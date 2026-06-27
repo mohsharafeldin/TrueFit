@@ -8,24 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		33AA80F92FEFEFC700A20AF9 /* ContainerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80F82FEFEFC700A20AF9 /* ContainerProtocol.swift */; };
-		33AA80FC2FEFF0F300A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80FB2FEFF0F300A20AF9 /* File.swift */; };
-		33AA80FE2FEFF10E00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80FD2FEFF10E00A20AF9 /* File.swift */; };
-		33AA81002FEFF12200A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80FF2FEFF12200A20AF9 /* File.swift */; };
-		33AA81022FEFF15500A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81012FEFF15500A20AF9 /* File.swift */; };
-		33AA81042FEFF19F00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81032FEFF19F00A20AF9 /* File.swift */; };
-		33AA81062FEFF1D300A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81052FEFF1D300A20AF9 /* File.swift */; };
-		33AA81082FEFF20500A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81072FEFF20500A20AF9 /* File.swift */; };
-		33AA810A2FEFF24200A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81092FEFF24200A20AF9 /* File.swift */; };
-		33AA81102FEFF2BD00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA810F2FEFF2BD00A20AF9 /* File.swift */; };
-		33AA81122FEFF2D600A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81112FEFF2D600A20AF9 /* File.swift */; };
-		33AA81142FEFF2F200A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81132FEFF2F200A20AF9 /* File.swift */; };
-		33AA81162FEFF31900A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81152FEFF31900A20AF9 /* File.swift */; };
-		33AA81182FEFF33E00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81172FEFF33E00A20AF9 /* File.swift */; };
-		33AA811A2FEFF36A00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81192FEFF36A00A20AF9 /* File.swift */; };
-		33AA811C2FEFF38A00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA811B2FEFF38A00A20AF9 /* File.swift */; };
-		33AA811E2FEFF3A100A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA811D2FEFF3A100A20AF9 /* File.swift */; };
-		33AA81202FEFF3BD00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA811F2FEFF3BD00A20AF9 /* File.swift */; };
-		33AA81222FEFF3DD00A20AF9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81212FEFF3DD00A20AF9 /* File.swift */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A92FEFD52800401F6B /* ContentView.swift */; };
 		5A1CA3AC2FEFD52900401F6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AB2FEFD52900401F6B /* Assets.xcassets */; };
@@ -545,27 +527,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1CA3B12FEFD52900401F6B /* Persistence.swift in Sources */,
-				33AA81082FEFF20500A20AF9 /* File.swift in Sources */,
-				33AA80FC2FEFF0F300A20AF9 /* File.swift in Sources */,
-				33AA80FE2FEFF10E00A20AF9 /* File.swift in Sources */,
 				33AA80F92FEFEFC700A20AF9 /* ContainerProtocol.swift in Sources */,
-				33AA811C2FEFF38A00A20AF9 /* File.swift in Sources */,
-				33AA81222FEFF3DD00A20AF9 /* File.swift in Sources */,
-				33AA81142FEFF2F200A20AF9 /* File.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
-				33AA81182FEFF33E00A20AF9 /* File.swift in Sources */,
-				33AA81202FEFF3BD00A20AF9 /* File.swift in Sources */,
-				33AA81042FEFF19F00A20AF9 /* File.swift in Sources */,
-				33AA81002FEFF12200A20AF9 /* File.swift in Sources */,
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
-				33AA81102FEFF2BD00A20AF9 /* File.swift in Sources */,
-				33AA81162FEFF31900A20AF9 /* File.swift in Sources */,
-				33AA81122FEFF2D600A20AF9 /* File.swift in Sources */,
-				33AA81022FEFF15500A20AF9 /* File.swift in Sources */,
-				33AA811E2FEFF3A100A20AF9 /* File.swift in Sources */,
-				33AA810A2FEFF24200A20AF9 /* File.swift in Sources */,
-				33AA81062FEFF1D300A20AF9 /* File.swift in Sources */,
-				33AA811A2FEFF36A00A20AF9 /* File.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
