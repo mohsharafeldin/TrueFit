@@ -11,7 +11,6 @@
 		4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBACF2FF003AC00CA6538 /* Apollo */; };
 		4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD22FF003D400CA6538 /* Alamofire */; };
 		4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD52FF004D900CA6538 /* FirebaseAuth */; };
-		4C8CBAD92FF005DF00CA6538 /* SwiftLintBinary in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD82FF005DF00CA6538 /* SwiftLintBinary */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A92FEFD52800401F6B /* ContentView.swift */; };
 		5A1CA3AC2FEFD52900401F6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AB2FEFD52900401F6B /* Assets.xcassets */; };
@@ -79,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C8CBAD92FF005DF00CA6538 /* SwiftLintBinary in Frameworks */,
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
 				4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */,
@@ -496,7 +494,7 @@
 				4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4C8CBAD72FF005DF00CA6538 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				4C8CBADA2FF0253B00CA6538 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -869,32 +867,32 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.52.0;
+				kind = exactVersion;
+				version = 0.52.0;
 			};
 		};
 		4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.6.4;
+				kind = exactVersion;
+				version = 5.6.4;
 			};
 		};
 		4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.9.0;
+				kind = exactVersion;
+				version = 10.9.0;
 			};
 		};
-		4C8CBAD72FF005DF00CA6538 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+		4C8CBADA2FF0253B00CA6538 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.63.3;
+				kind = exactVersion;
+				version = 0.61.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -914,11 +912,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
-		};
-		4C8CBAD82FF005DF00CA6538 /* SwiftLintBinary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4C8CBAD72FF005DF00CA6538 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
-			productName = SwiftLintBinary;
 		};
 /* End XCSwiftPackageProductDependency section */
 
