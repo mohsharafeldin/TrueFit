@@ -75,6 +75,228 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33AA80D12FEFDF3000A20AF9 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80E62FEFE42F00A20AF9 /* DI */,
+				33AA80E52FEFE41E00A20AF9 /* DesignSystem */,
+				33AA80E42FEFE40800A20AF9 /* Networking */,
+				33AA80DB2FEFE14400A20AF9 /* Utilities */,
+				33AA80DA2FEFE12E00A20AF9 /* Extensions */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		33AA80D22FEFDF3A00A20AF9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80F22FEFE50100A20AF9 /* RepositoryInterfaces */,
+				33AA80D72FEFDFA300A20AF9 /* UseCases */,
+				33AA80D52FEFDF8400A20AF9 /* Entities */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		33AA80D42FEFDF6800A20AF9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80F12FEFE4DF00A20AF9 /* Repositories */,
+				33AA80EA2FEFE48100A20AF9 /* DataSources */,
+				33AA80E82FEFE46700A20AF9 /* Mappers */,
+				33AA80E72FEFE45600A20AF9 /* DTOs */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		33AA80D52FEFDF8400A20AF9 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		33AA80D72FEFDFA300A20AF9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		33AA80D92FEFDFF300A20AF9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		33AA80DA2FEFE12E00A20AF9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		33AA80DB2FEFE14400A20AF9 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		33AA80E12FEFE39900A20AF9 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80E22FEFE3D700A20AF9 /* Features */,
+				33AA80D22FEFDF3A00A20AF9 /* Domain */,
+				33AA80D42FEFDF6800A20AF9 /* Data */,
+				33AA80D12FEFDF3000A20AF9 /* Core */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		33AA80E22FEFE3D700A20AF9 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80E32FEFE3F100A20AF9 /* AuthFeature */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		33AA80E32FEFE3F100A20AF9 /* AuthFeature */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80F42FEFE54700A20AF9 /* ViewModels */,
+				33AA80F32FEFE53D00A20AF9 /* Views */,
+			);
+			path = AuthFeature;
+			sourceTree = "<group>";
+		};
+		33AA80E42FEFE40800A20AF9 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		33AA80E52FEFE41E00A20AF9 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		33AA80E62FEFE42F00A20AF9 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		33AA80E72FEFE45600A20AF9 /* DTOs */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80F02FEFE4CD00A20AF9 /* Local */,
+				33AA80EE2FEFE4B900A20AF9 /* Remote */,
+			);
+			path = DTOs;
+			sourceTree = "<group>";
+		};
+		33AA80E82FEFE46700A20AF9 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
+		33AA80EA2FEFE48100A20AF9 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80EC2FEFE49D00A20AF9 /* Local */,
+				33AA80EB2FEFE48F00A20AF9 /* Remote */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		33AA80EB2FEFE48F00A20AF9 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		33AA80EC2FEFE49D00A20AF9 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		33AA80EE2FEFE4B900A20AF9 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		33AA80F02FEFE4CD00A20AF9 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		33AA80F12FEFE4DF00A20AF9 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		33AA80F22FEFE50100A20AF9 /* RepositoryInterfaces */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RepositoryInterfaces;
+			sourceTree = "<group>";
+		};
+		33AA80F32FEFE53D00A20AF9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				33AA80F72FEFE5BA00A20AF9 /* Components */,
+				33AA80F62FEFE56F00A20AF9 /* SignUp */,
+				33AA80F52FEFE55700A20AF9 /* SignIn */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		33AA80F42FEFE54700A20AF9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		33AA80F52FEFE55700A20AF9 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		33AA80F62FEFE56F00A20AF9 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		33AA80F72FEFE5BA00A20AF9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		5A1CA39B2FEFD52800401F6B = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +320,8 @@
 		5A1CA3A62FEFD52800401F6B /* TrueFit */ = {
 			isa = PBXGroup;
 			children = (
+				33AA80E12FEFE39900A20AF9 /* Packages */,
+				33AA80D92FEFDFF300A20AF9 /* App */,
 				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
 				5A1CA3A92FEFD52800401F6B /* ContentView.swift */,
 				5A1CA3AB2FEFD52900401F6B /* Assets.xcassets */,
