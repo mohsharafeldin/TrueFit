@@ -64,6 +64,7 @@
 		5A1CA3BE2FEFD52A00401F6B /* TrueFitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3BD2FEFD52A00401F6B /* TrueFitTests.swift */; };
 		5A1CA3C82FEFD52A00401F6B /* TrueFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */; };
 		5A1CA3CA2FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */; };
+		5A1CA3DA2FF0046200401F6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3D92FF0046200401F6B /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		5A1CA3C32FEFD52A00401F6B /* TrueFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrueFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITests.swift; sourceTree = "<group>"; };
 		5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5A1CA3D92FF0046200401F6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -428,10 +430,18 @@
 		33AA80E22FEFE3D700A20AF9 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+
 				0C198EA82FF2BAD500477701 /* AuthFeature */,
 				33D02D1E2FF3DA4C0048E60D /* PreviewMocks.swift */,
+
 				4C8CBADC2FF02A0200CA6538 /* Splash */,
 				4C8CBADB2FF029E300CA6538 /* Onboarding */,
+
+
+				5A1CA3D62FF0012000401F6B /* Home */,
+				33AA80E32FEFE3F100A20AF9 /* AuthFeature */,
+
+
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -606,6 +616,30 @@
 			path = TrueFitUITests;
 			sourceTree = "<group>";
 		};
+		5A1CA3D62FF0012000401F6B /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5A1CA3D82FF0037E00401F6B /* ViewModel */,
+				5A1CA3D72FF0037100401F6B /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5A1CA3D72FF0037100401F6B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A1CA3D92FF0046200401F6B /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A1CA3D82FF0037E00401F6B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -772,8 +806,17 @@
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
 				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
+
+
+
+
+				0C00A1412FF02355007A668C /* AppRouter.swift in Sources */,
+
 				0C198EAD2FF2BAD500477701 /* ForgotPasswordView.swift in Sources */,
 				0C198E912FF2BA8E00477701 /* Colors.swift in Sources */,
+
+				5A1CA3DA2FF0046200401F6B /* HomeView.swift in Sources */,
+
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
