@@ -11,57 +11,83 @@ struct SignUpView: View {
     @StateObject private var viewModel = AuthViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Create Account")
-                .font(.largeTitle)
-                .bold()
-                .padding(.horizontal, 20)
-                .padding(.top, 40)
-            
-            Text("Start learning with create your account")
-                .foregroundColor(.gray)
-                .padding(.horizontal, 20)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Username")
-                    .padding(.horizontal, 20)
-                AuthTextField(placeholder: "Create your username", text: $viewModel.username, iconName: "person")
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Email or Phone Number")
-                    .padding(.horizontal, 20)
-                AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.emailOrPhone, iconName: "envelope")
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Password")
-                    .padding(.horizontal, 20)
-                AuthTextField(placeholder: "Create your password", text: $viewModel.password, iconName: "lock", isSecure: true)
-            }
-            
-            PrimaryButton(title: "Create Account") {
-                // Route to Verification
-            }
-            .padding(.top, 10)
-            
-            VStack(spacing: 15) {
-                Text("Or using other method")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Spacing.xl) {
                 
-                SocialLoginButton(title: "Sign Up with Google", iconImage: .googleIcon) {
-                    print("Google Sign Up Tapped")
-                }
+                // Hero Section
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    Text("Create Account")
+                        .trueFitTextStyle(.display)
+                        .foregroundColor(.textPrimary)
                     
-                SocialLoginButton(title: "Sign Up with Facebook", iconImage: .facebookIcon) {
-                    print("Facebook Sign Up Tapped")
+                    Text("Start learning with create your account")
+                        .trueFitTextStyle(.subheadline)
+                        .foregroundColor(.textSecondary)
                 }
+                .padding(.top, Spacing.xxxxl)
+                .padding(.horizontal, Spacing.md)
+                
+                // Form Card
+                VStack(spacing: Spacing.lg) {
+                    VStack(alignment: .leading, spacing: Spacing.xs) {
+                        Text("Username")
+                            .trueFitTextStyle(.footnote)
+                            .foregroundColor(.textPrimary)
+                        AuthTextField(placeholder: "Create your username", text: $viewModel.username, iconName: "person")
+                    }
+                    
+                    VStack(alignment: .leading, spacing: Spacing.xs) {
+                        Text("Email or Phone Number")
+                            .trueFitTextStyle(.footnote)
+                            .foregroundColor(.textPrimary)
+                        AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.emailOrPhone, iconName: "envelope")
+                    }
+                    
+                    VStack(alignment: .leading, spacing: Spacing.xs) {
+                        Text("Password")
+                            .trueFitTextStyle(.footnote)
+                            .foregroundColor(.textPrimary)
+                        AuthTextField(placeholder: "Create your password", text: $viewModel.password, iconName: "lock", isSecure: true)
+                    }
+                }
+                .padding(Spacing.lg)
+                .background(Color.surface)
+                .clipShape(RoundedRectangle.trueFit(Radius.lg))
+                .trueFitShadow(.sm)
+                .padding(.horizontal, Spacing.md)
+                
+                // Primary Action
+                PrimaryButton(title: "Create Account") {
+                    // Route to Verification
+                }
+                .padding(.horizontal, Spacing.md)
+                .padding(.top, Spacing.sm)
+                
+                // Social Login
+                VStack(spacing: Spacing.md) {
+                    Text("Or using other method")
+                        .trueFitTextStyle(.footnote)
+                        .foregroundColor(.textSecondary)
+                    
+                    SocialLoginButton(title: "Sign Up with Google", iconImage: .googleIcon) {
+                        print("Google Sign Up Tapped")
+                    }
+                        
+                    SocialLoginButton(title: "Sign Up with Facebook", iconImage: .facebookIcon) {
+                        print("Facebook Sign Up Tapped")
+                    }
+                }
+                .padding(.horizontal, Spacing.md)
+                .padding(.top, Spacing.lg)
+                
+                Spacer(minLength: Spacing.xxxxl)
             }
-            .padding(.top, 10)
-            
-            Spacer()
         }
+        .scrollDismissesKeyboard(.interactively)
+        .background(
+            Color.trueFitBackground
+                .ignoresSafeArea(edges: .bottom)
+        )
     }
 }
 

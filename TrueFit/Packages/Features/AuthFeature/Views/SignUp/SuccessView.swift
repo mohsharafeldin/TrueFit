@@ -9,40 +9,42 @@ import SwiftUI
 
 struct SuccessView: View {
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: Spacing.xl) {
             
             HStack {
                 Spacer()
                 Capsule()
-                    .fill(Color(.systemGray4))
+                    .fill(Color.disabledColor)
                     .frame(width: 40, height: 5)
-                    .padding(.top, 15)
+                    .padding(.top, Spacing.md)
                 Spacer()
             }
             
-            VStack(spacing: 20) {
+            VStack(spacing: Spacing.lg) {
                 ZStack {
                     Circle()
-                        .fill(Color.green.opacity(0.2))
+                        .fill(Color.semanticSuccess.opacity(0.15))
                         .frame(width: 120, height: 120)
                     Circle()
-                        .fill(Color.green)
+                        .fill(Color.semanticSuccess)
                         .frame(width: 80, height: 80)
                     Image(systemName: "checkmark")
                         .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .bold()
+                        .font(.system(size: 32, weight: .bold))
                 }
-                .padding(.top, 20)
+                .padding(.top, Spacing.lg)
                 
-                Text("Register Success")
-                    .font(.title2)
-                    .bold()
-                
-                Text("Congratulation! your account already created.\nPlease login to get amazing experience.")
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
+                VStack(spacing: Spacing.xs) {
+                    Text("Register Success")
+                        .trueFitTextStyle(.title2)
+                        .foregroundColor(.textPrimary)
+                    
+                    Text("Congratulation! your account already created.\nPlease login to get amazing experience.")
+                        .trueFitTextStyle(.body)
+                        .foregroundColor(.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, Spacing.xxxxl)
+                }
             }
             
             Spacer()
@@ -50,14 +52,15 @@ struct SuccessView: View {
             PrimaryButton(title: "Go to Homepage") {
                 // Route to Home
             }
-            .padding(.bottom, 30)
+            .padding(.horizontal, Spacing.md)
+            .padding(.bottom, Spacing.xxl)
         }
-        .background(Color.white)
+        .background(Color.surface.ignoresSafeArea())
     }
 }
 
 #Preview {
-    Color.gray.opacity(0.3)
+    Color.trueFitBackground
         .ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
             SuccessView()

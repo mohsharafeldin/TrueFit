@@ -11,54 +11,60 @@ struct NewPasswordView: View {
     @StateObject private var viewModel = AuthViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: Spacing.xl) {
             
             HStack {
                 Spacer()
                 Capsule()
-                    .fill(Color(.systemGray4))
+                    .fill(Color.disabledColor)
                     .frame(width: 40, height: 5)
-                    .padding(.top, 15)
+                    .padding(.top, Spacing.md)
                 Spacer()
             }
             
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: Spacing.xs) {
                 Text("Create New Password")
-                    .font(.title2)
-                    .bold()
+                    .trueFitTextStyle(.title2)
+                    .foregroundColor(.textPrimary)
                 
                 Text("Enter your new password")
-                    .foregroundColor(.gray)
-                    .font(.subheadline)
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.textSecondary)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 10)
+            .padding(.horizontal, Spacing.md)
+            .padding(.top, Spacing.xs)
             
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Password")
-                    .padding(.horizontal, 20)
-                AuthTextField(placeholder: "Create your password", text: $viewModel.password, iconName: "lock", isSecure: true)
+            VStack(spacing: Spacing.md) {
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    Text("Password")
+                        .trueFitTextStyle(.footnote)
+                        .foregroundColor(.textPrimary)
+                    AuthTextField(placeholder: "Create your password", text: $viewModel.password, iconName: "lock", isSecure: true)
+                }
+                
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    Text("Confirm Password")
+                        .trueFitTextStyle(.footnote)
+                        .foregroundColor(.textPrimary)
+                    AuthTextField(placeholder: "Confirm your password", text: $viewModel.confirmPassword, iconName: "lock", isSecure: true)
+                }
             }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Confirm Password")
-                    .padding(.horizontal, 20)
-                AuthTextField(placeholder: "Confirm your password", text: $viewModel.confirmPassword, iconName: "lock", isSecure: true)
-            }
+            .padding(.horizontal, Spacing.md)
             
             PrimaryButton(title: "Change Password") {
                 // Action to change password
             }
-            .padding(.top, 20)
+            .padding(.horizontal, Spacing.md)
+            .padding(.top, Spacing.sm)
             
             Spacer()
         }
-        .background(Color.white)
+        .background(Color.surface.ignoresSafeArea())
     }
 }
 
 #Preview {
-    Color.gray.opacity(0.3)
+    Color.trueFitBackground
         .ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
             NewPasswordView()

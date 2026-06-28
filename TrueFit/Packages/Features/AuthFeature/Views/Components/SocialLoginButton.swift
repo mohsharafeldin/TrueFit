@@ -7,7 +7,24 @@
 
 import SwiftUI
 
-import SwiftUI
+public struct TrueFitSocialButtonStyle: ButtonStyle {
+    public func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .trueFitTextStyle(.headline)
+            .foregroundColor(.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(Spacing.md)
+            .background(Color.surface)
+            .clipShape(RoundedRectangle.trueFit(Radius.xl))
+            .overlay(
+                RoundedRectangle.trueFit(Radius.xl)
+                    .stroke(Color.borderColor, lineWidth: 1)
+            )
+            .trueFitShadow(.xs)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .animation(TrueFitMotion.springSnappy, value: configuration.isPressed)
+    }
+}
 
 public struct SocialLoginButton: View {
     var title: String
@@ -22,32 +39,24 @@ public struct SocialLoginButton: View {
     
     public var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
+            HStack(spacing: Spacing.sm) {
                 iconImage
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24)
                 
                 Text(title)
-                    .font(.headline)
-                    .foregroundColor(.black)
             }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.white)
-            .cornerRadius(25)
-            .overlay(
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color(.systemGray5), lineWidth: 1)
-            )
         }
-        .padding(.horizontal, 20)
+        .buttonStyle(TrueFitSocialButtonStyle())
     }
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        SocialLoginButton(title: "Sign In with Google", iconImage: .googleIcon, action: {})
-        SocialLoginButton(title: "Sign In with Facebook", iconImage: .facebookIcon, action: {})
+    VStack(spacing: Spacing.lg) {
+        SocialLoginButton(title: "Sign In with Google", iconImage: Image("google"), action: {})
+        SocialLoginButton(title: "Sign In with Facebook", iconImage: Image("facebook"), action: {})
     }
+    .padding(Spacing.xl)
+    .background(Color.trueFitBackground)
 }

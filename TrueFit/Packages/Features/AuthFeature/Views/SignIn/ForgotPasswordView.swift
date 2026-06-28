@@ -11,51 +11,56 @@ struct ForgotPasswordView: View {
     @StateObject private var viewModel = AuthViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: Spacing.xl) {
             
             HStack {
                 Spacer()
                 Capsule()
-                    .fill(Color(.systemGray4))
+                    .fill(Color.disabledColor)
                     .frame(width: 40, height: 5)
-                    .padding(.top, 15)
+                    .padding(.top, Spacing.md)
                 Spacer()
             }
             
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: Spacing.xs) {
                 Text("Forgot Password")
-                    .font(.title2)
-                    .bold()
+                    .trueFitTextStyle(.title2)
+                    .foregroundColor(.textPrimary)
                 
                 Text("Enter your mail or phone number")
-                    .foregroundColor(.gray)
-                    .font(.subheadline)
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.textSecondary)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 10)
+            .padding(.horizontal, Spacing.md)
+            .padding(.top, Spacing.xs)
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: Spacing.xs) {
                 Text("Email or Phone Number")
-                    .padding(.horizontal, 20)
+                    .trueFitTextStyle(.footnote)
+                    .foregroundColor(.textPrimary)
+                
                 AuthTextField(placeholder: "Enter your email", text: $viewModel.emailOrPhone, iconName: "envelope")
             }
+            .padding(.horizontal, Spacing.md)
             
             PrimaryButton(title: "Send Code") {
                 // Action to send code
             }
-            .padding(.top, 20)
+            .padding(.horizontal, Spacing.md)
+            .padding(.top, Spacing.sm)
             
             Spacer()
         }
-        .background(Color.white)
+        .background(Color.surface.ignoresSafeArea())
     }
 }
 
 #Preview {
-    Color.gray.opacity(0.3)
+    Color.trueFitBackground
         .ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
             ForgotPasswordView()
-                .presentationDetents([.height(350)]) .presentationDragIndicator(.hidden)
+                .presentationDetents([.height(350)])
+                .presentationDragIndicator(.hidden)
         }
 }
