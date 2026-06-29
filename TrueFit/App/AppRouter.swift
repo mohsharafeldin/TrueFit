@@ -6,30 +6,36 @@
 //
 
 import SwiftUI
-enum Route : Hashable{
+enum AuthRoute: Hashable {
     case signIn
     case signUp
+}
+ 
+enum AppRoute: Hashable {
     case home
     case cart
     case checkout
     case profile
-    
-    
 }
 
-final class AppRouter : ObservableObject {
-    @Published  var path = NavigationPath()
-    
-    func navigate(to router : Route){
-        path.append(router)
+
+final class Router<Route: Hashable>: ObservableObject {
+
+    @Published var path = NavigationPath()
+
+    func navigate(to route: Route) {
+        path.append(route)
     }
-    func goBack(){
-        if !path.isEmpty{
-            path.removeLast()
-        }
+
+    func goBack() {
+        guard !path.isEmpty else { return }
+        path.removeLast()
     }
-    
-    func popToRoot(){
-        path.removeLast(path.count)
+
+    func popToRoot() {
+        path = NavigationPath()
     }
 }
+
+typealias AuthRouter = Router<AuthRoute>
+typealias AppRouter = Router<AppRoute>

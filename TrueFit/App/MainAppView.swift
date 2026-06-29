@@ -15,7 +15,7 @@ struct MainAppView: View {
     var body: some View {
         NavigationStack(path: $appRouter.path) {
             Text("Home Screen (TabBar) Placeholder")
-                .navigationDestination(for: Route.self) { route in
+                .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .home:
                         Text("Home Screen")
@@ -25,11 +25,10 @@ struct MainAppView: View {
                         Text("Checkout Screen")
                     case .profile:
                         Text("Profile Screen")
-                    default:
-                        EmptyView()
+                        
                     }
                 }
         }
     }
+    
 }
-

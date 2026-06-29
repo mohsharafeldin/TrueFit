@@ -10,13 +10,14 @@ import CoreData
 @main
 struct TrueFitApp: App {
     @StateObject private var diContainer = DIContainer()
-    @StateObject private var router = AppRouter()
+    
    
 
     var body: some Scene {
         WindowGroup {
             RootView(viewModel: diContainer.makeRootViewModel())
-                .environmentObject(router)
+                .environmentObject(diContainer.authRouter)
+                .environmentObject(diContainer.appRouter)
                 .environmentObject(diContainer)
                 .environment(\.managedObjectContext, diContainer.persistenceController.container.viewContext)
         }
