@@ -16,9 +16,12 @@ struct RootView: View {
                 Text("Splash Screen")
             case .unauthenticated:
                 AuthFlowView()
-                            
-            case .authenticated:
+                
+            case .authenticated, .guest:
                 MainAppView()
+                
+            case .onboarding:
+                Text("onboarding flow view")
             }
         }
         .animation(.easeInOut(duration: 0.5), value: viewModel.currentState)

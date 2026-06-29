@@ -13,17 +13,26 @@ import CoreData
 @MainActor
 final class DIContainer: ObservableObject {
     
-    let persistenceController: PersistenceController
-    let authManager = AuthManager()
     
+    let persistenceController = PersistenceController.shared
+        let authManager = AuthManager()
+        let preferencesManager = PreferencesManager()
+    
+    let appRouter = AppRouter()
+    let authRouter = AuthRouter()
     init() {
-        self.persistenceController = PersistenceController.shared
+       
         
     }
     
     
     func makeRootViewModel() -> RootViewModel {
-        return RootViewModel(authManager: self.authManager)
+        return RootViewModel(
+            authManager: authManager,
+            authRouter: authRouter,
+            appRouter: appRouter,  
+            preferencesManager: preferencesManager
+        )
     }
     
 }
