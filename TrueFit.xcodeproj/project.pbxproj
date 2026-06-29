@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		33AA80F92FEFEFC700A20AF9 /* ContainerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80F82FEFEFC700A20AF9 /* ContainerProtocol.swift */; };
+		0C00A13E2FF0051B007A668C /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C00A13D2FF0051B007A668C /* RootView.swift */; };
+		0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C00A13F2FF01FD5007A668C /* RootViewModel.swift */; };
+		0C00A1412FF02355007A668C /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA81212FEFF3DD00A20AF9 /* AppRouter.swift */; };
+		0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */; };
+		0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E7D2FF2A3B900477701 /* MainAppView.swift */; };
+		0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E802FF2A4EF00477701 /* AuthManager.swift */; };
+		33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A92FEFD52800401F6B /* ContentView.swift */; };
 		5A1CA3AC2FEFD52900401F6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AB2FEFD52900401F6B /* Assets.xcassets */; };
@@ -37,7 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		33AA80F82FEFEFC700A20AF9 /* ContainerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerProtocol.swift; sourceTree = "<group>"; };
+		0C00A13D2FF0051B007A668C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		0C00A13F2FF01FD5007A668C /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
+		0C198E7D2FF2A3B900477701 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		0C198E802FF2A4EF00477701 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA80FB2FEFF0F300A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA80FD2FEFF10E00A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA80FF2FEFF12200A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -55,7 +66,7 @@
 		33AA811B2FEFF38A00A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA811D2FEFF3A100A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA811F2FEFF3BD00A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		33AA81212FEFF3DD00A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		33AA81212FEFF3DD00A20AF9 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		5A1CA3A42FEFD52800401F6B /* TrueFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitApp.swift; sourceTree = "<group>"; };
 		5A1CA3A92FEFD52800401F6B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,9 +106,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C198E7F2FF2A4E500477701 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0C198E802FF2A4EF00477701 /* AuthManager.swift */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				0C198E7F2FF2A4E500477701 /* helpers */,
 				33AA80E62FEFE42F00A20AF9 /* DI */,
 				33AA80E52FEFE41E00A20AF9 /* DesignSystem */,
 				33AA80E42FEFE40800A20AF9 /* Networking */,
@@ -147,7 +167,12 @@
 		33AA80D92FEFDFF300A20AF9 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				33AA81212FEFF3DD00A20AF9 /* File.swift */,
+				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
+				33AA81212FEFF3DD00A20AF9 /* AppRouter.swift */,
+				0C00A13D2FF0051B007A668C /* RootView.swift */,
+				0C00A13F2FF01FD5007A668C /* RootViewModel.swift */,
+				0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */,
+				0C198E7D2FF2A3B900477701 /* MainAppView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -215,7 +240,7 @@
 		33AA80E62FEFE42F00A20AF9 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				33AA80F82FEFEFC700A20AF9 /* ContainerProtocol.swift */,
+				33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -361,7 +386,6 @@
 			children = (
 				33AA80E12FEFE39900A20AF9 /* Packages */,
 				33AA80D92FEFDFF300A20AF9 /* App */,
-				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
 				5A1CA3A92FEFD52800401F6B /* ContentView.swift */,
 				5A1CA3AB2FEFD52900401F6B /* Assets.xcassets */,
 				5A1CA3B02FEFD52900401F6B /* Persistence.swift */,
@@ -527,9 +551,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A1CA3B12FEFD52900401F6B /* Persistence.swift in Sources */,
-				33AA80F92FEFEFC700A20AF9 /* ContainerProtocol.swift in Sources */,
+				0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */,
+				0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */,
+				33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */,
+				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
+				0C00A1412FF02355007A668C /* AppRouter.swift in Sources */,
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
+				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
+				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
