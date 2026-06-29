@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-// MARK: - Main Content View
 struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
@@ -27,10 +26,10 @@ struct HomeView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
-                .padding(.bottom, 100) // Space for bottom tab bar
+                .padding(.bottom, 100)
             }
             
-            // Custom Bottom Tab Bar overlaid at the bottom
+            
             CustomBottomTabBar()
         }
         .ignoresSafeArea(.all, edges: .bottom)
@@ -41,7 +40,7 @@ struct HomeView: View {
 struct HeaderView: View {
     var body: some View {
         HStack {
-            Image("profile") // Replace with your image
+            Image("profile")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 44, height: 44)
@@ -65,8 +64,7 @@ struct HeaderView: View {
                     Image(systemName: "bell")
                         .font(.title3)
                     
-                    // Red Notification Badge
-                    Circle()
+                    
                         .fill(Color.red)
                         .frame(width: 8, height: 8)
                         .offset(x: 2, y: -2)
@@ -111,11 +109,11 @@ struct BannerView: View {
     var body: some View {
         VStack(spacing: 12) {
             ZStack {
-                // Background
+                
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color(UIColor.systemGray6))
                 
-                // Decorative Purple Shape
+                
                 GeometryReader { geo in
                     Circle()
                         .fill(Color.purple.opacity(0.3))
@@ -138,7 +136,7 @@ struct BannerView: View {
                     
                     Spacer()
                     
-                    Image("bag") // Replace with your image
+                    Image("bag")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100)
@@ -148,7 +146,7 @@ struct BannerView: View {
             .frame(height: 120)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             
-            // Pagination Dots
+            
             HStack(spacing: 6) {
                 Circle().fill(Color.purple).frame(width: 6, height: 6)
                 Circle().fill(Color.gray.opacity(0.3)).frame(width: 6, height: 6)
@@ -268,7 +266,7 @@ struct CustomBottomTabBar: View {
             }
             .padding(.horizontal, 30)
             .padding(.top, 16)
-            .padding(.bottom, 34) // Safe area padding for iPhones without home button
+            .padding(.bottom, 34) 
             .background(Color.white)
         }
     }
@@ -292,7 +290,6 @@ struct TabBarItem: View {
     }
 }
 
-// MARK: - Preview
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()

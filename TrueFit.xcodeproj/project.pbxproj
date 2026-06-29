@@ -656,6 +656,8 @@
 			dependencies = (
 			);
 			name = TrueFit;
+			packageProductDependencies = (
+			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
 			productType = "com.apple.product-type.application";
