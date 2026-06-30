@@ -70,3 +70,11 @@ fastlane/test_output
 # =========================
 *.xcconfig
 !Config.xcconfig.example
+
+
+.build/
+
+.swiftpm/
+
+Package.resolved
+ 
