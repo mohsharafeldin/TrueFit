@@ -15,11 +15,14 @@ final class DIContainer: ObservableObject {
     
     
     let persistenceController = PersistenceController.shared
-        let authManager = AuthManager()
-        let preferencesManager = PreferencesManager()
+    let authManager = AuthManager()
+    let preferencesManager = PreferencesManager()
     
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
+    
+    let authRepository: AuthRepositoryProtocol = AuthRepository()
+    
     init() {
        
         
@@ -35,4 +38,11 @@ final class DIContainer: ObservableObject {
         )
     }
     
+    func makeAuthViewModel() -> AuthViewModel {
+        return AuthViewModel(
+            authRepository: authRepository,
+            authManager: authManager,
+            authRouter: authRouter
+        )
+    }
 }

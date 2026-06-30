@@ -13,14 +13,13 @@ struct AuthFlowView: View {
     
     var body: some View {
         NavigationStack(path: $authRouter.path) {
-            Text("SignIn View Placeholder")
+            LoginView(viewModel: container.makeAuthViewModel())
                 .navigationDestination(for: AuthRoute.self) { route in
                     switch route {
                     case .signIn:
-                        Text("Signin Screen")
+                        LoginView(viewModel: container.makeAuthViewModel())
                     case .signUp:
-                        Text("Sign Up Screen")
-                        
+                        SignUpView(viewModel: container.makeAuthViewModel())
                     }
                 }
         }

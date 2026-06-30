@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @StateObject var viewModel: AuthViewModel
     
     var body: some View {
         ScrollView {
@@ -30,10 +30,10 @@ struct LoginView: View {
                 // Form Card
                 VStack(spacing: Spacing.lg) {
                     VStack(alignment: .leading, spacing: Spacing.xs) {
-                        Text("Email or Phone Number")
+                        Text("Email")
                             .trueFitTextStyle(.footnote)
                             .foregroundColor(.textPrimary)
-                        AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.emailOrPhone, iconName: "envelope")
+                        AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.email, iconName: "envelope")
                     }
                     
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -60,13 +60,7 @@ struct LoginView: View {
                 
                 // Primary Action
                 PrimaryButton(title: "Sign In") {
-                    viewModel.login { success in
-                        if success {
-                            print("Route to Home")
-                        } else {
-                            print("Show Error")
-                        }
-                    }
+                    viewModel.login()
                 }
                 .padding(.horizontal, Spacing.md)
                 .padding(.top, Spacing.sm)
@@ -100,5 +94,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(viewModel: PreviewMocks.makeAuthViewModel())
 }

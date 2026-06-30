@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @StateObject var viewModel: AuthViewModel
     
     var body: some View {
         ScrollView {
@@ -29,18 +29,29 @@ struct SignUpView: View {
                 
                 // Form Card
                 VStack(spacing: Spacing.lg) {
-                    VStack(alignment: .leading, spacing: Spacing.xs) {
-                        Text("Username")
-                            .trueFitTextStyle(.footnote)
-                            .foregroundColor(.textPrimary)
-                        AuthTextField(placeholder: "Create your username", text: $viewModel.username, iconName: "person")
+                    
+                    // First Name & Last Name
+                    HStack(spacing: Spacing.md) {
+                        VStack(alignment: .leading, spacing: Spacing.xs) {
+                            Text("First Name")
+                                .trueFitTextStyle(.footnote)
+                                .foregroundColor(.textPrimary)
+                            AuthTextField(placeholder: "First name", text: $viewModel.firstName, iconName: "person")
+                        }
+                        
+                        VStack(alignment: .leading, spacing: Spacing.xs) {
+                            Text("Last Name")
+                                .trueFitTextStyle(.footnote)
+                                .foregroundColor(.textPrimary)
+                            AuthTextField(placeholder: "Last name", text: $viewModel.lastName, iconName: "person")
+                        }
                     }
                     
                     VStack(alignment: .leading, spacing: Spacing.xs) {
-                        Text("Email or Phone Number")
+                        Text("Email")
                             .trueFitTextStyle(.footnote)
                             .foregroundColor(.textPrimary)
-                        AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.emailOrPhone, iconName: "envelope")
+                        AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope")
                     }
                     
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -58,7 +69,7 @@ struct SignUpView: View {
                 
                 // Primary Action
                 PrimaryButton(title: "Create Account") {
-                    // Route to Verification
+                    // Route to Verification or Trigger Sign Up
                 }
                 .padding(.horizontal, Spacing.md)
                 .padding(.top, Spacing.sm)
@@ -92,5 +103,5 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    SignUpView(viewModel: PreviewMocks.makeAuthViewModel())
 }

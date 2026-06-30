@@ -8,35 +8,43 @@
 import Foundation
 import Combine
 
+@MainActor
 class AuthViewModel: ObservableObject {
     // Inputs
-    @Published var emailOrPhone: String = ""
-    @Published var password: String = ""
-    @Published var verificationCode: String = ""
-    @Published var username: String = ""
-    @Published var confirmPassword: String = ""
+    @Published var firstName = ""
+    @Published var lastName = ""
+    @Published var email = ""
+    @Published var password = ""
+    @Published var confirmPassword = ""
     
-    // States for Dummy Loading
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
+    // States
+    @Published var isLoading = false
+    @Published var errorMessage: String?
     
-    // Dummy Actions
-    func login(completion: @escaping (Bool) -> Void) {
-        isLoading = true
-        // Simulate network delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.isLoading = false
-            if self.emailOrPhone == "magdalena83@mail.com" && self.password == "123456" {
-                completion(true) // Success
-            } else {
-                self.errorMessage = "Invalid credentials"
-                completion(false) // Failed
-            }
-        }
+    // Dependencies
+    private let authRepository: AuthRepositoryProtocol
+    private let authManager: AuthManagerProtocol
+    private let authRouter: AuthRouter
+    
+    // Injection
+    init(authRepository: AuthRepositoryProtocol, authManager: AuthManagerProtocol, authRouter: AuthRouter) {
+        self.authRepository = authRepository
+        self.authManager = authManager
+        self.authRouter = authRouter
     }
     
-    func verifyCode(completion: @escaping (Bool) -> Void) {
-        // Dummy verification logic
-        completion(verificationCode == "6381")
+    func login() {
+        isLoading = true
+        Task {
+            do {
+                let token = try await authRepository.login(email: email, password: password)
+                
+                authManager.login(token: token)
+                
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+            isLoading = false
+        }
     }
 }
