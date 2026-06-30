@@ -65,3 +65,16 @@ fastlane/test_output
 .vscode/
 .idea/
 *.code-workspace
+# =========================
+# Configuration
+# =========================
+*.xcconfig
+!Config.xcconfig.example
+
+
+.build/
+
+.swiftpm/
+
+Package.resolved
+ 

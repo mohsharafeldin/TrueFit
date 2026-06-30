@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,19 @@
 		0C198EB02FF2BAD500477701 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198EA42FF2BAD500477701 /* SignUpView.swift */; };
 		0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198EA52FF2BAD500477701 /* SuccessView.swift */; };
 		0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */; };
+		0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */; };
+		0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */; };
+		0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3012FF3D18100466794 /* Endpoint.swift */; };
+		0CE9F30F2FF3D18100466794 /* RESTClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3022FF3D18100466794 /* RESTClient.swift */; };
+		0CE9F3102FF3D18100466794 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3042FF3D18100466794 /* AuthInterceptor.swift */; };
+		0CE9F3112FF3D18100466794 /* RetryInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3052FF3D18100466794 /* RetryInterceptor.swift */; };
+		0CE9F3122FF3D18100466794 /* APIClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3072FF3D18100466794 /* APIClientProtocol.swift */; };
+		0CE9F3132FF3D18100466794 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3082FF3D18100466794 /* APIError.swift */; };
+		0CE9F3142FF3D18100466794 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3092FF3D18100466794 /* Constants.swift */; };
+		0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */; };
+		0CE9F31B2FF3D31E00466794 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3182FF3D31E00466794 /* File.swift */; };
+		0CE9F31D2FF3D67100466794 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0CE9F31C2FF3D67000466794 /* Config.xcconfig */; };
+		0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */; };
 		33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */; };
 		33D02D1B2FF3D9F70048E60D /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */; };
 		33D02D1D2FF3DA210048E60D /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D02D1C2FF3DA210048E60D /* AuthRepository.swift */; };
@@ -91,6 +104,20 @@
 		0C198EA42FF2BAD500477701 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0C198EA52FF2BAD500477701 /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
+		0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLClient.swift; sourceTree = "<group>"; };
+		0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLEndpoint.swift; sourceTree = "<group>"; };
+		0CE9F3012FF3D18100466794 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		0CE9F3022FF3D18100466794 /* RESTClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTClient.swift; sourceTree = "<group>"; };
+		0CE9F3042FF3D18100466794 /* AuthInterceptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		0CE9F3052FF3D18100466794 /* RetryInterceptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryInterceptor.swift; sourceTree = "<group>"; };
+		0CE9F3072FF3D18100466794 /* APIClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientProtocol.swift; sourceTree = "<group>"; };
+		0CE9F3082FF3D18100466794 /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		0CE9F3092FF3D18100466794 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0CE9F3152FF3D26800466794 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Shopify.swift"; sourceTree = "<group>"; };
+		0CE9F3182FF3D31E00466794 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		0CE9F31C2FF3D67000466794 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.xcconfig.example; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81052FEFF1D300A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA81072FEFF20500A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -251,6 +278,63 @@
 			path = AuthFeature;
 			sourceTree = "<group>";
 		};
+		0CE9F3002FF3D18100466794 /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */,
+				0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */,
+			);
+			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		0CE9F3032FF3D18100466794 /* REST */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F3012FF3D18100466794 /* Endpoint.swift */,
+				0CE9F3022FF3D18100466794 /* RESTClient.swift */,
+			);
+			path = REST;
+			sourceTree = "<group>";
+		};
+		0CE9F3062FF3D18100466794 /* Interceptors */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F3042FF3D18100466794 /* AuthInterceptor.swift */,
+				0CE9F3052FF3D18100466794 /* RetryInterceptor.swift */,
+			);
+			path = Interceptors;
+			sourceTree = "<group>";
+		};
+		0CE9F30A2FF3D18100466794 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F3062FF3D18100466794 /* Interceptors */,
+				0CE9F3072FF3D18100466794 /* APIClientProtocol.swift */,
+				0CE9F3082FF3D18100466794 /* APIError.swift */,
+				0CE9F3092FF3D18100466794 /* Constants.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		0CE9F30B2FF3D18100466794 /* Shopify */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F3002FF3D18100466794 /* GraphQL */,
+				0CE9F3032FF3D18100466794 /* REST */,
+				0CE9F30A2FF3D18100466794 /* Shared */,
+			);
+			path = Shopify;
+			sourceTree = "<group>";
+		};
+		0CE9F3192FF3D31E00466794 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */,
+				0CE9F3182FF3D31E00466794 /* File.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +400,7 @@
 		33AA80DB2FEFE14400A20AF9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0CE9F3192FF3D31E00466794 /* Extensions */,
 				33AA811D2FEFF3A100A20AF9 /* File.swift */,
 			);
 			path = Utilities;
@@ -344,6 +429,7 @@
 		33AA80E42FEFE40800A20AF9 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				0CE9F30B2FF3D18100466794 /* Shopify */,
 				33AA811B2FEFF38A00A20AF9 /* File.swift */,
 			);
 			path = Networking;
@@ -434,6 +520,8 @@
 		5A1CA39B2FEFD52800401F6B = {
 			isa = PBXGroup;
 			children = (
+				0CE9F31C2FF3D67000466794 /* Config.xcconfig */,
+				0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */,
 				5A1CA3A62FEFD52800401F6B /* TrueFit */,
 				5A1CA3BC2FEFD52A00401F6B /* TrueFitTests */,
 				5A1CA3C62FEFD52A00401F6B /* TrueFitUITests */,
@@ -454,6 +542,7 @@
 		5A1CA3A62FEFD52800401F6B /* TrueFit */ = {
 			isa = PBXGroup;
 			children = (
+				0CE9F3152FF3D26800466794 /* Info.plist */,
 				33AA80E12FEFE39900A20AF9 /* Packages */,
 				33AA80D92FEFDFF300A20AF9 /* App */,
 				5A1CA3A92FEFD52800401F6B /* ContentView.swift */,
@@ -598,6 +687,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CE9F31D2FF3D67100466794 /* Config.xcconfig in Resources */,
+				0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */,
 				5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */,
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0C198E972FF2BA8E00477701 /* Assets.xcassets in Resources */,
@@ -633,14 +724,23 @@
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
 				0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */,
 				0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */,
+				0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */,
 				0C198E952FF2BA8E00477701 /* Spacing.swift in Sources */,
+				0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */,
+				0CE9F30F2FF3D18100466794 /* RESTClient.swift in Sources */,
+				0CE9F31B2FF3D31E00466794 /* File.swift in Sources */,
+				0CE9F3102FF3D18100466794 /* AuthInterceptor.swift in Sources */,
 				0C198EAE2FF2BAD500477701 /* LoginView.swift in Sources */,
 				33D02D1F2FF3DA4C0048E60D /* PreviewMocks.swift in Sources */,
 				0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */,
+				0CE9F3122FF3D18100466794 /* APIClientProtocol.swift in Sources */,
 				0C198EB02FF2BAD500477701 /* SignUpView.swift in Sources */,
 				0C198EA92FF2BAD500477701 /* AuthViewModel.swift in Sources */,
+				0CE9F3112FF3D18100466794 /* RetryInterceptor.swift in Sources */,
 				0C198EAF2FF2BAD500477701 /* NewPasswordView.swift in Sources */,
+				0CE9F3132FF3D18100466794 /* APIError.swift in Sources */,
 				33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */,
+				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
 				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
@@ -651,10 +751,12 @@
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
 				0C198E942FF2BA8E00477701 /* Shadow.swift in Sources */,
+				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
+				0CE9F3142FF3D18100466794 /* Constants.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -816,6 +918,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TrueFit/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrueFit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -844,6 +947,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TrueFit/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TrueFit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

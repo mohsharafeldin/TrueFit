@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ShopifyStoreName</key>
+	<string>$(SHOPIFY_STORE_NAME)</string>
+	<key>ShopifyAdminAPIToken</key>
+	<string>$(SHOPIFY_ADMIN_API_TOKEN)</string>
+	<key>ShopifyAPIVersion</key>
+	<string>$(SHOPIFY_API_VERSION)</string>
+	<key>ShopifyGraphQLAPIVersion</key>
+	<string>$(SHOPIFY_GRAPHQL_API_VERSION)</string>
+</dict>
+</plist>
