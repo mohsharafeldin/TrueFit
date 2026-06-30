@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewPasswordView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @StateObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -67,7 +67,7 @@ struct NewPasswordView: View {
     Color.trueFitBackground
         .ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
-            NewPasswordView()
+            NewPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
                 .presentationDetents([.height(450)])
                 .presentationDragIndicator(.hidden)
         }

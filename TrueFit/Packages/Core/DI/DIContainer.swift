@@ -23,6 +23,9 @@ final class DIContainer: ObservableObject {
     // let graphQLClient = GraphQLClient()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
+    
+    let authRepository: AuthRepositoryProtocol = AuthRepository()
+    
     init() {
        
         
@@ -38,4 +41,11 @@ final class DIContainer: ObservableObject {
         )
     }
     
+    func makeAuthViewModel() -> AuthViewModel {
+        return AuthViewModel(
+            authRepository: authRepository,
+            authManager: authManager,
+            authRouter: authRouter
+        )
+    }
 }
