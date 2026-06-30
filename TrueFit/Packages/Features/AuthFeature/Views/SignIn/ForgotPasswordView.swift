@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @StateObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -35,11 +35,11 @@ struct ForgotPasswordView: View {
             .padding(.top, Spacing.xs)
             
             VStack(alignment: .leading, spacing: Spacing.xs) {
-                Text("Email or Phone Number")
+                Text("Email")
                     .trueFitTextStyle(.footnote)
                     .foregroundColor(.textPrimary)
                 
-                AuthTextField(placeholder: "Enter your email", text: $viewModel.emailOrPhone, iconName: "envelope")
+                AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope")
             }
             .padding(.horizontal, Spacing.md)
             
@@ -59,7 +59,7 @@ struct ForgotPasswordView: View {
     Color.trueFitBackground
         .ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
-            ForgotPasswordView()
+            ForgotPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
                 .presentationDetents([.height(350)])
                 .presentationDragIndicator(.hidden)
         }
