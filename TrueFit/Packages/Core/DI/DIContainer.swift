@@ -15,9 +15,12 @@ final class DIContainer: ObservableObject {
     
     
     let persistenceController = PersistenceController.shared
-        let authManager = AuthManager()
-        let preferencesManager = PreferencesManager()
+    let authManager = AuthManager()
+    let preferencesManager = PreferencesManager()
     
+    // MARK: - Networking
+    let restClient: APIClientProtocol = RESTClient()
+    // let graphQLClient = GraphQLClient()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
     init() {
