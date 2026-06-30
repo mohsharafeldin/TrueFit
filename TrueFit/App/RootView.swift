@@ -13,15 +13,27 @@ struct RootView: View {
         Group{
             switch viewModel.currentState {
             case .splash:
-                Text("Splash Screen")
+                SplashView(onSplashComplete: viewModel.splashDidFinish)
             case .unauthenticated:
-                AuthFlowView()
+                AuthFlowView(
+                    onLoginSuccess: {
+                        viewModel.didAuthenticate()
+                    },
+                    onGuestContinue: {
+                        viewModel.continueAsGuest()
+                    }
+                )
                 
             case .authenticated, .guest:
                 MainAppView()
                 
             case .onboarding:
-                Text("onboarding flow view")
+                OnboardingContentView(
+                    onComplete: {
+                        viewModel.completeOnboarding()
+                    }
+                )
+                    
             }
         }
         .animation(.easeInOut(duration: 0.5), value: viewModel.currentState)

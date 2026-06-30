@@ -41,7 +41,7 @@ class RootViewModel: ObservableObject {
         self.appRouter   = appRouter
         self.preferencesManager = preferencesManager
         
-        Task { await initializeApp() }
+        //Task { await initializeApp() }
     }
 
 
@@ -49,7 +49,9 @@ class RootViewModel: ObservableObject {
         try? await Task.sleep(nanoseconds: splashDuration)
         routeAfterSplash()
     }
-
+    func splashDidFinish() {
+            routeAfterSplash()
+    }
     private func routeAfterSplash() {
         let hasSeenOnboarding = preferencesManager.hasSeenOnboarding
         guard hasSeenOnboarding else {
