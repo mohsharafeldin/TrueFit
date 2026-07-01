@@ -9,9 +9,9 @@ import Foundation
 
 final class FetchNewArrivalsUseCase {
 
-    private let repository: HomeRepositoryProtocol
+    private let repository: ProductsRepositoryProtocol
 
-    init(repository: HomeRepositoryProtocol) {
+    init(repository: ProductsRepositoryProtocol) {
         self.repository = repository
     }
 

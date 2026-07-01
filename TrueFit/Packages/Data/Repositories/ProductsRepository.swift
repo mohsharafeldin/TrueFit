@@ -1,17 +1,17 @@
 //
-//  HomeRepository.swift
+//  ProductsRepository.swift
 //  TrueFit
 //
-//  Data — Implements HomeRepositoryProtocol, coordinates data sources and mappers.
+//  Data — Implements ProductsRepositoryProtocol, coordinates data sources and mappers.
 //
 
 import Foundation
 
-final class HomeRepository: HomeRepositoryProtocol {
+final class ProductsRepository: ProductsRepositoryProtocol {
 
-    private let remoteDataSource: HomeRemoteDataSourceProtocol
+    private let remoteDataSource: ProductsRemoteDataSourceProtocol
 
-    init(remoteDataSource: HomeRemoteDataSourceProtocol) {
+    init(remoteDataSource: ProductsRemoteDataSourceProtocol) {
         self.remoteDataSource = remoteDataSource
     }
 

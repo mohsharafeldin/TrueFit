@@ -26,11 +26,11 @@ final class DIContainer: ObservableObject {
     
     let authRepository: AuthRepositoryProtocol = AuthRepository()
     
-    // MARK: - Home Feature Dependencies
-    private lazy var homeRemoteDataSource: HomeRemoteDataSourceProtocol = HomeRemoteDataSource(apiClient: restClient)
-    private lazy var homeRepository: HomeRepositoryProtocol = HomeRepository(remoteDataSource: homeRemoteDataSource)
-    private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: homeRepository)
-    private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: homeRepository)
+    // MARK: - Products & Home Dependencies
+    private lazy var productsRemoteDataSource: ProductsRemoteDataSourceProtocol = ProductsRemoteDataSource(apiClient: restClient)
+    private lazy var productsRepository: ProductsRepositoryProtocol = ProductsRepository(remoteDataSource: productsRemoteDataSource)
+    private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: productsRepository)
+    private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
     
     init() {
        
