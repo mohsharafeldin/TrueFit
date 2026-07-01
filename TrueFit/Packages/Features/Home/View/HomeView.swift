@@ -2,296 +2,658 @@
 //  HomeView.swift
 //  TrueFit
 //
-//  Created by mohamed sharaf on 27/06/2026.
-//
-
+//  Features — Home screen 
 
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject var viewModel: HomeViewModel
+
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: 24) {
-                    HeaderView()
-                    
-                    TabSelectionView()
-                    
-                    BannerView()
-                    
-                    VStack(spacing: 16) {
-                        SectionHeaderView(title: "New Arrivals 🔥", actionTitle: "See All")
-                        ProductGridView()
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: Spacing.xl) {
+                    HomeHeaderView()
+
+                    HomeTabSelector(selectedTab: $viewModel.selectedTab)
+
+                    // Tab Content
+                    switch viewModel.selectedTab {
+                    case .home:
+                        homeTabContent
+                    case .category:
+                        categoryTabContent
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 10)
+                .padding(.horizontal, Spacing.lg)
+                .padding(.top, Spacing.sm)
                 .padding(.bottom, 100)
             }
-            
-            
-            CustomBottomTabBar()
+
+            HomeBottomTabBar()
         }
+        .background(Color.trueFitBackground)
         .ignoresSafeArea(.all, edges: .bottom)
+        .onAppear {
+            viewModel.onAppear()
+        }
+    }
+
+    // MARK: - Home Tab Content
+
+    @ViewBuilder
+    private var homeTabContent: some View {
+        VStack(spacing: Spacing.xl) {
+            HomeBannerCarousel()
+
+            // New Arrivals Section
+            VStack(spacing: Spacing.md) {
+                HomeSectionHeader(title: "New Arrivals 🔥", actionTitle: "See All") {
+                    // TODO: Navigate to full products list
+                }
+
+                if viewModel.isLoadingProducts {
+                    productGridPlaceholder
+                } else if viewModel.products.isEmpty {
+                    emptyStateView(message: "No products found")
+                } else {
+                    ProductsGridView(products: viewModel.products)
+                }
+            }
+        }
+    }
+
+    // MARK: - Category Tab Content
+
+    @ViewBuilder
+    private var categoryTabContent: some View {
+        VStack(spacing: Spacing.md) {
+            if viewModel.isLoadingCollections {
+                categoryPlaceholder
+            } else if viewModel.collections.isEmpty {
+                emptyStateView(message: "No categories found")
+            } else {
+                ForEach(viewModel.collections) { collection in
+                    CategoryCard(collection: collection)
+                }
+            }
+        }
+    }
+
+    // MARK: - Placeholders
+
+    @ViewBuilder
+    private var productGridPlaceholder: some View {
+        let columns = [
+            GridItem(.flexible(), spacing: Spacing.md),
+            GridItem(.flexible(), spacing: Spacing.md)
+        ]
+        LazyVGrid(columns: columns, spacing: Spacing.lg) {
+            ForEach(0..<4, id: \.self) { _ in
+                ShimmerProductCard()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var categoryPlaceholder: some View {
+        ForEach(0..<4, id: \.self) { _ in
+            ShimmerCategoryCard()
+        }
+    }
+
+    @ViewBuilder
+    private func emptyStateView(message: String) -> some View {
+        VStack(spacing: Spacing.md) {
+            Image(systemName: "bag")
+                .font(.system(size: 48))
+                .foregroundColor(.textTertiary)
+
+            Text(message)
+                .trueFitTextStyle(.body)
+                .foregroundColor(.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, Spacing.xxxl)
     }
 }
 
 // MARK: - Header View
-struct HeaderView: View {
+
+struct HomeHeaderView: View {
     var body: some View {
-        HStack {
-            Image("profile")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 44, height: 44)
-                .clipShape(Circle())
-            
-            VStack(alignment: .leading, spacing: 4) {
+        HStack(spacing: Spacing.sm) {
+            // Profile avatar
+            Circle()
+                .fill(Color.brandPrimary.opacity(0.15))
+                .frame(width: 48, height: 48)
+                .overlay(
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.brandPrimary)
+                )
+
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
                 Text("Hi, Jonathan")
-                    .font(.system(size: 16, weight: .bold))
+                    .trueFitTextStyle(.headline)
+                    .foregroundColor(.textPrimary)
+
                 Text("Let's go shopping")
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray)
+                    .trueFitTextStyle(.caption)
+                    .foregroundColor(.textSecondary)
             }
-            
+
             Spacer()
-            
-            HStack(spacing: 16) {
-                Image(systemName: "magnifyingglass")
-                    .font(.title3)
-                
-                ZStack(alignment: .topTrailing) {
-                    Image(systemName: "bell")
-                        .font(.title3)
-                    
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 8, height: 8)
-                        .offset(x: 2, y: -2)
-                }
+
+            HStack(spacing: Spacing.md) {
+                IconButton(systemName: "magnifyingglass")
+                NotificationButton()
             }
         }
     }
 }
 
-// MARK: - Tab Selection View
-struct TabSelectionView: View {
+// MARK: - Icon Button
+
+struct IconButton: View {
+    let systemName: String
+    var action: () -> Void = {}
+
     var body: some View {
-        HStack(spacing: 40) {
-            VStack(spacing: 8) {
-                Text("Home")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.primary)
-                
-                Rectangle()
-                    .fill(Color.purple)
-                    .frame(width: 40, height: 3)
-                    .cornerRadius(1.5)
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(.textPrimary)
+                .frame(width: 40, height: 40)
+                .background(Color.surface)
+                .clipShape(Circle())
+                .trueFitShadow(.xs)
+        }
+    }
+}
+
+// MARK: - Notification Button
+
+struct NotificationButton: View {
+    var body: some View {
+        Button(action: {}) {
+            ZStack(alignment: .topTrailing) {
+                Image(systemName: "bell")
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundColor(.textPrimary)
+                    .frame(width: 40, height: 40)
+                    .background(Color.surface)
+                    .clipShape(Circle())
+                    .trueFitShadow(.xs)
+
+                Circle()
+                    .fill(Color.semanticDanger)
+                    .frame(width: 10, height: 10)
+                    .offset(x: 2, y: -1)
             }
-            
-            VStack(spacing: 8) {
-                Text("Category")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.gray)
-                
-                Rectangle()
+        }
+    }
+}
+
+// MARK: - Tab Selector
+
+struct HomeTabSelector: View {
+    @Binding var selectedTab: HomeTab
+    @Namespace private var tabNamespace
+
+    var body: some View {
+        HStack(spacing: Spacing.xxl) {
+            ForEach(HomeTab.allCases, id: \.self) { tab in
+                tabButton(for: tab)
+            }
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private func tabButton(for tab: HomeTab) -> some View {
+        VStack(spacing: Spacing.xs) {
+            Text(tab.title)
+                .trueFitTextStyle(selectedTab == tab ? .headline : .callout)
+                .foregroundColor(selectedTab == tab ? .textPrimary : .textTertiary)
+
+            if selectedTab == tab {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.brandPrimary)
+                    .frame(width: 40, height: 3)
+                    .matchedGeometryEffect(id: "tab_indicator", in: tabNamespace)
+            } else {
+                RoundedRectangle(cornerRadius: 2)
                     .fill(Color.clear)
                     .frame(width: 40, height: 3)
             }
-            
-            Spacer()
+        }
+        .onTapGesture {
+            withAnimation(TrueFitMotion.springDefault) {
+                selectedTab = tab
+            }
         }
     }
 }
 
-// MARK: - Banner View
-struct BannerView: View {
+// MARK: - Banner Carousel
+
+struct HomeBannerCarousel: View {
+    @State private var currentPage = 0
+    private let banners = BannerData.samples
+
     var body: some View {
-        VStack(spacing: 12) {
-            ZStack {
-                
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(UIColor.systemGray6))
-                
-                
-                GeometryReader { geo in
-                    Circle()
-                        .fill(Color.purple.opacity(0.3))
-                        .frame(width: 150, height: 150)
-                        .offset(x: -50, y: geo.size.height / 2)
-                }
-                .clipped()
-                
-                HStack {
-                    VStack(alignment: .center, spacing: 8) {
-                        Text("24% off shipping today\non bag purchases")
-                            .font(.system(size: 16, weight: .bold))
-                            .multilineTextAlignment(.center)
-                        
-                        Text("By Kutuku Store")
-                            .font(.system(size: 12))
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.leading, 20)
-                    
-                    Spacer()
-                    
-                    Image("bag")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100)
-                        .padding(.trailing, 10)
+        VStack(spacing: Spacing.sm) {
+            TabView(selection: $currentPage) {
+                ForEach(banners.indices, id: \.self) { index in
+                    BannerCard(banner: banners[index])
+                        .tag(index)
                 }
             }
-            .frame(height: 120)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            
-            
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 140)
+            .clipShape(RoundedRectangle.trueFit(Radius.lg))
+
+            // Page dots
             HStack(spacing: 6) {
-                Circle().fill(Color.purple).frame(width: 6, height: 6)
-                Circle().fill(Color.gray.opacity(0.3)).frame(width: 6, height: 6)
-                Circle().fill(Color.gray.opacity(0.3)).frame(width: 6, height: 6)
+                ForEach(banners.indices, id: \.self) { index in
+                    Circle()
+                        .fill(index == currentPage ? Color.brandPrimary : Color.textTertiary.opacity(0.3))
+                        .frame(width: index == currentPage ? 8 : 6,
+                               height: index == currentPage ? 8 : 6)
+                        .animation(TrueFitMotion.springSnappy, value: currentPage)
+                }
             }
         }
     }
 }
 
-// MARK: - Section Header View
-struct SectionHeaderView: View {
+struct BannerData: Identifiable {
+    let id = UUID()
+    let title: String
+    let subtitle: String
+    let accentColor: Color
+
+    static let samples: [BannerData] = [
+        BannerData(title: "24% off shipping today\non bag purchases", subtitle: "By Kutuku Store", accentColor: .brandPrimary),
+        BannerData(title: "New Summer Collection\njust arrived", subtitle: "Explore Now", accentColor: .categoryApparel),
+        BannerData(title: "Free returns on\nall orders", subtitle: "Limited Time", accentColor: .categoryAccessories)
+    ]
+}
+
+struct BannerCard: View {
+    let banner: BannerData
+
+    var body: some View {
+        ZStack {
+            // Background
+            RoundedRectangle.trueFit(Radius.lg)
+                .fill(Color.surface)
+
+            // Accent circle decoration
+            GeometryReader { geo in
+                Circle()
+                    .fill(banner.accentColor.opacity(0.15))
+                    .frame(width: 160, height: 160)
+                    .offset(x: -40, y: geo.size.height * 0.1)
+            }
+            .clipped()
+
+            HStack {
+                VStack(alignment: .center, spacing: Spacing.xs) {
+                    Text(banner.title)
+                        .trueFitTextStyle(.headline)
+                        .foregroundColor(.textPrimary)
+                        .multilineTextAlignment(.center)
+
+                    Text(banner.subtitle)
+                        .trueFitTextStyle(.caption)
+                        .foregroundColor(.textSecondary)
+                }
+                .padding(.leading, Spacing.lg)
+
+                Spacer()
+
+                // Shopping bag icon as placeholder
+                Image(systemName: "bag.fill")
+                    .font(.system(size: 48))
+                    .foregroundColor(banner.accentColor.opacity(0.3))
+                    .padding(.trailing, Spacing.lg)
+            }
+        }
+        .clipShape(RoundedRectangle.trueFit(Radius.lg))
+        .trueFitShadow(.sm)
+    }
+}
+
+// MARK: - Section Header
+
+struct HomeSectionHeader: View {
     let title: String
     let actionTitle: String
-    
+    var action: () -> Void = {}
+
     var body: some View {
         HStack {
             Text(title)
-                .font(.system(size: 18, weight: .bold))
+                .trueFitTextStyle(.title3)
+                .foregroundColor(.textPrimary)
+
             Spacer()
-            Text(actionTitle)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundColor(.purple)
-        }
-    }
-}
 
-// MARK: - Product Grid & Model
-struct Product: Identifiable {
-    let id = UUID()
-    let name: String
-    let brand: String
-    let price: String
-    let image: String
-}
-
-struct ProductGridView: View {
-    let products = [
-        Product(name: "The Mirac Jiz", brand: "Lisa Robber", price: "$195.00", image: "bag1"),
-        Product(name: "Meriza Kiles", brand: "Gazuna Resika", price: "$143.45", image: "bag2"),
-        Product(name: "Placeholder", brand: "Brand", price: "$100.00", image: "bag3"),
-        Product(name: "Placeholder", brand: "Brand", price: "$100.00", image: "bag4")
-    ]
-    
-    let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16)
-    ]
-    
-    var body: some View {
-        LazyVGrid(columns: columns, spacing: 24) {
-            ForEach(products) { product in
-                ProductCard(product: product)
+            Button(action: action) {
+                Text(actionTitle)
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.brandPrimary)
             }
         }
     }
 }
 
-struct ProductCard: View {
-    let product: Product
-    
+// MARK: - Products Grid
+
+struct ProductsGridView: View {
+    let products: [Product]
+
+    private let columns = [
+        GridItem(.flexible(), spacing: Spacing.md),
+        GridItem(.flexible(), spacing: Spacing.md)
+    ]
+
     var body: some View {
-        VStack(spacing: 12) {
+        LazyVGrid(columns: columns, spacing: Spacing.lg) {
+            ForEach(products) { product in
+                HomeProductCard(product: product)
+            }
+        }
+    }
+}
+
+// MARK: - Product Card
+
+struct HomeProductCard: View {
+    let product: Product
+    @State private var isFavorite = false
+
+    var body: some View {
+        VStack(spacing: Spacing.sm) {
+            // Image + Favorite button
             ZStack(alignment: .topTrailing) {
                 // Product Image
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(UIColor.systemGray6))
-                    .frame(height: 160)
-                    .overlay(
-                        Image(product.image) // Replace with your image
+                AsyncImage(url: product.imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        RoundedRectangle.trueFit(Radius.lg)
+                            .fill(Color.surface)
+                            .overlay(
+                                ProgressView()
+                                    .tint(.brandPrimary)
+                            )
+                    case .success(let image):
+                        image
                             .resizable()
                             .scaledToFit()
-                            .padding(10)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                
-                // Favorite Button
-                Button(action: {}) {
-                    Image(systemName: "heart")
+                            .padding(Spacing.sm)
+                    case .failure:
+                        RoundedRectangle.trueFit(Radius.lg)
+                            .fill(Color.surface)
+                            .overlay(
+                                Image(systemName: "photo")
+                                    .font(.system(size: 28))
+                                    .foregroundColor(.textTertiary)
+                            )
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(height: 160)
+                .frame(maxWidth: .infinity)
+                .background(Color.surface)
+                .clipShape(RoundedRectangle.trueFit(Radius.lg))
+
+                // Favorite button
+                Button {
+                    withAnimation(TrueFitMotion.springSnappy) {
+                        isFavorite.toggle()
+                    }
+                } label: {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .background(Color.black.opacity(0.3))
+                        .foregroundColor(isFavorite ? .statusWishlistActive : .white)
+                        .padding(Spacing.xs)
+                        .background(Color.black.opacity(0.25))
                         .clipShape(Circle())
                 }
-                .padding(8)
+                .padding(Spacing.xs)
             }
-            
-            VStack(spacing: 4) {
-                Text(product.name)
-                    .font(.system(size: 15, weight: .bold))
-                
-                Text(product.brand)
-                    .font(.system(size: 12))
-                    .foregroundColor(.gray)
-                
-                Text(product.price)
-                    .font(.system(size: 14, weight: .bold))
+            .trueFitShadow(.xs)
+
+            // Product Info
+            VStack(spacing: Spacing.xxs) {
+                Text(product.title)
+                    .trueFitTextStyle(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.textPrimary)
+                    .lineLimit(1)
+
+                Text(product.vendor)
+                    .trueFitTextStyle(.caption)
+                    .foregroundColor(.textSecondary)
+                    .lineLimit(1)
+
+                Text(formattedPrice)
+                    .trueFitTextStyle(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.textPrimary)
                     .padding(.top, 2)
             }
         }
     }
+
+    private var formattedPrice: String {
+        if let value = Double(product.price) {
+            return String(format: "$%.2f", value)
+        }
+        return "$\(product.price)"
+    }
 }
 
-// MARK: - Custom Bottom Tab Bar
-struct CustomBottomTabBar: View {
+// MARK: - Category Card
+
+struct CategoryCard: View {
+    let collection: ProductCollection
+
     var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-            HStack {
-                TabBarItem(icon: "house.fill", title: "Home", isSelected: true)
-                Spacer()
-                TabBarItem(icon: "shippingbox", title: "My Order", isSelected: false)
-                Spacer()
-                TabBarItem(icon: "heart", title: "Favorite", isSelected: false)
-                Spacer()
-                TabBarItem(icon: "person", title: "My Profile", isSelected: false)
+        ZStack(alignment: .leading) {
+            // Background image or gradient
+            if let imageURL = collection.imageURL {
+                AsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    default:
+                        categoryPlaceholderBackground
+                    }
+                }
+            } else {
+                categoryPlaceholderBackground
             }
-            .padding(.horizontal, 30)
-            .padding(.top, 16)
-            .padding(.bottom, 34) 
-            .background(Color.white)
+
+            // Gradient overlay for text readability
+            LinearGradient(
+                colors: [.black.opacity(0.5), .clear, .black.opacity(0.3)],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+
+            // Text overlay
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
+                Text(collection.title)
+                    .trueFitTextStyle(.title2)
+                    .foregroundColor(.white)
+
+                Text("\(collection.productsCount) Product")
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.white.opacity(0.85))
+            }
+            .padding(.leading, Spacing.lg)
+        }
+        .frame(height: 120)
+        .frame(maxWidth: .infinity)
+        .clipShape(RoundedRectangle.trueFit(Radius.lg))
+        .trueFitShadow(.sm)
+    }
+
+    @ViewBuilder
+    private var categoryPlaceholderBackground: some View {
+        LinearGradient(
+            colors: [Color.brandPrimary.opacity(0.6), Color.brandPrimary.opacity(0.2)],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+}
+
+// MARK: - Shimmer Product Card (Loading)
+
+struct ShimmerProductCard: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        VStack(spacing: Spacing.sm) {
+            RoundedRectangle.trueFit(Radius.lg)
+                .fill(Color.surface)
+                .frame(height: 160)
+                .overlay(
+                    RoundedRectangle.trueFit(Radius.lg)
+                        .fill(
+                            LinearGradient(
+                                colors: [.clear, .white.opacity(0.3), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .offset(x: isAnimating ? 200 : -200)
+                )
+                .clipped()
+
+            VStack(spacing: Spacing.xxs) {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.surface)
+                    .frame(height: 14)
+
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.surface)
+                    .frame(width: 80, height: 12)
+
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.surface)
+                    .frame(width: 60, height: 14)
+            }
+        }
+        .onAppear {
+            withAnimation(
+                .linear(duration: TrueFitMotion.loadingCycle)
+                .repeatForever(autoreverses: false)
+            ) {
+                isAnimating = true
+            }
         }
     }
 }
 
-struct TabBarItem: View {
+// MARK: - Shimmer Category Card (Loading)
+
+struct ShimmerCategoryCard: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        RoundedRectangle.trueFit(Radius.lg)
+            .fill(Color.surface)
+            .frame(height: 120)
+            .frame(maxWidth: .infinity)
+            .overlay(
+                RoundedRectangle.trueFit(Radius.lg)
+                    .fill(
+                        LinearGradient(
+                            colors: [.clear, .white.opacity(0.3), .clear],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .offset(x: isAnimating ? 400 : -400)
+            )
+            .clipped()
+            .onAppear {
+                withAnimation(
+                    .linear(duration: TrueFitMotion.loadingCycle)
+                    .repeatForever(autoreverses: false)
+                ) {
+                    isAnimating = true
+                }
+            }
+    }
+}
+
+// MARK: - Bottom Tab Bar
+
+struct HomeBottomTabBar: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            Divider()
+                .background(Color.borderColor)
+
+            HStack {
+                HomeTabBarItem(icon: "house.fill", title: "Home", isSelected: true)
+                Spacer()
+                HomeTabBarItem(icon: "shippingbox", title: "My Order", isSelected: false)
+                Spacer()
+                HomeTabBarItem(icon: "heart", title: "Favorite", isSelected: false)
+                Spacer()
+                HomeTabBarItem(icon: "person", title: "My Profile", isSelected: false)
+            }
+            .padding(.horizontal, Spacing.xxl)
+            .padding(.top, Spacing.md)
+            .padding(.bottom, 34)
+            .background(Color.surface)
+        }
+    }
+}
+
+struct HomeTabBarItem: View {
     let icon: String
     let title: String
     let isSelected: Bool
-    
+
     var body: some View {
         VStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.system(size: 20))
-                .foregroundColor(isSelected ? .purple : .gray)
-            
+                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+
             Text(title)
                 .font(.system(size: 10, weight: isSelected ? .bold : .regular))
-                .foregroundColor(isSelected ? .purple : .gray)
+                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
         }
     }
 }
 
+// MARK: - Preview
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        let repo = HomeRepository(
+            remoteDataSource: HomeRemoteDataSource(
+                apiClient: RESTClient()
+            )
+        )
+        HomeView(
+            viewModel: HomeViewModel(
+                fetchNewArrivalsUseCase: FetchNewArrivalsUseCase(repository: repo),
+                fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo)
+            )
+        )
     }
 }
