@@ -34,10 +34,12 @@ struct PrimaryButton: View {
     }
 }
 
-#Preview {
-    PrimaryButton(title: "Sign In", action: {
-        print("Button Tapped")
-    })
-    .padding(Spacing.md)
-    .background(Color.trueFitBackground)
+struct PrimaryButton_Previews: PreviewProvider {
+    static var previews: some View {
+        PrimaryButton(title: "Sign In", action: {
+            print("Button Tapped")
+        })
+        .padding(Spacing.md)
+        .background(Color.trueFitBackground)
+    }
 }

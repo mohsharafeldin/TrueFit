@@ -18,6 +18,8 @@
 //    }
 //}
 //
-//#Preview {
-//    ThirdOnBoeardingView()
+//struct ThirdOnBoeardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ThirdOnBoeardingView()
+//    }
 //}

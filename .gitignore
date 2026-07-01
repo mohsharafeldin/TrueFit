@@ -65,6 +65,7 @@ fastlane/test_output
 .vscode/
 .idea/
 *.code-workspace
+
 # =========================
 # Configuration
 # =========================
@@ -78,3 +79,7 @@ fastlane/test_output
 
 Package.resolved
  
+
+# Swift Package Manager
+**/Package.resolved
+

@@ -43,10 +43,13 @@
 		0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */; };
 		0CE9F31B2FF3D31E00466794 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3182FF3D31E00466794 /* File.swift */; };
 		0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */; };
+		1B24BDC3A68A3586C0E1B089 /* HomeRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957F3631A3A292081F12F12 /* HomeRepositoryProtocol.swift */; };
 		33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */; };
 		33D02D1B2FF3D9F70048E60D /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */; };
 		33D02D1D2FF3DA210048E60D /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D02D1C2FF3DA210048E60D /* AuthRepository.swift */; };
 		33D02D1F2FF3DA4C0048E60D /* PreviewMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D02D1E2FF3DA4C0048E60D /* PreviewMocks.swift */; };
+		4218E3C9051CF4AF0FED087A /* CollectionMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C4744FE4CE5D5FD8A06FA /* CollectionMapper.swift */; };
+		42A624BF63A745A51FE33305 /* CollectionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748823BB7127A095BA183264 /* CollectionDTO.swift */; };
 		4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */; };
 		4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBACF2FF003AC00CA6538 /* Apollo */; };
 		4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD22FF003D400CA6538 /* Alamofire */; };
@@ -64,6 +67,18 @@
 		5A1CA3BE2FEFD52A00401F6B /* TrueFitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3BD2FEFD52A00401F6B /* TrueFitTests.swift */; };
 		5A1CA3C82FEFD52A00401F6B /* TrueFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */; };
 		5A1CA3CA2FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */; };
+		5A1CA3DA2FF0046200401F6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3D92FF0046200401F6B /* HomeView.swift */; };
+		5A99FE812FF4B35E00467A59 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5A99FE802FF4B35E00467A59 /* SDWebImage */; };
+		5A99FE832FF4B35E00467A59 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A99FE822FF4B35E00467A59 /* SDWebImageMapKit */; };
+		750E3B81664445D6B746E007 /* FetchNewArrivalsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9542F23C0DDE5AD14E0AD16 /* FetchNewArrivalsUseCase.swift */; };
+		7C2EEF713C42F9008EE8E2C2 /* HomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF2C97DA2023004AC456CA9 /* HomeRepository.swift */; };
+		7F194F85A6D5509F90EA5DEB /* ProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D897B4DB55914962CBCF75FA /* ProductDTO.swift */; };
+		853F6CACE384E03F04EADE7B /* FetchCollectionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0936AB739B0D9B44B2BA05B7 /* FetchCollectionsUseCase.swift */; };
+		898F78CCB10B86B5469978F7 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A381AA784BAFF8C8B6A1A41 /* Product.swift */; };
+		AFC16132F9B8E49C2E7ACB2D /* ProductMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A74B83A2D7B50D654C5A0F /* ProductMapper.swift */; };
+		B83B7C12C5D7E41D8424B495 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6838EAF70612C10F3ACAF7 /* Collection.swift */; };
+		E768796DFA1CF2BB2C1694D1 /* HomeRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737A3A2C389A36C1E1D896C6 /* HomeRemoteDataSource.swift */; };
+		FC520DBC29B3757F10BBEB73 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3ABC47A758FFBA75DAC73 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +99,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0936AB739B0D9B44B2BA05B7 /* FetchCollectionsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchCollectionsUseCase.swift; sourceTree = "<group>"; };
+		09A74B83A2D7B50D654C5A0F /* ProductMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProductMapper.swift; sourceTree = "<group>"; };
 		0C00A13D2FF0051B007A668C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		0C00A13F2FF01FD5007A668C /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
@@ -107,6 +124,7 @@
 		0C198EA22FF2BAD500477701 /* NewPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPasswordView.swift; sourceTree = "<group>"; };
 		0C198EA42FF2BAD500477701 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0C198EA52FF2BAD500477701 /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		0CC3ABC47A758FFBA75DAC73 /* HomeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLClient.swift; sourceTree = "<group>"; };
 		0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLEndpoint.swift; sourceTree = "<group>"; };
@@ -121,6 +139,7 @@
 		0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Shopify.swift"; sourceTree = "<group>"; };
 		0CE9F3182FF3D31E00466794 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.xcconfig.example; sourceTree = "<group>"; };
+		0F6838EAF70612C10F3ACAF7 /* Collection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81052FEFF1D300A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AA81072FEFF20500A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -134,6 +153,7 @@
 		33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
 		33D02D1C2FF3DA210048E60D /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		33D02D1E2FF3DA4C0048E60D /* PreviewMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMocks.swift; sourceTree = "<group>"; };
+		3DF2C97DA2023004AC456CA9 /* HomeRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeRepository.swift; sourceTree = "<group>"; };
 		4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
 		4C8CBADE2FF02D1600CA6538 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4C8F1EFF2FF2AFD900299F30 /* FirstOnBoeardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoeardingView.swift; sourceTree = "<group>"; };
@@ -151,6 +171,15 @@
 		5A1CA3C32FEFD52A00401F6B /* TrueFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrueFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITests.swift; sourceTree = "<group>"; };
 		5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5A1CA3D92FF0046200401F6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5A381AA784BAFF8C8B6A1A41 /* Product.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		5A5CEE7C2FF4B8F400D83CE1 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		618C4744FE4CE5D5FD8A06FA /* CollectionMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionMapper.swift; sourceTree = "<group>"; };
+		737A3A2C389A36C1E1D896C6 /* HomeRemoteDataSource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeRemoteDataSource.swift; sourceTree = "<group>"; };
+		748823BB7127A095BA183264 /* CollectionDTO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CollectionDTO.swift; sourceTree = "<group>"; };
+		A9542F23C0DDE5AD14E0AD16 /* FetchNewArrivalsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchNewArrivalsUseCase.swift; sourceTree = "<group>"; };
+		C957F3631A3A292081F12F12 /* HomeRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D897B4DB55914962CBCF75FA /* ProductDTO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProductDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +188,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
+				5A99FE832FF4B35E00467A59 /* SDWebImageMapKit in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
+				5A99FE812FF4B35E00467A59 /* SDWebImage in Frameworks */,
 				4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +411,8 @@
 			isa = PBXGroup;
 			children = (
 				33AA81052FEFF1D300A20AF9 /* File.swift */,
+				5A381AA784BAFF8C8B6A1A41 /* Product.swift */,
+				0F6838EAF70612C10F3ACAF7 /* Collection.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -388,6 +421,8 @@
 			isa = PBXGroup;
 			children = (
 				33AA81072FEFF20500A20AF9 /* File.swift */,
+				A9542F23C0DDE5AD14E0AD16 /* FetchNewArrivalsUseCase.swift */,
+				0936AB739B0D9B44B2BA05B7 /* FetchCollectionsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -432,6 +467,7 @@
 				33D02D1E2FF3DA4C0048E60D /* PreviewMocks.swift */,
 				4C8CBADC2FF02A0200CA6538 /* Splash */,
 				4C8CBADB2FF029E300CA6538 /* Onboarding */,
+				5A1CA3D62FF0012000401F6B /* Home */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -466,6 +502,8 @@
 			isa = PBXGroup;
 			children = (
 				33AA81132FEFF2F200A20AF9 /* File.swift */,
+				09A74B83A2D7B50D654C5A0F /* ProductMapper.swift */,
+				618C4744FE4CE5D5FD8A06FA /* CollectionMapper.swift */,
 			);
 			path = Mappers;
 			sourceTree = "<group>";
@@ -483,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				33AA81112FEFF2D600A20AF9 /* File.swift */,
+				737A3A2C389A36C1E1D896C6 /* HomeRemoteDataSource.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -499,6 +538,8 @@
 			isa = PBXGroup;
 			children = (
 				33AA81172FEFF33E00A20AF9 /* File.swift */,
+				D897B4DB55914962CBCF75FA /* ProductDTO.swift */,
+				748823BB7127A095BA183264 /* CollectionDTO.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -515,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				33D02D1C2FF3DA210048E60D /* AuthRepository.swift */,
+				3DF2C97DA2023004AC456CA9 /* HomeRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -523,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */,
+				C957F3631A3A292081F12F12 /* HomeRepositoryProtocol.swift */,
 			);
 			path = RepositoryInterfaces;
 			sourceTree = "<group>";
@@ -549,6 +592,7 @@
 		5A1CA39B2FEFD52800401F6B = {
 			isa = PBXGroup;
 			children = (
+				5A5CEE7C2FF4B8F400D83CE1 /* Config.xcconfig */,
 				0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */,
 				5A1CA3A62FEFD52800401F6B /* TrueFit */,
 				5A1CA3BC2FEFD52A00401F6B /* TrueFitTests */,
@@ -606,6 +650,31 @@
 			path = TrueFitUITests;
 			sourceTree = "<group>";
 		};
+		5A1CA3D62FF0012000401F6B /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5A1CA3D82FF0037E00401F6B /* ViewModel */,
+				5A1CA3D72FF0037100401F6B /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5A1CA3D72FF0037100401F6B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5A1CA3D92FF0046200401F6B /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5A1CA3D82FF0037E00401F6B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0CC3ABC47A758FFBA75DAC73 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -622,6 +691,10 @@
 			dependencies = (
 			);
 			name = TrueFit;
+			packageProductDependencies = (
+				5A99FE802FF4B35E00467A59 /* SDWebImage */,
+				5A99FE822FF4B35E00467A59 /* SDWebImageMapKit */,
+			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
 			productType = "com.apple.product-type.application";
@@ -698,6 +771,7 @@
 				4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5A99FE7F2FF4B35E00467A59 /* XCRemoteSwiftPackageReference "sdwebimage" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -774,6 +848,7 @@
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
 				0C198EAD2FF2BAD500477701 /* ForgotPasswordView.swift in Sources */,
 				0C198E912FF2BA8E00477701 /* Colors.swift in Sources */,
+				5A1CA3DA2FF0046200401F6B /* HomeView.swift in Sources */,
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
@@ -793,6 +868,18 @@
 				4C8F1F042FF2AFFD00299F30 /* ThirdOnBoeardingView.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 				4C8CBADF2FF02D1600CA6538 /* SplashView.swift in Sources */,
+				898F78CCB10B86B5469978F7 /* Product.swift in Sources */,
+				B83B7C12C5D7E41D8424B495 /* Collection.swift in Sources */,
+				1B24BDC3A68A3586C0E1B089 /* HomeRepositoryProtocol.swift in Sources */,
+				750E3B81664445D6B746E007 /* FetchNewArrivalsUseCase.swift in Sources */,
+				853F6CACE384E03F04EADE7B /* FetchCollectionsUseCase.swift in Sources */,
+				7F194F85A6D5509F90EA5DEB /* ProductDTO.swift in Sources */,
+				42A624BF63A745A51FE33305 /* CollectionDTO.swift in Sources */,
+				AFC16132F9B8E49C2E7ACB2D /* ProductMapper.swift in Sources */,
+				4218E3C9051CF4AF0FED087A /* CollectionMapper.swift in Sources */,
+				E768796DFA1CF2BB2C1694D1 /* HomeRemoteDataSource.swift in Sources */,
+				7C2EEF713C42F9008EE8E2C2 /* HomeRepository.swift in Sources */,
+				FC520DBC29B3757F10BBEB73 /* HomeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,6 +1032,7 @@
 		};
 		5A1CA3CE2FEFD52A00401F6B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A5CEE7C2FF4B8F400D83CE1 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -974,6 +1062,7 @@
 		};
 		5A1CA3CF2FEFD52A00401F6B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A5CEE7C2FF4B8F400D83CE1 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1119,8 +1208,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.28.0;
+				kind = exactVersion;
+				version = 10.24.0;
 			};
 		};
 		4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
@@ -1147,6 +1236,14 @@
 				version = 10.9.0;
 			};
 		};
+		5A99FE7F2FF4B35E00467A59 /* XCRemoteSwiftPackageReference "sdwebimage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sdwebimage/sdwebimage";
+			requirement = {
+				kind = exactVersion;
+				version = 5.9.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1164,6 +1261,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		5A99FE802FF4B35E00467A59 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A99FE7F2FF4B35E00467A59 /* XCRemoteSwiftPackageReference "sdwebimage" */;
+			productName = SDWebImage;
+		};
+		5A99FE822FF4B35E00467A59 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A99FE7F2FF4B35E00467A59 /* XCRemoteSwiftPackageReference "sdwebimage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

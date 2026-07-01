@@ -55,12 +55,14 @@ struct ForgotPasswordView: View {
     }
 }
 
-#Preview {
-    Color.trueFitBackground
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            ForgotPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
-                .presentationDetents([.height(350)])
-                .presentationDragIndicator(.hidden)
-        }
+struct ForgotPasswordView_Previews: PreviewProvider {
+    static var previews: some View {
+        Color.trueFitBackground
+            .ignoresSafeArea()
+            .sheet(isPresented: .constant(true)) {
+                ForgotPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
+                    .presentationDetents([.height(350)])
+                    .presentationDragIndicator(.hidden)
+            }
+    }
 }

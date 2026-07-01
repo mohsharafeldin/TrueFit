@@ -102,6 +102,8 @@ struct SignUpView: View {
     }
 }
 
-#Preview {
-    SignUpView(viewModel: PreviewMocks.makeAuthViewModel())
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpView(viewModel: PreviewMocks.makeAuthViewModel())
+    }
 }
