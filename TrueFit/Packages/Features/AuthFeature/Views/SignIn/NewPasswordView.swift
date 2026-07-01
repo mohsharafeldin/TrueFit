@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewPasswordView: View {
-    @StateObject var viewModel: AuthViewModel
+    @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {

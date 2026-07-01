@@ -9,6 +9,7 @@ import SwiftUI
 enum AuthRoute: Hashable {
     case signIn
     case signUp
+    case forgotPassword
 }
  
 enum AppRoute: Hashable {

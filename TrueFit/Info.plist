@@ -6,6 +6,8 @@
 	<string>$(SHOPIFY_STORE_NAME)</string>
 	<key>ShopifyAdminAPIToken</key>
 	<string>$(SHOPIFY_ADMIN_API_TOKEN)</string>
+	<key>ShopifyStorefrontToken</key>
+	<string>$(SHOPIFY_STOREFRONT_TOKEN)</string>
 	<key>ShopifyAPIVersion</key>
 	<string>$(SHOPIFY_API_VERSION)</string>
 	<key>ShopifyGraphQLAPIVersion</key>
