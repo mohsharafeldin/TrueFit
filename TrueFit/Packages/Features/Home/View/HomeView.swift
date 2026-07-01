@@ -644,8 +644,8 @@ struct HomeTabBarItem: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        let repo = HomeRepository(
-            remoteDataSource: HomeRemoteDataSource(
+        let repo = ProductsRepository(
+            remoteDataSource: ProductsRemoteDataSource(
                 apiClient: RESTClient()
             )
         )

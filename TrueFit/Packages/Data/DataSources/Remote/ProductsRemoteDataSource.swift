@@ -1,8 +1,8 @@
 //
-//  HomeRemoteDataSource.swift
+//  ProductsRemoteDataSource.swift
 //  TrueFit
 //
-//  Data — Remote data source for Home screen Shopify API calls.
+//  Data — Remote data source for Shopify API calls.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import Alamofire
 
 // MARK: - Protocol
 
-protocol HomeRemoteDataSourceProtocol {
+protocol ProductsRemoteDataSourceProtocol {
     func fetchProducts(limit: Int, sortKey: String?) async throws -> [ProductDTO]
     func fetchSmartCollections() async throws -> [CollectionDTO]
     func fetchCustomCollections() async throws -> [CollectionDTO]
@@ -19,7 +19,7 @@ protocol HomeRemoteDataSourceProtocol {
 
 // MARK: - Implementation
 
-final class HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
+final class ProductsRemoteDataSource: ProductsRemoteDataSourceProtocol {
 
     private let apiClient: APIClientProtocol
 
@@ -28,25 +28,25 @@ final class HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
     }
 
     func fetchProducts(limit: Int, sortKey: String?) async throws -> [ProductDTO] {
-        let endpoint = HomeEndpoint.products(limit: limit, sortKey: sortKey)
+        let endpoint = ProductsEndpoint.products(limit: limit, sortKey: sortKey)
         let response: ProductsResponseDTO = try await apiClient.request(endpoint)
         return response.products
     }
 
     func fetchSmartCollections() async throws -> [CollectionDTO] {
-        let endpoint = HomeEndpoint.smartCollections
+        let endpoint = ProductsEndpoint.smartCollections
         let response: SmartCollectionsResponseDTO = try await apiClient.request(endpoint)
         return response.smartCollections
     }
 
     func fetchCustomCollections() async throws -> [CollectionDTO] {
-        let endpoint = HomeEndpoint.customCollections
+        let endpoint = ProductsEndpoint.customCollections
         let response: CustomCollectionsResponseDTO = try await apiClient.request(endpoint)
         return response.customCollections
     }
 
     func fetchProductsCount(collectionId: Int64) async throws -> Int {
-        let endpoint = HomeEndpoint.productsCount(collectionId: collectionId)
+        let endpoint = ProductsEndpoint.productsCount(collectionId: collectionId)
         let response: ProductsCountResponseDTO = try await apiClient.request(endpoint)
         return response.count
     }
@@ -54,7 +54,7 @@ final class HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
 
 // MARK: - Endpoints
 
-enum HomeEndpoint: Endpoint {
+enum ProductsEndpoint: Endpoint {
 
     case products(limit: Int, sortKey: String?)
     case smartCollections
