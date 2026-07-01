@@ -64,7 +64,7 @@ struct HeaderView: View {
                     Image(systemName: "bell")
                         .font(.title3)
                     
-                    
+                    Circle()
                         .fill(Color.red)
                         .frame(width: 8, height: 8)
                         .offset(x: 2, y: -2)

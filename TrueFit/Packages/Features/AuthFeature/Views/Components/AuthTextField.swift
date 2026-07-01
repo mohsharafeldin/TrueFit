@@ -48,11 +48,13 @@ struct AuthTextField: View {
     }
 }
 
-#Preview {
-    VStack(spacing: Spacing.lg) {
-        AuthTextField(placeholder: "Enter your email", text: .constant(""), iconName: "envelope")
-        AuthTextField(placeholder: "Create your password", text: .constant(""), iconName: "lock", isSecure: true)
+struct AuthTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: Spacing.lg) {
+            AuthTextField(placeholder: "Enter your email", text: .constant(""), iconName: "envelope")
+            AuthTextField(placeholder: "Create your password", text: .constant(""), iconName: "lock", isSecure: true)
+        }
+        .padding(Spacing.xl)
+        .background(Color.trueFitBackground)
     }
-    .padding(Spacing.xl)
-    .background(Color.trueFitBackground)
 }

@@ -63,12 +63,14 @@ struct NewPasswordView: View {
     }
 }
 
-#Preview {
-    Color.trueFitBackground
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            NewPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
-                .presentationDetents([.height(450)])
-                .presentationDragIndicator(.hidden)
-        }
+struct NewPasswordView_Previews: PreviewProvider {
+    static var previews: some View {
+        Color.trueFitBackground
+            .ignoresSafeArea()
+            .sheet(isPresented: .constant(true)) {
+                NewPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
+                    .presentationDetents([.height(450)])
+                    .presentationDragIndicator(.hidden)
+            }
+    }
 }

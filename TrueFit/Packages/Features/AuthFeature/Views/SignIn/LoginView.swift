@@ -93,6 +93,8 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView(viewModel: PreviewMocks.makeAuthViewModel())
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView(viewModel: PreviewMocks.makeAuthViewModel())
+    }
 }

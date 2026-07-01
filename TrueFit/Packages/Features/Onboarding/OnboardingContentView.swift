@@ -159,6 +159,8 @@ struct OnboardingPage {
     let img: String
 }
 
-//#Preview {
-//    OnboardingContentView()
+//struct OnboardingContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnboardingContentView()
+//    }
 //}
