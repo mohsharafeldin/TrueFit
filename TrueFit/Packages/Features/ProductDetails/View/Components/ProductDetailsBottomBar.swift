@@ -10,13 +10,25 @@ struct ProductDetailsBottomBar: View {
                 Text("Total Price")
                     .trueFitTextStyle(.caption2)
                     .foregroundColor(.textSecondary)
-                Text(viewModel.displayedTotalPrice)
-                    .trueFitTextStyle(.headline)
-                    .foregroundColor(.textPrimary)
-                    .bold()
+                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                    Text(viewModel.displayedTotalPrice)
+                        .trueFitTextStyle(.headline)
+                        .foregroundColor(.textPrimary)
+                        .bold()
+                    
+                    if let oldTotal = viewModel.displayedTotalCompareAtPrice {
+                        Text(oldTotal)
+                            .trueFitTextStyle(.headline)
+                            .trueFitTextStyle(.subheadline)
+                            .foregroundColor(.textTertiary)
+                            .strikethrough()
+                    }
+                    
+                }
             }
             
             Spacer()
+            
             
             Button(action: { viewModel.addToCart() }) {
                 HStack(spacing: Spacing.sm) {
