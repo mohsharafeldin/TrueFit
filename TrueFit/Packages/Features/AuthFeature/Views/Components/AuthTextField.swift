@@ -12,8 +12,16 @@ struct AuthTextField: View {
     @Binding var text: String
     var iconName: String
     var isSecure: Bool = false
+    var keyboardType: UIKeyboardType = .default
     
     @FocusState private var isFocused: Bool
+    
+    var autocapitalization: TextInputAutocapitalization {
+        if isSecure { return .never }
+        if keyboardType == .emailAddress { return .never }
+        if keyboardType == .default { return .words }
+        return .sentences
+    }
     
     var body: some View {
         HStack(spacing: Spacing.sm) {
@@ -24,8 +32,13 @@ struct AuthTextField: View {
             Group {
                 if isSecure {
                     SecureField(placeholder, text: $text)
+                        .textInputAutocapitalization(autocapitalization)
+                        .autocorrectionDisabled(true)
                 } else {
                     TextField(placeholder, text: $text)
+                        .textInputAutocapitalization(autocapitalization)
+                        .keyboardType(keyboardType)
+                        .autocorrectionDisabled(true)
                 }
             }
             .focused($isFocused)

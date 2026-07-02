@@ -67,19 +67,9 @@ fastlane/test_output
 *.code-workspace
 
 # =========================
-# Configuration
+# Configuration & Security
 # =========================
 *.xcconfig
 !Config.xcconfig.example
-
-
-.build/
-
-.swiftpm/
-
-Package.resolved
- 
-
-# Swift Package Manager
-**/Package.resolved
-
+**/GoogleService-Info.plist
+build_log.txt

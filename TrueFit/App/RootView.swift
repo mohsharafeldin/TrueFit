@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
+
 struct RootView: View {
     @StateObject var viewModel: RootViewModel
     
+    @EnvironmentObject var container: DIContainer
+
     var body: some View {
-        Group{
+        Group {
             switch viewModel.currentState {
             case .splash:
                 SplashView(onSplashComplete: viewModel.splashDidFinish)
+                
             case .unauthenticated:
                 AuthFlowView(
+                    container: container,
                     onLoginSuccess: {
                         viewModel.didAuthenticate()
                     },
@@ -33,12 +38,8 @@ struct RootView: View {
                         viewModel.completeOnboarding()
                     }
                 )
-                    
             }
         }
         .animation(.easeInOut(duration: 0.5), value: viewModel.currentState)
-       
     }
 }
-
-

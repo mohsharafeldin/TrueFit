@@ -8,14 +8,46 @@
 import Foundation
 import SwiftUI
 
-// Mock Repository
+// MARK: - Mock Repository
+
 class MockAuthRepository: AuthRepositoryProtocol {
-    func login(email: String, password: String) async throws -> String { return "dummy_token" }
-    func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> String { return "dummy_token" }
+
+    func login(email: String, password: String) async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock-id", email: email, firstName: "Mock", lastName: "User", shopifyCustomerId: "mock-shopify-id"))
+    }
+    func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock-id", email: email, firstName: firstName, lastName: lastName, shopifyCustomerId: "mock-shopify-id"))
+    }
+    
     func resetPassword(email: String) async throws {}
+    
+    func signOut() async throws {}
 }
 
-// Mock Manager
+// MARK: - Mock Use Cases
+
+class MockLoginUseCase: LoginUseCaseProtocol {
+    func execute(email: String, password: String) async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock", email: email, firstName: "Mock", lastName: "User", shopifyCustomerId: ""))
+    }
+}
+
+class MockSignUpUseCase: SignUpUseCaseProtocol {
+    func execute(firstName: String, lastName: String, email: String, password: String) async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock", email: email, firstName: firstName, lastName: lastName, shopifyCustomerId: ""))
+    }
+}
+
+class MockResetPasswordUseCase: ResetPasswordUseCaseProtocol {
+    func execute(email: String) async throws {}
+}
+
+class MockLogoutUseCase: LogoutUseCaseProtocol {
+    func execute() async throws {}
+}
+
+// MARK: - Mock Manager
+
 @MainActor
 class MockAuthManager: AuthManagerProtocol {
     var isAuthenticated = false
@@ -26,12 +58,16 @@ class MockAuthManager: AuthManagerProtocol {
     func getAccessToken() -> String? { return nil }
 }
 
-// Mock ViewModel Creator
+// MARK: - Preview ViewModel Creator
+
 @MainActor
 struct PreviewMocks {
     static func makeAuthViewModel() -> AuthViewModel {
         return AuthViewModel(
-            authRepository: MockAuthRepository(),
+            loginUseCase: MockLoginUseCase(),
+            signUpUseCase: MockSignUpUseCase(),
+            resetPasswordUseCase: MockResetPasswordUseCase(),
+            logoutUseCase: MockLogoutUseCase(),
             authManager: MockAuthManager(),
             authRouter: AuthRouter()
         )
