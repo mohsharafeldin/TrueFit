@@ -374,78 +374,82 @@ struct ProductsGridView: View {
 struct HomeProductCard: View {
     let product: Product
     @State private var isFavorite = false
+    @EnvironmentObject var appRouter: AppRouter
 
     var body: some View {
-        VStack(spacing: Spacing.sm) {
-            // Image + Favorite button
-            ZStack(alignment: .topTrailing) {
-                // Product Image
-                AsyncImage(url: product.imageURL) { phase in
-                    switch phase {
-                    case .empty:
-                        RoundedRectangle.trueFit(Radius.lg)
-                            .fill(Color.surface)
-                            .overlay(
-                                ProgressView()
-                                    .tint(.brandPrimary)
-                            )
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .padding(Spacing.sm)
-                    case .failure:
-                        RoundedRectangle.trueFit(Radius.lg)
-                            .fill(Color.surface)
-                            .overlay(
-                                Image(systemName: "photo")
-                                    .font(.system(size: 28))
-                                    .foregroundColor(.textTertiary)
-                            )
-                    @unknown default:
-                        EmptyView()
+        Button(action: {
+            appRouter.navigate(to: .productDetails(productId: product.id))
+        }) {
+            VStack(spacing: Spacing.sm) {
+                ZStack(alignment: .topTrailing) {
+                    // Product Image
+                    AsyncImage(url: product.imageURL) { phase in
+                        switch phase {
+                        case .empty:
+                            RoundedRectangle.trueFit(Radius.lg)
+                                .fill(Color.surface)
+                                .overlay(
+                                    ProgressView()
+                                        .tint(.brandPrimary)
+                                )
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(Spacing.sm)
+                        case .failure:
+                            RoundedRectangle.trueFit(Radius.lg)
+                                .fill(Color.surface)
+                                .overlay(
+                                    Image(systemName: "photo")
+                                        .font(.system(size: 28))
+                                        .foregroundColor(.textTertiary)
+                                )
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
-                }
-                .frame(height: 160)
-                .frame(maxWidth: .infinity)
-                .background(Color.surface)
-                .clipShape(RoundedRectangle.trueFit(Radius.lg))
-
-                // Favorite button
-                Button {
-                    withAnimation(TrueFitMotion.springSnappy) {
-                        isFavorite.toggle()
+                    .frame(height: 160)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.surface)
+                    .clipShape(RoundedRectangle.trueFit(Radius.lg))
+                    
+                    // Favorite button
+                    Button {
+                        withAnimation(TrueFitMotion.springSnappy) {
+                            isFavorite.toggle()
+                        }
+                    } label: {
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(isFavorite ? .statusWishlistActive : .white)
+                            .padding(Spacing.xs)
+                            .background(Color.black.opacity(0.25))
+                            .clipShape(Circle())
                     }
-                } label: {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(isFavorite ? .statusWishlistActive : .white)
-                        .padding(Spacing.xs)
-                        .background(Color.black.opacity(0.25))
-                        .clipShape(Circle())
+                    .padding(Spacing.xs)
                 }
-                .padding(Spacing.xs)
-            }
-            .trueFitShadow(.xs)
-
-            // Product Info
-            VStack(spacing: Spacing.xxs) {
-                Text(product.title)
-                    .trueFitTextStyle(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.textPrimary)
-                    .lineLimit(1)
-
-                Text(product.vendor)
-                    .trueFitTextStyle(.caption)
-                    .foregroundColor(.textSecondary)
-                    .lineLimit(1)
-
-                Text(formattedPrice)
-                    .trueFitTextStyle(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.textPrimary)
-                    .padding(.top, 2)
+                .trueFitShadow(.xs)
+                
+                // Product Info
+                VStack(spacing: Spacing.xxs) {
+                    Text(product.title)
+                        .trueFitTextStyle(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.textPrimary)
+                        .lineLimit(1)
+                    
+                    Text(product.vendor ?? "")
+                        .trueFitTextStyle(.caption)
+                        .foregroundColor(.textSecondary)
+                        .lineLimit(1)
+                    
+                    Text(formattedPrice)
+                        .trueFitTextStyle(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.textPrimary)
+                        .padding(.top, 2)
+                }
             }
         }
     }

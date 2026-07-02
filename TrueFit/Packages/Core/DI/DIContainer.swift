@@ -22,6 +22,26 @@ final class DIContainer: ObservableObject {
     public lazy var authManager: AuthManager = AuthManager(keychainManager: keychainManager)
     
     // MARK: - Networking
+    let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
+    
+    lazy var getProductUseCase: GetProductUseCase = {
+        GetProductUseCase(repository: productsRepository)
+    }()
+    
+    // MARK: - Currency Dependencies (from feature branch)
+    lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
+        CurrencyRemoteDataSource(apiClient: genericClient)
+    }()
+    
+    lazy var currencyRepository: CurrencyRepositoryProtocol = {
+        CurrencyRepository(remoteDataSource: currencyRemoteDataSource)
+    }()
+    
+    lazy var getExchangeRatesUseCase: GetExchangeRatesUseCase = {
+        GetExchangeRatesUseCase(repository: currencyRepository)
+    }()
+    
+    // MARK: - Networking
     let restClient: APIClientProtocol = RESTClient()
     
     // MARK: - AUTH FEATURE
@@ -99,5 +119,14 @@ final class DIContainer: ObservableObject {
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
             fetchCollectionsUseCase: fetchCollectionsUseCase
         )
+    }
+
+    func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
+        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        return viewModel
+    }
+    
+    func makeCurrencyConverterViewModel() -> CurrencyConverterViewModel {
+        return CurrencyConverterViewModel(getExchangeRatesUseCase: getExchangeRatesUseCase)
     }
 }

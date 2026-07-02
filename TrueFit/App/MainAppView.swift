@@ -25,6 +25,11 @@ struct MainAppView: View {
                         Text("Checkout Screen")
                     case .profile:
                         Text("Profile Screen")
+                    case .productDetails(let id):
+                        ProductDetailsView(
+                            productId: id,
+                            viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
+                        )
                         
                     }
                 }
