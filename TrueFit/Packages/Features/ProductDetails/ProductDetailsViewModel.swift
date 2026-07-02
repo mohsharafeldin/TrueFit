@@ -104,6 +104,18 @@ final class ProductDetailsViewModel: ObservableObject {
         
         return PriceFormatter.format(compareAtPrice)
     }
+    var displayedTotalCompareAtPrice: String? {
+        guard case .success = state,
+              let selectedVariant = selectedVariant,
+              let compareAtPrice = selectedVariant.compareAtPrice,
+              compareAtPrice > selectedVariant.price else {
+                return nil
+            }
+                
+        let decimalQuantity = Decimal(quantity)
+        let totalOldPrice = compareAtPrice * decimalQuantity
+        return PriceFormatter.format(totalOldPrice)
+        }
     
     var displayedTotalPrice: String {
         guard case .success(let product) = state else { return "" }
