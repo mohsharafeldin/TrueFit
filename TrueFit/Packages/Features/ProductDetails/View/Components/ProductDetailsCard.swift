@@ -58,7 +58,7 @@ struct ProductDetailsCard: View {
             if !product.options.isEmpty && product.options.first?.name.lowercased() != "title" {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     ForEach(product.options, id: \.id) { option in
-                        dynamicOptionSection(option: option)
+                        ProductOptionSectionView(option: option, viewModel: viewModel)
                     }
                 }
             }
@@ -79,54 +79,7 @@ struct ProductDetailsCard: View {
         .padding(Spacing.xl)
     }
     
-    @ViewBuilder
-    private func dynamicOptionSection(option: ProductOption) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text(option.name)
-                .trueFitTextStyle(.title3)
-                .foregroundColor(.textPrimary)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: Spacing.sm) {
-                    ForEach(option.values, id: \.self) { value in
-                        if option.name.lowercased().contains("color") || option.name.lowercased().contains("colour") {
-                            Circle()
-                                .fill(colorFromString(value))
-                                .frame(width: 35, height: 35)
-                                .overlay(
-                                    Circle().stroke(Color.borderColor, lineWidth: 1)
-                                )
-                        } else {
-                            Text(value)
-                                .trueFitTextStyle(.callout)
-                                .padding(.horizontal, Spacing.lg)
-                                .padding(.vertical, Spacing.sm)
-                                .background(Color.surface)
-                                .clipShape(RoundedRectangle.trueFit(Radius.md))
-                                .overlay(
-                                    RoundedRectangle.trueFit(Radius.md)
-                                        .stroke(Color.borderColor, lineWidth: 1)
-                                )
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    private func colorFromString(_ colorName: String) -> Color {
-        switch colorName.lowercased() {
-        case "red": return .red
-        case "black": return .black
-        case "blue": return .brandPrimary
-        case "green": return .brandSecondary
-        case "white": return .white
-        case "gray", "grey": return .gray
-        case "brown": return .brown
-        default: return .disabledColor
-        }
-    }
-    
+
     @ViewBuilder
     private func stockStatusView(status: StockStatus) -> some View {
         HStack(spacing: Spacing.xxs) {
@@ -145,7 +98,7 @@ struct ProductDetailsCard: View {
         switch status {
         case .inStock, .available:
             return .brandSecondary
-        case .outOfStock:
+        case .outOfStock, .unavailable:
             return .red
         }
     }
@@ -158,6 +111,8 @@ struct ProductDetailsCard: View {
             return "Available"
         case .outOfStock:
             return "Out of Stock"
+        case .unavailable:
+            return "Unavailable"
         }
     }
 }

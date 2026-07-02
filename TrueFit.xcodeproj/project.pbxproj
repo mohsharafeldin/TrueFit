@@ -69,6 +69,7 @@
 		0CE05B772FF6ADD600ADEB7D /* ProductDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B722FF6ADD600ADEB7D /* ProductDetailsHeader.swift */; };
 		0CE05B782FF6ADD600ADEB7D /* ProductImageCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B732FF6ADD600ADEB7D /* ProductImageCarousel.swift */; };
 		0CE05B7A2FF6CCE100ADEB7D /* PriceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B792FF6CCE100ADEB7D /* PriceFormatter.swift */; };
+		0CE05B7C2FF7041C00ADEB7D /* ProductOptionSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B7B2FF7041C00ADEB7D /* ProductOptionSectionView.swift */; };
 		0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */; };
 		0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */; };
 		0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3012FF3D18100466794 /* Endpoint.swift */; };
@@ -215,6 +216,7 @@
 		0CE05B722FF6ADD600ADEB7D /* ProductDetailsHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsHeader.swift; sourceTree = "<group>"; };
 		0CE05B732FF6ADD600ADEB7D /* ProductImageCarousel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImageCarousel.swift; sourceTree = "<group>"; };
 		0CE05B792FF6CCE100ADEB7D /* PriceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFormatter.swift; sourceTree = "<group>"; };
+		0CE05B7B2FF7041C00ADEB7D /* ProductOptionSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOptionSectionView.swift; sourceTree = "<group>"; };
 		0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLClient.swift; sourceTree = "<group>"; };
 		0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQLEndpoint.swift; sourceTree = "<group>"; };
 		0CE9F3012FF3D18100466794 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				0CE05B712FF6ADD600ADEB7D /* ProductDetailsCard.swift */,
 				0CE05B722FF6ADD600ADEB7D /* ProductDetailsHeader.swift */,
 				0CE05B732FF6ADD600ADEB7D /* ProductImageCarousel.swift */,
+				0CE05B7B2FF7041C00ADEB7D /* ProductOptionSectionView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1044,6 +1047,7 @@
 				0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */,
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
+				0CE05B7C2FF7041C00ADEB7D /* ProductOptionSectionView.swift in Sources */,
 				0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */,
 				0C09B6902FF63D3600F4CC3D /* ErrorLogger.swift in Sources */,
 				0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */,
