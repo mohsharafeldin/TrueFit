@@ -1,9 +1,9 @@
 import Foundation
 
 final class GetProductUseCase {
-    private let repository: ProductRepositoryProtocol
+    private let repository: ProductsRepositoryProtocol
     
-    init(repository: ProductRepositoryProtocol) {
+    init(repository: ProductsRepositoryProtocol) {
         self.repository = repository
     }
     

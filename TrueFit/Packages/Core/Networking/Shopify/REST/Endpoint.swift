@@ -36,3 +36,6 @@ struct GetProductEndpoint: Endpoint {
         return nil
     }
 }
+
+
+

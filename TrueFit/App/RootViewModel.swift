@@ -57,6 +57,7 @@ class RootViewModel: ObservableObject {
     func splashDidFinish() {
             routeAfterSplash()
     }
+    
     private func routeAfterSplash() {
         let hasSeenOnboarding = preferencesManager.hasSeenOnboarding
         guard hasSeenOnboarding else {

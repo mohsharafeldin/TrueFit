@@ -1,13 +1,13 @@
 import Foundation
 import Combine
 
-
 @MainActor
 final class ProductDetailsViewModel: ObservableObject {
     private let getProductUseCase: GetProductUseCase
     
     @Published var state: ViewState<Product> = .idle
     @Published var selectedVariant: ProductVariant?
+    @Published var quantity: Int = 1
     
     init(getProductUseCase: GetProductUseCase) {
         self.getProductUseCase = getProductUseCase
@@ -37,30 +37,21 @@ final class ProductDetailsViewModel: ObservableObject {
         self.selectedVariant = variant
     }
     
-    var displayedImages: [ProductImage] {
-        guard case .success(let product) = state else { return [] }
-        return product.images
-    }
+    // MARK: - UI Formatters
     
     var displayedPrice: String {
         guard case .success(let product) = state else { return "" }
         
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        
         if let selectedVariant = selectedVariant {
-            return formatter.string(from: selectedVariant.price as NSDecimalNumber) ?? ""
+            return PriceFormatter.format(selectedVariant.price)
         }
         
         if product.priceRange.isSinglePrice {
-            return formatter.string(from: product.priceRange.min as NSDecimalNumber) ?? ""
+            return PriceFormatter.format(product.priceRange.min)
         }
         
-        let minString = formatter.string(from: product.priceRange.min as NSDecimalNumber) ?? ""
-        let maxString = formatter.string(from: product.priceRange.max as NSDecimalNumber) ?? ""
+        let minString = PriceFormatter.format(product.priceRange.min)
+        let maxString = PriceFormatter.format(product.priceRange.max)
         return "\(minString) - \(maxString)"
     }
     
@@ -72,14 +63,43 @@ final class ProductDetailsViewModel: ObservableObject {
             return nil
         }
         
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        
-        return formatter.string(from: compareAtPrice as NSDecimalNumber)
+        return PriceFormatter.format(compareAtPrice)
     }
     
-
+    var displayedTotalPrice: String {
+        guard case .success(let product) = state else { return "" }
+        
+        let decimalQuantity = Decimal(quantity)
+        
+        if let selectedVariant = selectedVariant {
+            let total = selectedVariant.price * decimalQuantity
+            return PriceFormatter.format(total)
+        }
+        
+        if product.priceRange.isSinglePrice {
+            let total = product.priceRange.min * decimalQuantity
+            return PriceFormatter.format(total)
+        }
+        
+        let minTotal = product.priceRange.min * decimalQuantity
+        let maxTotal = product.priceRange.max * decimalQuantity
+        return "\(PriceFormatter.format(minTotal)) - \(PriceFormatter.format(maxTotal))"
+    }
+    
+    // MARK: - Actions
+    
+    func addToCart() {
+        guard let variant = selectedVariant else { return }
+        print("🛒 Added \(quantity) of variant [\(variant.id)] to Cart!")
+    }
+    
+    func increaseQuantity() {
+        quantity += 1
+    }
+        
+    func decreaseQuantity() {
+        if quantity > 1 {
+            quantity -= 1
+        }
+    }
 }

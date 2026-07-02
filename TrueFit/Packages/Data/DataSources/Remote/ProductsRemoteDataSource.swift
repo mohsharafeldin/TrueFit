@@ -15,11 +15,13 @@ protocol ProductsRemoteDataSourceProtocol {
     func fetchSmartCollections() async throws -> [CollectionDTO]
     func fetchCustomCollections() async throws -> [CollectionDTO]
     func fetchProductsCount(collectionId: Int64) async throws -> Int
+    func fetchProduct(id: String) async throws -> ProductDTO
 }
 
 // MARK: - Implementation
 
 final class ProductsRemoteDataSource: ProductsRemoteDataSourceProtocol {
+    
 
     private let apiClient: APIClientProtocol
 
@@ -50,6 +52,19 @@ final class ProductsRemoteDataSource: ProductsRemoteDataSourceProtocol {
         let response: ProductsCountResponseDTO = try await apiClient.request(endpoint)
         return response.count
     }
+    
+    
+    func fetchProduct(id: String) async throws -> ProductDTO {
+        let endpoint = GetProductEndpoint(productId: id)
+        let response: ProductResponseDTO = try await apiClient.request(endpoint)
+        
+        guard let product = response.product else {
+            throw APIError.decodingFailed(NSError(domain: "ProductRemoteDataSource", code: 0, userInfo: [NSLocalizedDescriptionKey: "Product data is missing in the response"]))
+        }
+        
+        return product
+    }
+    
 }
 
 // MARK: - Endpoints

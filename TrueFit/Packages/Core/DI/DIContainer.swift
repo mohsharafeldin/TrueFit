@@ -24,17 +24,8 @@ final class DIContainer: ObservableObject {
     // MARK: - Networking
     let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
     
-    // MARK: - Product Details Dependencies (from feature branch)
-    lazy var productRemoteDataSource: ProductRemoteDataSourceProtocol = {
-        ProductRemoteDataSource(apiClient: restClient)
-    }()
-    
-    lazy var productRepository: ProductRepositoryProtocol = {
-        ProductRepository(remoteDataSource: productRemoteDataSource)
-    }()
-    
     lazy var getProductUseCase: GetProductUseCase = {
-        GetProductUseCase(repository: productRepository)
+        GetProductUseCase(repository: productsRepository)
     }()
     
     // MARK: - Currency Dependencies (from feature branch)
