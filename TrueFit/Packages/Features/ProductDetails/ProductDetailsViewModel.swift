@@ -1,6 +1,12 @@
 import Foundation
 import Combine
 
+enum StockStatus {
+    case inStock(quantity: Int)
+    case available
+    case outOfStock
+}
+
 @MainActor
 final class ProductDetailsViewModel: ObservableObject {
     private let getProductUseCase: GetProductUseCase
@@ -102,4 +108,26 @@ final class ProductDetailsViewModel: ObservableObject {
             quantity -= 1
         }
     }
+    
+    var stockStatus: StockStatus {
+            guard let variant = selectedVariant else { return .outOfStock }
+            
+            if variant.isAvailable {
+                if let qty = variant.inventoryQuantity, qty > 0 {
+                    return .inStock(quantity: qty)
+                }
+                return .available
+            }
+            return .outOfStock
+        }
+    
+        
+
+        
+    var isAddToCartDisabled: Bool {
+            if case .outOfStock = stockStatus {
+                return true
+            }
+            return false
+        }
 }

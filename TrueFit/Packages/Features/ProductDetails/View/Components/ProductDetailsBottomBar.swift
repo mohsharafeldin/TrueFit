@@ -23,7 +23,7 @@ struct ProductDetailsBottomBar: View {
                     Image(systemName: "bag.fill")
                         .font(.system(size: 16))
                     
-                    Text("Add to Cart")
+                    Text(viewModel.isAddToCartDisabled ? "Out of Stock" : "Add to Cart")
                         .trueFitTextStyle(.headline)
                         .lineLimit(1)
                         .fixedSize(horizontal: true, vertical: false)
@@ -31,9 +31,10 @@ struct ProductDetailsBottomBar: View {
                 .foregroundColor(.surface)
                 .frame(height: 50)
                 .padding(.horizontal, Spacing.lg)
-                .background(Color.brandPrimary)
+                .background(viewModel.isAddToCartDisabled ? Color.disabledColor : Color.brandPrimary)
                 .clipShape(Capsule())
             }
+            .disabled(viewModel.isAddToCartDisabled)
         }
         .padding(.horizontal, Spacing.xl)
         .padding(.vertical, Spacing.sm)
