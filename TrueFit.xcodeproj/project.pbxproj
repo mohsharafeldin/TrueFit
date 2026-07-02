@@ -9,6 +9,33 @@
 /* Begin PBXBuildFile section */
 		0C00A13E2FF0051B007A668C /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C00A13D2FF0051B007A668C /* RootView.swift */; };
 		0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C00A13F2FF01FD5007A668C /* RootViewModel.swift */; };
+		0C09B6882FF63D0700F4CC3D /* GenericAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6832FF63D0700F4CC3D /* GenericAPIError.swift */; };
+		0C09B6892FF63D0700F4CC3D /* GenericEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6842FF63D0700F4CC3D /* GenericEndpoint.swift */; };
+		0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6852FF63D0700F4CC3D /* GenericHTTPClient.swift */; };
+		0C09B68B2FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6862FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift */; };
+		0C09B68E2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B68C2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift */; };
+		0C09B6902FF63D3600F4CC3D /* ErrorLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B68F2FF63D3600F4CC3D /* ErrorLogger.swift */; };
+		0C09B6922FF63D3B00F4CC3D /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6912FF63D3A00F4CC3D /* ViewState.swift */; };
+		0C09B6942FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6932FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift */; };
+		0C09B6962FF63D6300F4CC3D /* ProductRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6952FF63D6300F4CC3D /* ProductRemoteDataSource.swift */; };
+		0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6972FF63D7C00F4CC3D /* CurrencyRatesDTO.swift */; };
+		0C09B69A2FF63D7C00F4CC3D /* ShopifyProductDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6982FF63D7C00F4CC3D /* ShopifyProductDTO.swift */; };
+		0C09B69F2FF63D9A00F4CC3D /* APIErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B69B2FF63D9A00F4CC3D /* APIErrorMapper.swift */; };
+		0C09B6A02FF63D9A00F4CC3D /* ProductMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B69C2FF63D9A00F4CC3D /* ProductMapper.swift */; };
+		0C09B6A12FF63D9A00F4CC3D /* CurrencyRatesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B69D2FF63D9A00F4CC3D /* CurrencyRatesMapper.swift */; };
+		0C09B6A22FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B69E2FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift */; };
+		0C09B6A52FF63DAA00F4CC3D /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6A32FF63DAA00F4CC3D /* ProductRepository.swift */; };
+		0C09B6A62FF63DAA00F4CC3D /* CurrencyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6A42FF63DAA00F4CC3D /* CurrencyRepository.swift */; };
+		0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6A72FF63DC500F4CC3D /* AppError.swift */; };
+		0C09B6AB2FF63DC500F4CC3D /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6A82FF63DC500F4CC3D /* Product.swift */; };
+		0C09B6AC2FF63DC500F4CC3D /* CurrencyRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6A92FF63DC500F4CC3D /* CurrencyRates.swift */; };
+		0C09B6AF2FF63DD400F4CC3D /* ProductRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6AD2FF63DD400F4CC3D /* ProductRepositoryProtocol.swift */; };
+		0C09B6B02FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6AE2FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift */; };
+		0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6B12FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift */; };
+		0C09B6B42FF63DE500F4CC3D /* GetProductUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6B22FF63DE500F4CC3D /* GetProductUseCase.swift */; };
+		0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6B52FF63E0000F4CC3D /* CurrencyConverterViewModel.swift */; };
+		0C09B6BA2FF63E0B00F4CC3D /* ProductDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6B82FF63E0B00F4CC3D /* ProductDetailsViewModel.swift */; };
+		0C09B6BE2FF63E1A00F4CC3D /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09B6BB2FF63E1A00F4CC3D /* ErrorView.swift */; };
 		0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */; };
 		0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E7D2FF2A3B900477701 /* MainAppView.swift */; };
 		0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198E802FF2A4EF00477701 /* AuthManager.swift */; };
@@ -86,6 +113,33 @@
 /* Begin PBXFileReference section */
 		0C00A13D2FF0051B007A668C /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		0C00A13F2FF01FD5007A668C /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		0C09B6832FF63D0700F4CC3D /* GenericAPIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericAPIError.swift; sourceTree = "<group>"; };
+		0C09B6842FF63D0700F4CC3D /* GenericEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericEndpoint.swift; sourceTree = "<group>"; };
+		0C09B6852FF63D0700F4CC3D /* GenericHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericHTTPClient.swift; sourceTree = "<group>"; };
+		0C09B6862FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericHTTPClientProtocol.swift; sourceTree = "<group>"; };
+		0C09B68C2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLatestRatesEndpoint.swift; sourceTree = "<group>"; };
+		0C09B68F2FF63D3600F4CC3D /* ErrorLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorLogger.swift; sourceTree = "<group>"; };
+		0C09B6912FF63D3A00F4CC3D /* ViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		0C09B6932FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRemoteDataSource.swift; sourceTree = "<group>"; };
+		0C09B6952FF63D6300F4CC3D /* ProductRemoteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductRemoteDataSource.swift; sourceTree = "<group>"; };
+		0C09B6972FF63D7C00F4CC3D /* CurrencyRatesDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRatesDTO.swift; sourceTree = "<group>"; };
+		0C09B6982FF63D7C00F4CC3D /* ShopifyProductDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopifyProductDTO.swift; sourceTree = "<group>"; };
+		0C09B69B2FF63D9A00F4CC3D /* APIErrorMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIErrorMapper.swift; sourceTree = "<group>"; };
+		0C09B69C2FF63D9A00F4CC3D /* ProductMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductMapper.swift; sourceTree = "<group>"; };
+		0C09B69D2FF63D9A00F4CC3D /* CurrencyRatesMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRatesMapper.swift; sourceTree = "<group>"; };
+		0C09B69E2FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericAPIErrorMapper.swift; sourceTree = "<group>"; };
+		0C09B6A32FF63DAA00F4CC3D /* ProductRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductRepository.swift; sourceTree = "<group>"; };
+		0C09B6A42FF63DAA00F4CC3D /* CurrencyRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRepository.swift; sourceTree = "<group>"; };
+		0C09B6A72FF63DC500F4CC3D /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		0C09B6A82FF63DC500F4CC3D /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		0C09B6A92FF63DC500F4CC3D /* CurrencyRates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRates.swift; sourceTree = "<group>"; };
+		0C09B6AD2FF63DD400F4CC3D /* ProductRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductRepositoryProtocol.swift; sourceTree = "<group>"; };
+		0C09B6AE2FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyRepositoryProtocol.swift; sourceTree = "<group>"; };
+		0C09B6B12FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetExchangeRatesUseCase.swift; sourceTree = "<group>"; };
+		0C09B6B22FF63DE500F4CC3D /* GetProductUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetProductUseCase.swift; sourceTree = "<group>"; };
+		0C09B6B52FF63E0000F4CC3D /* CurrencyConverterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyConverterViewModel.swift; sourceTree = "<group>"; };
+		0C09B6B82FF63E0B00F4CC3D /* ProductDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewModel.swift; sourceTree = "<group>"; };
+		0C09B6BB2FF63E1A00F4CC3D /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
 		0C198E7D2FF2A3B900477701 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		0C198E802FF2A4EF00477701 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -181,6 +235,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C09B6872FF63D0700F4CC3D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B6832FF63D0700F4CC3D /* GenericAPIError.swift */,
+				0C09B6842FF63D0700F4CC3D /* GenericEndpoint.swift */,
+				0C09B6852FF63D0700F4CC3D /* GenericHTTPClient.swift */,
+				0C09B6862FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		0C09B68D2FF63D1400F4CC3D /* Frankfurter */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B68C2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift */,
+			);
+			path = Frankfurter;
+			sourceTree = "<group>";
+		};
+		0C09B6B62FF63E0000F4CC3D /* CurrencyConversion */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B6B52FF63E0000F4CC3D /* CurrencyConverterViewModel.swift */,
+			);
+			path = CurrencyConversion;
+			sourceTree = "<group>";
+		};
+		0C09B6B92FF63E0B00F4CC3D /* ProductDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B6B82FF63E0B00F4CC3D /* ProductDetailsViewModel.swift */,
+			);
+			path = ProductDetails;
+			sourceTree = "<group>";
+		};
+		0C09B6BC2FF63E1A00F4CC3D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B6BB2FF63E1A00F4CC3D /* ErrorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C09B6BD2FF63E1A00F4CC3D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0C09B6BC2FF63E1A00F4CC3D /* Views */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		0C198E7F2FF2A4E500477701 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +484,9 @@
 		33AA80D52FEFDF8400A20AF9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B6A72FF63DC500F4CC3D /* AppError.swift */,
+				0C09B6A92FF63DC500F4CC3D /* CurrencyRates.swift */,
+				0C09B6A82FF63DC500F4CC3D /* Product.swift */,
 				33AA81052FEFF1D300A20AF9 /* File.swift */,
 			);
 			path = Entities;
@@ -388,6 +496,8 @@
 			isa = PBXGroup;
 			children = (
 				33AA81072FEFF20500A20AF9 /* File.swift */,
+				0C09B6B12FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift */,
+				0C09B6B22FF63DE500F4CC3D /* GetProductUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -408,6 +518,8 @@
 		33AA80DB2FEFE14400A20AF9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B68F2FF63D3600F4CC3D /* ErrorLogger.swift */,
+				0C09B6912FF63D3A00F4CC3D /* ViewState.swift */,
 				0CE9F3192FF3D31E00466794 /* Extensions */,
 				33AA811D2FEFF3A100A20AF9 /* File.swift */,
 			);
@@ -428,6 +540,9 @@
 		33AA80E22FEFE3D700A20AF9 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B6BD2FF63E1A00F4CC3D /* Shared */,
+				0C09B6B92FF63E0B00F4CC3D /* ProductDetails */,
+				0C09B6B62FF63E0000F4CC3D /* CurrencyConversion */,
 				0C198EA82FF2BAD500477701 /* AuthFeature */,
 				33D02D1E2FF3DA4C0048E60D /* PreviewMocks.swift */,
 				4C8CBADC2FF02A0200CA6538 /* Splash */,
@@ -439,6 +554,8 @@
 		33AA80E42FEFE40800A20AF9 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B68D2FF63D1400F4CC3D /* Frankfurter */,
+				0C09B6872FF63D0700F4CC3D /* Shared */,
 				0CE9F30B2FF3D18100466794 /* Shopify */,
 				33AA811B2FEFF38A00A20AF9 /* File.swift */,
 			);
@@ -465,6 +582,10 @@
 		33AA80E82FEFE46700A20AF9 /* Mappers */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B69B2FF63D9A00F4CC3D /* APIErrorMapper.swift */,
+				0C09B69D2FF63D9A00F4CC3D /* CurrencyRatesMapper.swift */,
+				0C09B69E2FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift */,
+				0C09B69C2FF63D9A00F4CC3D /* ProductMapper.swift */,
 				33AA81132FEFF2F200A20AF9 /* File.swift */,
 			);
 			path = Mappers;
@@ -482,6 +603,8 @@
 		33AA80EB2FEFE48F00A20AF9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B6932FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift */,
+				0C09B6952FF63D6300F4CC3D /* ProductRemoteDataSource.swift */,
 				33AA81112FEFF2D600A20AF9 /* File.swift */,
 			);
 			path = Remote;
@@ -498,6 +621,8 @@
 		33AA80EE2FEFE4B900A20AF9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B6972FF63D7C00F4CC3D /* CurrencyRatesDTO.swift */,
+				0C09B6982FF63D7C00F4CC3D /* ShopifyProductDTO.swift */,
 				33AA81172FEFF33E00A20AF9 /* File.swift */,
 			);
 			path = Remote;
@@ -514,6 +639,8 @@
 		33AA80F12FEFE4DF00A20AF9 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				0C09B6A42FF63DAA00F4CC3D /* CurrencyRepository.swift */,
+				0C09B6A32FF63DAA00F4CC3D /* ProductRepository.swift */,
 				33D02D1C2FF3DA210048E60D /* AuthRepository.swift */,
 			);
 			path = Repositories;
@@ -523,6 +650,8 @@
 			isa = PBXGroup;
 			children = (
 				33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */,
+				0C09B6AE2FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift */,
+				0C09B6AD2FF63DD400F4CC3D /* ProductRepositoryProtocol.swift */,
 			);
 			path = RepositoryInterfaces;
 			sourceTree = "<group>";
@@ -747,17 +876,26 @@
 				5A1CA3B12FEFD52900401F6B /* Persistence.swift in Sources */,
 				0C198EAA2FF2BAD500477701 /* AuthTextField.swift in Sources */,
 				33D02D1D2FF3DA210048E60D /* AuthRepository.swift in Sources */,
+				0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */,
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
+				0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */,
+				0C09B6962FF63D6300F4CC3D /* ProductRemoteDataSource.swift in Sources */,
+				0C09B6902FF63D3600F4CC3D /* ErrorLogger.swift in Sources */,
 				0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */,
+				0C09B6922FF63D3B00F4CC3D /* ViewState.swift in Sources */,
 				0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */,
 				0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */,
+				0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */,
 				0C198E952FF2BA8E00477701 /* Spacing.swift in Sources */,
+				0C09B6AF2FF63DD400F4CC3D /* ProductRepositoryProtocol.swift in Sources */,
 				0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */,
 				0CE9F30F2FF3D18100466794 /* RESTClient.swift in Sources */,
+				0C09B6B42FF63DE500F4CC3D /* GetProductUseCase.swift in Sources */,
 				0CE9F31B2FF3D31E00466794 /* File.swift in Sources */,
 				0CE9F3102FF3D18100466794 /* AuthInterceptor.swift in Sources */,
 				0C198EAE2FF2BAD500477701 /* LoginView.swift in Sources */,
+				0C09B6BA2FF63E0B00F4CC3D /* ProductDetailsViewModel.swift in Sources */,
 				33D02D1F2FF3DA4C0048E60D /* PreviewMocks.swift in Sources */,
 				0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */,
 				0CE9F3122FF3D18100466794 /* APIClientProtocol.swift in Sources */,
@@ -766,21 +904,34 @@
 				0C198EA92FF2BAD500477701 /* AuthViewModel.swift in Sources */,
 				0CE9F3112FF3D18100466794 /* RetryInterceptor.swift in Sources */,
 				0C198EAF2FF2BAD500477701 /* NewPasswordView.swift in Sources */,
+				0C09B6BE2FF63E1A00F4CC3D /* ErrorView.swift in Sources */,
+				0C09B6A22FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift in Sources */,
 				0CE9F3132FF3D18100466794 /* APIError.swift in Sources */,
+				0C09B6A52FF63DAA00F4CC3D /* ProductRepository.swift in Sources */,
 				33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */,
+				0C09B69A2FF63D7C00F4CC3D /* ShopifyProductDTO.swift in Sources */,
 				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
+				0C09B6AB2FF63DC500F4CC3D /* Product.swift in Sources */,
 				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
+				0C09B6AC2FF63DC500F4CC3D /* CurrencyRates.swift in Sources */,
 				0C198EAD2FF2BAD500477701 /* ForgotPasswordView.swift in Sources */,
+				0C09B6A12FF63D9A00F4CC3D /* CurrencyRatesMapper.swift in Sources */,
+				0C09B6892FF63D0700F4CC3D /* GenericEndpoint.swift in Sources */,
 				0C198E912FF2BA8E00477701 /* Colors.swift in Sources */,
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
+				0C09B6942FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
 				0C198E942FF2BA8E00477701 /* Shadow.swift in Sources */,
+				0C09B69F2FF63D9A00F4CC3D /* APIErrorMapper.swift in Sources */,
 				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
+				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
+				0C09B6A02FF63D9A00F4CC3D /* ProductMapper.swift in Sources */,
+				0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
 				0CE9F3142FF3D18100466794 /* Constants.swift in Sources */,
@@ -789,9 +940,14 @@
 				4C8F1F022FF2AFEC00299F30 /* SecondOnBoeardingView.swift in Sources */,
 				33AA80F92FEFEFC700A20AF9 /* DIContainer.swift in Sources */,
 				5A1CA3AA2FEFD52800401F6B /* ContentView.swift in Sources */,
+				0C09B6A62FF63DAA00F4CC3D /* CurrencyRepository.swift in Sources */,
+				0C09B6B02FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift in Sources */,
 				4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */,
 				4C8F1F042FF2AFFD00299F30 /* ThirdOnBoeardingView.swift in Sources */,
+				0C09B68B2FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
+				0C09B68E2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift in Sources */,
+				0C09B6882FF63D0700F4CC3D /* GenericAPIError.swift in Sources */,
 				4C8CBADF2FF02D1600CA6538 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
