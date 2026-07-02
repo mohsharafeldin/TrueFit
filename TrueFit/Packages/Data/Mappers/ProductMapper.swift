@@ -1,6 +1,3 @@
-import Foundation
-
-struct ProductMapper {
     static func map(_ dto: ShopifyProductDTO) -> Product {
         let id = String(dto.id ?? 0)
         let title = dto.title ?? ""
@@ -54,85 +51,54 @@ struct ProductMapper {
             updatedAt: updatedAt
         )
     }
-    
-    private static func mapVariant(_ dto: ShopifyProductVariantDTO, optionNames: [String]) -> ProductVariant? {
-        guard let variantId = dto.id else { return nil }
-        
-        let price = Decimal(string: dto.price ?? "") ?? 0
-        let compareAtPrice = Decimal(string: dto.compare_at_price ?? "")
-        
-        var selectedOptions: [String: String] = [:]
-        let optionValues = [dto.option1, dto.option2, dto.option3].compactMap { $0 }
-        
-        for (index, value) in optionValues.enumerated() {
-            if index < optionNames.count {
-                selectedOptions[optionNames[index]] = value
+
+    // MARK: - Compatibility with HomeView/Develop branch
+    static func map(_ dto: ProductDTO) -> Product {
+        let imageURL: URL? = {
+            if let src = dto.image?.src ?? dto.images?.first?.src {
+                return URL(string: src)
             }
-        }
+            return nil
+        }()
+
+        let priceDecimal = Decimal(string: dto.variants?.first?.price ?? "0.00") ?? 0
+        let compareAtPriceDecimal = Decimal(string: dto.variants?.first?.compareAtPrice ?? "")
         
-        // According to requirement: isAvailable is true if inventory_quantity > 0 OR inventory_policy == "continue"
-        let isAvailable = (dto.inventory_quantity ?? 0) > 0 || dto.inventory_policy == "continue"
-        
-        let imageId = dto.image_id.map { String($0) }
-        
-        return ProductVariant(
-            id: String(variantId),
-            title: dto.title ?? "",
-            price: price,
-            compareAtPrice: compareAtPrice,
-            sku: dto.sku,
-            isAvailable: isAvailable,
-            requiresShipping: dto.requires_shipping ?? false,
-            weight: dto.weight,
-            weightUnit: dto.weight_unit,
-            inventoryQuantity: dto.inventory_quantity,
-            imageId: imageId,
-            selectedOptions: selectedOptions
+        let createdAt: Date? = {
+            guard let dateString = dto.createdAt else { return nil }
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let date = formatter.date(from: dateString) { return date }
+            // Fallback without fractional seconds
+            formatter.formatOptions = [.withInternetDateTime]
+            return formatter.date(from: dateString)
+        }()
+
+        let mainImage = imageURL.map { ProductImage(id: "", src: $0, altText: nil, width: nil, height: nil, position: 1, variantIds: []) }
+        let variant = ProductVariant(id: "", title: "", price: priceDecimal, compareAtPrice: compareAtPriceDecimal, sku: nil, isAvailable: true, requiresShipping: false, weight: nil, weightUnit: nil, inventoryQuantity: nil, imageId: nil, selectedOptions: [:])
+
+        return Product(
+            id: String(dto.id),
+            title: dto.title,
+            description: "",
+            vendor: dto.vendor,
+            productType: dto.productType,
+            handle: "",
+            status: .active,
+            tags: [],
+            variants: [variant],
+            images: mainImage != nil ? [mainImage!] : [],
+            options: [],
+            mainImage: mainImage,
+            isAvailable: true,
+            priceRange: PriceRange(min: priceDecimal, max: priceDecimal, isSinglePrice: true),
+            hasMultipleVariants: false,
+            createdAt: createdAt,
+            updatedAt: nil
         )
     }
-    
-    private static func mapImage(_ dto: ShopifyProductImageDTO) -> ProductImage? {
-        guard let id = dto.id, let srcString = dto.src, let src = URL(string: srcString) else { return nil }
-        
-        let variantIds = (dto.variant_ids ?? []).map { String($0) }
-        
-        return ProductImage(
-            id: String(id),
-            src: src,
-            altText: dto.alt,
-            width: dto.width,
-            height: dto.height,
-            position: dto.position ?? 0,
-            variantIds: variantIds
-        )
-    }
-    
-    private static func mapOption(_ dto: ShopifyProductOptionDTO) -> ProductOption? {
-        guard let id = dto.id, let name = dto.name else { return nil }
-        return ProductOption(
-            id: String(id),
-            name: name,
-            values: dto.values ?? []
-        )
-    }
-    
-    private static func computePriceRange(from variants: [ProductVariant]) -> PriceRange {
-        guard let firstVariant = variants.first else {
-            return PriceRange(min: 0, max: 0, isSinglePrice: true)
-        }
-        
-        var minPrice = firstVariant.price
-        var maxPrice = firstVariant.price
-        
-        for variant in variants {
-            if variant.price < minPrice { minPrice = variant.price }
-            if variant.price > maxPrice { maxPrice = variant.price }
-        }
-        
-        return PriceRange(min: minPrice, max: maxPrice, isSinglePrice: minPrice == maxPrice)
-    }
-    
-    private static func stripHTML(from string: String) -> String {
-        return string.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+
+    static func map(_ dtos: [ProductDTO]) -> [Product] {
+        dtos.map { map($0) }
     }
 }

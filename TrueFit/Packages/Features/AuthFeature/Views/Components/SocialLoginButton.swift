@@ -52,11 +52,13 @@ public struct SocialLoginButton: View {
     }
 }
 
-#Preview {
-    VStack(spacing: Spacing.lg) {
-        SocialLoginButton(title: "Sign In with Google", iconImage: Image("google"), action: {})
-        SocialLoginButton(title: "Sign In with Facebook", iconImage: Image("facebook"), action: {})
+struct SocialLoginButton_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: Spacing.lg) {
+            SocialLoginButton(title: "Sign In with Google", iconImage: Image("google"), action: {})
+            SocialLoginButton(title: "Sign In with Facebook", iconImage: Image("facebook"), action: {})
+        }
+        .padding(Spacing.xl)
+        .background(Color.trueFitBackground)
     }
-    .padding(Spacing.xl)
-    .background(Color.trueFitBackground)
 }

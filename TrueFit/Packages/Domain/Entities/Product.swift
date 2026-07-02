@@ -1,6 +1,13 @@
+//
+//  Product.swift
+//  TrueFit
+//
+//  Domain Entity — Pure business model, no framework dependencies.
+//
+
 import Foundation
 
-struct Product {
+struct Product: Identifiable, Equatable {
     let id: String
     let title: String
     let description: String
@@ -18,9 +25,24 @@ struct Product {
     let hasMultipleVariants: Bool
     let createdAt: Date?
     let updatedAt: Date?
+    
+    // Compatibility properties for develop branch features (HomeView)
+    var price: String {
+        "\(priceRange.min)"
+    }
+    var compareAtPrice: String? {
+        variants.first?.compareAtPrice.map { "\($0)" }
+    }
+    var imageURL: URL? {
+        mainImage?.src ?? images.first?.src
+    }
+    
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
-struct ProductVariant {
+struct ProductVariant: Equatable {
     let id: String
     let title: String
     let price: Decimal
@@ -35,7 +57,7 @@ struct ProductVariant {
     let selectedOptions: [String: String]
 }
 
-struct ProductImage {
+struct ProductImage: Equatable {
     let id: String
     let src: URL
     let altText: String?
@@ -45,19 +67,19 @@ struct ProductImage {
     let variantIds: [String]
 }
 
-struct ProductOption {
+struct ProductOption: Equatable {
     let id: String
     let name: String
     let values: [String]
 }
 
-struct PriceRange {
+struct PriceRange: Equatable {
     let min: Decimal
     let max: Decimal
     let isSinglePrice: Bool
 }
 
-enum ProductStatus: String {
+enum ProductStatus: String, Equatable {
     case active
     case archived
     case draft

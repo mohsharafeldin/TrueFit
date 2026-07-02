@@ -19,6 +19,8 @@
 //    }
 //}
 //
-//#Preview {
-//    SecondOnBoeardingView()
+//struct SecondOnBoeardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SecondOnBoeardingView()
+//    }
 //}

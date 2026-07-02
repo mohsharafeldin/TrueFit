@@ -12,8 +12,16 @@ struct AuthTextField: View {
     @Binding var text: String
     var iconName: String
     var isSecure: Bool = false
+    var keyboardType: UIKeyboardType = .default
     
     @FocusState private var isFocused: Bool
+    
+    var autocapitalization: TextInputAutocapitalization {
+        if isSecure { return .never }
+        if keyboardType == .emailAddress { return .never }
+        if keyboardType == .default { return .words }
+        return .sentences
+    }
     
     var body: some View {
         HStack(spacing: Spacing.sm) {
@@ -24,8 +32,13 @@ struct AuthTextField: View {
             Group {
                 if isSecure {
                     SecureField(placeholder, text: $text)
+                        .textInputAutocapitalization(autocapitalization)
+                        .autocorrectionDisabled(true)
                 } else {
                     TextField(placeholder, text: $text)
+                        .textInputAutocapitalization(autocapitalization)
+                        .keyboardType(keyboardType)
+                        .autocorrectionDisabled(true)
                 }
             }
             .focused($isFocused)
@@ -48,11 +61,13 @@ struct AuthTextField: View {
     }
 }
 
-#Preview {
-    VStack(spacing: Spacing.lg) {
-        AuthTextField(placeholder: "Enter your email", text: .constant(""), iconName: "envelope")
-        AuthTextField(placeholder: "Create your password", text: .constant(""), iconName: "lock", isSecure: true)
+struct AuthTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: Spacing.lg) {
+            AuthTextField(placeholder: "Enter your email", text: .constant(""), iconName: "envelope")
+            AuthTextField(placeholder: "Create your password", text: .constant(""), iconName: "lock", isSecure: true)
+        }
+        .padding(Spacing.xl)
+        .background(Color.trueFitBackground)
     }
-    .padding(Spacing.xl)
-    .background(Color.trueFitBackground)
 }

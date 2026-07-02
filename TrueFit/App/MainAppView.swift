@@ -14,11 +14,11 @@ struct MainAppView: View {
     
     var body: some View {
         NavigationStack(path: $appRouter.path) {
-            Text("Home Screen (TabBar) Placeholder")
+            HomeView(viewModel: container.makeHomeViewModel())
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .home:
-                        Text("Home Screen")
+                        HomeView(viewModel: container.makeHomeViewModel())
                     case .cart:
                         Text("Cart Screen")
                     case .checkout:

@@ -59,12 +59,14 @@ struct SuccessView: View {
     }
 }
 
-#Preview {
-    Color.trueFitBackground
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            SuccessView()
-                .presentationDetents([.height(400)])
-                .presentationDragIndicator(.hidden)
-        }
+struct SuccessView_Previews: PreviewProvider {
+    static var previews: some View {
+        Color.trueFitBackground
+            .ignoresSafeArea()
+            .sheet(isPresented: .constant(true)) {
+                SuccessView()
+                    .presentationDetents([.height(400)])
+                    .presentationDragIndicator(.hidden)
+            }
+    }
 }

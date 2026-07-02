@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewPasswordView: View {
-    @StateObject var viewModel: AuthViewModel
+    @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -63,12 +63,14 @@ struct NewPasswordView: View {
     }
 }
 
-#Preview {
-    Color.trueFitBackground
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            NewPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
-                .presentationDetents([.height(450)])
-                .presentationDragIndicator(.hidden)
-        }
+struct NewPasswordView_Previews: PreviewProvider {
+    static var previews: some View {
+        Color.trueFitBackground
+            .ignoresSafeArea()
+            .sheet(isPresented: .constant(true)) {
+                NewPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
+                    .presentationDetents([.height(450)])
+                    .presentationDragIndicator(.hidden)
+            }
+    }
 }

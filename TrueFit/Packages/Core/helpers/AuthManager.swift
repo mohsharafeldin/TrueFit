@@ -25,7 +25,6 @@
 
 
 import Foundation
-import Security
 
 @MainActor
 protocol AuthManagerProtocol {
@@ -43,12 +42,14 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
     @Published var isAuthenticated: Bool = false
     @Published var isGuest: Bool = false
     
-   // private let tokenKey = "com.truefit.accessToken"
+    private let keychainManager: KeychainManagerProtocol
+    private let service = "com.truefit.auth"
+    private let account = "shopifyCustomerToken"
     
-    init() {
+    init(keychainManager: KeychainManagerProtocol = KeychainManager()) {
+        self.keychainManager = keychainManager
         checkAuthStatus()
     }
-    
     
     func login(token: String) {
         saveTokenToKeychain(token)
@@ -70,7 +71,6 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
         return getTokenFromKeychain()
     }
     
-    
     private func checkAuthStatus() {
         if getTokenFromKeychain() != nil {
             self.isAuthenticated = true
@@ -79,17 +79,27 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
         }
     }
     
-    
     private nonisolated func saveTokenToKeychain(_ token: String) {
-       
+        do {
+            try keychainManager.save(token, service: service, account: account)
+        } catch {
+            print("Failed to save token to Keychain: \(error)")
+        }
     }
     
     private nonisolated func getTokenFromKeychain() -> String? {
-        //TODO: change this and put your implementation
-           return nil
+        do {
+            return try keychainManager.read(service: service, account: account, type: String.self)
+        } catch {
+            return nil
+        }
     }
     
     private nonisolated func deleteTokenFromKeychain() {
-       
+        do {
+            try keychainManager.delete(service: service, account: account)
+        } catch {
+            print("Failed to delete token from Keychain: \(error)")
+        }
     }
 }

@@ -1,32 +1,30 @@
 //
-//  ContainerProtocol.swift
+//  DIContainer.swift
 //  TrueFit
 //
 //  Created by Mona Zarea on 27/06/2026.
 //
 
-
 import Foundation
 import CoreData
-
 
 @MainActor
 final class DIContainer: ObservableObject {
     
-    
+    // MARK: - Infrastructure
     let persistenceController = PersistenceController.shared
-    let authManager = AuthManager()
     let preferencesManager = PreferencesManager()
-    
-    // MARK: - Networking
-    let restClient: APIClientProtocol = RESTClient()
-    let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
-    // let graphQLClient = GraphQLClient()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
     
-    let authRepository: AuthRepositoryProtocol = AuthRepository()
-    // MARK: - Product Dependencies
+    // MARK: - Core Services
+    private lazy var keychainManager: KeychainManagerProtocol = KeychainManager()
+    public lazy var authManager: AuthManager = AuthManager(keychainManager: keychainManager)
+    
+    // MARK: - Networking
+    let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
+    
+    // MARK: - Product Details Dependencies (from feature branch)
     lazy var productRemoteDataSource: ProductRemoteDataSourceProtocol = {
         ProductRemoteDataSource(apiClient: restClient)
     }()
@@ -39,7 +37,7 @@ final class DIContainer: ObservableObject {
         GetProductUseCase(repository: productRepository)
     }()
     
-    // MARK: - Currency Dependencies
+    // MARK: - Currency Dependencies (from feature branch)
     lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
         CurrencyRemoteDataSource(apiClient: genericClient)
     }()
@@ -52,29 +50,86 @@ final class DIContainer: ObservableObject {
         GetExchangeRatesUseCase(repository: currencyRepository)
     }()
     
-    init() {
-       
-        
+    // MARK: - Networking
+    let restClient: APIClientProtocol = RESTClient()
+    
+    // MARK: - AUTH FEATURE
+    
+    // Auth Data Sources
+    private lazy var firebaseAuthDataSource: FirebaseAuthDataSourceProtocol = FirebaseAuthDataSource()
+    private lazy var shopifyAuthDataSource: ShopifyAuthDataSourceProtocol = ShopifyAuthDataSource()
+    
+    // Auth Repository
+    private lazy var authRepository: AuthRepositoryProtocol = {
+        AuthRepository(
+            firebaseDataSource: firebaseAuthDataSource,
+            shopifyDataSource: shopifyAuthDataSource,
+            keychainManager: keychainManager
+        )
+    }()
+    
+    // Auth Use Cases
+    private func makeLoginUseCase() -> LoginUseCaseProtocol {
+        LoginUseCase(authRepository: authRepository)
+    }
+    
+    private func makeSignUpUseCase() -> SignUpUseCaseProtocol {
+        SignUpUseCase(authRepository: authRepository)
+    }
+    
+    private func makeResetPasswordUseCase() -> ResetPasswordUseCaseProtocol {
+        ResetPasswordUseCase(authRepository: authRepository)
+    }
+    
+    private func makeLogoutUseCase() -> LogoutUseCaseProtocol {
+        LogoutUseCase(authRepository: authRepository)
     }
     
     
-    func makeRootViewModel() -> RootViewModel {
-        return RootViewModel(
+    // MARK: - HOME & PRODUCTS FEATURE
+    
+    // Products Data Sources & Repositories
+    private lazy var productsRemoteDataSource: ProductsRemoteDataSourceProtocol = ProductsRemoteDataSource(apiClient: restClient)
+    private lazy var productsRepository: ProductsRepositoryProtocol = ProductsRepository(remoteDataSource: productsRemoteDataSource)
+    
+    // Products Use Cases
+    private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: productsRepository)
+    private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
+    
+    
+    // MARK: - Init
+    public init() {}
+    
+    
+    // MARK: - VIEW MODELS FACTORY
+    
+    public func makeRootViewModel() -> RootViewModel {
+        RootViewModel(
             authManager: authManager,
             authRouter: authRouter,
-            appRouter: appRouter,  
+            appRouter: appRouter,
             preferencesManager: preferencesManager
         )
     }
     
-    func makeAuthViewModel() -> AuthViewModel {
-        return AuthViewModel(
-            authRepository: authRepository,
+    public func makeAuthViewModel() -> AuthViewModel {
+        AuthViewModel(
+            loginUseCase: makeLoginUseCase(),
+            signUpUseCase: makeSignUpUseCase(),
+            resetPasswordUseCase: makeResetPasswordUseCase(),
+            logoutUseCase: makeLogoutUseCase(),
             authManager: authManager,
             authRouter: authRouter
         )
     }
     
+    public func makeHomeViewModel() -> HomeViewModel {
+        HomeViewModel(
+            fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
+            fetchCollectionsUseCase: fetchCollectionsUseCase
+        )
+    }
+
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
         let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
         return viewModel

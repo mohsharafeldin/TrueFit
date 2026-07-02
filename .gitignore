@@ -65,18 +65,16 @@ fastlane/test_output
 .vscode/
 .idea/
 *.code-workspace
+
 # =========================
-# Configuration
+# Configuration & Security
 # =========================
 *.xcconfig
 !Config.xcconfig.example
-
-
 .build/
-
 .swiftpm/
-
-Package.resolved
- 
 Package.resolved
 TrueFit.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+**/GoogleService-Info.plist
+build_log.txt
