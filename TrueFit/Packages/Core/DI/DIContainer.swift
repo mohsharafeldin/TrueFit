@@ -20,11 +20,37 @@ final class DIContainer: ObservableObject {
     
     // MARK: - Networking
     let restClient: APIClientProtocol = RESTClient()
+    let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
     // let graphQLClient = GraphQLClient()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
     
     let authRepository: AuthRepositoryProtocol = AuthRepository()
+    // MARK: - Product Dependencies
+    lazy var productRemoteDataSource: ProductRemoteDataSourceProtocol = {
+        ProductRemoteDataSource(apiClient: restClient)
+    }()
+    
+    lazy var productRepository: ProductRepositoryProtocol = {
+        ProductRepository(remoteDataSource: productRemoteDataSource)
+    }()
+    
+    lazy var getProductUseCase: GetProductUseCase = {
+        GetProductUseCase(repository: productRepository)
+    }()
+    
+    // MARK: - Currency Dependencies
+    lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
+        CurrencyRemoteDataSource(apiClient: genericClient)
+    }()
+    
+    lazy var currencyRepository: CurrencyRepositoryProtocol = {
+        CurrencyRepository(remoteDataSource: currencyRemoteDataSource)
+    }()
+    
+    lazy var getExchangeRatesUseCase: GetExchangeRatesUseCase = {
+        GetExchangeRatesUseCase(repository: currencyRepository)
+    }()
     
     init() {
        
@@ -47,5 +73,14 @@ final class DIContainer: ObservableObject {
             authManager: authManager,
             authRouter: authRouter
         )
+    }
+    
+    func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
+        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        return viewModel
+    }
+    
+    func makeCurrencyConverterViewModel() -> CurrencyConverterViewModel {
+        return CurrencyConverterViewModel(getExchangeRatesUseCase: getExchangeRatesUseCase)
     }
 }
