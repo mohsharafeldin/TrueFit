@@ -5,18 +5,30 @@ enum StockStatus {
     case inStock(quantity: Int)
     case available
     case outOfStock
+    case unavailable
 }
 
 @MainActor
 final class ProductDetailsViewModel: ObservableObject {
+    
+    // MARK: - Dependencies
     private let getProductUseCase: GetProductUseCase
     
+    // MARK: - Published Properties
     @Published var state: ViewState<Product> = .idle
     @Published var selectedVariant: ProductVariant?
     @Published var quantity: Int = 1
+    @Published var selectedOptions: [String: String] = [:]
     
     init(getProductUseCase: GetProductUseCase) {
         self.getProductUseCase = getProductUseCase
+    }
+    
+    func setupInitialSelection(for product: Product) {
+        if let firstVariant = product.variants.first(where: { $0.isAvailable }) ?? product.variants.first {
+            self.selectedVariant = firstVariant
+            self.selectedOptions = firstVariant.selectedOptions
+        }
     }
     
     func loadProduct(id: String) async {
@@ -39,11 +51,32 @@ final class ProductDetailsViewModel: ObservableObject {
         await loadProduct(id: id)
     }
     
-    func selectVariant(_ variant: ProductVariant) {
-        self.selectedVariant = variant
+
+    func selectOption(name: String, value: String) {
+        selectedOptions[name] = value
+        guard case .success(let product) = state else { return }
+        
+        self.selectedVariant = product.variants.first { variant in
+            return selectedOptions.allSatisfy { key, val in
+                variant.selectedOptions[key] == val
+            }
+        }
     }
     
-    // MARK: - UI Formatters
+    func addToCart() {
+        guard let variant = selectedVariant else { return }
+        print("🛒 Added \(quantity) of variant [\(variant.id)] to Cart!")
+    }
+    
+    func increaseQuantity() {
+        quantity += 1
+    }
+        
+    func decreaseQuantity() {
+        if quantity > 1 {
+            quantity -= 1
+        }
+    }
     
     var displayedPrice: String {
         guard case .success(let product) = state else { return "" }
@@ -63,9 +96,9 @@ final class ProductDetailsViewModel: ObservableObject {
     
     var displayedCompareAtPrice: String? {
         guard case .success = state,
-              let selectedVariant = selectedVariant,
-              let compareAtPrice = selectedVariant.compareAtPrice,
-              compareAtPrice > selectedVariant.price else {
+            let selectedVariant = selectedVariant,
+            let compareAtPrice = selectedVariant.compareAtPrice,
+            compareAtPrice > selectedVariant.price else {
             return nil
         }
         
@@ -92,42 +125,20 @@ final class ProductDetailsViewModel: ObservableObject {
         return "\(PriceFormatter.format(minTotal)) - \(PriceFormatter.format(maxTotal))"
     }
     
-    // MARK: - Actions
-    
-    func addToCart() {
-        guard let variant = selectedVariant else { return }
-        print("🛒 Added \(quantity) of variant [\(variant.id)] to Cart!")
-    }
-    
-    func increaseQuantity() {
-        quantity += 1
-    }
-        
-    func decreaseQuantity() {
-        if quantity > 1 {
-            quantity -= 1
-        }
-    }
-    
     var stockStatus: StockStatus {
-            guard let variant = selectedVariant else { return .outOfStock }
-            
-            if variant.isAvailable {
-                if let qty = variant.inventoryQuantity, qty > 0 {
-                    return .inStock(quantity: qty)
-                }
-                return .available
+        guard let variant = selectedVariant else { return .unavailable }
+        if variant.isAvailable {
+            if let qty = variant.inventoryQuantity, qty > 0 {
+                return .inStock(quantity: qty)
             }
-            return .outOfStock
+            return .available
         }
+        return .outOfStock
+    }
     
-        
-
-        
     var isAddToCartDisabled: Bool {
-            if case .outOfStock = stockStatus {
-                return true
-            }
-            return false
-        }
+        if case .outOfStock = stockStatus { return true }
+        if case .unavailable = stockStatus { return true }
+        return false
+    }
 }
