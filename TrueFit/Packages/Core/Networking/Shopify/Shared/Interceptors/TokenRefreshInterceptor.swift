@@ -7,6 +7,7 @@
 
 import Foundation
 import Apollo
+import ApolloAPI
 
 public class TokenRefreshInterceptor: ApolloInterceptor {
     public var id: String = UUID().uuidString

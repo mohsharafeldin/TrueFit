@@ -23,6 +23,8 @@ enum APIErrorMapper {
             return .unknown(messages.joined(separator: ", "))
         case .noInternetConnection:
             return .noInternet
+        case .noData:
+            return .unknown("No data returned from API")
         case .unknown(let error):
             return .unknown(error.localizedDescription)
         }
