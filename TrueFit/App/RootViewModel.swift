@@ -44,6 +44,9 @@ class RootViewModel: ObservableObject {
         self.preferencesManager = preferencesManager
         
         authManager.$isAuthenticated
+        
+            .dropFirst()
+            .receive(on: RunLoop.main)
             .sink { [weak self] isAuthenticated in self?.evaluateAuthState()
             }
             .store(in: &cancellables)
