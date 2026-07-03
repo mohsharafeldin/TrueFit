@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @StateObject var viewModel: AuthViewModel
+    @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         ScrollView {
@@ -36,14 +36,14 @@ struct SignUpView: View {
                             Text("First Name")
                                 .trueFitTextStyle(.footnote)
                                 .foregroundColor(.textPrimary)
-                            AuthTextField(placeholder: "First name", text: $viewModel.firstName, iconName: "person")
+                            AuthTextField(placeholder: "First name", text: $viewModel.firstName, iconName: "person", keyboardType: .default)
                         }
                         
                         VStack(alignment: .leading, spacing: Spacing.xs) {
                             Text("Last Name")
                                 .trueFitTextStyle(.footnote)
                                 .foregroundColor(.textPrimary)
-                            AuthTextField(placeholder: "Last name", text: $viewModel.lastName, iconName: "person")
+                            AuthTextField(placeholder: "Last name", text: $viewModel.lastName, iconName: "person", keyboardType: .default)
                         }
                     }
                     
@@ -51,7 +51,7 @@ struct SignUpView: View {
                         Text("Email")
                             .trueFitTextStyle(.footnote)
                             .foregroundColor(.textPrimary)
-                        AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope")
+                        AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope", keyboardType: .emailAddress)
                     }
                     
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -69,7 +69,7 @@ struct SignUpView: View {
                 
                 // Primary Action
                 PrimaryButton(title: "Create Account") {
-                    // Route to Verification or Trigger Sign Up
+                    viewModel.signUp()
                 }
                 .padding(.horizontal, Spacing.md)
                 .padding(.top, Spacing.sm)
@@ -91,6 +91,20 @@ struct SignUpView: View {
                 .padding(.horizontal, Spacing.md)
                 .padding(.top, Spacing.lg)
                 
+                // Already have account
+                HStack {
+                    Text("Already have an account?")
+                        .trueFitTextStyle(.footnote)
+                        .foregroundColor(.textSecondary)
+                    Button("Sign In") {
+                        viewModel.goBack()
+                    }
+                    .trueFitTextStyle(.footnote)
+                    .foregroundColor(.brandPrimary)
+                    .fontWeight(.semibold)
+                }
+                .padding(.top, Spacing.md)
+                
                 Spacer(minLength: Spacing.xxxxl)
             }
         }
@@ -99,9 +113,25 @@ struct SignUpView: View {
             Color.trueFitBackground
                 .ignoresSafeArea(edges: .bottom)
         )
+        .overlay {
+            if viewModel.isLoading {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                ProgressView()
+                    .tint(.white)
+                    .scaleEffect(1.5)
+            }
+        }
+        .alert(viewModel.errorMessage ?? "", isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) {
+                viewModel.errorMessage = nil
+            }
+        }
     }
 }
 
-#Preview {
-    SignUpView(viewModel: PreviewMocks.makeAuthViewModel())
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpView(viewModel: PreviewMocks.makeAuthViewModel())
+    }
 }

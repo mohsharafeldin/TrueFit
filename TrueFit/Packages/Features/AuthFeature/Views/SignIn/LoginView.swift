@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var viewModel: AuthViewModel
+    @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         ScrollView {
@@ -33,7 +33,7 @@ struct LoginView: View {
                         Text("Email")
                             .trueFitTextStyle(.footnote)
                             .foregroundColor(.textPrimary)
-                        AuthTextField(placeholder: "Enter your email or phone number", text: $viewModel.email, iconName: "envelope")
+                        AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope", keyboardType: .emailAddress)
                     }
                     
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -46,7 +46,7 @@ struct LoginView: View {
                     HStack {
                         Spacer()
                         Button("Forgot Password?") {
-                            // Route to Forgot Password
+                            viewModel.showForgotPasswordSheet = true
                         }
                         .trueFitTextStyle(.callout)
                         .foregroundColor(.brandPrimary)
@@ -82,6 +82,20 @@ struct LoginView: View {
                 .padding(.horizontal, Spacing.md)
                 .padding(.top, Spacing.lg)
                 
+                // Sign Up Navigation
+                HStack {
+                    Text("Don't have an account?")
+                        .trueFitTextStyle(.footnote)
+                        .foregroundColor(.textSecondary)
+                    Button("Sign Up") {
+                        viewModel.navigateToSignUp()
+                    }
+                    .trueFitTextStyle(.footnote)
+                    .foregroundColor(.brandPrimary)
+                    .fontWeight(.semibold)
+                }
+                .padding(.top, Spacing.md)
+                
                 Spacer(minLength: Spacing.xxxxl)
             }
         }
@@ -90,9 +104,31 @@ struct LoginView: View {
             Color.trueFitBackground
                 .ignoresSafeArea(edges: .bottom)
         )
+        .overlay {
+            if viewModel.isLoading {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                ProgressView()
+                    .tint(.white)
+                    .scaleEffect(1.5)
+            }
+        }
+        .alert(viewModel.successMessage ?? viewModel.errorMessage ?? "", isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) {
+                viewModel.errorMessage = nil
+                viewModel.successMessage = nil
+            }
+        }
+        .sheet(isPresented: $viewModel.showForgotPasswordSheet) {
+            ForgotPasswordView(viewModel: viewModel)
+                .presentationDetents([.height(350)])
+                .presentationDragIndicator(.hidden)
+        }
     }
 }
 
-#Preview {
-    LoginView(viewModel: PreviewMocks.makeAuthViewModel())
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView(viewModel: PreviewMocks.makeAuthViewModel())
+    }
 }

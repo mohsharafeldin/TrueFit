@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 enum AppState {
     case splash
     case onboarding
@@ -24,6 +25,7 @@ private extension String {
 class RootViewModel: ObservableObject {
 
     @Published var currentState: AppState = .splash
+    private var cancellables = Set<AnyCancellable>()
 
     private let authManager: AuthManager
     private let authRouter: AuthRouter
@@ -41,7 +43,10 @@ class RootViewModel: ObservableObject {
         self.appRouter   = appRouter
         self.preferencesManager = preferencesManager
         
-        Task { await initializeApp() }
+        authManager.$isAuthenticated
+            .sink { [weak self] isAuthenticated in self?.evaluateAuthState()
+            }
+            .store(in: &cancellables)
     }
 
 
@@ -49,7 +54,10 @@ class RootViewModel: ObservableObject {
         try? await Task.sleep(nanoseconds: splashDuration)
         routeAfterSplash()
     }
-
+    func splashDidFinish() {
+            routeAfterSplash()
+    }
+    
     private func routeAfterSplash() {
         let hasSeenOnboarding = preferencesManager.hasSeenOnboarding
         guard hasSeenOnboarding else {

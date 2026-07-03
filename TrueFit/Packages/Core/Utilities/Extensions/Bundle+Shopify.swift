@@ -2,6 +2,8 @@
 //  Bundle+Shopify.swift
 //  TrueFit
 //
+//  Created by Omar Khaled Jaafar on 01/07/2026.
+//
 
 import Foundation
 
@@ -21,6 +23,17 @@ extension Bundle {
         guard let token = object(forInfoDictionaryKey: "ShopifyAdminAPIToken") as? String, !token.isEmpty else {
             #if DEBUG
             fatalError("ShopifyAdminAPIToken is missing in Info.plist or Config.xcconfig")
+            #else
+            return ""
+            #endif
+        }
+        return token
+    }
+    
+    var shopifyStorefrontToken: String {
+        guard let token = object(forInfoDictionaryKey: "ShopifyStorefrontToken") as? String, !token.isEmpty else {
+            #if DEBUG
+            fatalError("ShopifyStorefrontToken is missing in Info.plist or Config.xcconfig")
             #else
             return ""
             #endif
@@ -50,3 +63,4 @@ extension Bundle {
         return version
     }
 }
+

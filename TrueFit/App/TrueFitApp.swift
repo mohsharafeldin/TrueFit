@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseCore
 import CoreData
 import GoogleSignIn
 import FirebaseCore
@@ -16,8 +17,6 @@ struct TrueFitApp: App {
         FirebaseApp.configure()
     }
     
-   
-
     var body: some Scene {
         WindowGroup {
             RootView(viewModel: diContainer.makeRootViewModel())

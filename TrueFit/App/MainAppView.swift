@@ -14,17 +14,22 @@ struct MainAppView: View {
     
     var body: some View {
         NavigationStack(path: $appRouter.path) {
-            Text("Home Screen (TabBar) Placeholder")
+            HomeView(viewModel: container.makeHomeViewModel())
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .home:
-                        Text("Home Screen")
+                        HomeView(viewModel: container.makeHomeViewModel())
                     case .cart:
                         Text("Cart Screen")
                     case .checkout:
                         Text("Checkout Screen")
                     case .profile:
                         Text("Profile Screen")
+                    case .productDetails(let id):
+                        ProductDetailsView(
+                            productId: id,
+                            viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
+                        )
                         
                     }
                 }

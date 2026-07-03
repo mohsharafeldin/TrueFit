@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ForgotPasswordView: View {
-    @StateObject var viewModel: AuthViewModel
+    @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -39,13 +39,14 @@ struct ForgotPasswordView: View {
                     .trueFitTextStyle(.footnote)
                     .foregroundColor(.textPrimary)
                 
-                AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope")
+                AuthTextField(placeholder: "Enter your email", text: $viewModel.email, iconName: "envelope", keyboardType: .emailAddress)
             }
             .padding(.horizontal, Spacing.md)
             
-            PrimaryButton(title: "Send Code") {
-                // Action to send code
+            PrimaryButton(title: "Send Reset Link") {
+                viewModel.resetPassword()
             }
+            .disabled(viewModel.isLoading)
             .padding(.horizontal, Spacing.md)
             .padding(.top, Spacing.sm)
             
@@ -55,12 +56,14 @@ struct ForgotPasswordView: View {
     }
 }
 
-#Preview {
-    Color.trueFitBackground
-        .ignoresSafeArea()
-        .sheet(isPresented: .constant(true)) {
-            ForgotPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
-                .presentationDetents([.height(350)])
-                .presentationDragIndicator(.hidden)
-        }
+struct ForgotPasswordView_Previews: PreviewProvider {
+    static var previews: some View {
+        Color.trueFitBackground
+            .ignoresSafeArea()
+            .sheet(isPresented: .constant(true)) {
+                ForgotPasswordView(viewModel: PreviewMocks.makeAuthViewModel())
+                    .presentationDetents([.height(350)])
+                    .presentationDragIndicator(.hidden)
+            }
+    }
 }

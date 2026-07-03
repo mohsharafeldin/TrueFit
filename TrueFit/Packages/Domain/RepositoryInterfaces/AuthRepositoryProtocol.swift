@@ -8,8 +8,9 @@
 import Foundation
 
 protocol AuthRepositoryProtocol {
-    func login(email: String, password: String) async throws -> String
-    func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> String
-    func resetPassword(email: String) async throws -> Void
+    func login(email: String, password: String) async throws -> AuthResult
+    func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> AuthResult
+    func resetPassword(email: String) async throws
+    func signOut() async throws
     func loginWithGoogle() async throws -> String
 }

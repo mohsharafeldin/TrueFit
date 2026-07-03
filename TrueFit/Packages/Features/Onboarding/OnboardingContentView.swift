@@ -9,16 +9,30 @@ import SwiftUI
 
 struct OnboardingContentView: View {
     var index: Int = 1
-    var title: String = ""
-    var desc: String = ""
-    var img = "onBoradingOne"
-    var skipBtn: () -> Void = {}
-    var nextBtn: () -> Void = {}
-
+    //var title: String = ""
+    //var desc: String = ""
+    //var img = "onBoradingOne"
+    var onComplete: () -> Void
+    
+    @State private var currentIndex = 1
+    let pages: [OnboardingPage] = [
+        OnboardingPage(title: "Shop Trends", desc: "Discover the latest fashion trends.", img: "onBoradingOne"),
+        OnboardingPage(title: "Easy Pay", desc: "Safe and secure payments.", img: "onboarding2"),
+        OnboardingPage(title: "Save Your Favorites", desc: "Browse thousands of premium products curated just for you.", img: "onboarding3")
+        ]
     var body: some View {
+        let currentPage = pages[currentIndex - 1]
+        let skipBtn = { onComplete() }
+        let nextBtn = {
+            if currentIndex < 3 {
+                withAnimation { currentIndex += 1 }
+            } else {
+                onComplete()
+            }
+        }
         GeometryReader { geo in
             ZStack {
-                Image(img)
+                Image(currentPage.img)
                     .resizable()
                     .scaledToFill()
                     .frame(width: geo.size.width, height: geo.size.height)
@@ -45,20 +59,20 @@ struct OnboardingContentView: View {
 
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text(title)
+                            Text(currentPage.title)
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
                                 .lineLimit(3)
 
-                            Text(desc)
+                            Text(currentPage.desc)
                                 .font(.title3)
                                 .foregroundColor(.white.opacity(0.7))
                                 .multilineTextAlignment(.leading)
                                 .lineLimit(2)
 
-                            switch index {
+                            switch currentIndex {
                             case 1:
                                 ViewIndex(
                                     firstRectColor: .green,
@@ -139,7 +153,14 @@ struct ViewIndex: View {
         }
     }
 }
-
-#Preview {
-    OnboardingContentView()
+struct OnboardingPage {
+    let title: String
+    let desc: String
+    let img: String
 }
+
+//struct OnboardingContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnboardingContentView()
+//    }
+//}
