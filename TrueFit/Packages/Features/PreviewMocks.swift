@@ -10,6 +10,10 @@ import SwiftUI
 
 // Mock Repository
 class MockAuthRepository: AuthRepositoryProtocol {
+    func loginWithGoogle() async throws -> String {
+        return "dummy_token" 
+    }
+    
     func login(email: String, password: String) async throws -> String { return "dummy_token" }
     func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> String { return "dummy_token" }
     func resetPassword(email: String) async throws {}

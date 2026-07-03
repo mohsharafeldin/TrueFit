@@ -8,6 +8,10 @@
 import Foundation
 
 class AuthRepository: AuthRepositoryProtocol {
+    func loginWithGoogle() async throws -> String {
+        return "dummy_token_123"
+    }
+    
         
     func login(email: String, password: String) async throws -> String {
         // TODO: API Call

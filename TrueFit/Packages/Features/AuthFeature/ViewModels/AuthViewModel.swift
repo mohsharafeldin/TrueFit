@@ -47,4 +47,18 @@ class AuthViewModel: ObservableObject {
             isLoading = false
         }
     }
+    func loginWithGoogle() {
+            isLoading = true
+            Task {
+                do {
+                    let token = try await authRepository.loginWithGoogle()
+                    
+                    authManager.login(token: token)
+                    
+                } catch {
+                    self.errorMessage = error.localizedDescription
+                }
+                isLoading = false
+            }
+        }
 }
