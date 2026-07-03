@@ -17,6 +17,7 @@ enum APIError: Error, LocalizedError {
     case graphQLErrors([String])
     case noInternetConnection
     case unknown(Error)
+    case noData
     
     var errorDescription: String? {
         switch self {
@@ -36,6 +37,8 @@ enum APIError: Error, LocalizedError {
         case .graphQLErrors(let messages): return "GraphQL Errors: \(messages.joined(separator: ", "))"
         case .noInternetConnection: return "No internet connection."
         case .unknown(let error): return "An unknown error occurred: \(error.localizedDescription)"
+        case .noData:
+            return "No data received from the server."  
         }
     }
 }
