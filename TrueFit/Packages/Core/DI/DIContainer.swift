@@ -44,6 +44,9 @@ final class DIContainer: ObservableObject {
     // MARK: - Networking
     let restClient: APIClientProtocol = RESTClient()
     
+    private lazy var apolloManager: ApolloManager = {
+            ApolloManager(authManager: authManager)
+        }()
     // MARK: - AUTH FEATURE
     
     // Auth Data Sources
@@ -88,6 +91,21 @@ final class DIContainer: ObservableObject {
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
     
     
+    // MARK: - CART FEATURE
+    
+    // GraphQL & Cart Data Sources
+    // TODO: Add SQLiteNormalizedCache to ApolloManager when offline support is needed
+    private lazy var cartRemoteDataSource: CartRemoteDataSourceProtocol = CartRemoteDataSource(apollo: apolloManager)
+    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource)
+    
+    // Cart Use Cases
+    private lazy var getCartUseCase = GetCartUseCase(repository: cartRepository)
+    private lazy var addToCartUseCase = AddToCartUseCase(repository: cartRepository)
+    private lazy var updateCartLineUseCase = UpdateCartLineUseCase(repository: cartRepository)
+    private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
+    private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
+    
+    
     // MARK: - Init
     public init() {}
     
@@ -128,5 +146,15 @@ final class DIContainer: ObservableObject {
     
     func makeCurrencyConverterViewModel() -> CurrencyConverterViewModel {
         return CurrencyConverterViewModel(getExchangeRatesUseCase: getExchangeRatesUseCase)
+    }
+    
+    public func makeCartViewModel() -> CartViewModel {
+        CartViewModel(
+            getCartUseCase: getCartUseCase,
+            addToCartUseCase: addToCartUseCase,
+            updateCartLineUseCase: updateCartLineUseCase,
+            removeCartLineUseCase: removeCartLineUseCase,
+            applyDiscountUseCase: applyDiscountUseCase
+        )
     }
 }
