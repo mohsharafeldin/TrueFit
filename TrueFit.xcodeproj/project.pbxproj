@@ -773,6 +773,7 @@
 		33AA80E22FEFE3D700A20AF9 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				4CB476932FF9A9A700BBA891 /* Adress */,
 				33AF9FBD2FF7FEF200628D96 /* Favorite */,
 				0C67AD062FF81FE7006A3E3B /* Cart */,
 				0C09B6BD2FF63E1A00F4CC3D /* Shared */,
@@ -1004,6 +1005,29 @@
 				4C8CBADE2FF02D1600CA6538 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		4CB476932FF9A9A700BBA891 /* Adress */ = {
+			isa = PBXGroup;
+			children = (
+				4CB476952FF9A9BA00BBA891 /* ViewModel */,
+				4CB476942FF9A9B300BBA891 /* View */,
+			);
+			path = Adress;
+			sourceTree = "<group>";
+		};
+		4CB476942FF9A9B300BBA891 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4CB476952FF9A9BA00BBA891 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		519E694443BBE6E8B63A0571 /* ViewModel */ = {
