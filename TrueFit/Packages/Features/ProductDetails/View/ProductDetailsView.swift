@@ -46,6 +46,7 @@ struct ProductDetailsView: View {
                 await viewModel.loadProduct(id: productId)
             }
         }
+        .trueFitToast(message: $viewModel.toastMessage, style: viewModel.toastStyle)
         .navigationBarHidden(true)
     }
     

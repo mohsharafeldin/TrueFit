@@ -13,15 +13,28 @@ final class ProductDetailsViewModel: ObservableObject {
     
     // MARK: - Dependencies
     private let getProductUseCase: GetProductUseCase
+    private let addToCartUseCase: AddToCartUseCase
+    private var preferencesManager: PreferencesManagerProtocol
+    private let cartState: CartState
     
     // MARK: - Published Properties
     @Published var state: ViewState<Product> = .idle
     @Published var selectedVariant: ProductVariant?
     @Published var quantity: Int = 1
     @Published var selectedOptions: [String: String] = [:]
+    @Published var isAddingToCart: Bool = false
+    @Published var addToCartError: AppError? = nil
+    @Published var toastMessage: String? = nil
+    @Published var toastStyle: ToastStyle = .success
     
-    init(getProductUseCase: GetProductUseCase) {
+    init(getProductUseCase: GetProductUseCase,
+         addToCartUseCase: AddToCartUseCase,
+         preferencesManager: PreferencesManagerProtocol,
+         cartState: CartState) {
         self.getProductUseCase = getProductUseCase
+        self.addToCartUseCase = addToCartUseCase
+        self.preferencesManager = preferencesManager
+        self.cartState = cartState
     }
     
     func setupInitialSelection(for product: Product) {
@@ -63,19 +76,50 @@ final class ProductDetailsViewModel: ObservableObject {
         }
     }
     
-    func addToCart() {
+    func addToCart() async {
         guard let variant = selectedVariant else { return }
-        print("🛒 Added \(quantity) of variant [\(variant.id)] to Cart!")
+        
+        isAddingToCart = true
+        defer { isAddingToCart = false }
+        
+        let globalVariantId = variant.id.hasPrefix("gid://") ? variant.id : "gid://shopify/ProductVariant/\(variant.id)"
+        
+        do {
+            let cart = try await addToCartUseCase.execute(cartId: preferencesManager.cartId, variantId: globalVariantId, quantity: quantity)
+            preferencesManager.cartId = cart.id
+            cartState.updateCount(cart.totalQuantity)
+            toastMessage = "Product added to cart successfully"
+            toastStyle = .success
+        } catch {
+            let appError = error as? AppError ?? .unknown(error.localizedDescription)
+            ErrorLogger.log(appError, context: "ProductDetailsViewModel.addToCart")
+            addToCartError = appError
+            toastMessage = appError.userMessage
+            toastStyle = .error
+        }
     }
     
     func increaseQuantity() {
-        quantity += 1
+        if case .inStock(let maxQty) = stockStatus {
+            if quantity < maxQty {
+                quantity += 1
+            }
+        } else {
+            quantity += 1
+        }
     }
         
     func decreaseQuantity() {
         if quantity > 1 {
             quantity -= 1
         }
+    }
+    
+    var maxQuantity: Int? {
+        if case .inStock(let maxQty) = stockStatus {
+            return maxQty
+        }
+        return nil
     }
     
     var displayedPrice: String {
@@ -151,6 +195,7 @@ final class ProductDetailsViewModel: ObservableObject {
     var isAddToCartDisabled: Bool {
         if case .outOfStock = stockStatus { return true }
         if case .unavailable = stockStatus { return true }
+        if let maxQty = maxQuantity, quantity > maxQty { return true }
         return false
     }
 }
