@@ -44,6 +44,9 @@ final class DIContainer: ObservableObject {
     // MARK: - Networking
     let restClient: APIClientProtocol = RESTClient()
     
+    private lazy var apolloManager: ApolloManager = {
+            ApolloManager(authManager: authManager)
+        }()
     // MARK: - AUTH FEATURE
     
     // Auth Data Sources
@@ -92,6 +95,36 @@ final class DIContainer: ObservableObject {
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
     
     
+    // MARK: - CART FEATURE
+    
+    // GraphQL & Cart Data Sources
+    // TODO: Add SQLiteNormalizedCache to ApolloManager when offline support is needed
+    private lazy var cartRemoteDataSource: CartRemoteDataSourceProtocol = CartRemoteDataSource(apollo: apolloManager)
+    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource)
+    
+    // Cart Use Cases
+    private lazy var getCartUseCase = GetCartUseCase(repository: cartRepository)
+    private lazy var addToCartUseCase = AddToCartUseCase(repository: cartRepository)
+    private lazy var updateCartLineUseCase = UpdateCartLineUseCase(repository: cartRepository)
+    private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
+    private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
+    
+    // MARK: - FAVORITES FEATURE
+    
+    // Favorites Data Sources & Repository
+    private lazy var favoritesLocalDataSource: FavoritesLocalDataSourceProtocol = {
+        FavoritesLocalDataSource(persistenceController: persistenceController)
+    }()
+    
+    private lazy var favoritesRepository: FavoritesRepositoryProtocol = {
+        FavoritesRepository(localDataSource: favoritesLocalDataSource)
+    }()
+    
+    // Favorites Use Cases
+    private lazy var getFavoritesUseCase = GetFavoritesUseCase(repository: favoritesRepository)
+    private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
+    lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
+    
     // MARK: - Init
     public init() {}
     
@@ -122,16 +155,40 @@ final class DIContainer: ObservableObject {
     public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
-            fetchCollectionsUseCase: fetchCollectionsUseCase
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
         )
     }
 
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
-        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        let viewModel = ProductDetailsViewModel(
+            getProductUseCase: getProductUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
+        )
         return viewModel
     }
     
     func makeCurrencyConverterViewModel() -> CurrencyConverterViewModel {
         return CurrencyConverterViewModel(getExchangeRatesUseCase: getExchangeRatesUseCase)
+    }
+    
+    public func makeCartViewModel() -> CartViewModel {
+        CartViewModel(
+            getCartUseCase: getCartUseCase,
+            addToCartUseCase: addToCartUseCase,
+            updateCartLineUseCase: updateCartLineUseCase,
+            removeCartLineUseCase: removeCartLineUseCase,
+            applyDiscountUseCase: applyDiscountUseCase
+        )
+    }
+    
+    func makeFavoritesViewModel() -> FavoritesViewModel {
+        FavoritesViewModel(
+            getFavoritesUseCase: getFavoritesUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: authManager
+        )
     }
 }

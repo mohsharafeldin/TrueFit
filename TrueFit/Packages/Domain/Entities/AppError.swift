@@ -29,6 +29,7 @@ enum AppError: Error, LocalizedError, Equatable {
     
     // Business
     case featureUnavailable(String)   // feature flag off, region locked etc.
+    case persistenceFailure           // CoreData save/fetch/delete failed
     
     // Fallback
     case unknown(String)        // message from the original error
@@ -55,6 +56,8 @@ enum AppError: Error, LocalizedError, Equatable {
             return "We encountered an issue processing the data. Please try again."
         case .featureUnavailable(let message):
             return message
+        case .persistenceFailure:
+            return "Failed to save or retrieve local data. Please try again."
         case .unknown(_):
             return "An unexpected error occurred. Please try again later."
         }
@@ -62,7 +65,7 @@ enum AppError: Error, LocalizedError, Equatable {
     
     var isRetryable: Bool {
         switch self {
-        case .noInternet, .serverError, .rateLimited, .unknown:
+        case .noInternet, .serverError, .rateLimited, .unknown, .persistenceFailure:
             return true
         case .unauthorized, .forbidden, .notFound, .conflict, .invalidRequest, .decodingFailed, .featureUnavailable:
             return false
@@ -75,7 +78,7 @@ enum AppError: Error, LocalizedError, Equatable {
             return .low
         case .notFound, .rateLimited, .featureUnavailable, .noInternet:
             return .medium
-        case .unauthorized, .serverError:
+        case .unauthorized, .serverError, .persistenceFailure:
             return .high
         case .forbidden, .invalidRequest, .conflict:
             return .critical

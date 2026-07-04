@@ -1,0 +1,84 @@
+fragment MoneyFields on MoneyV2 {
+  amount
+  currencyCode
+}
+
+fragment CartLineFields on CartLine {
+  id
+  quantity
+  merchandise {
+    ... on ProductVariant {
+      id
+      title
+      price { ...MoneyFields }
+      compareAtPrice { ...MoneyFields }
+      product {
+        id
+        title
+        handle
+        featuredImage { url altText width height }
+      }
+    }
+  }
+  cost {
+    totalAmount { ...MoneyFields }
+    compareAtAmountPerQuantity { ...MoneyFields }
+  }
+}
+
+fragment CartFields on Cart {
+  id
+  totalQuantity
+  lines(first: 50) {
+    edges { node { ...CartLineFields } }
+  }
+  cost {
+    subtotalAmount { ...MoneyFields }
+    totalAmount { ...MoneyFields }
+    totalTaxAmount { ...MoneyFields }
+  }
+  discountCodes {
+    code
+    applicable
+  }
+  checkoutUrl
+}
+
+query GetCart($cartId: ID!) {
+  cart(id: $cartId) { ...CartFields }
+}
+
+mutation CreateCart($input: CartInput!) {
+  cartCreate(input: $input) {
+    cart { ...CartFields }
+    userErrors { field message code }
+  }
+}
+
+mutation AddCartLines($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart { ...CartFields }
+    userErrors { field message code }
+  }
+}
+
+mutation UpdateCartLines($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+  cartLinesUpdate(cartId: $cartId, lines: $lines) {
+    cart { ...CartFields }
+    userErrors { field message code }
+  }
+}
+
+mutation RemoveCartLines($cartId: ID!, $lineIds: [ID!]!) {
+  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+    cart { ...CartFields }
+    userErrors { field message code }
+  }
+}
+
+mutation ApplyDiscountCode($cartId: ID!, $discountCodes: [String!]!) {
+  cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+    cart { ...CartFields }
+    userErrors { field message code }
+  }
+}

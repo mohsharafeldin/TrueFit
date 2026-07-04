@@ -82,3 +82,74 @@ struct PreviewMocks {
         )
     }
 }
+
+
+// MARK: - Mock Favorites Repository
+
+class MockFavoritesRepository: FavoritesRepositoryProtocol {
+    var mockFavorites: [FavoriteItem] = [
+        FavoriteItem(
+            id: "mock-1",
+            title: "Nike Air Force 1",
+            price: 120.0,
+            vendor: "Nike",
+            imageURL: URL(string: "https://via.placeholder.com/150"),
+            addedAt: Date()
+        ),
+        FavoriteItem(
+            id: "mock-2",
+            title: "Adidas Ultraboost Light",
+            price: 190.0,
+            vendor: "Adidas",
+            imageURL: URL(string: "https://via.placeholder.com/150"),
+            addedAt: Date().addingTimeInterval(-86400)
+        ),
+        FavoriteItem(
+            id: "mock-3",
+            title: "Classic Denim Jacket",
+            price: 85.50,
+            vendor: "Levi's",
+            imageURL: nil,
+            addedAt: Date().addingTimeInterval(-172800)
+        )
+    ]
+    
+    func getAllFavorites() async throws -> [FavoriteItem] {
+        return mockFavorites
+    }
+    
+    func addFavorite(_ item: FavoriteItem) async throws {
+        mockFavorites.append(item)
+    }
+    
+    func removeFavorite(productId: String) async throws {
+        mockFavorites.removeAll { $0.id == productId }
+    }
+    
+    func isFavorite(productId: String) async throws -> Bool {
+        return mockFavorites.contains { $0.id == productId }
+    }
+}
+
+// MARK: - Preview ViewModel Creator Extension
+
+extension PreviewMocks {
+    
+    @MainActor
+    static func makeFavoritesViewModel(isEmpty: Bool = false) -> FavoritesViewModel {
+        let mockRepo = MockFavoritesRepository()
+        
+        if isEmpty {
+            mockRepo.mockFavorites = []
+        }
+        
+        let getFavoritesUseCase = GetFavoritesUseCase(repository: mockRepo)
+        let toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: mockRepo)
+        
+        return FavoritesViewModel(
+            getFavoritesUseCase: getFavoritesUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: MockAuthManager()
+        )
+    }
+}
