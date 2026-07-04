@@ -27,6 +27,7 @@ final class HomeViewModel: ObservableObject {
 
     @Published var selectedTab: HomeTab = .home
     @Published var products: [Product] = []
+    @Published var favoriteStatuses: [String: Bool] = [:]
     @Published var collections: [ProductCollection] = []
     @Published var isLoadingProducts = false
     @Published var isLoadingCollections = false
@@ -36,15 +37,21 @@ final class HomeViewModel: ObservableObject {
 
     private let fetchNewArrivalsUseCase: FetchNewArrivalsUseCase
     private let fetchCollectionsUseCase: FetchCollectionsUseCase
+    private let toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private let isFavoriteUseCase: IsFavoriteUseCase
 
     // MARK: - Init
 
     init(
         fetchNewArrivalsUseCase: FetchNewArrivalsUseCase,
-        fetchCollectionsUseCase: FetchCollectionsUseCase
+        fetchCollectionsUseCase: FetchCollectionsUseCase,
+        toggleFavoriteUseCase: ToggleFavoriteUseCase,
+        isFavoriteUseCase: IsFavoriteUseCase
     ) {
         self.fetchNewArrivalsUseCase = fetchNewArrivalsUseCase
         self.fetchCollectionsUseCase = fetchCollectionsUseCase
+        self.toggleFavoriteUseCase = toggleFavoriteUseCase
+        self.isFavoriteUseCase = isFavoriteUseCase
     }
 
     // MARK: - Public Methods
@@ -58,6 +65,24 @@ final class HomeViewModel: ObservableObject {
     func refreshData() {
         Task {
             await loadAllData()
+        }
+    }
+    
+    func toggleFavorite(product: Product) {
+        let currentValue = favoriteStatuses[product.id] ?? false
+        // Optimistic UI update
+        favoriteStatuses[product.id] = !currentValue
+        
+        Task {
+            do {
+                let newValue = try await toggleFavoriteUseCase.execute(item: product.toFavoriteItem())
+                favoriteStatuses[product.id] = newValue
+            } catch {
+                // Revert on failure
+                favoriteStatuses[product.id] = currentValue
+                errorMessage = error.localizedDescription
+                ErrorLogger.log(error as? AppError ?? AppError.unknown(error.localizedDescription), context: "HomeViewModel.toggleFavorite")
+            }
         }
     }
 
@@ -78,6 +103,7 @@ final class HomeViewModel: ObservableObject {
 
         do {
             products = try await fetchNewArrivalsUseCase.execute(limit: 10)
+            await checkFavoriteStatuses()
         } catch {
             #if DEBUG
             print("❌ [HomeViewModel] Failed to load products: \(error.localizedDescription)")
@@ -98,6 +124,17 @@ final class HomeViewModel: ObservableObject {
             #endif
             if errorMessage == nil {
                 errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func checkFavoriteStatuses() async {
+        for product in products {
+            do {
+                let isFav = try await isFavoriteUseCase.execute(productId: product.id)
+                favoriteStatuses[product.id] = isFav
+            } catch {
+                favoriteStatuses[product.id] = false
             }
         }
     }

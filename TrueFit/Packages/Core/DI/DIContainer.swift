@@ -105,6 +105,21 @@ final class DIContainer: ObservableObject {
     private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
     private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
     
+    // MARK: - FAVORITES FEATURE
+    
+    // Favorites Data Sources & Repository
+    private lazy var favoritesLocalDataSource: FavoritesLocalDataSourceProtocol = {
+        FavoritesLocalDataSource(persistenceController: persistenceController)
+    }()
+    
+    private lazy var favoritesRepository: FavoritesRepositoryProtocol = {
+        FavoritesRepository(localDataSource: favoritesLocalDataSource)
+    }()
+    
+    // Favorites Use Cases
+    private lazy var getFavoritesUseCase = GetFavoritesUseCase(repository: favoritesRepository)
+    private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
+    lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
     
     // MARK: - Init
     public init() {}
@@ -135,12 +150,18 @@ final class DIContainer: ObservableObject {
     public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
-            fetchCollectionsUseCase: fetchCollectionsUseCase
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
         )
     }
 
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
-        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        let viewModel = ProductDetailsViewModel(
+            getProductUseCase: getProductUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
+        )
         return viewModel
     }
     
@@ -155,6 +176,14 @@ final class DIContainer: ObservableObject {
             updateCartLineUseCase: updateCartLineUseCase,
             removeCartLineUseCase: removeCartLineUseCase,
             applyDiscountUseCase: applyDiscountUseCase
+        )
+    }
+    
+    func makeFavoritesViewModel() -> FavoritesViewModel {
+        FavoritesViewModel(
+            getFavoritesUseCase: getFavoritesUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: authManager
         )
     }
 }
