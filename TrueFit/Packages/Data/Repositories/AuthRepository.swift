@@ -9,21 +9,24 @@ import Foundation
 import FirebaseAuth
 
 public final class AuthRepository: AuthRepositoryProtocol {
-func loginWithGoogle() async throws -> String {
-        return "dummy_token_123"
-    }
+    
+    
+
     private let firebaseDataSource: FirebaseAuthDataSourceProtocol
     private let shopifyDataSource: ShopifyAuthDataSourceProtocol
     private let keychainManager: KeychainManagerProtocol
+    private let googleSignInService:GoogleSignInServiceProtocol
     
     public init(
         firebaseDataSource: FirebaseAuthDataSourceProtocol,
         shopifyDataSource: ShopifyAuthDataSourceProtocol,
-        keychainManager: KeychainManagerProtocol
+        keychainManager: KeychainManagerProtocol,
+        googleSignInService:GoogleSignInServiceProtocol
     ) {
         self.firebaseDataSource = firebaseDataSource
         self.shopifyDataSource = shopifyDataSource
         self.keychainManager = keychainManager
+        self.googleSignInService = googleSignInService
     }
     
     public func login(email: String, password: String) async throws -> AuthResult {
@@ -111,5 +114,58 @@ func loginWithGoogle() async throws -> String {
         // 3. Clear all auth tokens
         try? keychainManager.delete(service: "com.truefit.auth", account: "firebaseToken")
         try? keychainManager.delete(service: "com.truefit.auth", account: "shopifyCustomerToken")
+    }
+    public func loginWithGoogle() async throws -> AuthResult {
+        do {
+            // 1. Authenticate with Google
+            let googleResult = try await googleSignInService.signIn()
+            let email = googleResult.email
+            let fixedPassword = "12345678"
+            
+            let shopifyToken: String
+            let shopifyCustomerId: String
+            
+            // 2. Try to log in first (account might already exist)
+            do {
+                let tokenResponse = try await shopifyDataSource.customerAccessTokenCreate(
+                    email: email,
+                    password: fixedPassword
+                )
+                shopifyToken = AuthMapper.extractShopifyToken(from: tokenResponse)
+                shopifyCustomerId = ""
+                
+            } catch {
+                // Account doesn't exist yet - create it
+                let customer = try await shopifyDataSource.customerCreate(
+                    firstName: googleResult.firstName,
+                    lastName: googleResult.lastName,
+                    email: email,
+                    password: fixedPassword
+                )
+                shopifyCustomerId = AuthMapper.extractShopifyCustomerId(from: customer)
+                
+                let tokenResponse = try await shopifyDataSource.customerAccessTokenCreate(
+                    email: email,
+                    password: fixedPassword
+                )
+                shopifyToken = AuthMapper.extractShopifyToken(from: tokenResponse)
+            }
+            
+            // 3. Save token
+            try keychainManager.save(shopifyToken, service: "com.truefit.auth", account: "shopifyCustomerToken")
+            
+            // 4. Map to Domain entity
+            let user = User(
+                id: shopifyCustomerId,
+                email: email,
+                firstName: googleResult.firstName,
+                lastName: googleResult.lastName,
+                shopifyCustomerId: shopifyCustomerId
+            )
+            return AuthResult(user: user)
+            
+        } catch {
+            throw AuthMapper.mapError(error)
+        }
     }
 }

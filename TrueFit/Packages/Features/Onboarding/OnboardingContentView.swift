@@ -16,8 +16,16 @@ struct OnboardingContentView: View {
     
     @State private var currentIndex = 1
     let pages: [OnboardingPage] = [
-        OnboardingPage(title: "Shop Trends", desc: "Discover the latest fashion trends.", img: "onBoradingOne"),
-        OnboardingPage(title: "Easy Pay", desc: "Safe and secure payments.", img: "onboarding2"),
+        OnboardingPage(
+                title: "Find Your Perfect Style",
+                desc: "Browse thousands of fashion items from top brands and discover outfits that match your unique style.",
+                img: "onboarding1"
+            ),
+        OnboardingPage(
+                title: "Shop with Confidence",
+                desc: "Enjoy a seamless shopping experience with secure payments, exclusive offers, and easy order tracking.",
+                img: "onboarding2"
+            ),
         OnboardingPage(title: "Save Your Favorites", desc: "Browse thousands of premium products curated just for you.", img: "onboarding3")
         ]
     var body: some View {
@@ -70,7 +78,7 @@ struct OnboardingContentView: View {
                                 .font(.title3)
                                 .foregroundColor(.white.opacity(0.7))
                                 .multilineTextAlignment(.leading)
-                                .lineLimit(2)
+                                
 
                             switch currentIndex {
                             case 1:

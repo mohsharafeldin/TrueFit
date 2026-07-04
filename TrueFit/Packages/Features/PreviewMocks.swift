@@ -11,8 +11,8 @@ import SwiftUI
 // MARK: - Mock Repository
 
 class MockAuthRepository: AuthRepositoryProtocol {
-     func loginWithGoogle() async throws -> String {
-        return "dummy_token" 
+     func loginWithGoogle() async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock-id", email: "email", firstName: "Mock", lastName: "User", shopifyCustomerId: "mock-shopify-id"))
     }
     func login(email: String, password: String) async throws -> AuthResult {
         return AuthResult(user: User(id: "mock-id", email: email, firstName: "Mock", lastName: "User", shopifyCustomerId: "mock-shopify-id"))
@@ -48,6 +48,13 @@ class MockLogoutUseCase: LogoutUseCaseProtocol {
     func execute() async throws {}
 }
 
+class MockLoginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol {
+    func execute() async throws -> AuthResult {
+        return AuthResult(user: User(id: "mock-id", email: "email", firstName: "Mock", lastName: "User", shopifyCustomerId: "mock-shopify-id"))
+    }
+}
+
+
 // MARK: - Mock Manager
 
 @MainActor
@@ -71,7 +78,7 @@ struct PreviewMocks {
             logoutUseCase: MockLogoutUseCase(),
             authManager: MockAuthManager(),
             authRouter: AuthRouter(),
-            authRepository: MockAuthRepository()
+            loginWithGoogleUseCase: MockLoginWithGoogleUseCase(),
         )
     }
 }

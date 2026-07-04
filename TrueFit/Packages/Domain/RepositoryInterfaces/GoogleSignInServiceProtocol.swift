@@ -6,6 +6,6 @@
 //
 
 import Foundation
-protocol GoogleSignInServiceProtocol {
-    func signIn() async throws -> GoogleSignInResult
-}
+//protocol GoogleSignInServiceProtocol {
+//    func signIn() async throws -> GoogleSignInResult
+//}

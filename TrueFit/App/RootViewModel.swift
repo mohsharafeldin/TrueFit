@@ -42,9 +42,14 @@ class RootViewModel: ObservableObject {
         self.authRouter  = authRouter
         self.appRouter   = appRouter
         self.preferencesManager = preferencesManager
+        authManager.logout()
         
         authManager.$isAuthenticated
-            .sink { [weak self] isAuthenticated in self?.evaluateAuthState()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.evaluateAuthState()
+                }
             }
             .store(in: &cancellables)
     }
@@ -69,12 +74,15 @@ class RootViewModel: ObservableObject {
     }
 
     private func evaluateAuthState() {
+        print("🟣 evaluateAuthState called - isAuthenticated: \(authManager.isAuthenticated)")
         if authManager.isAuthenticated {
             currentState = .authenticated
+            print("🟣 currentState = .authenticated")
         } else if authManager.isGuest {
             currentState = .guest
         } else {
             currentState = .unauthenticated
+            print("🟣 currentState = .unauthenticated")
         }
     }
 

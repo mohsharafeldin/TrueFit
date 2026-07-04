@@ -2,15 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ShopifyStoreName</key>
-	<string>$(SHOPIFY_STORE_NAME)</string>
-	<key>ShopifyAdminAPIToken</key>
-	<string>$(SHOPIFY_ADMIN_API_TOKEN)</string>
-	<key>ShopifyStorefrontToken</key>
-	<string>$(SHOPIFY_STOREFRONT_TOKEN)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.417972246872-fncu0633hq5jvu8kguoapmhdtiavtagk</string>
+			</array>
+		</dict>
+	</array>
 	<key>ShopifyAPIVersion</key>
 	<string>$(SHOPIFY_API_VERSION)</string>
+	<key>ShopifyAdminAPIToken</key>
+	<string>$(SHOPIFY_ADMIN_API_TOKEN)</string>
 	<key>ShopifyGraphQLAPIVersion</key>
 	<string>$(SHOPIFY_GRAPHQL_API_VERSION)</string>
+	<key>ShopifyStoreName</key>
+	<string>$(SHOPIFY_STORE_NAME)</string>
+	<key>ShopifyStorefrontToken</key>
+	<string>$(SHOPIFY_STOREFRONT_TOKEN)</string>
 </dict>
 </plist>

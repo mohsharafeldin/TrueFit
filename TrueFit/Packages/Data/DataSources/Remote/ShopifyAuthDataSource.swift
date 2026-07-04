@@ -31,6 +31,10 @@ public final class ShopifyAuthDataSource: ShopifyAuthDataSourceProtocol {
         
         let task = AF.request(baseURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
         
+        let rawResponse = await task.serializingData().response
+        if let data = rawResponse.data, let jsonString = String(data: data, encoding: .utf8) {
+        }
+        
         let result = await task.serializingDecodable(GraphQLResponse<T>.self).response
         
         switch result.result {

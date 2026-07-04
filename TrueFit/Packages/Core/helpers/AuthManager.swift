@@ -52,9 +52,11 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
     }
     
     func login(token: String) {
+        print("🟢 AuthManager.login called with token: \(token)")
         saveTokenToKeychain(token)
         self.isAuthenticated = true
         self.isGuest = false
+        print("🟢 isAuthenticated set to: \(self.isAuthenticated)")
     }
     
     func logout() {

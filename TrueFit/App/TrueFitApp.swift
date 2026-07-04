@@ -15,6 +15,7 @@ struct TrueFitApp: App {
     @StateObject private var diContainer = DIContainer()
     init(){
         FirebaseApp.configure()
+        
     }
     
     var body: some Scene {
