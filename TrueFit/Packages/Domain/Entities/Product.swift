@@ -94,3 +94,16 @@ enum ProductStatus: String, Equatable {
         }
     }
 }
+
+extension Product {
+    func toFavoriteItem() -> FavoriteItem {
+        FavoriteItem(
+            id: id,
+            title: title,
+            price: priceRange.min,
+            vendor: vendor,
+            imageURL: imageURL,
+            addedAt: Date()
+        )
+    }
+}

@@ -37,11 +37,11 @@ struct FavoritesView: View {
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: Spacing.lg) {
-                        ForEach(viewModel.filteredProducts) { mockProduct in
+                        ForEach(viewModel.filteredProducts) { favoriteItem in
                             FavoriteProductCard(
-                                product: mockProduct,
-                                onRemove: { viewModel.removeFromFavorites(mockProduct.id) },
-                                onAddToCart: { viewModel.addToCart(mockProduct.id) }
+                                product: favoriteItem,
+                                onRemove: { viewModel.removeFromFavorites(favoriteItem.id) },
+                                onAddToCart: { viewModel.addToCart(favoriteItem.id) }
                             )
                         }
                     }
@@ -171,7 +171,7 @@ struct FilterCategoriesRow: View {
 
 // MARK: - Favorite Product Card
 struct FavoriteProductCard: View {
-    let product: MockProduct
+    let product: FavoriteItem
     var onRemove: () -> Void
     var onAddToCart: () -> Void
     
@@ -259,10 +259,10 @@ struct FavoriteProductCard: View {
     }
     
     private var formattedPrice: String {
-        if let value = Double(product.price) {
-            return String(format: "$%.2f", value)
-        }
-        return "$\(product.price)"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        return formatter.string(from: NSDecimalNumber(decimal: product.price)) ?? "$\(product.price)"
     }
 }
 
@@ -367,14 +367,19 @@ struct ShimmerFavoriteCard: View {
 
 
 // MARK: - Previews
-#Preview("Favorites View") {
-    FavoritesView(viewModel: FavoritesViewModel(isPreviewMode: true, previewState: .content))
+#Preview("Favorites - With Data") {
+    NavigationStack {
+        FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel())
+    }
 }
 
-#Preview("Loading (Shimmer)") {
-    FavoritesView(viewModel: FavoritesViewModel(isPreviewMode: true, previewState: .loading))
+#Preview("Favorites - Empty State") {
+    NavigationStack {
+        FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel(isEmpty: true))
+    }
 }
-
-#Preview("Empty State") {
-    FavoritesView(viewModel: FavoritesViewModel(isPreviewMode: true, previewState: .empty))
-}
+ 
+// #Preview("Loading (Shimmer)") {
+//     FavoritesView(viewModel: FavoritesViewModel(isPreviewMode: true, previewState: .loading))
+// }
+ 

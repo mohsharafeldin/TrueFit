@@ -88,6 +88,22 @@ final class DIContainer: ObservableObject {
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
     
     
+    // MARK: - FAVORITES FEATURE
+    
+    // Favorites Data Sources & Repository
+    private lazy var favoritesLocalDataSource: FavoritesLocalDataSourceProtocol = {
+        FavoritesLocalDataSource(persistenceController: persistenceController)
+    }()
+    
+    private lazy var favoritesRepository: FavoritesRepositoryProtocol = {
+        FavoritesRepository(localDataSource: favoritesLocalDataSource)
+    }()
+    
+    // Favorites Use Cases
+    private lazy var getFavoritesUseCase = GetFavoritesUseCase(repository: favoritesRepository)
+    private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
+    lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
+    
     // MARK: - Init
     public init() {}
     
@@ -128,5 +144,12 @@ final class DIContainer: ObservableObject {
     
     func makeCurrencyConverterViewModel() -> CurrencyConverterViewModel {
         return CurrencyConverterViewModel(getExchangeRatesUseCase: getExchangeRatesUseCase)
+    }
+    
+    func makeFavoritesViewModel() -> FavoritesViewModel {
+        FavoritesViewModel(
+            getFavoritesUseCase: getFavoritesUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase
+        )
     }
 }
