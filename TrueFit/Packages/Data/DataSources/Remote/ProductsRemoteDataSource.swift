@@ -16,6 +16,8 @@ protocol ProductsRemoteDataSourceProtocol {
     func fetchCustomCollections() async throws -> [CollectionDTO]
     func fetchProductsCount(collectionId: Int64) async throws -> Int
     func fetchProduct(id: String) async throws -> ProductDTO
+    func fetchProductsByCollection(collectionId: Int64) async throws -> [ProductDTO]
+    func fetchProductsByVendor(vendor: String) async throws -> [ProductDTO]
 }
 
 // MARK: - Implementation
@@ -64,7 +66,18 @@ final class ProductsRemoteDataSource: ProductsRemoteDataSourceProtocol {
         
         return product
     }
-    
+
+    func fetchProductsByCollection(collectionId: Int64) async throws -> [ProductDTO] {
+        let endpoint = ProductsEndpoint.productsByCollection(collectionId: collectionId)
+        let response: ProductsResponseDTO = try await apiClient.request(endpoint)
+        return response.products
+    }
+
+    func fetchProductsByVendor(vendor: String) async throws -> [ProductDTO] {
+        let endpoint = ProductsEndpoint.productsByVendor(vendor: vendor)
+        let response: ProductsResponseDTO = try await apiClient.request(endpoint)
+        return response.products
+    }
 }
 
 // MARK: - Endpoints
@@ -75,10 +88,12 @@ enum ProductsEndpoint: Endpoint {
     case smartCollections
     case customCollections
     case productsCount(collectionId: Int64)
+    case productsByCollection(collectionId: Int64)
+    case productsByVendor(vendor: String)
 
     var path: String {
         switch self {
-        case .products:
+        case .products, .productsByCollection, .productsByVendor:
             return "/products.json"
         case .smartCollections:
             return "/smart_collections.json"
@@ -105,6 +120,20 @@ enum ProductsEndpoint: Endpoint {
                 items.append(URLQueryItem(name: "order", value: "desc"))
             }
             return items
+
+        case .productsByCollection(let collectionId):
+            return [
+                URLQueryItem(name: "collection_id", value: "\(collectionId)"),
+                URLQueryItem(name: "status", value: "active"),
+                URLQueryItem(name: "limit", value: "50")
+            ]
+
+        case .productsByVendor(let vendor):
+            return [
+                URLQueryItem(name: "vendor", value: vendor),
+                URLQueryItem(name: "status", value: "active"),
+                URLQueryItem(name: "limit", value: "50")
+            ]
 
         case .smartCollections, .customCollections:
             return nil

@@ -89,6 +89,9 @@ final class DIContainer: ObservableObject {
     // Products Use Cases
     private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: productsRepository)
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
+    private lazy var fetchBrandsUseCase = FetchBrandsUseCase(repository: productsRepository)
+    private lazy var fetchProductsByCollectionUseCase = FetchProductsByCollectionUseCase(repository: productsRepository)
+    private lazy var fetchProductsByVendorUseCase = FetchProductsByVendorUseCase(repository: productsRepository)
     
     
     // MARK: - CART FEATURE
@@ -135,7 +138,8 @@ final class DIContainer: ObservableObject {
     public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
-            fetchCollectionsUseCase: fetchCollectionsUseCase
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase
         )
     }
 
@@ -155,6 +159,14 @@ final class DIContainer: ObservableObject {
             updateCartLineUseCase: updateCartLineUseCase,
             removeCartLineUseCase: removeCartLineUseCase,
             applyDiscountUseCase: applyDiscountUseCase
+        )
+    }
+
+    func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
+        ProductListViewModel(
+            source: source,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
         )
     }
 }
