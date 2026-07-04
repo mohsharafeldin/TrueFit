@@ -92,6 +92,7 @@ final class DIContainer: ObservableObject {
     private lazy var fetchBrandsUseCase = FetchBrandsUseCase(repository: productsRepository)
     private lazy var fetchProductsByCollectionUseCase = FetchProductsByCollectionUseCase(repository: productsRepository)
     private lazy var fetchProductsByVendorUseCase = FetchProductsByVendorUseCase(repository: productsRepository)
+    private lazy var fetchAllProductsUseCase = FetchAllProductsUseCase(repository: productsRepository)
     
     
     // MARK: - CART FEATURE
@@ -140,6 +141,15 @@ final class DIContainer: ObservableObject {
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
             fetchCollectionsUseCase: fetchCollectionsUseCase,
             fetchBrandsUseCase: fetchBrandsUseCase
+        )
+    }
+
+    public func makeSearchViewModel() -> SearchViewModel {
+        SearchViewModel(
+            fetchAllProductsUseCase: fetchAllProductsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase,
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase
         )
     }
 

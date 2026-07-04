@@ -25,6 +25,8 @@ struct MainAppView: View {
                         Text("Checkout Screen")
                     case .profile:
                         Text("Profile Screen")
+                    case .search:
+                        SearchView(viewModel: container.makeSearchViewModel())
                     case .productDetails(let id):
                         ProductDetailsView(
                             productId: id,

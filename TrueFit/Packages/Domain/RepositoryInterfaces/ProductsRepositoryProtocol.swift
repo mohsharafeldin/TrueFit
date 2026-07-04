@@ -14,4 +14,5 @@ protocol ProductsRepositoryProtocol {
     func fetchBrands() async throws -> [Brand]
     func fetchProductsByCollection(collectionId: Int64) async throws -> [Product]
     func fetchProductsByVendor(vendor: String) async throws -> [Product]
+    func fetchAllProducts() async throws -> [Product]
 }

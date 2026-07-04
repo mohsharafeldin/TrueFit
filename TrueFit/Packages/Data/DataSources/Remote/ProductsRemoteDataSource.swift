@@ -18,6 +18,7 @@ protocol ProductsRemoteDataSourceProtocol {
     func fetchProduct(id: String) async throws -> ProductDTO
     func fetchProductsByCollection(collectionId: Int64) async throws -> [ProductDTO]
     func fetchProductsByVendor(vendor: String) async throws -> [ProductDTO]
+    func fetchAllProducts() async throws -> [ProductDTO]
 }
 
 // MARK: - Implementation
@@ -29,6 +30,12 @@ final class ProductsRemoteDataSource: ProductsRemoteDataSourceProtocol {
 
     init(apiClient: APIClientProtocol) {
         self.apiClient = apiClient
+    }
+
+    func fetchAllProducts() async throws -> [ProductDTO] {
+        let endpoint = ProductsEndpoint.products(limit: 250, sortKey: nil)
+        let response: ProductsResponseDTO = try await apiClient.request(endpoint)
+        return response.products
     }
 
     func fetchProducts(limit: Int, sortKey: String?) async throws -> [ProductDTO] {

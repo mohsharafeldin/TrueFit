@@ -157,4 +157,17 @@ final class ProductsRepository: ProductsRepositoryProtocol {
             throw AppError.unknown(error.localizedDescription)
         }
     }
+
+    // MARK: - Fetch All Products
+
+    func fetchAllProducts() async throws -> [Product] {
+        do {
+            let dtos = try await remoteDataSource.fetchAllProducts()
+            return ProductMapper.map(dtos)
+        } catch let error as APIError {
+            throw APIErrorMapper.map(error)
+        } catch {
+            throw AppError.unknown(error.localizedDescription)
+        }
+    }
 }

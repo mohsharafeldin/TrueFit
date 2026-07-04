@@ -158,6 +158,8 @@ struct HomeView: View {
 // MARK: - Header View
 
 struct HomeHeaderView: View {
+    @EnvironmentObject var appRouter: AppRouter
+
     var body: some View {
         HStack(spacing: Spacing.sm) {
             // Profile avatar
@@ -183,7 +185,9 @@ struct HomeHeaderView: View {
             Spacer()
 
             HStack(spacing: Spacing.md) {
-                IconButton(systemName: "magnifyingglass")
+                IconButton(systemName: "magnifyingglass") {
+                    appRouter.navigate(to: .search)
+                }
                 NotificationButton()
             }
         }
