@@ -16,15 +16,23 @@ final class FavoritesViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var searchQuery: String = ""
     @Published var selectedCategory: String = "All"
+    @Published var isGuest: Bool = false
     
     // MARK: - Dependencies
     private let getFavoritesUseCase: GetFavoritesUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private let authManager: AuthManagerProtocol
     
     // MARK: - Init
-    init(getFavoritesUseCase: GetFavoritesUseCase, toggleFavoriteUseCase: ToggleFavoriteUseCase) {
+    init(
+        getFavoritesUseCase: GetFavoritesUseCase,
+        toggleFavoriteUseCase: ToggleFavoriteUseCase,
+        authManager: AuthManagerProtocol
+    ) {
         self.getFavoritesUseCase = getFavoritesUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
+        self.authManager = authManager
+        self.isGuest = !authManager.isAuthenticated
     }
     
     // MARK: - Computed Properties
@@ -52,7 +60,9 @@ final class FavoritesViewModel: ObservableObject {
     // MARK: - Actions
     
     func onAppeard() {
-        loadFavorites()
+        if !isGuest {
+            loadFavorites()
+        }
     }
     
     private func loadFavorites() {

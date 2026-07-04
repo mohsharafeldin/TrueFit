@@ -139,7 +139,8 @@ extension PreviewMocks {
         
         return FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
-            toggleFavoriteUseCase: toggleFavoriteUseCase
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: MockAuthManager()
         )
     }
 }

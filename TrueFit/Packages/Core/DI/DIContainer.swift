@@ -150,12 +150,18 @@ final class DIContainer: ObservableObject {
     public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
-            fetchCollectionsUseCase: fetchCollectionsUseCase
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
         )
     }
 
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
-        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        let viewModel = ProductDetailsViewModel(
+            getProductUseCase: getProductUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
+        )
         return viewModel
     }
     
@@ -176,7 +182,8 @@ final class DIContainer: ObservableObject {
     func makeFavoritesViewModel() -> FavoritesViewModel {
         FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
-            toggleFavoriteUseCase: toggleFavoriteUseCase
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: authManager
         )
     }
 }
