@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,6 +55,20 @@
 		0C198EAF2FF2BAD500477701 /* NewPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198EA22FF2BAD500477701 /* NewPasswordView.swift */; };
 		0C198EB02FF2BAD500477701 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198EA42FF2BAD500477701 /* SignUpView.swift */; };
 		0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C198EA52FF2BAD500477701 /* SuccessView.swift */; };
+		0C67ACEB2FF81E64006A3E3B /* ApolloManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACEA2FF81E64006A3E3B /* ApolloManager.swift */; };
+		0C67ACF02FF81E7F006A3E3B /* Cart.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 0C67ACEE2FF81E7F006A3E3B /* Cart.graphql */; };
+		0C67ACF22FF81F04006A3E3B /* CartRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */; };
+		0C67ACF42FF81F2F006A3E3B /* CartMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACF32FF81F2F006A3E3B /* CartMapper.swift */; };
+		0C67ACF82FF81F65006A3E3B /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACF72FF81F65006A3E3B /* CartRepository.swift */; };
+		0C67ACFA2FF81F80006A3E3B /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACF92FF81F80006A3E3B /* Cart.swift */; };
+		0C67ACFC2FF81F8E006A3E3B /* CartRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACFB2FF81F8E006A3E3B /* CartRepositoryProtocol.swift */; };
+		0C67ACFE2FF81F9D006A3E3B /* AddToCartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACFD2FF81F9D006A3E3B /* AddToCartUseCase.swift */; };
+		0C67AD002FF81FA3006A3E3B /* ApplyDiscountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ACFF2FF81FA3006A3E3B /* ApplyDiscountUseCase.swift */; };
+		0C67AD022FF81FB5006A3E3B /* GetCartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD012FF81FB5006A3E3B /* GetCartUseCase.swift */; };
+		0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */; };
+		0C67AD072FF81FE7006A3E3B /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD052FF81FE7006A3E3B /* CartViewModel.swift */; };
+		0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */; };
+		0C67ADDF2FF878C5006A3E3B /* RemoveCartLineUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */; };
 		0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */; };
 		0CE05B622FF680E200ADEB7D /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B5E2FF680E200ADEB7D /* KeychainError.swift */; };
 		0CE05B632FF680E200ADEB7D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B5F2FF680E200ADEB7D /* KeychainManager.swift */; };
@@ -213,6 +227,19 @@
 		0C198EA22FF2BAD500477701 /* NewPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPasswordView.swift; sourceTree = "<group>"; };
 		0C198EA42FF2BAD500477701 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		0C198EA52FF2BAD500477701 /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		0C67ACEA2FF81E64006A3E3B /* ApolloManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApolloManager.swift; sourceTree = "<group>"; };
+		0C67ACEE2FF81E7F006A3E3B /* Cart.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cart.graphql; sourceTree = "<group>"; };
+		0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRemoteDataSource.swift; sourceTree = "<group>"; };
+		0C67ACF32FF81F2F006A3E3B /* CartMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartMapper.swift; sourceTree = "<group>"; };
+		0C67ACF72FF81F65006A3E3B /* CartRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
+		0C67ACF92FF81F80006A3E3B /* Cart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
+		0C67ACFB2FF81F8E006A3E3B /* CartRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRepositoryProtocol.swift; sourceTree = "<group>"; };
+		0C67ACFD2FF81F9D006A3E3B /* AddToCartUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToCartUseCase.swift; sourceTree = "<group>"; };
+		0C67ACFF2FF81FA3006A3E3B /* ApplyDiscountUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyDiscountUseCase.swift; sourceTree = "<group>"; };
+		0C67AD012FF81FB5006A3E3B /* GetCartUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCartUseCase.swift; sourceTree = "<group>"; };
+		0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateCartLineUseCase.swift; sourceTree = "<group>"; };
+		0C67AD052FF81FE7006A3E3B /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveCartLineUseCase.swift; sourceTree = "<group>"; };
 		0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		0CE05B5E2FF680E200ADEB7D /* KeychainError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		0CE05B5F2FF680E200ADEB7D /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -310,6 +337,7 @@
 			files = (
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
+				0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */,
 				4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +516,22 @@
 			path = AuthFeature;
 			sourceTree = "<group>";
 		};
+		0C67ACEF2FF81E7F006A3E3B /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				0C67ACEE2FF81E7F006A3E3B /* Cart.graphql */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		0C67AD062FF81FE7006A3E3B /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				0C67AD052FF81FE7006A3E3B /* CartViewModel.swift */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
 		0CE05B612FF680E200ADEB7D /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,6 +566,8 @@
 		0CE9F3002FF3D18100466794 /* GraphQL */ = {
 			isa = PBXGroup;
 			children = (
+				0C67ACEF2FF81E7F006A3E3B /* Operations */,
+				0C67ACEA2FF81E64006A3E3B /* ApolloManager.swift */,
 				0CE9F2FE2FF3D18100466794 /* GraphQLClient.swift */,
 				0CE9F2FF2FF3D18100466794 /* GraphQLEndpoint.swift */,
 			);
@@ -625,6 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				33CB34E12FF8E2A700798582 /* Favorites */,
+				0C67ACF92FF81F80006A3E3B /* Cart.swift */,
 				0C09B6A72FF63DC500F4CC3D /* AppError.swift */,
 				0C09B6A92FF63DC500F4CC3D /* CurrencyRates.swift */,
 				0C09B6A82FF63DC500F4CC3D /* Product.swift */,
@@ -640,6 +687,11 @@
 			isa = PBXGroup;
 			children = (
 				33CB34EB2FF8E43600798582 /* Favorites */,
+				0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */,
+				0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */,
+				0C67ACFD2FF81F9D006A3E3B /* AddToCartUseCase.swift */,
+				0C67AD012FF81FB5006A3E3B /* GetCartUseCase.swift */,
+				0C67ACFF2FF81FA3006A3E3B /* ApplyDiscountUseCase.swift */,
 				0C09B6B12FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift */,
 				0C09B6B22FF63DE500F4CC3D /* GetProductUseCase.swift */,
 				BCDE23C28C8A5826C4D10058 /* FetchCollectionsUseCase.swift */,
@@ -692,6 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				33AF9FBD2FF7FEF200628D96 /* Favorite */,
+				0C67AD062FF81FE7006A3E3B /* Cart */,
 				0C09B6BD2FF63E1A00F4CC3D /* Shared */,
 				0C09B6B92FF63E0B00F4CC3D /* ProductDetails */,
 				0C09B6B62FF63E0000F4CC3D /* CurrencyConversion */,
@@ -735,6 +788,7 @@
 			isa = PBXGroup;
 			children = (
 				33CB34F82FF8E69B00798582 /* Favorites */,
+				0C67ACF32FF81F2F006A3E3B /* CartMapper.swift */,
 				0C09B69B2FF63D9A00F4CC3D /* APIErrorMapper.swift */,
 				0C09B69D2FF63D9A00F4CC3D /* CurrencyRatesMapper.swift */,
 				0C09B69E2FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift */,
@@ -757,6 +811,7 @@
 		33AA80EB2FEFE48F00A20AF9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */,
 				0C09B6932FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift */,
 				774A2CFE4A3ADF7B4F142BD9 /* FirebaseAuthDataSource.swift */,
 				6C6CB8651FB7E10FF83AD07F /* FirebaseAuthDataSourceProtocol.swift */,
@@ -799,6 +854,7 @@
 			isa = PBXGroup;
 			children = (
 				33CB35032FF8EA6100798582 /* Favorites */,
+				0C67ACF72FF81F65006A3E3B /* CartRepository.swift */,
 				0C09B6A42FF63DAA00F4CC3D /* CurrencyRepository.swift */,
 				33D02D1C2FF3DA210048E60D /* AuthRepository.swift */,
 				CF8BADE78F43A402E9000982 /* ProductsRepository.swift */,
@@ -810,6 +866,7 @@
 			isa = PBXGroup;
 			children = (
 				33CB34E42FF8E39800798582 /* Favorites */,
+				0C67ACFB2FF81F8E006A3E3B /* CartRepositoryProtocol.swift */,
 				33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */,
 				0C09B6AE2FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift */,
 				C0E01C55F9CDEC8EE71124A2 /* ProductsRepositoryProtocol.swift */,
@@ -1015,6 +1072,9 @@
 			dependencies = (
 			);
 			name = TrueFit;
+			packageProductDependencies = (
+				0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */,
+			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
 			productType = "com.apple.product-type.application";
@@ -1091,6 +1151,7 @@
 				4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0C67ADDB2FF8779E006A3E3B /* XCLocalSwiftPackageReference "ShopifyAPI" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -1110,6 +1171,8 @@
 			files = (
 				0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */,
 				5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */,
+				0C67ACF02FF81E7F006A3E3B /* Cart.graphql in Resources */,
+				0CE05B6A2FF6827E00ADEB7D /* GoogleService-Info.plist in Resources */,
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0CE05B6C2FF682E800ADEB7D /* Config.xcconfig in Resources */,
 				0C198E972FF2BA8E00477701 /* Assets.xcassets in Resources */,
@@ -1146,8 +1209,10 @@
 				0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */,
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
+				0C67AD002FF81FA3006A3E3B /* ApplyDiscountUseCase.swift in Sources */,
 				0CE05B7C2FF7041C00ADEB7D /* ProductOptionSectionView.swift in Sources */,
 				0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */,
+				0C67ACEB2FF81E64006A3E3B /* ApolloManager.swift in Sources */,
 				33CB34E32FF8E2C800798582 /* FavoriteItem.swift in Sources */,
 				0C09B6902FF63D3600F4CC3D /* ErrorLogger.swift in Sources */,
 				0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */,
@@ -1179,6 +1244,7 @@
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
 				0C09B6AB2FF63DC500F4CC3D /* Product.swift in Sources */,
 				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
+				0C67ACF22FF81F04006A3E3B /* CartRemoteDataSource.swift in Sources */,
 				0C09B6AC2FF63DC500F4CC3D /* CurrencyRates.swift in Sources */,
 				0C198EAD2FF2BAD500477701 /* ForgotPasswordView.swift in Sources */,
 				0C09B6A12FF63D9A00F4CC3D /* CurrencyRatesMapper.swift in Sources */,
@@ -1186,17 +1252,20 @@
 				0C198E912FF2BA8E00477701 /* Colors.swift in Sources */,
 				5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */,
 				0C09B6942FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift in Sources */,
+				0C67ADDF2FF878C5006A3E3B /* RemoveCartLineUseCase.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
 				0CE05B682FF6822100ADEB7D /* HomeViewModel.swift in Sources */,
 				0C198E942FF2BA8E00477701 /* Shadow.swift in Sources */,
 				0C09B69F2FF63D9A00F4CC3D /* APIErrorMapper.swift in Sources */,
+				0C67AD072FF81FE7006A3E3B /* CartViewModel.swift in Sources */,
 				33CB34FE2FF8E94200798582 /* FavoritesLocalDataSource.swift in Sources */,
 				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
 				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
 				0C09B6A02FF63D9A00F4CC3D /* ProductMapper.swift in Sources */,
+				0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */,
 				0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
@@ -1204,13 +1273,17 @@
 				4C8F1F002FF2AFD900299F30 /* FirstOnBoeardingView.swift in Sources */,
 				0CE05B782FF6ADD600ADEB7D /* ProductImageCarousel.swift in Sources */,
 				4C8F1F022FF2AFEC00299F30 /* SecondOnBoeardingView.swift in Sources */,
+				0C67ACF82FF81F65006A3E3B /* CartRepository.swift in Sources */,
 				0C09B6A62FF63DAA00F4CC3D /* CurrencyRepository.swift in Sources */,
 				0C09B6B02FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift in Sources */,
 				4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */,
+				0C67ACFE2FF81F9D006A3E3B /* AddToCartUseCase.swift in Sources */,
 				0CE05B762FF6ADD600ADEB7D /* ProductDetailsCard.swift in Sources */,
 				0CE05B772FF6ADD600ADEB7D /* ProductDetailsHeader.swift in Sources */,
 				4C8F1F042FF2AFFD00299F30 /* ThirdOnBoeardingView.swift in Sources */,
 				0CE05B622FF680E200ADEB7D /* KeychainError.swift in Sources */,
+				0C67AD022FF81FB5006A3E3B /* GetCartUseCase.swift in Sources */,
+				0C67ACF42FF81F2F006A3E3B /* CartMapper.swift in Sources */,
 				0C09B68B2FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 				33CB34ED2FF8E44D00798582 /* GetFavoritesUseCase.swift in Sources */,
@@ -1226,6 +1299,7 @@
 				F21779A812201BC592804D96 /* CollectionDTO.swift in Sources */,
 				EB0837D63B0F7A8541E3B52F /* ProductDTO.swift in Sources */,
 				6516502331B9330A3367E225 /* ShopifyAuthDTOs.swift in Sources */,
+				0C67ACFA2FF81F80006A3E3B /* Cart.swift in Sources */,
 				48F27D641A8702A854802C41 /* FirebaseAuthDataSource.swift in Sources */,
 				04BBAD26660056EC229A33A2 /* FirebaseAuthDataSourceProtocol.swift in Sources */,
 				6580A4834778E47C09BD380B /* ProductsRemoteDataSource.swift in Sources */,
@@ -1235,6 +1309,7 @@
 				33CB34F52FF8E4E300798582 /* IsFavoriteUseCase.swift in Sources */,
 				80B1A646229025004617CE6F /* AuthMapper.swift in Sources */,
 				48F12B180BFEBB0CA44FE028 /* CollectionMapper.swift in Sources */,
+				0C67ACFC2FF81F8E006A3E3B /* CartRepositoryProtocol.swift in Sources */,
 				EF2678C3EB727AE01B456535 /* ProductsRepository.swift in Sources */,
 				78692C4CF703BCC177F6DF2E /* AuthError.swift in Sources */,
 				03E39AB94D9AE1300262DDCF /* AuthResult.swift in Sources */,
@@ -1589,6 +1664,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		0C67ADDB2FF8779E006A3E3B /* XCLocalSwiftPackageReference "ShopifyAPI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ShopifyAPI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1603,7 +1685,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.52.0;
+				version = 1.0.7;
 			};
 		};
 		4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -1625,6 +1707,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShopifyAPI;
+		};
 		4C8CBACF2FF003AC00CA6538 /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */;

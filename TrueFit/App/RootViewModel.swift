@@ -42,7 +42,7 @@ class RootViewModel: ObservableObject {
         self.authRouter  = authRouter
         self.appRouter   = appRouter
         self.preferencesManager = preferencesManager
-        
+       // authManager.logout()
         authManager.$isAuthenticated
         
             .dropFirst()
