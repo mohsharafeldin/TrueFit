@@ -74,15 +74,12 @@ class RootViewModel: ObservableObject {
     }
 
     private func evaluateAuthState() {
-        print("🟣 evaluateAuthState called - isAuthenticated: \(authManager.isAuthenticated)")
         if authManager.isAuthenticated {
             currentState = .authenticated
-            print("🟣 currentState = .authenticated")
         } else if authManager.isGuest {
             currentState = .guest
         } else {
             currentState = .unauthenticated
-            print("🟣 currentState = .unauthenticated")
         }
     }
 
