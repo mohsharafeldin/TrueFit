@@ -72,7 +72,7 @@ struct LoginView: View {
                         .foregroundColor(.textSecondary)
                     
                     SocialLoginButton(title: "Sign In with Google", iconImage: .googleIcon) {
-                        print("Google Login Tapped")
+                        viewModel.loginWithGoogle()
                     }
                         
                     SocialLoginButton(title: "Sign In with Facebook", iconImage: .facebookIcon) {

@@ -12,4 +12,5 @@ protocol AuthRepositoryProtocol {
     func signUp(firstName: String, lastName: String, email: String, password: String) async throws -> AuthResult
     func resetPassword(email: String) async throws
     func signOut() async throws
+    func loginWithGoogle() async throws -> AuthResult
 }

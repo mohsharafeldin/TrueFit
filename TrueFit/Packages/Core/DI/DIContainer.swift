@@ -52,13 +52,15 @@ final class DIContainer: ObservableObject {
     // Auth Data Sources
     private lazy var firebaseAuthDataSource: FirebaseAuthDataSourceProtocol = FirebaseAuthDataSource()
     private lazy var shopifyAuthDataSource: ShopifyAuthDataSourceProtocol = ShopifyAuthDataSource()
+    private lazy var googleSignInDataSource: GoogleSignInServiceProtocol = GoogleSignInDataSource()
     
     // Auth Repository
     private lazy var authRepository: AuthRepositoryProtocol = {
         AuthRepository(
             firebaseDataSource: firebaseAuthDataSource,
             shopifyDataSource: shopifyAuthDataSource,
-            keychainManager: keychainManager
+            keychainManager: keychainManager,
+            googleSignInService: googleSignInDataSource
         )
     }()
     
@@ -77,6 +79,8 @@ final class DIContainer: ObservableObject {
     
     private func makeLogoutUseCase() -> LogoutUseCaseProtocol {
         LogoutUseCase(authRepository: authRepository)
+    }
+    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol {         LoginWithGoogleUseCase(authRepository: authRepository)
     }
     
     
@@ -143,7 +147,8 @@ final class DIContainer: ObservableObject {
             resetPasswordUseCase: makeResetPasswordUseCase(),
             logoutUseCase: makeLogoutUseCase(),
             authManager: authManager,
-            authRouter: authRouter
+            authRouter: authRouter,
+            loginWithGoogleUseCase: makeLoginWithGoogleUseCase()
         )
     }
     

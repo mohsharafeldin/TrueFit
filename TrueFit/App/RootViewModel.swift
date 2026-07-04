@@ -42,12 +42,14 @@ class RootViewModel: ObservableObject {
         self.authRouter  = authRouter
         self.appRouter   = appRouter
         self.preferencesManager = preferencesManager
-       // authManager.logout()
-        authManager.$isAuthenticated
+        authManager.logout()
         
-            .dropFirst()
-            .receive(on: RunLoop.main)
-            .sink { [weak self] isAuthenticated in self?.evaluateAuthState()
+        authManager.$isAuthenticated
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.evaluateAuthState()
+                }
             }
             .store(in: &cancellables)
     }
