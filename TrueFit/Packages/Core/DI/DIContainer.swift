@@ -53,13 +53,15 @@ final class DIContainer: ObservableObject {
     // Auth Data Sources
     private lazy var firebaseAuthDataSource: FirebaseAuthDataSourceProtocol = FirebaseAuthDataSource()
     private lazy var shopifyAuthDataSource: ShopifyAuthDataSourceProtocol = ShopifyAuthDataSource()
+    private lazy var googleSignInDataSource: GoogleSignInServiceProtocol = GoogleSignInDataSource()
     
     // Auth Repository
     private lazy var authRepository: AuthRepositoryProtocol = {
         AuthRepository(
             firebaseDataSource: firebaseAuthDataSource,
             shopifyDataSource: shopifyAuthDataSource,
-            keychainManager: keychainManager
+            keychainManager: keychainManager,
+            googleSignInService: googleSignInDataSource
         )
     }()
     
@@ -78,6 +80,8 @@ final class DIContainer: ObservableObject {
     
     private func makeLogoutUseCase() -> LogoutUseCaseProtocol {
         LogoutUseCase(authRepository: authRepository)
+    }
+    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol {         LoginWithGoogleUseCase(authRepository: authRepository)
     }
     
     
@@ -106,6 +110,21 @@ final class DIContainer: ObservableObject {
     private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
     private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
     
+    // MARK: - FAVORITES FEATURE
+    
+    // Favorites Data Sources & Repository
+    private lazy var favoritesLocalDataSource: FavoritesLocalDataSourceProtocol = {
+        FavoritesLocalDataSource(persistenceController: persistenceController)
+    }()
+    
+    private lazy var favoritesRepository: FavoritesRepositoryProtocol = {
+        FavoritesRepository(localDataSource: favoritesLocalDataSource)
+    }()
+    
+    // Favorites Use Cases
+    private lazy var getFavoritesUseCase = GetFavoritesUseCase(repository: favoritesRepository)
+    private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
+    lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
     
     // MARK: - Init
     public init() {}
@@ -129,14 +148,17 @@ final class DIContainer: ObservableObject {
             resetPasswordUseCase: makeResetPasswordUseCase(),
             logoutUseCase: makeLogoutUseCase(),
             authManager: authManager,
-            authRouter: authRouter
+            authRouter: authRouter,
+            loginWithGoogleUseCase: makeLoginWithGoogleUseCase()
         )
     }
     
     public func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
-            fetchCollectionsUseCase: fetchCollectionsUseCase
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase
         )
     }
 
@@ -145,6 +167,8 @@ final class DIContainer: ObservableObject {
             getProductUseCase: getProductUseCase,
             addToCartUseCase: addToCartUseCase,
             preferencesManager: preferencesManager,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            isFavoriteUseCase: isFavoriteUseCase,
             cartState: cartState
         )
         return viewModel
@@ -162,6 +186,14 @@ final class DIContainer: ObservableObject {
             removeCartLineUseCase: removeCartLineUseCase,
             applyDiscountUseCase: applyDiscountUseCase,
             cartState: cartState
+        )
+    }
+    
+    func makeFavoritesViewModel() -> FavoritesViewModel {
+        FavoritesViewModel(
+            getFavoritesUseCase: getFavoritesUseCase,
+            toggleFavoriteUseCase: toggleFavoriteUseCase,
+            authManager: authManager
         )
     }
 }

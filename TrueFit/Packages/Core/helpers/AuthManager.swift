@@ -52,6 +52,7 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
     }
     
     func login(token: String) {
+       
         saveTokenToKeychain(token)
         self.isAuthenticated = true
         self.isGuest = false

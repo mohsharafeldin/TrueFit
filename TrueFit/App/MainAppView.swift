@@ -27,6 +27,8 @@ struct MainAppView: View {
                                 appRouter.popToRoot()
                             }
                         )
+                    case .favorites:
+                        FavoritesView(viewModel: container.makeFavoritesViewModel())
                     case .checkout:
                         Text("Checkout Screen")
                     case .profile:

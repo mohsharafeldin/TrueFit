@@ -57,7 +57,13 @@ struct HomeView: View {
                 } else if viewModel.products.isEmpty {
                     emptyStateView(message: "No products found")
                 } else {
-                    ProductsGridView(products: viewModel.products)
+                    ProductsGridView(
+                        products: viewModel.products,
+                        favoriteStatuses: viewModel.favoriteStatuses,
+                        onToggleFavorite: { product in
+                            viewModel.toggleFavorite(product: product)
+                        }
+                    )
                 }
             }
         }
@@ -354,6 +360,8 @@ struct HomeSectionHeader: View {
 
 struct ProductsGridView: View {
     let products: [Product]
+    let favoriteStatuses: [String: Bool]
+    let onToggleFavorite: (Product) -> Void
 
     private let columns = [
         GridItem(.flexible(), spacing: Spacing.md),
@@ -363,7 +371,13 @@ struct ProductsGridView: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: Spacing.lg) {
             ForEach(products) { product in
-                HomeProductCard(product: product)
+                HomeProductCard(
+                    product: product,
+                    isFavorite: favoriteStatuses[product.id] ?? false,
+                    onToggleFavorite: {
+                        onToggleFavorite(product)
+                    }
+                )
             }
         }
     }
@@ -373,7 +387,8 @@ struct ProductsGridView: View {
 
 struct HomeProductCard: View {
     let product: Product
-    @State private var isFavorite = false
+    let isFavorite: Bool
+    var onToggleFavorite: () -> Void
     @EnvironmentObject var appRouter: AppRouter
 
     var body: some View {
@@ -417,7 +432,7 @@ struct HomeProductCard: View {
                     // Favorite button
                     Button {
                         withAnimation(TrueFitMotion.springSnappy) {
-                            isFavorite.toggle()
+                            onToggleFavorite()
                         }
                     } label: {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
@@ -613,7 +628,11 @@ struct HomeBottomTabBar: View {
                 .background(Color.borderColor)
 
             HStack {
-                HomeTabBarItem(icon: "house.fill", title: "Home", isSelected: true)
+                Button(action: {
+                    // Already on Home
+                }) {
+                    HomeTabBarItem(icon: "house.fill", title: "Home", isSelected: true)
+                }
                 Spacer()
                 Button(action: {
                     appRouter.navigate(to: .cart)
@@ -621,9 +640,17 @@ struct HomeBottomTabBar: View {
                     HomeTabBarItem(icon: "cart", title: "Cart", isSelected: false, badgeCount: cartState.itemCount)
                 }
                 Spacer()
-                HomeTabBarItem(icon: "heart", title: "Favorite", isSelected: false)
+                Button(action: {
+                    appRouter.navigate(to: .favorites)
+                }) {
+                    HomeTabBarItem(icon: "heart", title: "Favorite", isSelected: false)
+                }
                 Spacer()
-                HomeTabBarItem(icon: "person", title: "My Profile", isSelected: false)
+                Button(action: {
+                    appRouter.navigate(to: .profile)
+                }) {
+                    HomeTabBarItem(icon: "person", title: "My Profile", isSelected: false)
+                }
             }
             .padding(.horizontal, Spacing.xxl)
             .padding(.top, Spacing.md)
@@ -669,6 +696,8 @@ struct HomeTabBarItem: View {
 
 // MARK: - Preview
 
+// MARK: - Preview
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         let repo = ProductsRepository(
@@ -676,10 +705,15 @@ struct HomeView_Previews: PreviewProvider {
                 apiClient: RESTClient()
             )
         )
+        
+        let mockFavoritesRepo = MockFavoritesRepository()
+        
         HomeView(
             viewModel: HomeViewModel(
                 fetchNewArrivalsUseCase: FetchNewArrivalsUseCase(repository: repo),
-                fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo)
+                fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo),
+                toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: mockFavoritesRepo),
+                isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo)
             )
         )
         .environmentObject(CartState())

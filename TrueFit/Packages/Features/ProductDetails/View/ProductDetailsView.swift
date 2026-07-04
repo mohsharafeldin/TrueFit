@@ -85,7 +85,10 @@ struct ProductDetailsView: View {
                 .ignoresSafeArea(.all, edges: .top)
                 
                 // Floating Header Over the Image
-                ProductDetailsHeader()
+                ProductDetailsHeader(
+                    isFavorite: viewModel.isFavorite,
+                    onToggleFavorite: { viewModel.toggleFavorite() }
+                )
             }
             
             // Sticky Bottom Bar

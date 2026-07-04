@@ -30,6 +30,7 @@ class AuthViewModel: ObservableObject {
     private let resetPasswordUseCase: ResetPasswordUseCaseProtocol
     private let logoutUseCase: LogoutUseCaseProtocol
     private let authManager: AuthManagerProtocol
+    private let loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol
     var authRouter: AuthRouter
     
     // MARK: - Init
@@ -39,7 +40,8 @@ class AuthViewModel: ObservableObject {
         resetPasswordUseCase: ResetPasswordUseCaseProtocol,
         logoutUseCase: LogoutUseCaseProtocol,
         authManager: AuthManagerProtocol,
-        authRouter: AuthRouter
+        authRouter: AuthRouter,
+        loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol
     ) {
         self.loginUseCase = loginUseCase
         self.signUpUseCase = signUpUseCase
@@ -47,6 +49,8 @@ class AuthViewModel: ObservableObject {
         self.logoutUseCase = logoutUseCase
         self.authManager = authManager
         self.authRouter = authRouter
+        self.loginWithGoogleUseCase = loginWithGoogleUseCase
+        
     }
     
     // MARK: - Validation
@@ -221,4 +225,19 @@ class AuthViewModel: ObservableObject {
         errorMessage = nil
         successMessage = nil
     }
+    func loginWithGoogle() {
+        isLoading = true
+        errorMessage = nil        
+        Task {
+            do {
+                let result = try await loginWithGoogleUseCase.execute()
+                authManager.login(token: result.user.id)
+            } catch let error as AuthError {
+                showError(error.localizedDescription)
+            } catch {
+                showError(error.localizedDescription)
+            }
+            isLoading = false
+        }
+    } 
 }

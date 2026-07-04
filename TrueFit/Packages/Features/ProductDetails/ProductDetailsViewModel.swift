@@ -16,6 +16,8 @@ final class ProductDetailsViewModel: ObservableObject {
     private let addToCartUseCase: AddToCartUseCase
     private var preferencesManager: PreferencesManagerProtocol
     private let cartState: CartState
+    private let toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private let isFavoriteUseCase: IsFavoriteUseCase
     
     // MARK: - Published Properties
     @Published var state: ViewState<Product> = .idle
@@ -26,15 +28,20 @@ final class ProductDetailsViewModel: ObservableObject {
     @Published var addToCartError: AppError? = nil
     @Published var toastMessage: String? = nil
     @Published var toastStyle: ToastStyle = .success
+    @Published var isFavorite: Bool = false
     
     init(getProductUseCase: GetProductUseCase,
          addToCartUseCase: AddToCartUseCase,
          preferencesManager: PreferencesManagerProtocol,
+        toggleFavoriteUseCase: ToggleFavoriteUseCase,
+        isFavoriteUseCase: IsFavoriteUseCase,
          cartState: CartState) {
         self.getProductUseCase = getProductUseCase
         self.addToCartUseCase = addToCartUseCase
         self.preferencesManager = preferencesManager
         self.cartState = cartState
+        self.toggleFavoriteUseCase = toggleFavoriteUseCase
+        self.isFavoriteUseCase = isFavoriteUseCase
     }
     
     func setupInitialSelection(for product: Product) {
@@ -50,6 +57,7 @@ final class ProductDetailsViewModel: ObservableObject {
             let product = try await getProductUseCase.execute(productId: id)
             self.selectedVariant = product.variants.first(where: { $0.isAvailable }) ?? product.variants.first
             self.state = .success(product)
+            await checkFavoriteStatus(id: id)
         } catch let appError as AppError {
             ErrorLogger.log(appError, context: "ProductDetailsViewModel.loadProduct")
             self.state = .failure(appError)
@@ -64,7 +72,31 @@ final class ProductDetailsViewModel: ObservableObject {
         await loadProduct(id: id)
     }
     
-
+    private func checkFavoriteStatus(id: String) async {
+        do {
+            self.isFavorite = try await isFavoriteUseCase.execute(productId: id)
+        } catch {
+            self.isFavorite = false
+        }
+    }
+    
+    func toggleFavorite() {
+        guard case .success(let product) = state else { return }
+        
+        let currentValue = isFavorite
+        isFavorite = !currentValue
+        
+        Task {
+            do {
+                let newValue = try await toggleFavoriteUseCase.execute(item: product.toFavoriteItem())
+                isFavorite = newValue
+            } catch {
+                isFavorite = currentValue
+                ErrorLogger.log(error as? AppError ?? AppError.unknown(error.localizedDescription), context: "ProductDetailsViewModel.toggleFavorite")
+            }
+        }
+    }
+    
     func selectOption(name: String, value: String) {
         selectedOptions[name] = value
         guard case .success(let product) = state else { return }
