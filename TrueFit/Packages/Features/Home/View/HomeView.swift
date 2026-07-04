@@ -604,6 +604,9 @@ struct ShimmerCategoryCard: View {
 // MARK: - Bottom Tab Bar
 
 struct HomeBottomTabBar: View {
+    @EnvironmentObject var appRouter: AppRouter
+    @EnvironmentObject var cartState: CartState
+    
     var body: some View {
         VStack(spacing: 0) {
             Divider()
@@ -612,7 +615,11 @@ struct HomeBottomTabBar: View {
             HStack {
                 HomeTabBarItem(icon: "house.fill", title: "Home", isSelected: true)
                 Spacer()
-                HomeTabBarItem(icon: "shippingbox", title: "My Order", isSelected: false)
+                Button(action: {
+                    appRouter.navigate(to: .cart)
+                }) {
+                    HomeTabBarItem(icon: "cart", title: "Cart", isSelected: false, badgeCount: cartState.itemCount)
+                }
                 Spacer()
                 HomeTabBarItem(icon: "heart", title: "Favorite", isSelected: false)
                 Spacer()
@@ -630,16 +637,32 @@ struct HomeTabBarItem: View {
     let icon: String
     let title: String
     let isSelected: Bool
+    var badgeCount: Int = 0
 
     var body: some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+        ZStack(alignment: .topTrailing) {
+            VStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
 
-            Text(title)
-                .font(.system(size: 10, weight: isSelected ? .bold : .regular))
-                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+                Text(title)
+                    .font(.system(size: 10, weight: isSelected ? .bold : .regular))
+                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+            }
+            .padding(.top, 4) // space for badge
+            .padding(.trailing, badgeCount > 0 ? 8 : 0) // space for badge
+
+            if badgeCount > 0 {
+                Text("\(badgeCount)")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(minWidth: 16, minHeight: 16)
+                    .padding(2)
+                    .background(Color.semanticDanger)
+                    .clipShape(Capsule())
+                    .offset(x: 10, y: -4)
+            }
         }
     }
 }
@@ -659,5 +682,7 @@ struct HomeView_Previews: PreviewProvider {
                 fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo)
             )
         )
+        .environmentObject(CartState())
+        .environmentObject(AppRouter())
     }
 }

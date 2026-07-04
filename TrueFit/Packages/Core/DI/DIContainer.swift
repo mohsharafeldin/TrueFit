@@ -16,6 +16,7 @@ final class DIContainer: ObservableObject {
     let preferencesManager = PreferencesManager()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
+    let cartState = CartState()
     
     // MARK: - Core Services
     private lazy var keychainManager: KeychainManagerProtocol = KeychainManager()
@@ -140,7 +141,12 @@ final class DIContainer: ObservableObject {
     }
 
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
-        let viewModel = ProductDetailsViewModel(getProductUseCase: getProductUseCase)
+        let viewModel = ProductDetailsViewModel(
+            getProductUseCase: getProductUseCase,
+            addToCartUseCase: addToCartUseCase,
+            preferencesManager: preferencesManager,
+            cartState: cartState
+        )
         return viewModel
     }
     
@@ -154,7 +160,8 @@ final class DIContainer: ObservableObject {
             addToCartUseCase: addToCartUseCase,
             updateCartLineUseCase: updateCartLineUseCase,
             removeCartLineUseCase: removeCartLineUseCase,
-            applyDiscountUseCase: applyDiscountUseCase
+            applyDiscountUseCase: applyDiscountUseCase,
+            cartState: cartState
         )
     }
 }
