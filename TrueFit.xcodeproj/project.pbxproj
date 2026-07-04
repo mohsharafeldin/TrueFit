@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -139,6 +139,9 @@
 		4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */; };
 		4CB476922FF9695A00BBA891 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB476912FF9695A00BBA891 /* FirebaseAuth */; };
 		594868AB2FF401B000F2241E /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594868AA2FF401B000F2241E /* AppRouter.swift */; };
+		5A104C612FF90D1C002AC6E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A104C602FF90D1C002AC6E2 /* GoogleService-Info.plist */; };
+		5A104C642FF90F57002AC6E2 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5A104C632FF90F57002AC6E2 /* SDWebImage */; };
+		5A104C662FF90F57002AC6E2 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AE2FEFD52900401F6B /* Preview Assets.xcassets */; };
 		5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3B22FEFD52A00401F6B /* TrueFit.xcdatamodeld */; };
@@ -252,6 +255,7 @@
 		0C67AD012FF81FB5006A3E3B /* GetCartUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCartUseCase.swift; sourceTree = "<group>"; };
 		0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateCartLineUseCase.swift; sourceTree = "<group>"; };
 		0C67AD052FF81FE7006A3E3B /* CartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
+		0C67ADDB2FF8779E006A3E3B /* ShopifyAPI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ShopifyAPI; sourceTree = "<group>"; };
 		0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveCartLineUseCase.swift; sourceTree = "<group>"; };
 		0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		0CE05B5E2FF680E200ADEB7D /* KeychainError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
@@ -318,6 +322,7 @@
 		4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInDataSource.swift; sourceTree = "<group>"; };
 		5690582B6FD0D8BA140ADB74 /* FetchNewArrivalsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchNewArrivalsUseCase.swift; sourceTree = "<group>"; };
 		594868AA2FF401B000F2241E /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		5A104C602FF90D1C002AC6E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A1CA3A42FEFD52800401F6B /* TrueFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitApp.swift; sourceTree = "<group>"; };
 		5A1CA3A92FEFD52800401F6B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -366,6 +371,8 @@
 				0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */,
 				4CB476922FF9695A00BBA891 /* FirebaseAuth in Frameworks */,
 				4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */,
+				5A104C662FF90F57002AC6E2 /* SDWebImageMapKit in Frameworks */,
+				5A104C642FF90F57002AC6E2 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,6 +744,7 @@
 		33AA80D92FEFDFF300A20AF9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5A104C602FF90D1C002AC6E2 /* GoogleService-Info.plist */,
 				594868AA2FF401B000F2241E /* AppRouter.swift */,
 				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
 				0C00A13D2FF0051B007A668C /* RootView.swift */,
@@ -1019,6 +1027,7 @@
 			children = (
 				0CE05B6B2FF682E800ADEB7D /* Config.xcconfig */,
 				0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */,
+				0C67ADDB2FF8779E006A3E3B /* ShopifyAPI */,
 				5A1CA3A62FEFD52800401F6B /* TrueFit */,
 				5A1CA3BC2FEFD52A00401F6B /* TrueFitTests */,
 				5A1CA3C62FEFD52A00401F6B /* TrueFitUITests */,
@@ -1112,7 +1121,12 @@
 			name = TrueFit;
 			packageProductDependencies = (
 				0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */,
+
 				4CB476912FF9695A00BBA891 /* FirebaseAuth */,
+
+				5A104C632FF90F57002AC6E2 /* SDWebImage */,
+				5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */,
+
 			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
@@ -1189,9 +1203,14 @@
 			packageReferences = (
 				4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				4C8CBAD12FF003D400CA6538 /* XCRemoteSwiftPackageReference "Alamofire" */,
+
 				0C67ADDB2FF8779E006A3E3B /* XCLocalSwiftPackageReference "ShopifyAPI" */,
 				4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				4CB476902FF9695A00BBA891 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+
+				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */,
+
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -1215,7 +1234,11 @@
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0CE05B6C2FF682E800ADEB7D /* Config.xcconfig in Resources */,
 				0C198E972FF2BA8E00477701 /* Assets.xcassets in Resources */,
+
 				4C0306B62FF8267F005D9827 /* GoogleService-Info.plist in Resources */,
+
+				5A104C612FF90D1C002AC6E2 /* GoogleService-Info.plist in Resources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1713,14 +1736,18 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		0C67ADDB2FF8779E006A3E3B /* XCLocalSwiftPackageReference "ShopifyAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ShopifyAPI;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
+
+
+		0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.24.0;
+			};
+		};
+
 		4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
@@ -1737,12 +1764,12 @@
 				version = 5.6.4;
 			};
 		};
-		4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/sdwebimage/sdwebimage";
 			requirement = {
 				kind = exactVersion;
-				version = 10.9.0;
+				version = 5.9.5;
 			};
 		};
 		4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
@@ -1780,9 +1807,10 @@
 		};
 		4C8CBAD52FF004D900CA6538 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C8CBAD42FF004D900CA6538 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
+
 		4CAAF4822FF4668900D751DB /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
@@ -1797,6 +1825,17 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB476902FF9695A00BBA891 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+
+		5A104C632FF90F57002AC6E2 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */;
+			productName = SDWebImage;
+		};
+		5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */;
+			productName = SDWebImageMapKit;
+
 		};
 /* End XCSwiftPackageProductDependency section */
 
