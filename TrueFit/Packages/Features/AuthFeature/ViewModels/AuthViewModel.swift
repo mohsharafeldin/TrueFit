@@ -41,7 +41,7 @@ class AuthViewModel: ObservableObject {
         logoutUseCase: LogoutUseCaseProtocol,
         authManager: AuthManagerProtocol,
         authRouter: AuthRouter,
-        loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol,
+        loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol
     ) {
         self.loginUseCase = loginUseCase
         self.signUpUseCase = signUpUseCase

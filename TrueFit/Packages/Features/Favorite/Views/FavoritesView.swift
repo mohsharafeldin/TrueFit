@@ -72,15 +72,20 @@ struct FavoritesView: View {
     }
 }
 
-// MARK: - Previews
-#Preview("Favorites - With Data") {
-    NavigationStack {
-        FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel())
-    }
-}
 
-#Preview("Favorites - Empty State") {
-    NavigationStack {
-        FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel(isEmpty: true))
+// MARK: - Previews
+struct FavoritesView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            NavigationView {
+                FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel())
+            }
+            .previewDisplayName("Favorites - With Data")
+
+            NavigationView {
+                FavoritesView(viewModel: PreviewMocks.makeFavoritesViewModel(isEmpty: true))
+            }
+            .previewDisplayName("Favorites - Empty State")
+        }
     }
 }
