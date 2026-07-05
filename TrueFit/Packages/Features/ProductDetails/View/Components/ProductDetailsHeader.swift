@@ -4,7 +4,8 @@ import SwiftUI
 
 struct ProductDetailsHeader: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var isFavorite = false
+    let isFavorite: Bool
+    var onToggleFavorite: () -> Void
     
     var body: some View {
         HStack {
@@ -28,7 +29,7 @@ struct ProductDetailsHeader: View {
             
             Button(action: {
                 withAnimation(.spring()) {
-                    isFavorite.toggle()
+                    onToggleFavorite()
                 }
             }) {
                 Image(systemName: isFavorite ? "heart.fill" : "heart")

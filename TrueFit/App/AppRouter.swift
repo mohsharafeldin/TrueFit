@@ -15,6 +15,7 @@ enum AuthRoute: Hashable {
 enum AppRoute: Hashable {
     case home
     case cart
+    case favorites
     case checkout
     case profile
     case search

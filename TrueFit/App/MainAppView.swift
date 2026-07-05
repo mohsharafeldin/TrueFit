@@ -21,6 +21,8 @@ struct MainAppView: View {
                         HomeView(viewModel: container.makeHomeViewModel())
                     case .cart:
                         Text("Cart Screen")
+                    case .favorites:
+                        FavoritesView(viewModel: container.makeFavoritesViewModel())
                     case .checkout:
                         Text("Checkout Screen")
                     case .profile:
