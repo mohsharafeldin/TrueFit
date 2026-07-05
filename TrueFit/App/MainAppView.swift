@@ -33,6 +33,8 @@ struct MainAppView: View {
                             viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
                         )
                         
+                    case .address:
+                        AddressView()
                     }
                 }
         }

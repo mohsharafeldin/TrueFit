@@ -138,6 +138,9 @@
 		4CAAF4892FF477AF00D751DB /* GoogleSignInResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF4882FF477AF00D751DB /* GoogleSignInResult.swift */; };
 		4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */; };
 		4CB476922FF9695A00BBA891 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB476912FF9695A00BBA891 /* FirebaseAuth */; };
+		4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB476982FF9AA8D00BBA891 /* AddressView.swift */; };
+		4CB4769B2FF9AAD300BBA891 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4769A2FF9AAD300BBA891 /* AddressViewModel.swift */; };
+		4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */; };
 		594868AB2FF401B000F2241E /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594868AA2FF401B000F2241E /* AppRouter.swift */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AE2FEFD52900401F6B /* Preview Assets.xcassets */; };
@@ -316,6 +319,9 @@
 		4C8F1F032FF2AFFD00299F30 /* ThirdOnBoeardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnBoeardingView.swift; sourceTree = "<group>"; };
 		4CAAF4882FF477AF00D751DB /* GoogleSignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInResult.swift; sourceTree = "<group>"; };
 		4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInDataSource.swift; sourceTree = "<group>"; };
+		4CB476982FF9AA8D00BBA891 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		4CB4769A2FF9AAD300BBA891 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
 		5690582B6FD0D8BA140ADB74 /* FetchNewArrivalsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchNewArrivalsUseCase.swift; sourceTree = "<group>"; };
 		594868AA2FF401B000F2241E /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		5A1CA3A42FEFD52800401F6B /* TrueFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1019,6 +1025,8 @@
 		4CB476942FF9A9B300BBA891 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CD6DD402FF9EB23007B6E2D /* Components */,
+				4CB476982FF9AA8D00BBA891 /* AddressView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1026,8 +1034,17 @@
 		4CB476952FF9A9BA00BBA891 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4CB4769A2FF9AAD300BBA891 /* AddressViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4CD6DD402FF9EB23007B6E2D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		519E694443BBE6E8B63A0571 /* ViewModel */ = {
@@ -1291,6 +1308,7 @@
 				0CE9F3102FF3D18100466794 /* AuthInterceptor.swift in Sources */,
 				0C198EAE2FF2BAD500477701 /* LoginView.swift in Sources */,
 				0C09B6BA2FF63E0B00F4CC3D /* ProductDetailsViewModel.swift in Sources */,
+				4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */,
 				33D02D1F2FF3DA4C0048E60D /* PreviewMocks.swift in Sources */,
 				0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */,
 				0CE9F3122FF3D18100466794 /* APIClientProtocol.swift in Sources */,
@@ -1303,6 +1321,7 @@
 				33CB35072FF8EEFB00798582 /* FavoritesViewModel.swift in Sources */,
 				0C09B6BE2FF63E1A00F4CC3D /* ErrorView.swift in Sources */,
 				0C09B6A22FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift in Sources */,
+				4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */,
 				0CE9F3132FF3D18100466794 /* APIError.swift in Sources */,
 				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
@@ -1346,6 +1365,7 @@
 				0CE05B782FF6ADD600ADEB7D /* ProductImageCarousel.swift in Sources */,
 				4C8F1F022FF2AFEC00299F30 /* SecondOnBoeardingView.swift in Sources */,
 				0C67ACF82FF81F65006A3E3B /* CartRepository.swift in Sources */,
+				4CB4769B2FF9AAD300BBA891 /* AddressViewModel.swift in Sources */,
 				0C09B6A62FF63DAA00F4CC3D /* CurrencyRepository.swift in Sources */,
 				0C09B6B02FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift in Sources */,
 				4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */,

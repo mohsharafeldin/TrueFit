@@ -18,6 +18,7 @@ enum AppRoute: Hashable {
     case favorites
     case checkout
     case profile
+    case address
     case productDetails(productId: String)
 }
 
