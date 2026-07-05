@@ -92,12 +92,14 @@ struct SearchView: View {
                     .focused($isSearchFocused)
                     .submitLabel(.search)
                     .onSubmit {
+                        isSearchFocused = false
                         viewModel.commitSearch()
                     }
 
                 if !viewModel.searchText.isEmpty {
                     Button(action: {
                         viewModel.searchText = ""
+                        viewModel.applyFiltersAndSearch()
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 16))
@@ -190,7 +192,10 @@ struct SearchView: View {
                 ForEach(viewModel.searchHistory, id: \.self) { item in
                     SearchHistoryChip(
                         text: item,
-                        onTap: { viewModel.selectHistoryItem(item) },
+                        onTap: {
+                            isSearchFocused = false
+                            viewModel.selectHistoryItem(item)
+                        },
                         onRemove: {
                             withAnimation(TrueFitMotion.springDefault) {
                                 viewModel.removeFromHistory(item)
@@ -213,6 +218,7 @@ struct SearchView: View {
             VStack(spacing: 0) {
                 ForEach(viewModel.popularSearches) { item in
                     Button(action: {
+                        isSearchFocused = false
                         viewModel.selectPopularSearch(item)
                     }) {
                         PopularSearchRow(item: item)

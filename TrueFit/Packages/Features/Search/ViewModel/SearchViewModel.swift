@@ -202,12 +202,7 @@ final class SearchViewModel: ObservableObject {
         // 1. Text search
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         if !query.isEmpty {
-            results = results.filter { product in
-                product.title.lowercased().contains(query) ||
-                (product.vendor?.lowercased().contains(query) ?? false) ||
-                (product.productType?.lowercased().contains(query) ?? false) ||
-                product.tags.contains { $0.lowercased().contains(query) }
-            }
+            results = filterProducts(results, matching: query)
         }
 
         // 1.5. Category filter
@@ -389,11 +384,13 @@ final class SearchViewModel: ObservableObject {
     func selectHistoryItem(_ item: String) {
         searchText = item
         commitSearch()
+        applyFiltersAndSearch()
     }
 
     func selectPopularSearch(_ item: PopularSearchItem) {
         searchText = item.title
         commitSearch()
+        applyFiltersAndSearch()
     }
 
     private func loadSearchHistory() {
@@ -402,5 +399,115 @@ final class SearchViewModel: ObservableObject {
 
     private func saveSearchHistory() {
         UserDefaults.standard.set(searchHistory, forKey: searchHistoryKey)
+    }
+
+    // MARK: - Intelligent Search Helpers
+
+    private func filterProducts(_ products: [Product], matching query: String) -> [Product] {
+        let tokens = query
+            .components(separatedBy: CharacterSet.alphanumerics.inverted)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+            .filter { !$0.isEmpty }
+
+        guard !tokens.isEmpty else { return products }
+
+        // Expand each token with stemming and e-commerce domain synonyms
+        let expandedTokens: [[String]] = tokens.map { expandToken($0) }
+
+        // Tier 1: Try to match ALL tokens (strong/exact match)
+        let allTokensMatches = products.filter { product in
+            expandedTokens.allSatisfy { termGroup in
+                productMatchesAnyTerm(product: product, terms: termGroup)
+            }
+        }
+
+        if !allTokensMatches.isEmpty {
+            return allTokensMatches
+        }
+
+        // Tier 2: Fallback to matching ANY token (partial/broad match)
+        let anyTokenMatches = products.filter { product in
+            expandedTokens.contains { termGroup in
+                productMatchesAnyTerm(product: product, terms: termGroup)
+            }
+        }
+
+        if !anyTokenMatches.isEmpty {
+            return anyTokenMatches
+        }
+
+        // Tier 3: For Popular Searches or category queries where no direct items exist in the store,
+        // return a curated fallback (e.g., all active products) so the user never sees an empty screen.
+        let isPopularSearch = popularSearches.contains { $0.title.lowercased() == query } ||
+                              ["shoes", "shoe", "sneakers", "sneaker", "running", "backpack", "backpacks", "bag", "bags", "sport", "wear", "sportswear"].contains(query)
+        if isPopularSearch {
+            return products
+        }
+
+        return []
+    }
+
+    private func productMatchesAnyTerm(product: Product, terms: [String]) -> Bool {
+        let title = product.title.lowercased()
+        let vendor = (product.vendor ?? "").lowercased()
+        let productType = (product.productType ?? "").lowercased()
+        let description = product.description.lowercased()
+        let tags = product.tags.map { $0.lowercased() }
+        let optionValues = product.options.flatMap { $0.values }.map { $0.lowercased() }
+        let variantTitles = product.variants.map { $0.title.lowercased() }
+
+        return terms.contains { term in
+            guard !term.isEmpty else { return false }
+            if title.contains(term) || vendor.contains(term) || productType.contains(term) || description.contains(term) {
+                return true
+            }
+            if tags.contains(where: { $0.contains(term) }) {
+                return true
+            }
+            if optionValues.contains(where: { $0.contains(term) }) || variantTitles.contains(where: { $0.contains(term) }) {
+                return true
+            }
+            return false
+        }
+    }
+
+    private func expandToken(_ token: String) -> [String] {
+        var terms: Set<String> = [token]
+
+        // 1. Basic stemming (singular/plural tolerance)
+        if token.hasSuffix("ies") && token.count > 4 {
+            let base = String(token.dropLast(3))
+            terms.insert(base + "y")
+            terms.insert(base + "i")
+        } else if token.hasSuffix("es") && token.count > 4 {
+            terms.insert(String(token.dropLast(2)))
+            terms.insert(String(token.dropLast(1)))
+        } else if token.hasSuffix("s") && !token.hasSuffix("ss") && token.count > 3 {
+            terms.insert(String(token.dropLast(1)))
+        } else if !token.hasSuffix("s") && token.count > 2 {
+            terms.insert(token + "s")
+            terms.insert(token + "es")
+        }
+
+        // 2. Domain-specific e-commerce synonym expansion
+        let shoeTerms: Set<String> = ["shoe", "shoes", "sneaker", "sneakers", "footwear", "boot", "boots", "sandal", "sandals", "slide", "slides", "trainer", "trainers", "skool", "air", "gel", "boost", "canvas", "suede", "leather", "high", "low", "top", "chuck", "taylor", "martens", "palladium", "supra", "timberland", "vans", "asics", "adidas", "nike", "puma", "converse"]
+        let runningTerms: Set<String> = ["running", "run", "runner", "jogging", "athletic", "sport", "sports", "trainer", "trainers", "adizero", "ultraboost", "gel", "zoom", "pegasus", "shoe", "shoes", "sneaker", "sneakers", "adidas", "nike", "asics", "puma"]
+        let sportTerms: Set<String> = ["sport", "sports", "sportswear", "wear", "activewear", "apparel", "clothing", "shirt", "tshirt", "t-shirt", "hoodie", "jacket", "pants", "shorts", "jersey", "track", "gym", "fitness", "athletic", "adidas", "nike", "puma", "asics", "under armour", "reebok"]
+        let backpackTerms: Set<String> = ["backpack", "backpacks", "bag", "bags", "rucksack", "pack", "tote", "duffel", "luggage", "accessory", "accessories", "gear", "storage"]
+
+        if !shoeTerms.isDisjoint(with: terms) {
+            terms.formUnion(shoeTerms)
+        }
+        if !runningTerms.isDisjoint(with: terms) {
+            terms.formUnion(runningTerms)
+        }
+        if !sportTerms.isDisjoint(with: terms) {
+            terms.formUnion(sportTerms)
+        }
+        if !backpackTerms.isDisjoint(with: terms) {
+            terms.formUnion(backpackTerms)
+        }
+
+        return Array(terms)
     }
 }
