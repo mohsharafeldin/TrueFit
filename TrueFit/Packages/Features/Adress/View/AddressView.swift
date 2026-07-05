@@ -11,6 +11,7 @@ struct AddressView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showActionSheet = false
     @State private var isMenuPressed = false
+    @EnvironmentObject var appRouter: AppRouter
     
     var body: some View {
         ZStack {
@@ -46,7 +47,7 @@ struct AddressView: View {
                         
                         // Add new address
                         Button(action: {
-                            // TODO: Navigate to add address flow
+                            appRouter.navigate(to: .addNewAddress)
                         }) {
                             HStack {
                                 HStack(spacing: 10) {

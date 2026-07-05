@@ -141,6 +141,7 @@
 		4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB476982FF9AA8D00BBA891 /* AddressView.swift */; };
 		4CB4769B2FF9AAD300BBA891 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4769A2FF9AAD300BBA891 /* AddressViewModel.swift */; };
 		4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */; };
+		4CD6DD442FF9ECE3007B6E2D /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */; };
 		594868AB2FF401B000F2241E /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594868AA2FF401B000F2241E /* AppRouter.swift */; };
 		5A1CA3A82FEFD52800401F6B /* TrueFitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */; };
 		5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A1CA3AE2FEFD52900401F6B /* Preview Assets.xcassets */; };
@@ -322,6 +323,7 @@
 		4CB476982FF9AA8D00BBA891 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		4CB4769A2FF9AAD300BBA891 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
+		4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
 		5690582B6FD0D8BA140ADB74 /* FetchNewArrivalsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchNewArrivalsUseCase.swift; sourceTree = "<group>"; };
 		594868AA2FF401B000F2241E /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		5A1CA3A42FEFD52800401F6B /* TrueFit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrueFit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1043,6 +1045,7 @@
 			isa = PBXGroup;
 			children = (
 				4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */,
+				4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1299,6 +1302,7 @@
 				0C09B6922FF63D3B00F4CC3D /* ViewState.swift in Sources */,
 				0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */,
 				0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */,
+				4CD6DD442FF9ECE3007B6E2D /* AddNewAddressView.swift in Sources */,
 				4C0306B02FF7E671005D9827 /* LoginWithGoogleUseCaseProtocol.swift in Sources */,
 				0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */,
 				0C198E952FF2BA8E00477701 /* Spacing.swift in Sources */,

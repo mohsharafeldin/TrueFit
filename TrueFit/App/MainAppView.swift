@@ -35,6 +35,9 @@ struct MainAppView: View {
                         
                     case .address:
                         AddressView()
+                        
+                    case .addNewAddress:
+                        AddNewAddressView()
                     }
                 }
         }
