@@ -20,7 +20,13 @@ struct MainAppView: View {
                     case .home:
                         HomeView(viewModel: container.makeHomeViewModel())
                     case .cart:
-                        Text("Cart Screen")
+                        CartView(
+                            viewModelFactory: { container.makeCartViewModel() },
+                            cartId: container.preferencesManager.cartId ?? "",
+                            onStartShopping: {
+                                appRouter.popToRoot()
+                            }
+                        )
                     case .favorites:
                         FavoritesView(viewModel: container.makeFavoritesViewModel())
                     case .checkout:
