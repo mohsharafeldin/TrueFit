@@ -15,31 +15,12 @@ struct ProductDetailsCard: View {
                     
                     Spacer(minLength: Spacing.md)
                     
-                    HStack(spacing: Spacing.sm) {
-                        Button(action: { viewModel.decreaseQuantity() }) {
-                            Image(systemName: "minus")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.textPrimary)
-                                .frame(width: 24, height: 24)
-                        }
-                        
-                        Text("\(viewModel.quantity)")
-                            .trueFitTextStyle(.subheadline)
-                            .fontWeight(.bold)
-                            .frame(minWidth: 20)
-                        
-                        Button(action: { viewModel.increaseQuantity() }) {
-                            Image(systemName: "plus")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.textPrimary)
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                    .padding(.horizontal, Spacing.sm)
-                    .padding(.vertical, Spacing.xs)
-                    .background(Color.surface)
-                    .clipShape(RoundedRectangle.trueFit(Radius.pill))
-                    .trueFitShadow(.xs)
+                    TrueFitStepper(
+                        quantity: viewModel.quantity,
+                        maxQuantity: viewModel.maxQuantity,
+                        onIncrement: { viewModel.increaseQuantity() },
+                        onDecrement: { viewModel.decreaseQuantity() }
+                    )
                 }
                 
                 HStack(alignment: .center) {

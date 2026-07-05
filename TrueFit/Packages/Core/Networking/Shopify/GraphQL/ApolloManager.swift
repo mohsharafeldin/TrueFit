@@ -28,7 +28,7 @@ final class ApolloManager {
         let storeName = Bundle.main.shopifyStoreName
         let apiVersion = Bundle.main.shopifyGraphQLAPIVersion
         
-        guard let url = URL(string: Constants.graphQLBaseURL) else {
+        guard let url = URL(string: Constants.storefrontGraphQLBaseURL) else {
             fatalError("Invalid GraphQL endpoint URL.")
         }
      

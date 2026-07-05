@@ -36,10 +36,7 @@ struct Money {
     let currencyCode: String
     
     var formatted: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = currencyCode
-        return formatter.string(from: amount as NSDecimalNumber) ?? "\(currencyCode) \(amount)"
+        return PriceFormatter.format(amount)
     }
 }
 

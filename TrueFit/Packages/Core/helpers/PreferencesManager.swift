@@ -12,7 +12,7 @@ import Foundation
 
 protocol PreferencesManagerProtocol {
     var hasSeenOnboarding: Bool { get set }
-    
+    var cartId: String? { get set }
 }
 
 final class PreferencesManager: PreferencesManagerProtocol {
@@ -25,6 +25,7 @@ final class PreferencesManager: PreferencesManagerProtocol {
     
     private enum Keys {
         static let hasSeenOnboarding = "hasSeenOnboarding"
+        static let cartId = "cartId"
     }
     
     var hasSeenOnboarding: Bool {
@@ -34,5 +35,10 @@ final class PreferencesManager: PreferencesManagerProtocol {
         set {
             defaults.set(newValue, forKey: Keys.hasSeenOnboarding)
         }
+    }
+    
+    var cartId: String? {
+        get { defaults.string(forKey: Keys.cartId) }
+        set { defaults.set(newValue, forKey: Keys.cartId) }
     }
 }

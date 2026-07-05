@@ -775,6 +775,7 @@ struct ShimmerBrandTabCard: View {
 
 struct HomeBottomTabBar: View {
     @EnvironmentObject var appRouter: AppRouter
+    @EnvironmentObject var cartState: CartState
     
     var body: some View {
         VStack(spacing: 0) {
@@ -789,9 +790,9 @@ struct HomeBottomTabBar: View {
                 }
                 Spacer()
                 Button(action: {
-                    // Placeholder for My Order
+                    appRouter.navigate(to: .cart)
                 }) {
-                    HomeTabBarItem(icon: "shippingbox", title: "My Order", isSelected: false)
+                    HomeTabBarItem(icon: "cart", title: "Cart", isSelected: false, badgeCount: cartState.itemCount)
                 }
                 Spacer()
                 Button(action: {
@@ -818,16 +819,32 @@ struct HomeTabBarItem: View {
     let icon: String
     let title: String
     let isSelected: Bool
+    var badgeCount: Int = 0
 
     var body: some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+        ZStack(alignment: .topTrailing) {
+            VStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
 
-            Text(title)
-                .font(.system(size: 10, weight: isSelected ? .bold : .regular))
-                .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+                Text(title)
+                    .font(.system(size: 10, weight: isSelected ? .bold : .regular))
+                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
+            }
+            .padding(.top, 4) // space for badge
+            .padding(.trailing, badgeCount > 0 ? 8 : 0) // space for badge
+
+            if badgeCount > 0 {
+                Text("\(badgeCount)")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(minWidth: 16, minHeight: 16)
+                    .padding(2)
+                    .background(Color.semanticDanger)
+                    .clipShape(Capsule())
+                    .offset(x: 10, y: -4)
+            }
         }
     }
 }
@@ -855,6 +872,7 @@ struct HomeView_Previews: PreviewProvider {
                 isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo)
             )
         )
+        .environmentObject(CartState())
         .environmentObject(AppRouter())
     }
 }
