@@ -94,6 +94,10 @@ final class DIContainer: ObservableObject {
     // Products Use Cases
     private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: productsRepository)
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
+    private lazy var fetchBrandsUseCase = FetchBrandsUseCase(repository: productsRepository)
+    private lazy var fetchProductsByCollectionUseCase = FetchProductsByCollectionUseCase(repository: productsRepository)
+    private lazy var fetchProductsByVendorUseCase = FetchProductsByVendorUseCase(repository: productsRepository)
+    private lazy var fetchAllProductsUseCase = FetchAllProductsUseCase(repository: productsRepository)
     
     
     // MARK: - CART FEATURE
@@ -157,8 +161,18 @@ final class DIContainer: ObservableObject {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
             fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
             isFavoriteUseCase: isFavoriteUseCase
+        )
+    }
+
+    public func makeSearchViewModel() -> SearchViewModel {
+        SearchViewModel(
+            fetchAllProductsUseCase: fetchAllProductsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase,
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase
         )
     }
 
@@ -186,6 +200,13 @@ final class DIContainer: ObservableObject {
             removeCartLineUseCase: removeCartLineUseCase,
             applyDiscountUseCase: applyDiscountUseCase,
             cartState: cartState
+        )
+    }
+    func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
+        ProductListViewModel(
+            source: source,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
         )
     }
     

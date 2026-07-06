@@ -8,6 +8,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
+    @EnvironmentObject var appRouter: AppRouter
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,6 +24,8 @@ struct HomeView: View {
                         homeTabContent
                     case .category:
                         categoryTabContent
+                    case .brand:
+                        brandTabContent
                     }
                 }
                 .padding(.horizontal, Spacing.lg)
@@ -80,7 +83,32 @@ struct HomeView: View {
                 emptyStateView(message: "No categories found")
             } else {
                 ForEach(viewModel.collections) { collection in
-                    CategoryCard(collection: collection)
+                    Button(action: {
+                        appRouter.navigate(to: .productsByCollection(collectionId: collection.id, title: collection.title))
+                    }) {
+                        CategoryCard(collection: collection)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Brand Tab Content
+
+    @ViewBuilder
+    private var brandTabContent: some View {
+        VStack(spacing: Spacing.md) {
+            if viewModel.isLoadingBrands {
+                brandGridPlaceholder
+            } else if viewModel.brands.isEmpty {
+                emptyStateView(message: "No brands found")
+            } else {
+                ForEach(viewModel.brands) { brand in
+                    Button(action: {
+                        appRouter.navigate(to: .productsByBrand(vendor: brand.name))
+                    }) {
+                        BrandTabCard(brand: brand)
+                    }
                 }
             }
         }
@@ -109,6 +137,15 @@ struct HomeView: View {
     }
 
     @ViewBuilder
+    private var brandGridPlaceholder: some View {
+        VStack(spacing: Spacing.md) {
+            ForEach(0..<8, id: \.self) { _ in
+                ShimmerBrandTabCard()
+            }
+        }
+    }
+
+    @ViewBuilder
     private func emptyStateView(message: String) -> some View {
         VStack(spacing: Spacing.md) {
             Image(systemName: "bag")
@@ -127,6 +164,8 @@ struct HomeView: View {
 // MARK: - Header View
 
 struct HomeHeaderView: View {
+    @EnvironmentObject var appRouter: AppRouter
+
     var body: some View {
         HStack(spacing: Spacing.sm) {
             // Profile avatar
@@ -152,7 +191,9 @@ struct HomeHeaderView: View {
             Spacer()
 
             HStack(spacing: Spacing.md) {
-                IconButton(systemName: "magnifyingglass")
+                IconButton(systemName: "magnifyingglass") {
+                    appRouter.navigate(to: .search)
+                }
                 NotificationButton()
             }
         }
@@ -387,8 +428,8 @@ struct ProductsGridView: View {
 
 struct HomeProductCard: View {
     let product: Product
-    let isFavorite: Bool
-    var onToggleFavorite: () -> Void
+    var isFavorite: Bool = false
+    var onToggleFavorite: () -> Void = {}
     @EnvironmentObject var appRouter: AppRouter
 
     var body: some View {
@@ -535,6 +576,65 @@ struct CategoryCard: View {
     }
 }
 
+// MARK: - Brand Tab Card
+
+struct BrandTabCard: View {
+    let brand: Brand
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            // Background
+            RoundedRectangle.trueFit(Radius.lg)
+                .fill(Color.surface)
+            
+            // Image aligned to the right
+            HStack {
+                Spacer()
+                if let imageURL = brand.imageURL {
+                    AsyncImage(url: imageURL) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .padding(Spacing.lg)
+                                .frame(width: 150)
+                        default:
+                            brandInitials
+                        }
+                    }
+                } else {
+                    brandInitials
+                }
+            }
+            
+            // Text overlay
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
+                Text(brand.name)
+                    .trueFitTextStyle(.title2)
+                    .foregroundColor(.textPrimary)
+                
+                Text("\(brand.productCount) Items")
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.textSecondary)
+            }
+            .padding(.leading, Spacing.lg)
+        }
+        .frame(height: 120)
+        .frame(maxWidth: .infinity)
+        .clipShape(RoundedRectangle.trueFit(Radius.lg))
+        .trueFitShadow(.sm)
+    }
+    
+    private var brandInitials: some View {
+        Text(brand.name.prefix(2).uppercased())
+            .trueFitTextStyle(.title1)
+            .fontWeight(.bold)
+            .foregroundColor(.brandPrimary.opacity(0.3))
+            .frame(width: 150)
+    }
+}
+
 // MARK: - Shimmer Product Card (Loading)
 
 struct ShimmerProductCard: View {
@@ -613,6 +713,61 @@ struct ShimmerCategoryCard: View {
                     isAnimating = true
                 }
             }
+    }
+}
+
+// MARK: - Shimmer Brand Tab Card (Loading)
+
+struct ShimmerBrandTabCard: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle.trueFit(Radius.lg)
+                .fill(Color.surface)
+                .frame(height: 120)
+                .overlay(
+                    RoundedRectangle.trueFit(Radius.lg)
+                        .fill(
+                            LinearGradient(
+                                colors: [.clear, .white.opacity(0.3), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .offset(x: isAnimating ? 400 : -400)
+                )
+                .clipped()
+            
+            HStack {
+                Spacer()
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.surface)
+                    .frame(width: 80, height: 80)
+                    .padding(Spacing.lg)
+            }
+            
+            VStack(alignment: .leading, spacing: 10) {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.surface)
+                    .frame(width: 120, height: 24)
+                
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.surface)
+                    .frame(width: 80, height: 16)
+            }
+            .padding(.leading, Spacing.lg)
+        }
+        .frame(height: 120)
+        .frame(maxWidth: .infinity)
+        .onAppear {
+            withAnimation(
+                .linear(duration: TrueFitMotion.loadingCycle)
+                .repeatForever(autoreverses: false)
+            ) {
+                isAnimating = true
+            }
+        }
     }
 }
 
@@ -712,6 +867,7 @@ struct HomeView_Previews: PreviewProvider {
             viewModel: HomeViewModel(
                 fetchNewArrivalsUseCase: FetchNewArrivalsUseCase(repository: repo),
                 fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo),
+                fetchBrandsUseCase: FetchBrandsUseCase(repository: repo),
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: mockFavoritesRepo),
                 isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo)
             )

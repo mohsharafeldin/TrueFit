@@ -33,12 +33,25 @@ struct MainAppView: View {
                         Text("Checkout Screen")
                     case .profile:
                         Text("Profile Screen")
+                    case .search:
+                        SearchView(viewModel: container.makeSearchViewModel())
                     case .productDetails(let id):
                         ProductDetailsView(
                             productId: id,
                             viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
                         )
-                        
+                    case .productsByCollection(let collectionId, let title):
+                        ProductListView(
+                            viewModel: container.makeProductListViewModel(
+                                source: .collection(id: collectionId, title: title)
+                            )
+                        )
+                    case .productsByBrand(let vendor):
+                        ProductListView(
+                            viewModel: container.makeProductListViewModel(
+                                source: .brand(vendor: vendor)
+                            )
+                        )
                     }
                 }
         }
