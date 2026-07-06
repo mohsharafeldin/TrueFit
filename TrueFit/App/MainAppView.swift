@@ -52,6 +52,10 @@ struct MainAppView: View {
                                 source: .brand(vendor: vendor)
                             )
                         )
+                    case .orders:
+                        OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
+                    case .orderDetails(let orderId):
+                        OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
                     }
                 }
         }

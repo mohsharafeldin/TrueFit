@@ -23,7 +23,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static func objectType(forTypename typename: String) -> Object? {
     switch typename {
     case "QueryRoot": return ShopifyAPI.Objects.QueryRoot
-    case "Cart": return ShopifyAPI.Objects.Cart
+    case "Customer": return ShopifyAPI.Objects.Customer
     case "Article": return ShopifyAPI.Objects.Article
     case "AppliedGiftCard": return ShopifyAPI.Objects.AppliedGiftCard
     case "Blog": return ShopifyAPI.Objects.Blog
@@ -32,6 +32,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Product": return ShopifyAPI.Objects.Product
     case "SearchQuerySuggestion": return ShopifyAPI.Objects.SearchQuerySuggestion
     case "Metaobject": return ShopifyAPI.Objects.Metaobject
+    case "Cart": return ShopifyAPI.Objects.Cart
     case "CartLine": return ShopifyAPI.Objects.CartLine
     case "ComponentizableCartLine": return ShopifyAPI.Objects.ComponentizableCartLine
     case "Comment": return ShopifyAPI.Objects.Comment
@@ -61,12 +62,18 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "ShopPolicy": return ShopifyAPI.Objects.ShopPolicy
     case "TaxonomyCategory": return ShopifyAPI.Objects.TaxonomyCategory
     case "UrlRedirect": return ShopifyAPI.Objects.UrlRedirect
-    case "Customer": return ShopifyAPI.Objects.Customer
     case "SellingPlan": return ShopifyAPI.Objects.SellingPlan
+    case "OrderConnection": return ShopifyAPI.Objects.OrderConnection
+    case "OrderEdge": return ShopifyAPI.Objects.OrderEdge
+    case "MoneyV2": return ShopifyAPI.Objects.MoneyV2
+    case "OrderLineItemConnection": return ShopifyAPI.Objects.OrderLineItemConnection
+    case "OrderLineItemEdge": return ShopifyAPI.Objects.OrderLineItemEdge
+    case "OrderLineItem": return ShopifyAPI.Objects.OrderLineItem
+    case "Image": return ShopifyAPI.Objects.Image
+    case "Fulfillment": return ShopifyAPI.Objects.Fulfillment
+    case "FulfillmentTrackingInfo": return ShopifyAPI.Objects.FulfillmentTrackingInfo
     case "BaseCartLineConnection": return ShopifyAPI.Objects.BaseCartLineConnection
     case "BaseCartLineEdge": return ShopifyAPI.Objects.BaseCartLineEdge
-    case "MoneyV2": return ShopifyAPI.Objects.MoneyV2
-    case "Image": return ShopifyAPI.Objects.Image
     case "CartLineCost": return ShopifyAPI.Objects.CartLineCost
     case "CartCost": return ShopifyAPI.Objects.CartCost
     case "CartDiscountCode": return ShopifyAPI.Objects.CartDiscountCode

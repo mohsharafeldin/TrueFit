@@ -10,10 +10,7 @@ import SwiftUI
 // MARK: - Order Details View
 struct OrderDetailsView: View {
     @EnvironmentObject var appRouter: AppRouter
-    // @StateObject var viewModel: OrderDetailsViewModel
-    
-    // Mock Data for UI
-    let orderDetails = OrderPreviewData.mockOrderDetails
+    @StateObject var viewModel: OrderDetailsViewModel
     
     var body: some View {
         ZStack {
@@ -21,36 +18,52 @@ struct OrderDetailsView: View {
             
             VStack(spacing: 0) {
                 // Header
-                headerView
+                if let orderDetails = viewModel.orderDetails {
+                    headerView(orderDetails: orderDetails)
+                }
                 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: Spacing.xl) {
-                        // Top Section: Status Timeline
-                        OrderStatusTimeline(currentStatus: orderDetails.status)
-                            .padding(.top, Spacing.sm)
-                        
-                        // Items List
-                        itemsSection
-                        
-                        // Shipping & Payment Info
-                        infoSection
-                        
-                        // Receipt / Payment Summary
-                        paymentSummarySection
+                    VStack(spacing: Spacing.lg) {
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding(.top, 40)
+                        } else if let orderDetails = viewModel.orderDetails {
+                            // Timeline & Status
+                            OrderStatusTimeline(currentStatus: orderDetails.status)
+                                .padding(.top, Spacing.sm)
+                            
+                            // Items List
+                            itemsSection(orderDetails: orderDetails)
+                            
+                            // Payment & Shipping Info
+                            infoSection(orderDetails: orderDetails)
+                            
+                            // Order Summary
+                            summarySection(orderDetails: orderDetails)
+                        } else if let error = viewModel.errorMessage {
+                            Text(error)
+                                .foregroundColor(.semanticDanger)
+                                .padding(.top, 40)
+                        }
                     }
                     .padding(.horizontal, Spacing.lg)
-                    .padding(.bottom, 120)
+                    .padding(.bottom, Spacing.xxl * 2)
                 }
             }
             
             // Floating CTA at the bottom
-            floatingBottomBar
+            if let orderDetails = viewModel.orderDetails {
+                floatingBottomBar(orderDetails: orderDetails)
+            }
         }
         .navigationBarHidden(true)
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
     
     // MARK: - Header
-    private var headerView: some View {
+    private func headerView(orderDetails: OrderDetails) -> some View {
         HStack(spacing: Spacing.md) {
             Button(action: {
                 appRouter.goBack()
@@ -94,7 +107,7 @@ struct OrderDetailsView: View {
     }
     
     // MARK: - Items Section
-    private var itemsSection: some View {
+    private func itemsSection(orderDetails: OrderDetails) -> some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
             Text("Items (\(orderDetails.items.count))")
                 .trueFitTextStyle(.headline)
@@ -108,38 +121,36 @@ struct OrderDetailsView: View {
         }
     }
     
-    // MARK: - Info Section (Shipping & Payment)
-    private var infoSection: some View {
-        HStack(alignment: .top, spacing: Spacing.md) {
-            // Shipping Box
-            InfoBoxView(
-                icon: "mappin.and.ellipse",
-                title: "Delivery Address",
-                value: orderDetails.shippingAddress
-            )
-            
-            // Payment Box
+    // MARK: - Info Section
+    private func infoSection(orderDetails: OrderDetails) -> some View {
+        HStack(spacing: Spacing.md) {
             InfoBoxView(
                 icon: "creditcard.fill",
-                title: "Payment Method",
+                title: "Payment",
                 value: orderDetails.paymentMethod
+            )
+            
+            InfoBoxView(
+                icon: "map.fill",
+                title: "Shipping To",
+                value: orderDetails.shippingAddress
             )
         }
     }
     
-    // MARK: - Payment Summary
-    private var paymentSummarySection: some View {
+    // MARK: - Summary Section
+    private func summarySection(orderDetails: OrderDetails) -> some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
             Text("Payment Summary")
                 .trueFitTextStyle(.headline)
                 .foregroundColor(.textPrimary)
             
             VStack(spacing: Spacing.sm) {
-                summaryRow(title: "Subtotal", amount: orderDetails.subtotal)
-                summaryRow(title: "Shipping Fee", amount: orderDetails.shippingFee)
+                summaryRow(title: "Subtotal", value: formatPrice(orderDetails.subtotal))
+                summaryRow(title: "Shipping Fee", value: formatPrice(orderDetails.shippingFee))
                 
                 if orderDetails.discount > 0 {
-                    summaryRow(title: "Discount", amount: -orderDetails.discount, textColor: .brandPrimary)
+                    summaryRow(title: "Discount", value: "-\(formatPrice(orderDetails.discount))")
                 }
                 
                 Divider()
@@ -170,21 +181,21 @@ struct OrderDetailsView: View {
         }
     }
     
-    private func summaryRow(title: String, amount: Double, textColor: Color = .textPrimary) -> some View {
+    private func summaryRow(title: String, value: String, isTotal: Bool = false) -> some View {
         HStack {
             Text(title)
                 .trueFitTextStyle(.subheadline)
                 .foregroundColor(.textSecondary)
             Spacer()
-            Text(formatPrice(amount))
+            Text(value)
                 .trueFitTextStyle(.subheadline)
                 .fontWeight(.medium)
-                .foregroundColor(textColor)
+                .foregroundColor(.textPrimary)
         }
     }
     
     // MARK: - Floating Bottom Bar
-    private var floatingBottomBar: some View {
+    private func floatingBottomBar(orderDetails: OrderDetails) -> some View {
         VStack {
             Spacer()
             
@@ -244,8 +255,5 @@ struct OrderDetailsView: View {
     }
 }
 
-// MARK: - #Preview
-#Preview("Order Details - In Progress") {
-    OrderDetailsView()
-        .environmentObject(AppRouter())
-}
+// MARK: - Previews
+// Preview requires DIContainer setup so it's skipped here.

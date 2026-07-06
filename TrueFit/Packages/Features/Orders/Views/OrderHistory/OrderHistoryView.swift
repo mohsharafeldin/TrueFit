@@ -10,19 +10,7 @@ import SwiftUI
 // MARK: - Order History View
 struct OrderHistoryView: View {
     @EnvironmentObject var appRouter: AppRouter
-    // @StateObject var viewModel: OrderHistoryViewModel
-    
-    // Temporary States for UI demonstration
-    @State private var selectedStatus: OrderStatus = .all
-    @State private var isLoading: Bool = false
-    @State private var orders: [Order] = OrderPreviewData.mockOrders
-    
-    var filteredOrders: [Order] {
-        if selectedStatus == .all {
-            return orders
-        }
-        return orders.filter { $0.status == selectedStatus }
-    }
+    @StateObject var viewModel: OrderHistoryViewModel
     
     var body: some View {
         ZStack {
@@ -33,14 +21,14 @@ struct OrderHistoryView: View {
                 headerView
                 
                 // Status Filter Tabs
-                OrderStatusTabs(selectedStatus: $selectedStatus)
+                OrderStatusTabs(selectedStatus: $viewModel.selectedStatus)
                     .padding(.vertical, Spacing.sm)
                 
                 // Content
-                if isLoading {
+                if viewModel.isLoading {
                     loadingContent
-                } else if filteredOrders.isEmpty {
-                    OrderEmptyStateView(status: selectedStatus)
+                } else if viewModel.filteredOrders.isEmpty {
+                    OrderEmptyStateView(status: viewModel.selectedStatus)
                 } else {
                     ordersList
                 }
@@ -48,7 +36,7 @@ struct OrderHistoryView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            // viewModel.loadOrders()
+            viewModel.onAppear()
         }
     }
     
@@ -83,9 +71,9 @@ struct OrderHistoryView: View {
     private var ordersList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: Spacing.lg) {
-                ForEach(filteredOrders) { order in
+                ForEach(viewModel.filteredOrders) { order in
                     OrderHistoryCard(order: order) {
-                        print("Navigate to order: \(order.orderNumber)")
+                        appRouter.navigate(to: .orderDetails(orderId: order.id))
                     }
                     .transition(.asymmetric(
                         insertion: .scale(scale: 0.95).combined(with: .opacity),
@@ -97,7 +85,7 @@ struct OrderHistoryView: View {
             .padding(.top, Spacing.sm)
             .padding(.bottom, 100)
         }
-        .animation(TrueFitMotion.springDefault, value: filteredOrders.count)
+        .animation(TrueFitMotion.springDefault, value: viewModel.filteredOrders.count)
     }
     
     // MARK: - Loading Content
@@ -115,9 +103,4 @@ struct OrderHistoryView: View {
 }
 
 // MARK: - Previews
-#Preview("Order History") {
-    NavigationView {
-        OrderHistoryView()
-            .environmentObject(AppRouter())
-    }
-}
+// Preview requires DIContainer setup so it's skipped here.
