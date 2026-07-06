@@ -195,6 +195,10 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func continueAsGuest() {
+        authManager.setGuestMode(true)
+    }
+    
     // MARK: - Navigation
     
     func navigateToSignUp() {

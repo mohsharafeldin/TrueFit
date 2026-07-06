@@ -9,21 +9,18 @@ import Foundation
 import SwiftUI
 
 struct AuthFlowView: View {
-    var onLoginSuccess: () -> Void
-    var onGuestContinue: () -> Void
+   
     
     @StateObject private var viewModel: AuthViewModel
     @EnvironmentObject var authRouter: AuthRouter
 
-    init(container: DIContainer, onLoginSuccess: @escaping () -> Void, onGuestContinue: @escaping () -> Void) {
-        self.onLoginSuccess = onLoginSuccess
-        self.onGuestContinue = onGuestContinue
+    init(container: DIContainer) {
         _viewModel = StateObject(wrappedValue: container.makeAuthViewModel())
     }
     
     var body: some View {
         NavigationStack(path: $authRouter.path) {
-            LoginView(viewModel: viewModel)
+            WelcomeAuthView(viewModel: viewModel)
                 .navigationDestination(for: AuthRoute.self) { route in
                     switch route {
                     case .signIn:
