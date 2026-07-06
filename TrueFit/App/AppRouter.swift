@@ -21,6 +21,8 @@ enum AppRoute: Hashable {
     case productDetails(productId: String)
     case productsByCollection(collectionId: Int64, title: String)
     case productsByBrand(vendor: String)
+    case orders
+    case orderDetails(orderId: String)
 }
 
 enum AppTab: Hashable {
