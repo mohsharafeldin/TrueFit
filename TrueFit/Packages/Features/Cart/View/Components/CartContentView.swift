@@ -45,7 +45,6 @@ struct CartContentView: View {
                     CartSummarySection(viewModel: viewModel, cart: cart)
                         .padding(.horizontal, Spacing.md)
                         .padding(.top, Spacing.lg)
-                        .padding(.bottom, Spacing.xxl) // Space for bottom bar
                 }
             }
             

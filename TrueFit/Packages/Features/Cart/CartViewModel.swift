@@ -33,8 +33,8 @@ final class CartViewModel: ObservableObject {
     
     // MARK: - Actions
     
-    func loadCart(id: String) async {
-        guard !id.isEmpty else {
+    func loadCart(id: String, silent: Bool = false) async {
+        if id.isEmpty {
             let emptyCart = Cart(
                 id: "",
                 lines: [],
@@ -49,13 +49,17 @@ final class CartViewModel: ObservableObject {
             return
         }
         
-        cartState = .loading
+        if !silent {
+            cartState = .loading
+        }
         do {
             let cart = try await getCartUseCase.execute(cartId: id)
             cartState = .success(cart)
             cartStateModel.updateCount(cart.totalQuantity)
         } catch {
-            cartState = .failure(error as? AppError ?? .unknown(error.localizedDescription))
+            if !silent {
+                cartState = .failure(error as? AppError ?? .unknown(error.localizedDescription))
+            }
         }
     }
     

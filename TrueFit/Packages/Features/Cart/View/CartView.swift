@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CartView: View {
     @StateObject var viewModel: CartViewModel
+    @EnvironmentObject var globalCartState: CartState
     let cartId: String
     let onStartShopping: () -> Void
     
@@ -51,6 +52,15 @@ struct CartView: View {
         .task {
             if case .idle = viewModel.cartState {
                 await viewModel.loadCart(id: cartId)
+            }
+        }
+        .onChange(of: globalCartState.itemCount) { newCount in
+            if case .success(let cart) = viewModel.cartState {
+                if cart.totalQuantity != newCount {
+                    Task {
+                        await viewModel.loadCart(id: cartId, silent: true)
+                    }
+                }
             }
         }
         .trueFitToast(
