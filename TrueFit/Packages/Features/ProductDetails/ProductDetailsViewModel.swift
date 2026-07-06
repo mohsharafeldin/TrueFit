@@ -30,6 +30,10 @@ final class ProductDetailsViewModel: ObservableObject {
     @Published var toastStyle: ToastStyle = .success
     @Published var isFavorite: Bool = false
     
+    var isGuest: Bool {
+        return preferencesManager.getUser() == nil
+    }
+    
     init(getProductUseCase: GetProductUseCase,
          addToCartUseCase: AddToCartUseCase,
          preferencesManager: PreferencesManagerProtocol,
