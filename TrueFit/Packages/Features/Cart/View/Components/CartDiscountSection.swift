@@ -3,7 +3,6 @@ import SwiftUI
 struct CartDiscountSection: View {
     let cart: Cart
     @ObservedObject var viewModel: CartViewModel
-    let cartId: String
     @Binding var isDiscountExpanded: Bool
     
     var body: some View {
@@ -60,11 +59,11 @@ struct CartDiscountSection: View {
                         .autocapitalization(.allCharacters)
                         .submitLabel(.done)
                         .onSubmit {
-                            Task { await viewModel.applyDiscount(cartId: cartId) }
+                            Task { await viewModel.applyDiscount() }
                         }
                     
                     Button(action: {
-                        Task { await viewModel.applyDiscount(cartId: cartId) }
+                        Task { await viewModel.applyDiscount() }
                     }) {
                         ZStack {
                             if viewModel.isUpdating {

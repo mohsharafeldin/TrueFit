@@ -3,15 +3,13 @@ import SwiftUI
 struct CartView: View {
     @StateObject var viewModel: CartViewModel
     @EnvironmentObject var globalCartState: CartState
-    let cartId: String
     let onStartShopping: () -> Void
     
     @State private var isDiscountExpanded: Bool = false
     @Environment(\.openURL) private var openURL
 
-    init(viewModelFactory: @escaping () -> CartViewModel, cartId: String, onStartShopping: @escaping () -> Void) {
+    init(viewModelFactory: @escaping () -> CartViewModel, onStartShopping: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: viewModelFactory())
-        self.cartId = cartId
         self.onStartShopping = onStartShopping
     }
     
@@ -29,7 +27,7 @@ struct CartView: View {
                 CartFailureView(
                     error: error,
                     onRetry: error.isRetryable ? {
-                        Task { await viewModel.retry(cartId: cartId) }
+                        Task { await viewModel.retry() }
                     } : nil
                 )
             case .success(let cart):
@@ -39,7 +37,6 @@ struct CartView: View {
                     CartContentView(
                         cart: cart,
                         viewModel: viewModel,
-                        cartId: cartId,
                         isDiscountExpanded: $isDiscountExpanded,
                         openURL: openURL
                     )
@@ -51,14 +48,14 @@ struct CartView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             if case .idle = viewModel.cartState {
-                await viewModel.loadCart(id: cartId)
+                await viewModel.loadCart()
             }
         }
         .onChange(of: globalCartState.itemCount) { newCount in
             if case .success(let cart) = viewModel.cartState {
                 if cart.totalQuantity != newCount {
                     Task {
-                        await viewModel.loadCart(id: cartId, silent: true)
+                        await viewModel.loadCart(silent: true)
                     }
                 }
             }

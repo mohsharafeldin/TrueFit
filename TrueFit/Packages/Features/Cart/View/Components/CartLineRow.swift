@@ -3,7 +3,6 @@ import SwiftUI
 struct CartLineRow: View {
     let line: CartLine
     @ObservedObject var viewModel: CartViewModel
-    let cartId: String
     @State private var showingDeleteAlert = false
     
     @State private var offset: CGFloat = 0
@@ -102,10 +101,10 @@ struct CartLineRow: View {
                         TrueFitStepper(
                             quantity: line.quantity,
                             onIncrement: {
-                                Task { await viewModel.updateQuantity(cartId: cartId, lineId: line.id, quantity: line.quantity + 1) }
+                                Task { await viewModel.updateQuantity(lineId: line.id, quantity: line.quantity + 1) }
                             },
                             onDecrement: {
-                                Task { await viewModel.updateQuantity(cartId: cartId, lineId: line.id, quantity: line.quantity - 1) }
+                                Task { await viewModel.updateQuantity(lineId: line.id, quantity: line.quantity - 1) }
                             },
                             isDisabled: viewModel.isUpdating
                         )
@@ -145,7 +144,7 @@ struct CartLineRow: View {
             isPrimaryDestructive: true,
             onPrimaryAction: {
                 Task {
-                    await viewModel.removeLine(cartId: cartId, lineId: line.id)
+                    await viewModel.removeLine(lineId: line.id)
                 }
             },
             onSecondaryAction: {

@@ -41,7 +41,6 @@ struct MainAppView: View {
             NavigationStack(path: $appRouter.cartPath) {
                 CartView(
                     viewModelFactory: { container.makeCartViewModel() },
-                    cartId: container.preferencesManager.cartId ?? "",
                     onStartShopping: {
                         appRouter.popToRoot()
                         appRouter.switchTab(to: .home)

@@ -216,7 +216,8 @@ final class DIContainer: ObservableObject {
             updateCartLineUseCase: updateCartLineUseCase,
             removeCartLineUseCase: removeCartLineUseCase,
             applyDiscountUseCase: applyDiscountUseCase,
-            cartState: cartState
+            cartState: cartState,
+            preferencesManager: preferencesManager
         )
     }
     func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
