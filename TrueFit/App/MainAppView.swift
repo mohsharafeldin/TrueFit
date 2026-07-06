@@ -76,14 +76,28 @@ extension MainAppView {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
-     
+            
         case .checkout:
             Text("Checkout Screen")
-        
+            
         case .productDetails(let id):
             ProductDetailsView(
                 productId: id,
                 viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
+            )
+        case .search:
+            SearchView(viewModel: container.makeSearchViewModel())
+        case .productsByCollection(let collectionId, let title):
+            ProductListView(
+                viewModel: container.makeProductListViewModel(
+                    source: .collection(id: collectionId, title: title)
+                )
+            )
+        case .productsByBrand(let vendor):
+            ProductListView(
+                viewModel: container.makeProductListViewModel(
+                    source: .brand(vendor: vendor)
+                )
             )
         }
     }

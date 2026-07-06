@@ -11,11 +11,13 @@ import SwiftUI
 enum HomeTab: Int, CaseIterable {
     case home
     case category
+    case brand
 
     var title: String {
         switch self {
         case .home: return "Home"
         case .category: return "Category"
+        case .brand: return "Brands"
         }
     }
 }
@@ -29,8 +31,10 @@ final class HomeViewModel: ObservableObject {
     @Published var products: [Product] = []
     @Published var favoriteStatuses: [String: Bool] = [:]
     @Published var collections: [ProductCollection] = []
+    @Published var brands: [Brand] = []
     @Published var isLoadingProducts = false
     @Published var isLoadingCollections = false
+    @Published var isLoadingBrands = false
     @Published var errorMessage: String?
     @Published var userName: String = "Guest"
 
@@ -38,6 +42,7 @@ final class HomeViewModel: ObservableObject {
 
     private let fetchNewArrivalsUseCase: FetchNewArrivalsUseCase
     private let fetchCollectionsUseCase: FetchCollectionsUseCase
+    private let fetchBrandsUseCase: FetchBrandsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let isFavoriteUseCase: IsFavoriteUseCase
     private let preferencesManager: PreferencesManagerProtocol
@@ -47,12 +52,14 @@ final class HomeViewModel: ObservableObject {
     init(
         fetchNewArrivalsUseCase: FetchNewArrivalsUseCase,
         fetchCollectionsUseCase: FetchCollectionsUseCase,
+        fetchBrandsUseCase: FetchBrandsUseCase,
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
         isFavoriteUseCase: IsFavoriteUseCase,
         preferencesManager: PreferencesManagerProtocol
     ) {
         self.fetchNewArrivalsUseCase = fetchNewArrivalsUseCase
         self.fetchCollectionsUseCase = fetchCollectionsUseCase
+        self.fetchBrandsUseCase = fetchBrandsUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.isFavoriteUseCase = isFavoriteUseCase
         self.preferencesManager = preferencesManager
@@ -106,8 +113,9 @@ final class HomeViewModel: ObservableObject {
 
         async let productsTask: () = loadProducts()
         async let collectionsTask: () = loadCollections()
+        async let brandsTask: () = loadBrands()
 
-        _ = await (productsTask, collectionsTask)
+        _ = await (productsTask, collectionsTask, brandsTask)
     }
 
     private func loadProducts() async {
@@ -140,7 +148,19 @@ final class HomeViewModel: ObservableObject {
             }
         }
     }
-    
+    private func loadBrands() async {
+        isLoadingBrands = true
+        defer { isLoadingBrands = false }
+
+        do {
+            brands = try await fetchBrandsUseCase.execute()
+        } catch {
+            #if DEBUG
+            print("❌ [HomeViewModel] Failed to load brands: \(error.localizedDescription)")
+            #endif
+        }
+    }
+
     private func checkFavoriteStatuses() async {
         for product in products {
             do {
