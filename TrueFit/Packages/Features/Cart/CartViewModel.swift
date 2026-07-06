@@ -14,6 +14,7 @@ final class CartViewModel: ObservableObject {
     private let removeCartLineUseCase: RemoveCartLineUseCase
     private let applyDiscountUseCase: ApplyDiscountUseCase
     private let cartStateModel: CartState
+    private var preferencesManager: PreferencesManagerProtocol
     
     init(
         getCartUseCase: GetCartUseCase,
@@ -21,7 +22,8 @@ final class CartViewModel: ObservableObject {
         updateCartLineUseCase: UpdateCartLineUseCase,
         removeCartLineUseCase: RemoveCartLineUseCase,
         applyDiscountUseCase: ApplyDiscountUseCase,
-        cartState: CartState
+        cartState: CartState,
+        preferencesManager: PreferencesManagerProtocol
     ) {
         self.getCartUseCase = getCartUseCase
         self.addToCartUseCase = addToCartUseCase
@@ -29,12 +31,14 @@ final class CartViewModel: ObservableObject {
         self.removeCartLineUseCase = removeCartLineUseCase
         self.applyDiscountUseCase = applyDiscountUseCase
         self.cartStateModel = cartState
+        self.preferencesManager = preferencesManager
     }
     
     // MARK: - Actions
     
-    func loadCart(id: String) async {
-        guard !id.isEmpty else {
+    func loadCart(silent: Bool = false) async {
+        let id = preferencesManager.cartId ?? ""
+        if id.isEmpty {
             let emptyCart = Cart(
                 id: "",
                 lines: [],
@@ -49,26 +53,32 @@ final class CartViewModel: ObservableObject {
             return
         }
         
-        cartState = .loading
+        if !silent {
+            cartState = .loading
+        }
         do {
             let cart = try await getCartUseCase.execute(cartId: id)
             cartState = .success(cart)
             cartStateModel.updateCount(cart.totalQuantity)
         } catch {
-            cartState = .failure(error as? AppError ?? .unknown(error.localizedDescription))
+            if !silent {
+                cartState = .failure(error as? AppError ?? .unknown(error.localizedDescription))
+            }
         }
     }
     
-    func retry(cartId: String) async {
-        await loadCart(id: cartId)
+    func retry() async {
+        await loadCart()
     }
     
-    func addToCart(cartId: String?, variantId: String, quantity: Int) async {
+    func addToCart(variantId: String, quantity: Int) async {
         isUpdating = true
         defer { isUpdating = false }
         
+        let cartId = preferencesManager.cartId
         do {
             let updatedCart = try await addToCartUseCase.execute(cartId: cartId, variantId: variantId, quantity: quantity)
+            preferencesManager.cartId = updatedCart.id
             cartState = .success(updatedCart)
             cartStateModel.updateCount(updatedCart.totalQuantity)
         } catch {
@@ -82,10 +92,11 @@ final class CartViewModel: ObservableObject {
         }
     }
     
-    func updateQuantity(cartId: String, lineId: String, quantity: Int) async {
+    func updateQuantity(lineId: String, quantity: Int) async {
         isUpdating = true
         defer { isUpdating = false }
         
+        guard let cartId = preferencesManager.cartId else { return }
         do {
             let updatedCart = try await updateCartLineUseCase.execute(cartId: cartId, lineId: lineId, quantity: quantity)
             cartState = .success(updatedCart)
@@ -95,10 +106,11 @@ final class CartViewModel: ObservableObject {
         }
     }
     
-    func removeLine(cartId: String, lineId: String) async {
+    func removeLine(lineId: String) async {
         isUpdating = true
         defer { isUpdating = false }
         
+        guard let cartId = preferencesManager.cartId else { return }
         do {
             let updatedCart = try await removeCartLineUseCase.execute(cartId: cartId, lineId: lineId)
             cartState = .success(updatedCart)
@@ -108,12 +120,13 @@ final class CartViewModel: ObservableObject {
         }
     }
     
-    func applyDiscount(cartId: String) async {
+    func applyDiscount() async {
         guard !discountInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         
         isUpdating = true
         defer { isUpdating = false }
         
+        guard let cartId = preferencesManager.cartId else { return }
         do {
             let updatedCart = try await applyDiscountUseCase.execute(cartId: cartId, code: discountInput)
             cartState = .success(updatedCart)

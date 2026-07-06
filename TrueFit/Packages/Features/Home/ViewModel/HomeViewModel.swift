@@ -36,6 +36,11 @@ final class HomeViewModel: ObservableObject {
     @Published var isLoadingCollections = false
     @Published var isLoadingBrands = false
     @Published var errorMessage: String?
+    @Published var userName: String = "Guest"
+    
+    var isGuest: Bool {
+        return preferencesManager.getUser() == nil
+    }
 
     // MARK: - Dependencies
 
@@ -44,6 +49,7 @@ final class HomeViewModel: ObservableObject {
     private let fetchBrandsUseCase: FetchBrandsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let isFavoriteUseCase: IsFavoriteUseCase
+    private let preferencesManager: PreferencesManagerProtocol
 
     // MARK: - Init
 
@@ -52,18 +58,21 @@ final class HomeViewModel: ObservableObject {
         fetchCollectionsUseCase: FetchCollectionsUseCase,
         fetchBrandsUseCase: FetchBrandsUseCase,
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
-        isFavoriteUseCase: IsFavoriteUseCase
+        isFavoriteUseCase: IsFavoriteUseCase,
+        preferencesManager: PreferencesManagerProtocol
     ) {
         self.fetchNewArrivalsUseCase = fetchNewArrivalsUseCase
         self.fetchCollectionsUseCase = fetchCollectionsUseCase
         self.fetchBrandsUseCase = fetchBrandsUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.isFavoriteUseCase = isFavoriteUseCase
+        self.preferencesManager = preferencesManager
     }
 
     // MARK: - Public Methods
 
     func onAppear() {
+        loadUser()
         Task {
             await loadAllData()
         }
@@ -90,6 +99,14 @@ final class HomeViewModel: ObservableObject {
                 errorMessage = error.localizedDescription
                 ErrorLogger.log(error as? AppError ?? AppError.unknown(error.localizedDescription), context: "HomeViewModel.toggleFavorite")
             }
+        }
+    }
+    
+    private func loadUser() {
+        if let user = preferencesManager.getUser() {
+            userName = user.firstName
+        } else {
+            userName = "Guest"
         }
     }
 

@@ -3,7 +3,6 @@ import SwiftUI
 struct CartContentView: View {
     let cart: Cart
     @ObservedObject var viewModel: CartViewModel
-    let cartId: String
     @Binding var isDiscountExpanded: Bool
     let openURL: OpenURLAction
     
@@ -16,7 +15,7 @@ struct CartContentView: View {
                     ZStack {
                         VStack(spacing: Spacing.xl) {
                             ForEach(cart.lines, id: \.id) { line in
-                                CartLineRow(line: line, viewModel: viewModel, cartId: cartId)
+                                CartLineRow(line: line, viewModel: viewModel)
                             }
                         }
                         .padding(.top, Spacing.md)
@@ -35,7 +34,6 @@ struct CartContentView: View {
                     CartDiscountSection(
                         cart: cart,
                         viewModel: viewModel,
-                        cartId: cartId,
                         isDiscountExpanded: $isDiscountExpanded
                     )
                     .padding(.horizontal, Spacing.md)
@@ -45,7 +43,6 @@ struct CartContentView: View {
                     CartSummarySection(viewModel: viewModel, cart: cart)
                         .padding(.horizontal, Spacing.md)
                         .padding(.top, Spacing.lg)
-                        .padding(.bottom, Spacing.xxl) // Space for bottom bar
                 }
             }
             
