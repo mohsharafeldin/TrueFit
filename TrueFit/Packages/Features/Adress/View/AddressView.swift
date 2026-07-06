@@ -9,20 +9,33 @@ import SwiftUI
 
 struct AddressView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var appRouter: AppRouter
+    @StateObject private var viewModel: AddressViewModel
+
     @State private var showActionSheet = false
     @State private var isMenuPressed = false
-    @EnvironmentObject var appRouter: AppRouter
-    
+    @State private var selectedAddress: Address?
+
+    // Local navigation state — mirrors the pattern AddNewAddressView already
+    // uses for its own push to the details form, so both screens share the
+    // exact same `viewModel` instance instead of going through the router.
+    @State private var showAddNewAddress = false
+    @State private var showEditAddress = false
+
+    init(viewModel: AddressViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                
+
                 // Nav Bar
                 ZStack {
                     Text("Address Book")
                         .font(.system(size: 17, weight: .medium))
                         .foregroundColor(.textPrimary)
-                    
+
                     HStack {
                         Button(action: { dismiss() }) {
                             Image(systemName: "chevron.left")
@@ -41,13 +54,13 @@ struct AddressView: View {
                         .frame(height: 0.5),
                     alignment: .bottom
                 )
-                
+
                 ScrollView {
                     VStack(spacing: 16) {
-                        
+
                         // Add new address
                         Button(action: {
-                            appRouter.navigate(to: .addNewAddress)
+                            showAddNewAddress = true
                         }) {
                             HStack {
                                 HStack(spacing: 10) {
@@ -57,9 +70,9 @@ struct AddressView: View {
                                         .font(.system(size: 15, weight: .medium))
                                 }
                                 .foregroundColor(.brandPrimary)
-                                
+
                                 Spacer()
-                                
+
                                 Image(systemName: "chevron.right")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(.textTertiary)
@@ -73,73 +86,37 @@ struct AddressView: View {
                                     .stroke(Color.borderColor, lineWidth: 0.5)
                             )
                         }
-                        
-                        // Address card (static for now — will come from API later)
-                        VStack(spacing: 0) {
-                            HStack {
-                                HStack(spacing: 8) {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(Color.surface)
-                                            .frame(width: 26, height: 26)
-                                        Image(systemName: "house.fill")
-                                            .font(.system(size: 13, weight: .medium))
-                                            .foregroundColor(.brandPrimary)
-                                    }
-                                    
-                                    Text("Home")
-                                        .font(.system(size: 15, weight: .medium))
-                                        .foregroundColor(.textPrimary)
-                                }
-                                
-                                Spacer()
-                                
-                                Button(action: {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
-                                        isMenuPressed = true
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
-                                            isMenuPressed = false
-                                        }
-                                    }
-                                    withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
-                                        showActionSheet = true
-                                    }
-                                }) {
-                                    Image(systemName: "ellipsis")
-                                        .font(.system(size: 18, weight: .medium))
-                                        .foregroundColor(.textSecondary)
-                                        .rotationEffect(.degrees(isMenuPressed ? 90 : 0))
-                                        .scaleEffect(isMenuPressed ? 1.2 : 1.0)
-                                        .frame(width: 32, height: 32)
-                                }
+
+                        // MARK: - Content states
+
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding(.top, 40)
+
+                        } else if viewModel.addresses.isEmpty {
+                            VStack(spacing: 8) {
+                                Image(systemName: "mappin.slash")
+                                    .font(.system(size: 28, weight: .medium))
+                                    .foregroundColor(.textTertiary)
+
+                                Text("No saved addresses yet")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .foregroundColor(.textSecondary)
                             }
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 12)
-                            .background(Color.brandPrimary.opacity(0.08))
-                            
-                            Text("مركز الخارجة حي الامل عمارة 16 شقة 3, عمارة 16, بجانب ملعب الامل او السجل المدني, محافظة الوادي الجديد - مصر")
-                                .font(.system(size: 13))
-                                .foregroundColor(.textSecondary)
-                                .multilineTextAlignment(.trailing)
-                                .environment(\.layoutDirection, .rightToLeft)
-                                .padding(14)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.top, 60)
+
+                        } else {
+                            ForEach(viewModel.addresses) { address in
+                                addressCard(for: address)
+                            }
                         }
-                        .background(Color.surface)
-                        .cornerRadius(12)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.borderColor, lineWidth: 0.5)
-                        )
                     }
                     .padding(16)
                 }
             }
             .background(Color.trueFitBackground.ignoresSafeArea())
             .navigationBarHidden(true)
-            
+
             // Custom animated action sheet
             if showActionSheet {
                 Color.black.opacity(0.35)
@@ -150,7 +127,7 @@ struct AddressView: View {
                             showActionSheet = false
                         }
                     }
-                
+
                 VStack {
                     Spacer()
                     CustomActionSheet(
@@ -158,13 +135,16 @@ struct AddressView: View {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 showActionSheet = false
                             }
-                            // TODO: Navigate to edit address
+                            // selectedAddress was captured on tap of the "..." button below.
+                            // Push the same details form used for Create, parameterized
+                            // with editingAddressId so it runs the update path on Save.
+                            showEditAddress = true
                         },
                         onShare: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 showActionSheet = false
                             }
-                            // TODO: Trigger share sheet
+                            // TODO: trigger share sheet with `selectedAddress`
                         },
                         onCancel: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
@@ -176,9 +156,113 @@ struct AddressView: View {
                 }
             }
         }
+        .task {
+            await viewModel.loadAddresses()
+        }
+        .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
+            Button("OK") { viewModel.errorMessage = nil }
+        } message: {
+            Text(viewModel.errorMessage ?? "")
+        }
+        // Add flow: map screen produces a draft, hands off to the details form.
+        // Passing `viewModel` here means any address created there lands in
+        // the exact same `addresses` array this screen is already observing.
+        .navigationDestination(isPresented: $showAddNewAddress) {
+            AddNewAddressView(addressViewModel: viewModel)
+        }
+        // Edit flow: skip the map entirely (we already have coordinates-free,
+        // known-good fields from the saved address) and go straight to the
+        // same reusable details form, just with editingAddressId set.
+        .navigationDestination(isPresented: $showEditAddress) {
+            if let selectedAddress {
+                AddressDetailsFormView(
+                    addressViewModel: viewModel,
+                    prefill: (
+                        address1: selectedAddress.address1,
+                        city: selectedAddress.city,
+                        province: selectedAddress.province,
+                        country: selectedAddress.country,
+                        zip: selectedAddress.zip
+                    ),
+                    editingAddressId: selectedAddress.id
+                )
+            }
+        }
+    }
+
+    // MARK: - Address Card
+
+    @ViewBuilder
+    private func addressCard(for address: Address) -> some View {
+        VStack(spacing: 0) {
+            HStack {
+                HStack(spacing: 8) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color.surface)
+                            .frame(width: 26, height: 26)
+                        Image(systemName: "mappin.and.ellipse")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(.brandPrimary)
+                    }
+
+                    Text(address.city)
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.textPrimary)
+                }
+
+                Spacer()
+
+                Button(action: {
+                    selectedAddress = address
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                        isMenuPressed = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                            isMenuPressed = false
+                        }
+                    }
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                        showActionSheet = true
+                    }
+                }) {
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.textSecondary)
+                        .rotationEffect(.degrees(isMenuPressed && selectedAddress?.id == address.id ? 90 : 0))
+                        .scaleEffect(isMenuPressed && selectedAddress?.id == address.id ? 1.2 : 1.0)
+                        .frame(width: 32, height: 32)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(Color.brandPrimary.opacity(0.08))
+
+            Text("\(address.address1), \(address.city), \(address.province), \(address.country) \(address.zip)")
+                .font(.system(size: 13))
+                .foregroundColor(.textSecondary)
+                .multilineTextAlignment(.leading)
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .background(Color.surface)
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.borderColor, lineWidth: 0.5)
+        )
     }
 }
 
-#Preview {
-    AddressView()
-}
+//#Preview {
+//    AddressView(
+//        viewModel: AddressViewModel(
+//            authManager: AuthManager(),
+//            getAddresses: GetAddressesUseCase(repository: PreviewAddressRepository()),
+//            createAddress: CreateAddressUseCase(repository: PreviewAddressRepository()),
+//            updateAddress: UpdateAddressUseCase(repository: PreviewAddressRepository()),
+//            deleteAddress: DeleteAddressUseCase(repository: PreviewAddressRepository())
+//        )
+//    )
+//}

@@ -125,8 +125,28 @@ final class DIContainer: ObservableObject {
     private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
     lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
     
+    
+    // MARK: - ADDRESS FEATURE
+        
+        // Address Data Source & Repository
+        private lazy var addressRemoteDataSource: AddressRemoteDataSourceProtocol = {
+            AddressRemoteDataSource(apollo: apolloManager)
+        }()
+        
+        private lazy var addressRepository: AddressRepositoryProtocol = {
+            AddressRepository(remoteDataSource: addressRemoteDataSource)
+        }()
+        
+        // Address Use Cases
+        private lazy var getAddressesUseCase = GetAddressesUseCase(repository: addressRepository)
+        private lazy var createAddressUseCase = CreateAddressUseCase(repository: addressRepository)
+        private lazy var updateAddressUseCase = UpdateAddressUseCase(repository: addressRepository)
+        private lazy var deleteAddressUseCase = DeleteAddressUseCase(repository: addressRepository)
+    
     // MARK: - Init
     public init() {}
+    
+    
     
     
     // MARK: - VIEW MODELS FACTORY
@@ -191,4 +211,16 @@ final class DIContainer: ObservableObject {
             authManager: authManager
         )
     }
+    
+    func makeAddressViewModel() -> AddressViewModel {
+            AddressViewModel(
+                authManager: authManager,
+                getAddresses: getAddressesUseCase,
+                createAddress: createAddressUseCase,
+                updateAddress: updateAddressUseCase,
+                deleteAddress: deleteAddressUseCase
+            )
+        }
+    
+    
 }

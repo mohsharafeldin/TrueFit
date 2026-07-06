@@ -1,4 +1,4 @@
-//
+
 //  MainAppView.swift
 //  TrueFit
 //
@@ -34,13 +34,11 @@ struct MainAppView: View {
                         )
                         
                     case .address:
-                        AddressView()
-                        
-                    case .addNewAddress:
-                        AddNewAddressView()
+                        AddressView(viewModel: container.makeAddressViewModel())
                     }
                 }
         }
     }
     
 }
+
