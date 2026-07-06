@@ -121,7 +121,8 @@ struct AddNewAddressView: View {
                 // up immediately with no extra reload needed.
                 AddressDetailsFormView(
                     addressViewModel: addressViewModel,
-                    prefill: resolvedAddress
+                    prefill: resolvedAddress,
+                    onSaved: { dismiss() }
                 )
             }
         }

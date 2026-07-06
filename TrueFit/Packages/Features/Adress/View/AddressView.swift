@@ -140,11 +140,13 @@ struct AddressView: View {
                             // with editingAddressId so it runs the update path on Save.
                             showEditAddress = true
                         },
-                        onShare: {
+                        onDelete: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 showActionSheet = false
                             }
-                            // TODO: trigger share sheet with `selectedAddress`
+                            if let address = selectedAddress {
+                                Task { await viewModel.removeAddress(addressId: address.id) }
+                            }
                         },
                         onCancel: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {

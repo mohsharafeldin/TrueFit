@@ -19,11 +19,13 @@ struct AddressDetailsFormView: View {
 
     /// nil means this is a new address (create); non-nil means editing an existing one (update)
     private let editingAddressId: String?
+    private let onSaved: (() -> Void)?
 
     init(
         addressViewModel: AddressViewModel,
         prefill: (address1: String, city: String, province: String, country: String, zip: String),
-        editingAddressId: String? = nil
+        editingAddressId: String? = nil,
+        onSaved: (() -> Void)? = nil
     ) {
         self.addressViewModel = addressViewModel
         self._address1 = State(initialValue: prefill.address1)
@@ -32,6 +34,7 @@ struct AddressDetailsFormView: View {
         self._country = State(initialValue: prefill.country)
         self._zip = State(initialValue: prefill.zip)
         self.editingAddressId = editingAddressId
+        self.onSaved = onSaved
     }
 
     private var isSaveDisabled: Bool {
@@ -149,6 +152,7 @@ struct AddressDetailsFormView: View {
         }
 
         if addressViewModel.errorMessage == nil {
+            onSaved?()
             dismiss()
         }
     }

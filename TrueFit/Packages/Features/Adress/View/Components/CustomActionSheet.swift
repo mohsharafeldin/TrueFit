@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomActionSheet: View {
     let onEdit: () -> Void
-    let onShare: () -> Void
+    let onDelete: () -> Void
     let onCancel: () -> Void
     
     var body: some View {
@@ -26,10 +26,10 @@ struct CustomActionSheet: View {
                 Divider()
                     .background(Color.borderColor)
                 
-                Button(action: onShare) {
-                    Text("Share")
+                Button(action: onDelete) {
+                    Text("Delete")
                         .font(.system(size: 17, weight: .regular))
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.red)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                 }
@@ -53,5 +53,5 @@ struct CustomActionSheet: View {
 }
 
 #Preview {
-    CustomActionSheet(onEdit: {},onShare: {},onCancel: {})
+    CustomActionSheet(onEdit: {}, onDelete: {}, onCancel: {})
 }
