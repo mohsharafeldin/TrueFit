@@ -145,3 +145,11 @@ struct AddressDetailsFormView: View {
         }
     }
 }
+
+#Preview {
+    AddressDetailsFormView(
+        addressViewModel: PreviewMocks.makeAddressViewModel(),
+        address: Address(id: "1", address1: "123 Main St", country: "USA", province: "NY", city: "New York", zip: "10001")
+    )
+    .environmentObject(AppRouter())
+}

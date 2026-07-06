@@ -157,3 +157,40 @@ extension PreviewMocks {
         )
     }
 }
+
+// MARK: - Mock Address Repository
+
+class MockAddressRepository: AddressRepositoryProtocol {
+    func createAddress(customerAccessToken: String, address1: String, country: String, province: String, city: String, zip: String) async throws -> Address {
+        return Address(id: UUID().uuidString, address1: address1, country: country, province: province, city: city, zip: zip)
+    }
+    
+    func deleteAddress(customerAccessToken: String, addressId: String) async throws -> String {
+        return addressId
+    }
+    
+    func updateAddress(customerAccessToken: String, addressId: String, address1: String, country: String, province: String, city: String, zip: String) async throws -> Address {
+        return Address(id: addressId, address1: address1, country: country, province: province, city: city, zip: zip)
+    }
+    
+    func getAddresses(customerAccessToken: String) async throws -> [Address] {
+        return [
+            Address(id: "1", address1: "123 Main St", country: "USA", province: "NY", city: "New York", zip: "10001"),
+            Address(id: "2", address1: "456 Elm St", country: "USA", province: "CA", city: "Los Angeles", zip: "90001")
+        ]
+    }
+}
+
+extension PreviewMocks {
+    @MainActor
+    static func makeAddressViewModel() -> AddressViewModel {
+        let repo = MockAddressRepository()
+        return AddressViewModel(
+            authManager: MockAuthManager(),
+            getAddresses: GetAddressesUseCase(repository: repo),
+            createAddress: CreateAddressUseCase(repository: repo),
+            updateAddress: UpdateAddressUseCase(repository: repo),
+            deleteAddress: DeleteAddressUseCase(repository: repo)
+        )
+    }
+}

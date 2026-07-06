@@ -229,14 +229,9 @@ struct AddressView: View {
     }
 }
 
-//#Preview {
-//    AddressView(
-//        viewModel: AddressViewModel(
-//            authManager: AuthManager(),
-//            getAddresses: GetAddressesUseCase(repository: PreviewAddressRepository()),
-//            createAddress: CreateAddressUseCase(repository: PreviewAddressRepository()),
-//            updateAddress: UpdateAddressUseCase(repository: PreviewAddressRepository()),
-//            deleteAddress: DeleteAddressUseCase(repository: PreviewAddressRepository())
-//        )
-//    )
-//}
+#Preview {
+    AddressView(
+        viewModel: PreviewMocks.makeAddressViewModel()
+    )
+    .environmentObject(AppRouter())
+}
