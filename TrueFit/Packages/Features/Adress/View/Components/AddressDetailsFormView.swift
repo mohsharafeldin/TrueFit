@@ -9,38 +9,27 @@ import SwiftUI
 
 struct AddressDetailsFormView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var appRouter: AppRouter
     @ObservedObject var addressViewModel: AddressViewModel
 
-    @State private var address1: String
-    @State private var city: String
-    @State private var province: String
-    @State private var country: String
-    @State private var zip: String
+    @State private var address: Address
 
-    /// nil means this is a new address (create); non-nil means editing an existing one (update)
     private let editingAddressId: String?
-    private let onSaved: (() -> Void)?
 
     init(
         addressViewModel: AddressViewModel,
-        prefill: (address1: String, city: String, province: String, country: String, zip: String),
-        editingAddressId: String? = nil,
-        onSaved: (() -> Void)? = nil
+        address: Address,
+        editingAddressId: String? = nil
     ) {
         self.addressViewModel = addressViewModel
-        self._address1 = State(initialValue: prefill.address1)
-        self._city = State(initialValue: prefill.city)
-        self._province = State(initialValue: prefill.province)
-        self._country = State(initialValue: prefill.country)
-        self._zip = State(initialValue: prefill.zip)
+        self._address = State(initialValue: address)
         self.editingAddressId = editingAddressId
-        self.onSaved = onSaved
     }
 
     private var isSaveDisabled: Bool {
-        address1.trimmingCharacters(in: .whitespaces).isEmpty ||
-        city.trimmingCharacters(in: .whitespaces).isEmpty ||
-        country.trimmingCharacters(in: .whitespaces).isEmpty
+        address.address1.trimmingCharacters(in: .whitespaces).isEmpty ||
+        address.city.trimmingCharacters(in: .whitespaces).isEmpty ||
+        address.country.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     var body: some View {
@@ -71,11 +60,11 @@ struct AddressDetailsFormView: View {
 
             ScrollView {
                 VStack(spacing: 14) {
-                    formField(title: "Address", text: $address1, placeholder: "Street, building, apartment")
-                    formField(title: "City", text: $city, placeholder: "City")
-                    formField(title: "Province / State", text: $province, placeholder: "Province or state")
-                    formField(title: "Country", text: $country, placeholder: "Country")
-                    formField(title: "ZIP / Postal code", text: $zip, placeholder: "ZIP code")
+                    formField(title: "Address", text: $address.address1, placeholder: "Street, building, apartment")
+                    formField(title: "City", text: $address.city, placeholder: "City")
+                    formField(title: "Province / State", text: $address.province, placeholder: "Province or state")
+                    formField(title: "Country", text: $address.country, placeholder: "Country")
+                    formField(title: "ZIP / Postal code", text: $address.zip, placeholder: "ZIP code")
                 }
                 .padding(16)
             }
@@ -135,38 +124,24 @@ struct AddressDetailsFormView: View {
         if let editingAddressId {
             await addressViewModel.editAddress(
                 addressId: editingAddressId,
-                address1: address1,
-                country: country,
-                province: province,
-                city: city,
-                zip: zip
+                address1: address.address1,
+                country: address.country,
+                province: address.province,
+                city: address.city,
+                zip: address.zip
             )
         } else {
             await addressViewModel.addAddress(
-                address1: address1,
-                country: country,
-                province: province,
-                city: city,
-                zip: zip
+                address1: address.address1,
+                country: address.country,
+                province: address.province,
+                city: address.city,
+                zip: address.zip
             )
         }
 
         if addressViewModel.errorMessage == nil {
-            onSaved?()
-            dismiss()
+            appRouter.pop(count: editingAddressId == nil ? 2 : 1)
         }
     }
 }
-
-//#Preview {
-//    AddressDetailsFormView(
-//        addressViewModel: AddressViewModel(
-//            authManager: AuthManager(),
-//            getAddresses: GetAddressesUseCase(repository: PreviewAddressRepository()),
-//            createAddress: CreateAddressUseCase(repository: PreviewAddressRepository()),
-//            updateAddress: UpdateAddressUseCase(repository: PreviewAddressRepository()),
-//            deleteAddress: DeleteAddressUseCase(repository: PreviewAddressRepository())
-//        ),
-//        prefill: (address1: "123 Main St", city: "Cairo", province: "Cairo", country: "Egypt", zip: "11511")
-//    )
-//}

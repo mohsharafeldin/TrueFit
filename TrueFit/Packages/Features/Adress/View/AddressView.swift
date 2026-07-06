@@ -16,11 +16,7 @@ struct AddressView: View {
     @State private var isMenuPressed = false
     @State private var selectedAddress: Address?
 
-    // Local navigation state — mirrors the pattern AddNewAddressView already
-    // uses for its own push to the details form, so both screens share the
-    // exact same `viewModel` instance instead of going through the router.
-    @State private var showAddNewAddress = false
-    @State private var showEditAddress = false
+
 
     init(viewModel: AddressViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -60,7 +56,7 @@ struct AddressView: View {
 
                         // Add new address
                         Button(action: {
-                            showAddNewAddress = true
+                            appRouter.navigate(to: .addNewAddress)
                         }) {
                             HStack {
                                 HStack(spacing: 10) {
@@ -135,10 +131,9 @@ struct AddressView: View {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                                 showActionSheet = false
                             }
-                            // selectedAddress was captured on tap of the "..." button below.
-                            // Push the same details form used for Create, parameterized
-                            // with editingAddressId so it runs the update path on Save.
-                            showEditAddress = true
+                            if let address = selectedAddress {
+                                appRouter.navigate(to: .editAddress(address: address))
+                            }
                         },
                         onDelete: {
                             withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
@@ -158,38 +153,15 @@ struct AddressView: View {
                 }
             }
         }
-        .task {
-            await viewModel.loadAddresses()
+        .onAppear {
+            Task { await viewModel.loadAddresses() }
         }
         .alert("Error", isPresented: .constant(viewModel.errorMessage != nil)) {
             Button("OK") { viewModel.errorMessage = nil }
         } message: {
             Text(viewModel.errorMessage ?? "")
         }
-        // Add flow: map screen produces a draft, hands off to the details form.
-        // Passing `viewModel` here means any address created there lands in
-        // the exact same `addresses` array this screen is already observing.
-        .navigationDestination(isPresented: $showAddNewAddress) {
-            AddNewAddressView(addressViewModel: viewModel)
-        }
-        // Edit flow: skip the map entirely (we already have coordinates-free,
-        // known-good fields from the saved address) and go straight to the
-        // same reusable details form, just with editingAddressId set.
-        .navigationDestination(isPresented: $showEditAddress) {
-            if let selectedAddress {
-                AddressDetailsFormView(
-                    addressViewModel: viewModel,
-                    prefill: (
-                        address1: selectedAddress.address1,
-                        city: selectedAddress.city,
-                        province: selectedAddress.province,
-                        country: selectedAddress.country,
-                        zip: selectedAddress.zip
-                    ),
-                    editingAddressId: selectedAddress.id
-                )
-            }
-        }
+
     }
 
     // MARK: - Address Card

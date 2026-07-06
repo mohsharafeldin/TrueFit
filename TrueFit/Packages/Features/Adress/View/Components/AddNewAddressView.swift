@@ -11,8 +11,9 @@ import CoreLocation
 
 struct AddNewAddressView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var navigateToDetails = false
+
     @ObservedObject var addressViewModel: AddressViewModel
+    @EnvironmentObject var appRouter: AppRouter
 
     // Location
     @StateObject private var locationManager = LocationManager()
@@ -31,7 +32,6 @@ struct AddNewAddressView: View {
     // Address resolution
     @State private var selectedLocationText: String = "Move the map to select a location"
     @State private var isResolvingAddress = false
-    @State private var resolvedAddress: (address1: String, city: String, province: String, country: String, zip: String)?
 
     init(addressViewModel: AddressViewModel) {
         self.addressViewModel = addressViewModel
@@ -42,15 +42,15 @@ struct AddNewAddressView: View {
     var body: some View {
         ZStack(alignment: .top) {
 
-            // ── Layer 1: Full-screen map ──────────────────────────────────
+          
             Map(coordinateRegion: $region, showsUserLocation: true)
                 .ignoresSafeArea()
-                // Tap anywhere on map to dismiss keyboard & results
+               
                 .onTapGesture {
                     dismissSearch()
                 }
 
-            // ── Layer 2: Centre pin ───────────────────────────────────────
+           
             VStack(spacing: 0) {
                 Spacer()
                 Image(systemName: "mappin")
@@ -62,9 +62,8 @@ struct AddNewAddressView: View {
                     .frame(width: 8, height: 4)
                 Spacer()
             }
-            .allowsHitTesting(false)      // pass touches through to the map
-
-            // ── Layer 3: Nav bar + Search bar (fixed at top) ──────────────
+            .allowsHitTesting(false)
+            
             VStack(spacing: 0) {
                 navBar
                     .background(Color.surface.opacity(0.95))
@@ -74,7 +73,7 @@ struct AddNewAddressView: View {
                     .padding(.vertical, 10)
                     .background(Color.surface.opacity(0.95))
 
-                // Search results dropdown — only visible when results exist
+                
                 if !searchResults.isEmpty {
                     searchDropdown
                         .padding(.horizontal, 16)
@@ -85,8 +84,6 @@ struct AddNewAddressView: View {
                 }
             }
             .animation(.easeInOut(duration: 0.18), value: searchResults.isEmpty)
-
-            // ── Layer 4: Floating location button (above confirm sheet) ────
             VStack {
                 Spacer()
                 HStack {
@@ -105,7 +102,6 @@ struct AddNewAddressView: View {
                 .padding(.bottom, 150)   // sits above the confirm sheet
             }
 
-            // ── Layer 5: Bottom confirm sheet ─────────────────────────────
             VStack {
                 Spacer()
                 confirmSheet
@@ -113,19 +109,6 @@ struct AddNewAddressView: View {
             .ignoresSafeArea(edges: .bottom)
         }
         .navigationBarHidden(true)
-        .navigationDestination(isPresented: $navigateToDetails) {
-            if let resolvedAddress {
-                // Same ViewModel instance flows all the way through: map ->
-                // details form -> save -> back to AddressView's list, which
-                // is observing this exact object, so the new address shows
-                // up immediately with no extra reload needed.
-                AddressDetailsFormView(
-                    addressViewModel: addressViewModel,
-                    prefill: resolvedAddress,
-                    onSaved: { dismiss() }
-                )
-            }
-        }
         .onReceive(locationManager.$lastLocation) { coord in
             guard let coord else { return }
             withAnimation(.easeInOut(duration: 0.5)) {
@@ -360,15 +343,11 @@ struct AddNewAddressView: View {
             let country = placemark.country ?? ""
             let zip = placemark.postalCode ?? ""
 
-            resolvedAddress = (address1: address1, city: city, province: province, country: country, zip: zip)
+            let newAddress = Address(id: "", address1: address1, country: country, province: province, city: city, zip: zip)
             selectedLocationText = [address1, city, province, country]
                 .filter { !$0.isEmpty }
                 .joined(separator: ", ")
-
-            // Reverse geocoding is frequently slightly wrong or missing unit/
-            // floor/building info, so we never persist directly from here —
-            // we only ever hand off a draft to the editable details form.
-            navigateToDetails = true
+            appRouter.navigate(to: .addressDetailsForm(address: newAddress))
 
         } catch {
             selectedLocationText = "Could not resolve address. Please try again."

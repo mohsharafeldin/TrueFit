@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct Address: Identifiable, Equatable {
+public struct Address: Identifiable, Equatable,Hashable {
     public let id: String
-    public let address1: String
-    public let country: String
-    public let province: String
-    public let city: String
-    public let zip: String
+    public var address1: String
+    public var country: String
+    public var province: String
+    public var city: String
+    public var zip: String
 
     public init(
         id: String,

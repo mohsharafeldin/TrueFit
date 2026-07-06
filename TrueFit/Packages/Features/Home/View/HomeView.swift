@@ -650,11 +650,6 @@ struct HomeBottomTabBar: View {
                 }) {
                     HomeTabBarItem(icon: "person", title: "My Profile", isSelected: false)
                 }
-                Button(action: {
-                    appRouter.navigate(to: .address)
-                }) {
-                    HomeTabBarItem(icon: "location", title: "address", isSelected: false)
-                }
             }
             .padding(.horizontal, Spacing.xxl)
             .padding(.top, Spacing.md)

@@ -35,6 +35,13 @@ struct MainAppView: View {
                         
                     case .address:
                         AddressView(viewModel: container.makeAddressViewModel())
+                    case .addNewAddress:
+                        AddNewAddressView(addressViewModel: container.makeAddressViewModel())
+                        
+                    case .editAddress(let address):
+                        AddressDetailsFormView(addressViewModel: container.makeAddressViewModel(), address: address, editingAddressId: address.id)
+                    case .addressDetailsForm(let address):
+                        AddressDetailsFormView(addressViewModel: container.makeAddressViewModel(), address: address, editingAddressId: nil)
                     }
                 }
         }
