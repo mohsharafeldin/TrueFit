@@ -135,6 +135,7 @@
 		4C0F11CA2FFAC8EC00B096F5 /* Address.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F11C92FFAC8E900B096F5 /* Address.graphql */; };
 		4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */; };
 		4C1A20432FFBF332001FC5B2 /* AddressDetailsFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20422FFBF332001FC5B2 /* AddressDetailsFormView.swift */; };
+		4C1A20452FFC1304001FC5B2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20442FFC1304001FC5B2 /* LocationManager.swift */; };
 		4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */; };
 		4C5F9CC42FFB162400BC1A4A /* AddressRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F9CC32FFB162400BC1A4A /* AddressRemoteDataSource.swift */; };
 		4C5F9CC82FFB2AE400BC1A4A /* DeleteAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F9CC72FFB2AE400BC1A4A /* DeleteAddressUseCase.swift */; };
@@ -337,6 +338,7 @@
 		4C0F11C92FFAC8E900B096F5 /* Address.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Address.graphql; sourceTree = "<group>"; };
 		4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		4C1A20422FFBF332001FC5B2 /* AddressDetailsFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailsFormView.swift; sourceTree = "<group>"; };
+		4C1A20442FFC1304001FC5B2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
 		4C5F9CC32FFB162400BC1A4A /* AddressRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRemoteDataSource.swift; sourceTree = "<group>"; };
 		4C5F9CC72FFB2AE400BC1A4A /* DeleteAddressUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAddressUseCase.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 			children = (
 				0C198E802FF2A4EF00477701 /* AuthManager.swift */,
 				0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */,
+				4C1A20442FFC1304001FC5B2 /* LocationManager.swift */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				48F12B180BFEBB0CA44FE028 /* CollectionMapper.swift in Sources */,
 				0C67ACFC2FF81F8E006A3E3B /* CartRepositoryProtocol.swift in Sources */,
 				EF2678C3EB727AE01B456535 /* ProductsRepository.swift in Sources */,
+				4C1A20452FFC1304001FC5B2 /* LocationManager.swift in Sources */,
 				78692C4CF703BCC177F6DF2E /* AuthError.swift in Sources */,
 				4C0306B42FF80136005D9827 /* LoginWithGoogleUseCase.swift in Sources */,
 				03E39AB94D9AE1300262DDCF /* AuthResult.swift in Sources */,

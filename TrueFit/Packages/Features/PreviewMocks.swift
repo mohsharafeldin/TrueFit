@@ -59,6 +59,10 @@ class MockLoginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol {
 
 @MainActor
 class MockAuthManager: AuthManagerProtocol {
+    func markAuthenticated() {
+        
+    }
+    
     var isAuthenticated = false
     var isGuest = false
     func login(token: String) {}
