@@ -256,4 +256,10 @@ struct OrderDetailsView: View {
 }
 
 // MARK: - Previews
-// Preview requires DIContainer setup so it's skipped here.
+#if DEBUG
+#Preview {
+    OrderDetailsView(viewModel: PreviewMocks.makeOrderDetailsViewModel(orderId: OrderPreviewData.mockOrderDetails.orderNumber))
+        .environmentObject(AppRouter())
+}
+#endif
+

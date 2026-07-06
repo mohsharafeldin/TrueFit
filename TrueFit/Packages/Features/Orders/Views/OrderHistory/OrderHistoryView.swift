@@ -103,4 +103,9 @@ struct OrderHistoryView: View {
 }
 
 // MARK: - Previews
-// Preview requires DIContainer setup so it's skipped here.
+#if DEBUG
+#Preview {
+    OrderHistoryView(viewModel: PreviewMocks.makeOrderHistoryViewModel())
+        .environmentObject(AppRouter())
+}
+#endif
