@@ -13,7 +13,7 @@ struct HomeView: View {
         VStack(spacing: 0) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: Spacing.xl) {
-                    HomeHeaderView()
+                    HomeHeaderView(userName: viewModel.userName)
 
                     HomeTabSelector(selectedTab: $viewModel.selectedTab)
 
@@ -29,8 +29,6 @@ struct HomeView: View {
                 .padding(.top, Spacing.sm)
                 .padding(.bottom, 100)
             }
-
-            HomeBottomTabBar()
         }
         .background(Color.trueFitBackground)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -127,6 +125,7 @@ struct HomeView: View {
 // MARK: - Header View
 
 struct HomeHeaderView: View {
+    let userName: String
     var body: some View {
         HStack(spacing: Spacing.sm) {
             // Profile avatar
@@ -140,7 +139,7 @@ struct HomeHeaderView: View {
                 )
 
             VStack(alignment: .leading, spacing: Spacing.xxs) {
-                Text("Hi, Jonathan")
+                Text("Hi, \(userName)")
                     .trueFitTextStyle(.headline)
                     .foregroundColor(.textPrimary)
 
@@ -616,83 +615,7 @@ struct ShimmerCategoryCard: View {
     }
 }
 
-// MARK: - Bottom Tab Bar
 
-struct HomeBottomTabBar: View {
-    @EnvironmentObject var appRouter: AppRouter
-    @EnvironmentObject var cartState: CartState
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-                .background(Color.borderColor)
-
-            HStack {
-                Button(action: {
-                    // Already on Home
-                }) {
-                    HomeTabBarItem(icon: "house.fill", title: "Home", isSelected: true)
-                }
-                Spacer()
-                Button(action: {
-                    appRouter.navigate(to: .cart)
-                }) {
-                    HomeTabBarItem(icon: "cart", title: "Cart", isSelected: false, badgeCount: cartState.itemCount)
-                }
-                Spacer()
-                Button(action: {
-                    appRouter.navigate(to: .favorites)
-                }) {
-                    HomeTabBarItem(icon: "heart", title: "Favorite", isSelected: false)
-                }
-                Spacer()
-                Button(action: {
-                    appRouter.navigate(to: .profile)
-                }) {
-                    HomeTabBarItem(icon: "person", title: "My Profile", isSelected: false)
-                }
-            }
-            .padding(.horizontal, Spacing.xxl)
-            .padding(.top, Spacing.md)
-            .padding(.bottom, 34)
-            .background(Color.surface)
-        }
-    }
-}
-
-struct HomeTabBarItem: View {
-    let icon: String
-    let title: String
-    let isSelected: Bool
-    var badgeCount: Int = 0
-
-    var body: some View {
-        ZStack(alignment: .topTrailing) {
-            VStack(spacing: 6) {
-                Image(systemName: icon)
-                    .font(.system(size: 20))
-                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
-
-                Text(title)
-                    .font(.system(size: 10, weight: isSelected ? .bold : .regular))
-                    .foregroundColor(isSelected ? .brandPrimary : .textTertiary)
-            }
-            .padding(.top, 4) // space for badge
-            .padding(.trailing, badgeCount > 0 ? 8 : 0) // space for badge
-
-            if badgeCount > 0 {
-                Text("\(badgeCount)")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(minWidth: 16, minHeight: 16)
-                    .padding(2)
-                    .background(Color.semanticDanger)
-                    .clipShape(Capsule())
-                    .offset(x: 10, y: -4)
-            }
-        }
-    }
-}
 
 // MARK: - Preview
 
@@ -707,13 +630,15 @@ struct HomeView_Previews: PreviewProvider {
         )
         
         let mockFavoritesRepo = MockFavoritesRepository()
+        let mockPreferences = PreferencesManager()
         
         HomeView(
             viewModel: HomeViewModel(
                 fetchNewArrivalsUseCase: FetchNewArrivalsUseCase(repository: repo),
                 fetchCollectionsUseCase: FetchCollectionsUseCase(repository: repo),
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: mockFavoritesRepo),
-                isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo)
+                isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo),
+                preferencesManager: mockPreferences 
             )
         )
         .environmentObject(CartState())
