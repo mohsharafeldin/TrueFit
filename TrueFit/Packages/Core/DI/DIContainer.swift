@@ -235,4 +235,12 @@ final class DIContainer: ObservableObject {
             authManager: authManager
         )
     }
+    
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(
+            preferencesManager: preferencesManager,
+            authManager: authManager,
+            logoutUseCase: makeLogoutUseCase()
+        )
+    }
 }

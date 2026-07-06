@@ -57,7 +57,7 @@ struct MainAppView: View {
             
             // Profile Tab
             NavigationStack(path: $appRouter.profilePath) {
-                Text("Profile Screen")
+                ProfileView(viewModelFactory: { container.makeProfileViewModel() })
                     .navigationDestination(for: AppRoute.self, destination: destination(for:))
             }
             .tabItem {
