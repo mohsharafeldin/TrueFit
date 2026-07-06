@@ -20,13 +20,8 @@ struct RootView: View {
                 
             case .unauthenticated:
                 AuthFlowView(
-                    container: container,
-                    onLoginSuccess: {
-                        viewModel.didAuthenticate()
-                    },
-                    onGuestContinue: {
-                        viewModel.continueAsGuest()
-                    }
+                    container: container
+                    
                 )
                 
             case .authenticated, .guest:
