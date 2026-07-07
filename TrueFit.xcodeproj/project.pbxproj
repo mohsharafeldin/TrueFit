@@ -143,6 +143,8 @@
 		336CCC212FFD92FB002B841D /* SendChatMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */; };
 		336CCC232FFD931C002B841D /* BuildProductContextUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */; };
 		336CCC262FFD97EC002B841D /* GeminiErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC252FFD97EC002B841D /* GeminiErrorMapper.swift */; };
+		336CCC292FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */; };
+		336CCC2B2FFD98AD002B841D /* AIChatRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -429,6 +431,8 @@
 		336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatMessageUseCase.swift; sourceTree = "<group>"; };
 		336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildProductContextUseCase.swift; sourceTree = "<group>"; };
 		336CCC252FFD97EC002B841D /* GeminiErrorMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiErrorMapper.swift; sourceTree = "<group>"; };
+		336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
+		336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRemoteDataSource.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -1057,6 +1061,15 @@
 			path = AIChat;
 			sourceTree = "<group>";
 		};
+		336CCC272FFD9876002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */,
+				336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1262,6 +1275,7 @@
 		33AA80EB2FEFE48F00A20AF9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC272FFD9876002B841D /* AIChat */,
 				33AB51512FFC077C0085ECAC /* Orders */,
 				4C0F11BD2FFA992800B096F5 /* Address */,
 				0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */,
@@ -2040,6 +2054,7 @@
 				0CCA5D6E2FFC1844005C538C /* ProfileSectionHeader.swift in Sources */,
 				4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */,
 				0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */,
+				336CCC292FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift in Sources */,
 				0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */,
 				4C0F11B82FFA98EC00B096F5 /* Address.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
@@ -2051,6 +2066,7 @@
 				4C0F11C42FFAC21500B096F5 /* AddressMapper.swift in Sources */,
 				4C0306B22FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift in Sources */,
 				0CE9F3142FF3D18100466794 /* Constants.swift in Sources */,
+				336CCC2B2FFD98AD002B841D /* AIChatRemoteDataSource.swift in Sources */,
 				4C8F1F002FF2AFD900299F30 /* FirstOnBoeardingView.swift in Sources */,
 				0C5EC9352FF92C3E00F8F028 /* CartLineLoadingRow.swift in Sources */,
 				0C5EC9322FF92C3E00F8F028 /* CartCheckoutBar.swift in Sources */,
