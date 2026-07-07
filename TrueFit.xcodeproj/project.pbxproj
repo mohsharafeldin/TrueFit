@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -83,7 +83,6 @@
 		0C67AD022FF81FB5006A3E3B /* GetCartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD012FF81FB5006A3E3B /* GetCartUseCase.swift */; };
 		0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */; };
 		0C67AD072FF81FE7006A3E3B /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67AD052FF81FE7006A3E3B /* CartViewModel.swift */; };
-		0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */; };
 		0C67ADDF2FF878C5006A3E3B /* RemoveCartLineUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */; };
 		0CCA5D5D2FFC0212005C538C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D582FFC0212005C538C /* ProfileView.swift */; };
 		0CCA5D5E2FFC0212005C538C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D5A2FFC0212005C538C /* ProfileViewModel.swift */; };
@@ -527,7 +526,6 @@
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
 				4CAAF4832FF4668900D751DB /* GoogleSignIn in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
-				0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */,
 				4CB476922FF9695A00BBA891 /* (null) in Frameworks */,
 				4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */,
 				5A104C662FF90F57002AC6E2 /* SDWebImageMapKit in Frameworks */,
@@ -1653,7 +1651,6 @@
 			);
 			name = TrueFit;
 			packageProductDependencies = (
-				0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */,
 				4C8CBACF2FF003AC00CA6538 /* Apollo */,
 				4C8CBAD22FF003D400CA6538 /* Alamofire */,
 				4C8CBAD52FF004D900CA6538 /* FirebaseAuth */,
@@ -1741,7 +1738,7 @@
 				4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */,
-				33AB50F72FFB9AE70085ECAC /* XCLocalSwiftPackageReference "ShopifyAPI" */,
+				33AB50F72FFB9AE70085ECAC /* XCRemoteSwiftPackageReference "ShopifyAPI" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -2343,12 +2340,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		33AB50F72FFB9AE70085ECAC /* XCLocalSwiftPackageReference "ShopifyAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ShopifyAPI;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -2391,15 +2382,20 @@
 				version = 5.9.5;
 			};
 		};
+		33AB50F72FFB9AE70085ECAC /* XCRemoteSwiftPackageReference "ShopifyAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/mohamedsharaf/Documents/TrueFit/ShopifyAPI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ShopifyAPI;
-		};
 		33AB50F82FFB9AE70085ECAC /* ShopifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 33AB50F72FFB9AE70085ECAC /* XCRemoteSwiftPackageReference "ShopifyAPI" */;
 			productName = ShopifyAPI;
 		};
 		4C8CBACF2FF003AC00CA6538 /* Apollo */ = {

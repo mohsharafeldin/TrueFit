@@ -78,8 +78,12 @@ struct ShimmerOrderCard: View {
     }
 }
 
-#Preview {
-    ShimmerOrderCard()
-        .padding()
-        .background(Color.trueFitBackground)
+struct ShimmerOrderCard_Previews: PreviewProvider {
+    static var previews: some View {
+
+        ShimmerOrderCard()
+            .padding()
+            .background(Color.trueFitBackground)
+
+    }
 }

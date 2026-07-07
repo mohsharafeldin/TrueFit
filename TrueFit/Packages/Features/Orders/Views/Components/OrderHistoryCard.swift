@@ -100,8 +100,12 @@ struct OrderHistoryCard: View {
     }
 }
 
-#Preview {
-    OrderHistoryCard(order: OrderPreviewData.mockOrders[0], onTap: {})
-        .padding()
-        .background(Color.trueFitBackground)
+struct OrderHistoryCard_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderHistoryCard(order: OrderPreviewData.mockOrders[0], onTap: {})
+            .padding()
+            .background(Color.trueFitBackground)
+
+    }
 }

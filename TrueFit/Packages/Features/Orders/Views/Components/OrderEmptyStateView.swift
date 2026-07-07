@@ -53,6 +53,10 @@ struct OrderEmptyStateView: View {
     }
 }
 
-#Preview {
-    OrderEmptyStateView(status: .all)
+struct OrderEmptyStateView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderEmptyStateView(status: .all)
+
+    }
 }
