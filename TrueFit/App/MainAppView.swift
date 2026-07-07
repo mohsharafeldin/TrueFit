@@ -98,6 +98,8 @@ extension MainAppView {
                     source: .brand(vendor: vendor)
                 )
             )
+        case .currency:
+            CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
         }
     }
 }

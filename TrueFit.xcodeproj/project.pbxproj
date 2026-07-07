@@ -96,6 +96,7 @@
 		0CCA5D6D2FFC1844005C538C /* ProfileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D652FFC1844005C538C /* ProfileRow.swift */; };
 		0CCA5D6E2FFC1844005C538C /* ProfileSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D662FFC1844005C538C /* ProfileSectionHeader.swift */; };
 		0CCA5D6F2FFC1844005C538C /* ProfileSupportSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D672FFC1844005C538C /* ProfileSupportSection.swift */; };
+		0CCA5D722FFC22C9005C538C /* CurrencyConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCA5D702FFC22C9005C538C /* CurrencyConverterView.swift */; };
 		0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */; };
 		0CE05B622FF680E200ADEB7D /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B5E2FF680E200ADEB7D /* KeychainError.swift */; };
 		0CE05B632FF680E200ADEB7D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE05B5F2FF680E200ADEB7D /* KeychainManager.swift */; };
@@ -121,6 +122,7 @@
 		0CE9F3142FF3D18100466794 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3092FF3D18100466794 /* Constants.swift */; };
 		0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */; };
 		0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */; };
+		0CF37AC22FFCEFE60058028E /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF37AC12FFCEFE50058028E /* CurrencyManager.swift */; };
 		0F86B1135D807284C47A1E1F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A92FEFD52800401F6B /* ContentView.swift */; };
 		1717B5BA4C546461434B9EDE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3B02FEFD52900401F6B /* Persistence.swift */; };
 		266E2E89725F7DBCA48A64CA /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008AECDFDFDB603CBC844C /* LoginUseCase.swift */; };
@@ -317,6 +319,7 @@
 		0CCA5D652FFC1844005C538C /* ProfileRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRow.swift; sourceTree = "<group>"; };
 		0CCA5D662FFC1844005C538C /* ProfileSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSectionHeader.swift; sourceTree = "<group>"; };
 		0CCA5D672FFC1844005C538C /* ProfileSupportSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSupportSection.swift; sourceTree = "<group>"; };
+		0CCA5D702FFC22C9005C538C /* CurrencyConverterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyConverterView.swift; sourceTree = "<group>"; };
 		0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		0CE05B5E2FF680E200ADEB7D /* KeychainError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		0CE05B5F2FF680E200ADEB7D /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 		0CE9F3152FF3D26800466794 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Shopify.swift"; sourceTree = "<group>"; };
 		0CE9F31E2FF3D67B00466794 /* Config.xcconfig.example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.xcconfig.example; sourceTree = "<group>"; };
+		0CF37AC12FFCEFE50058028E /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
 		0EEE39595D79E0B36460D59E /* AuthMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthMapper.swift; sourceTree = "<group>"; };
 		2CB59FC0F448ACA52816CC1D /* SignUpUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
@@ -489,6 +493,7 @@
 		0C09B6B62FF63E0000F4CC3D /* CurrencyConversion */ = {
 			isa = PBXGroup;
 			children = (
+				0CCA5D712FFC22C9005C538C /* View */,
 				0C09B6B52FF63E0000F4CC3D /* CurrencyConverterViewModel.swift */,
 			);
 			path = CurrencyConversion;
@@ -719,6 +724,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		0CCA5D712FFC22C9005C538C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0CCA5D702FFC22C9005C538C /* CurrencyConverterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		0CE05B612FF680E200ADEB7D /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -926,6 +939,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5EC93F2FF9C58D00F8F028 /* CartState.swift */,
+				0CF37AC12FFCEFE50058028E /* CurrencyManager.swift */,
 				0C09B68F2FF63D3600F4CC3D /* ErrorLogger.swift */,
 				0C09B6912FF63D3A00F4CC3D /* ViewState.swift */,
 				0CE9F3192FF3D31E00466794 /* Extensions */,
@@ -1556,6 +1570,7 @@
 				0C09B6A62FF63DAA00F4CC3D /* CurrencyRepository.swift in Sources */,
 				0C09B6B02FF63DD400F4CC3D /* CurrencyRepositoryProtocol.swift in Sources */,
 				4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */,
+				0CF37AC22FFCEFE60058028E /* CurrencyManager.swift in Sources */,
 				0C67ACFE2FF81F9D006A3E3B /* AddToCartUseCase.swift in Sources */,
 				0CE05B762FF6ADD600ADEB7D /* ProductDetailsCard.swift in Sources */,
 				0C5EC9402FF9C58D00F8F028 /* CartState.swift in Sources */,
@@ -1616,6 +1631,7 @@
 				C039945E66DD6FE33F888C8F /* SignUpUseCase.swift in Sources */,
 				33CB34FA2FF8E6BA00798582 /* FavoriteItemMapper.swift in Sources */,
 				A64517E9C5139F67356A5BF3 /* RoundedCornerModifier.swift in Sources */,
+				0CCA5D722FFC22C9005C538C /* CurrencyConverterView.swift in Sources */,
 				DCE84B6569739C5A11A945B0 /* DIContainer.swift in Sources */,
 				34D1C18A11551FB18A3C9F03 /* ContentView.swift in Sources */,
 				72381E43042586276C204D7F /* Persistence.swift in Sources */,

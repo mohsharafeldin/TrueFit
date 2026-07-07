@@ -34,6 +34,8 @@ final class ProductDetailsViewModel: ObservableObject {
         return preferencesManager.getUser() == nil
     }
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init(getProductUseCase: GetProductUseCase,
          addToCartUseCase: AddToCartUseCase,
          preferencesManager: PreferencesManagerProtocol,
@@ -43,9 +45,16 @@ final class ProductDetailsViewModel: ObservableObject {
         self.getProductUseCase = getProductUseCase
         self.addToCartUseCase = addToCartUseCase
         self.preferencesManager = preferencesManager
-        self.cartState = cartState
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.isFavoriteUseCase = isFavoriteUseCase
+        self.cartState = cartState
+        
+        CurrencyManager.shared.$selectedCurrency
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
     }
     
     func setupInitialSelection(for product: Product) {

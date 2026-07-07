@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct ProfilePreferencesSection: View {
+    @EnvironmentObject var appRouter: AppRouter
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ProfileSectionHeader(title: "Preferences")
             
             VStack(spacing: 0) {
                 ProfileRow(icon: "dollarsign.circle", title: "Currency") {
-                    // Navigate to Currency Selection Screen
+                    appRouter.navigate(to: .currency)
                 }
             }
             .background(Color.surface)
