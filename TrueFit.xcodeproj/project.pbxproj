@@ -136,6 +136,9 @@
 		336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0E2FFD4311002B841D /* AIChatInputView.swift */; };
 		336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */; };
 		336CCC142FFD8E4B002B841D /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */; };
+		336CCC172FFD8FF6002B841D /* GeminiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC162FFD8FF6002B841D /* GeminiError.swift */; };
+		336CCC192FFD909F002B841D /* GeminiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */; };
+		336CCC1B2FFD90D2002B841D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1A2FFD90D2002B841D /* GeminiService.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -415,6 +418,9 @@
 		336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatWelcomeStateView.swift; sourceTree = "<group>"; };
 		336CCC0E2FFD4311002B841D /* AIChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatInputView.swift; sourceTree = "<group>"; };
 		336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Gemini.swift"; sourceTree = "<group>"; };
+		336CCC162FFD8FF6002B841D /* GeminiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiError.swift; sourceTree = "<group>"; };
+		336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiServiceProtocol.swift; sourceTree = "<group>"; };
+		336CCC1A2FFD90D2002B841D /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -1008,6 +1014,16 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		336CCC152FFD8FDF002B841D /* Gemini */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC162FFD8FF6002B841D /* GeminiError.swift */,
+				336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */,
+				336CCC1A2FFD90D2002B841D /* GeminiService.swift */,
+			);
+			path = Gemini;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1157,6 +1173,7 @@
 		33AA80E42FEFE40800A20AF9 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC152FFD8FDF002B841D /* Gemini */,
 				0C09B68D2FF63D1400F4CC3D /* Frankfurter */,
 				0C09B6872FF63D0700F4CC3D /* Shared */,
 				0CE9F30B2FF3D18100466794 /* Shopify */,
@@ -1907,6 +1924,7 @@
 				33AB51282FFBC35C0085ECAC /* OrderStatus+Color.swift in Sources */,
 				0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */,
 				0C198E952FF2BA8E00477701 /* Spacing.swift in Sources */,
+				336CCC1B2FFD90D2002B841D /* GeminiService.swift in Sources */,
 				0C5EC9312FF92C3E00F8F028 /* CartLoadingView.swift in Sources */,
 				0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */,
 				0CE9F30F2FF3D18100466794 /* RESTClient.swift in Sources */,
@@ -2024,6 +2042,7 @@
 				336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */,
 				0C09B68E2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift in Sources */,
 				0CE05B7A2FF6CCE100ADEB7D /* PriceFormatter.swift in Sources */,
+				336CCC192FFD909F002B841D /* GeminiServiceProtocol.swift in Sources */,
 				0C09B6882FF63D0700F4CC3D /* GenericAPIError.swift in Sources */,
 				0CE05B6F2FF69F2A00ADEB7D /* ProductDetailsView.swift in Sources */,
 				4C8CBADF2FF02D1600CA6538 /* SplashView.swift in Sources */,
@@ -2078,6 +2097,7 @@
 				33AB51382FFBC8760085ECAC /* OrderImagesOverlapView.swift in Sources */,
 				0C5EC92F2FF92C3E00F8F028 /* CartLineRow.swift in Sources */,
 				0C5EC9332FF92C3E00F8F028 /* CartDiscountSection.swift in Sources */,
+				336CCC172FFD8FF6002B841D /* GeminiError.swift in Sources */,
 				336CCC042FFD4024002B841D /* AIChatBubbleShape.swift in Sources */,
 				33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */,
 				33AB513E2FFBC9780085ECAC /* OrderStatusTimeline.swift in Sources */,
