@@ -134,6 +134,7 @@
 		336CCC0A2FFD4200002B841D /* AIChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC092FFD4200002B841D /* AIChatHeaderView.swift */; };
 		336CCC0C2FFD427C002B841D /* AIChatWelcomeStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */; };
 		336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0E2FFD4311002B841D /* AIChatInputView.swift */; };
+		336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -412,6 +413,7 @@
 		336CCC092FFD4200002B841D /* AIChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatHeaderView.swift; sourceTree = "<group>"; };
 		336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatWelcomeStateView.swift; sourceTree = "<group>"; };
 		336CCC0E2FFD4311002B841D /* AIChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatInputView.swift; sourceTree = "<group>"; };
+		336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Gemini.swift"; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -935,6 +937,7 @@
 			isa = PBXGroup;
 			children = (
 				0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */,
+				336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1931,6 +1934,7 @@
 				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C5EC92D2FF92C3E00F8F028 /* CartContentView.swift in Sources */,
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
+				336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */,
 				0C5EC93C2FF94C8600F8F028 /* TrueFitStepper.swift in Sources */,
 				0C09B6AB2FF63DC500F4CC3D /* Product.swift in Sources */,
 				330EA0DB2FFD2758008A2244 /* AIChatView.swift in Sources */,
