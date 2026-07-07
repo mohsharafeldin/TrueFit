@@ -221,6 +221,9 @@
 		4CB476922FF9695A00BBA891 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB476982FF9AA8D00BBA891 /* AddressView.swift */; };
 		4CC2CBC52FFC7A1A00F136D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2CBC42FFC7A1A00F136D1 /* GoogleService-Info.plist */; };
+		4CC7276C2FFD22EB00182113 /* PaymentGatewayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7276B2FFD22EB00182113 /* PaymentGatewayProtocol.swift */; };
+		4CC7276E2FFD22FA00182113 /* StubPaymentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7276D2FFD22FA00182113 /* StubPaymentGateway.swift */; };
+		4CC727722FFD3FDB00182113 /* ClearCartUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC727712FFD3FDB00182113 /* ClearCartUseCase.swift */; };
 		4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */; };
 		4CD6DD442FF9ECE3007B6E2D /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */; };
 		594868AB2FF401B000F2241E /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594868AA2FF401B000F2241E /* AppRouter.swift */; };
@@ -493,6 +496,9 @@
 		4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInDataSource.swift; sourceTree = "<group>"; };
 		4CB476982FF9AA8D00BBA891 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		4CC2CBC42FFC7A1A00F136D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4CC7276B2FFD22EB00182113 /* PaymentGatewayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentGatewayProtocol.swift; sourceTree = "<group>"; };
+		4CC7276D2FFD22FA00182113 /* StubPaymentGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPaymentGateway.swift; sourceTree = "<group>"; };
+		4CC727712FFD3FDB00182113 /* ClearCartUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearCartUseCase.swift; sourceTree = "<group>"; };
 		4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
 		4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
 		50DDA34F4C3B3FD93E094907 /* FetchProductsByVendorUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchProductsByVendorUseCase.swift; sourceTree = "<group>"; };
@@ -975,6 +981,8 @@
 		33AA80D42FEFDF6800A20AF9 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				4CC7276A2FFD228000182113 /* Gateways */,
+				4CC727692FFD225A00182113 /* Configuration */,
 				33AA80F12FEFE4DF00A20AF9 /* Repositories */,
 				33AA80EA2FEFE48100A20AF9 /* DataSources */,
 				33AA80E82FEFE46700A20AF9 /* Mappers */,
@@ -1491,14 +1499,6 @@
 			path = Address;
 			sourceTree = "<group>";
 		};
-		4C2D27FA2FFC96B10017254C /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				4C2D27F92FFC96B10017254C /* PaymentConfiguration.swift */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
 		4C2D27FC2FFC96B10017254C /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1527,7 +1527,6 @@
 		4C2D28012FFC96B10017254C /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				4C2D27FA2FFC96B10017254C /* Configuration */,
 				4C2D27FE2FFC96B10017254C /* View */,
 				4C2D28002FFC96B10017254C /* ViewModel */,
 			);
@@ -1537,6 +1536,7 @@
 		4C2D28072FFC97960017254C /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				4CC727712FFD3FDB00182113 /* ClearCartUseCase.swift */,
 				4C2D28062FFC97960017254C /* ProcessPaymentUseCase.swift */,
 			);
 			path = Payment;
@@ -1627,6 +1627,23 @@
 				4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4CC727692FFD225A00182113 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				4C2D27F92FFC96B10017254C /* PaymentConfiguration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		4CC7276A2FFD228000182113 /* Gateways */ = {
+			isa = PBXGroup;
+			children = (
+				4CC7276B2FFD22EB00182113 /* PaymentGatewayProtocol.swift */,
+				4CC7276D2FFD22FA00182113 /* StubPaymentGateway.swift */,
+			);
+			path = Gateways;
 			sourceTree = "<group>";
 		};
 		4CD6DD402FF9EB23007B6E2D /* Components */ = {
@@ -1922,6 +1939,7 @@
 				33D02D1D2FF3DA210048E60D /* AuthRepository.swift in Sources */,
 				4C60A6C22FFB42FA00B5E17D /* GetAddressesUseCase.swift in Sources */,
 				0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */,
+				4CC727722FFD3FDB00182113 /* ClearCartUseCase.swift in Sources */,
 				0CCA5D5E2FFC0212005C538C /* ProfileViewModel.swift in Sources */,
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
@@ -2020,6 +2038,7 @@
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
 				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
 				0C09B6A02FF63D9A00F4CC3D /* ProductMapper.swift in Sources */,
+				4CC7276E2FFD22FA00182113 /* StubPaymentGateway.swift in Sources */,
 				0CCA5D6E2FFC1844005C538C /* ProfileSectionHeader.swift in Sources */,
 				4C2D280B2FFC97A90017254C /* PaymentRepositoryProtocol.swift in Sources */,
 				4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */,
@@ -2084,6 +2103,7 @@
 				33AB51322FFBC7750085ECAC /* OrderStatusTabs.swift in Sources */,
 				F1B8D6A20F0F2A78D504AB7D /* ShopifyAuthDataSource.swift in Sources */,
 				CF40E082F21BB21314FBA556 /* ShopifyAuthDataSourceProtocol.swift in Sources */,
+				4CC7276C2FFD22EB00182113 /* PaymentGatewayProtocol.swift in Sources */,
 				33AB51532FFC07A40085ECAC /* OrdersRemoteDataSource.swift in Sources */,
 				33CB35002FF8E97F00798582 /* FavoritesLocalDataSourceProtocol.swift in Sources */,
 				33CB34F52FF8E4E300798582 /* IsFavoriteUseCase.swift in Sources */,

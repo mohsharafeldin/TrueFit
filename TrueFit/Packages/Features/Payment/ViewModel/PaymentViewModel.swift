@@ -9,74 +9,71 @@
 import Foundation
 import PassKit
 
-// MARK: - Payment State
-
-/// Represents every possible state of the payment flow.
 enum PaymentState: Equatable {
-    /// No payment has been initiated.
     case idle
-    /// The Apple Pay sheet is being presented.
     case processing
-    /// The payment completed successfully.
     case success
-    /// The user dismissed the sheet without paying.
     case cancelled
-    /// The payment failed with a user-facing message.
     case failed(message: String)
 }
-
-// MARK: - Payment ViewModel
 
 @MainActor
 final class PaymentViewModel: ObservableObject {
 
-    // MARK: - Published State
-
     @Published private(set) var paymentState: PaymentState = .idle
     @Published private(set) var isApplePayAvailable: Bool = false
 
-    // MARK: - Dependencies
+    let orderTotal: Decimal
+    let orderLabel: String
 
     private let processPayment: ProcessPaymentUseCase
+    private let clearCartUseCase: ClearCartUseCase
+    private var preferencesManager: PreferencesManagerProtocol
+    private let cartStateModel: CartState
 
-    // MARK: - Init
-
-    init(processPaymentUseCase: ProcessPaymentUseCase) {
+    init(
+        processPaymentUseCase: ProcessPaymentUseCase,
+        clearCartUseCase: ClearCartUseCase,
+        preferencesManager: PreferencesManagerProtocol,
+        cartStateModel: CartState,
+        orderTotal: Decimal,
+        orderLabel: String = "TrueFit Order"
+    ) {
         self.processPayment = processPaymentUseCase
+        self.clearCartUseCase = clearCartUseCase
+        self.preferencesManager = preferencesManager
+        self.cartStateModel = cartStateModel
+        self.orderTotal = orderTotal
+        self.orderLabel = orderLabel
         self.isApplePayAvailable = checkApplePayAvailability()
     }
 
-    // MARK: - Apple Pay Availability
-
-    /// Checks both device hardware support and configured payment cards.
     private func checkApplePayAvailability() -> Bool {
         PKPaymentAuthorizationController.canMakePayments(
             usingNetworks: PaymentConfiguration.supportedNetworks
         )
     }
 
-    // MARK: - Actions
-
-    /// Initiates the Apple Pay payment sheet.
-    ///
-    /// Builds a `PaymentRequestDTO` from `PaymentConfiguration` constants,
-    /// delegates processing to the use case, and updates `paymentState`
-    /// based on the result. The view never inspects the DTO directly.
-    func startApplePayment(totalAmount: Decimal, label: String) async {
+    func startApplePayment() async {
         guard isApplePayAvailable else {
             paymentState = .failed(message: PaymentError.applePayUnavailable.errorDescription ?? "")
+            return
+        }
+
+        guard orderTotal > 0 else {
+            paymentState = .failed(message: PaymentError.invalidRequest.errorDescription ?? "")
             return
         }
 
         paymentState = .processing
 
         let summaryItem = PKPaymentSummaryItem(
-            label: label,
-            amount: NSDecimalNumber(decimal: totalAmount)
+            label: orderLabel,
+            amount: NSDecimalNumber(decimal: orderTotal)
         )
         let merchantItem = PKPaymentSummaryItem(
             label: PaymentConfiguration.merchantDisplayName,
-            amount: NSDecimalNumber(decimal: totalAmount)
+            amount: NSDecimalNumber(decimal: orderTotal)
         )
 
         let dto = PaymentRequestDTO(
@@ -91,7 +88,16 @@ final class PaymentViewModel: ObservableObject {
         do {
             let result = try await processPayment(request: dto)
             switch result {
-            case .success:    paymentState = .success
+            case .success:
+                do {
+                    if let cartId = preferencesManager.cartId, !cartId.isEmpty {
+                        let emptyCart = try await clearCartUseCase.execute(cartId: cartId)
+                        cartStateModel.updateCount(emptyCart.totalQuantity)
+                    }
+                } catch {
+                    print("Failed to clear cart: \(error)")
+                }
+                paymentState = .success
             case .cancelled:  paymentState = .cancelled
             case .failed(let reason): paymentState = .failed(message: reason)
             }
@@ -102,7 +108,6 @@ final class PaymentViewModel: ObservableObject {
         }
     }
 
-    /// Resets the payment state back to `.idle` so the user can try again.
     func resetState() {
         paymentState = .idle
     }

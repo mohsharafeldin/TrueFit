@@ -7,16 +7,17 @@
 
 import PassKit
 
-// MARK: - Payment Local Data Source
-
 final class PaymentLocalDataSource: NSObject, PaymentLocalDataSourceProtocol {
 
-    // MARK: - State
-
-   
     private var continuation: CheckedContinuation<PaymentResult, Error>?
+    private let gateway: PaymentGatewayProtocol
 
-    // MARK: - PaymentLocalDataSourceProtocol
+    private var pendingAmount: Decimal = 0
+    private var pendingCurrencyCode: String = "USD"
+
+    init(gateway: PaymentGatewayProtocol) {
+        self.gateway = gateway
+    }
 
     func present(request: PaymentRequestDTO) async throws -> PaymentResult {
         guard PKPaymentAuthorizationController.canMakePayments(
@@ -25,18 +26,23 @@ final class PaymentLocalDataSource: NSObject, PaymentLocalDataSourceProtocol {
             throw PaymentError.applePayUnavailable
         }
 
-        let pkRequest = makePKRequest(from: request)
+        pendingAmount = request.paymentSummaryItems.last.map { Decimal(string: $0.amount.stringValue) ?? 0 } ?? 0
+        pendingCurrencyCode = request.currencyCode
 
+        let pkRequest = makePKRequest(from: request)
         let controller = PKPaymentAuthorizationController(paymentRequest: pkRequest)
         controller.delegate = self
 
         return try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.continuation = continuation
-            controller.present(completion: nil)
+            controller.present { success in
+                if !success {
+                    continuation.resume(throwing: PaymentError.invalidRequest)
+                    self?.continuation = nil
+                }
+            }
         }
     }
-
-    // MARK: - Private Helpers
 
     private func makePKRequest(from dto: PaymentRequestDTO) -> PKPaymentRequest {
         let request = PKPaymentRequest()
@@ -50,8 +56,6 @@ final class PaymentLocalDataSource: NSObject, PaymentLocalDataSourceProtocol {
     }
 }
 
-// MARK: - PKPaymentAuthorizationControllerDelegate
-
 extension PaymentLocalDataSource: PKPaymentAuthorizationControllerDelegate {
 
     func paymentAuthorizationController(
@@ -59,25 +63,57 @@ extension PaymentLocalDataSource: PKPaymentAuthorizationControllerDelegate {
         didAuthorizePayment payment: PKPayment,
         handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-        
-        completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
-    }
+        Task { [weak self] in
+            guard let self else { return }
 
-    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
-        controller.dismiss {
-            
-            self.continuation?.resume(returning: .cancelled)
+            do {
+                let result = try await self.gateway.charge(
+                    paymentToken: payment.token,
+                    amount: self.pendingAmount,
+                    currencyCode: self.pendingCurrencyCode
+                )
+
+                switch result {
+                case .approved:
+                    completion(PKPaymentAuthorizationResult(status: .success, errors: nil))
+                    self.continuation?.resume(returning: .success)
+
+                case .declined(let reason):
+                    let error = NSError(
+                        domain: PKPaymentErrorDomain,
+                        code: PKPaymentError.unknownError.rawValue,
+                        userInfo: [NSLocalizedDescriptionKey: reason.message]
+                    )
+                    completion(PKPaymentAuthorizationResult(status: .failure, errors: [error]))
+                    self.continuation?.resume(returning: .failed(reason: reason.message))
+                }
+            } catch let error as PaymentError {
+                let nsError = NSError(
+                    domain: PKPaymentErrorDomain,
+                    code: PKPaymentError.unknownError.rawValue,
+                    userInfo: [NSLocalizedDescriptionKey: error.errorDescription ?? "Payment failed."]
+                )
+                completion(PKPaymentAuthorizationResult(status: .failure, errors: [nsError]))
+                self.continuation?.resume(returning: .failed(reason: error.errorDescription ?? "Payment failed."))
+            } catch {
+                let nsError = NSError(
+                    domain: PKPaymentErrorDomain,
+                    code: PKPaymentError.unknownError.rawValue,
+                    userInfo: [NSLocalizedDescriptionKey: error.localizedDescription]
+                )
+                completion(PKPaymentAuthorizationResult(status: .failure, errors: [nsError]))
+                self.continuation?.resume(returning: .failed(reason: error.localizedDescription))
+            }
+
             self.continuation = nil
         }
     }
 
-    func paymentAuthorizationController(
-        _ controller: PKPaymentAuthorizationController,
-        didAuthorizePayment payment: PKPayment,
-        completion: @escaping (PKPaymentAuthorizationStatus) -> Void
-    ) {
-        completion(.success)
-        continuation?.resume(returning: .success)
-        continuation = nil
+    func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
+        controller.dismiss { [weak self] in
+            guard let self, let continuation = self.continuation else { return }
+            continuation.resume(returning: .cancelled)
+            self.continuation = nil
+        }
     }
 }

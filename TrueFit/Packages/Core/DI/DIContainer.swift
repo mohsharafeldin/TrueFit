@@ -119,6 +119,7 @@ final class DIContainer: ObservableObject {
     private lazy var updateCartLineUseCase = UpdateCartLineUseCase(repository: cartRepository)
     private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
     private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
+    private lazy var clearCartUseCase = ClearCartUseCase(repository: cartRepository)
     
     // MARK: - FAVORITES FEATURE
     
@@ -171,8 +172,11 @@ final class DIContainer: ObservableObject {
     // MARK: - PAYMENT FEATURE
 
     // Payment Data Source & Repository
+    
+    private lazy var paymentGatWay: PaymentGatewayProtocol=StubPaymentGateway()
+    
     private lazy var paymentLocalDataSource: PaymentLocalDataSourceProtocol = {
-        PaymentLocalDataSource()
+        PaymentLocalDataSource(gateway: paymentGatWay)
     }()
 
     private lazy var paymentRepository: PaymentRepositoryProtocol = {
@@ -317,8 +321,15 @@ final class DIContainer: ObservableObject {
         )
     }()
 
-    func makePaymentViewModel() -> PaymentViewModel {
-        PaymentViewModel(processPaymentUseCase: processPaymentUseCase)
+    func makePaymentViewModel(orderTotal: Decimal, orderLabel: String = "TrueFit Order") -> PaymentViewModel {
+        PaymentViewModel(
+            processPaymentUseCase: processPaymentUseCase,
+            clearCartUseCase: clearCartUseCase,
+            preferencesManager: preferencesManager,
+            cartStateModel: cartState,
+            orderTotal: orderTotal,
+            orderLabel: orderLabel
+        )
     }
     
     

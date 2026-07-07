@@ -55,16 +55,16 @@ struct MainAppView: View {
             .badge(cartState.itemCount > 0 ? cartState.itemCount : 0)
             .tag(AppTab.cart)
             
-            // Payment Tab
-            NavigationStack(path: $appRouter.paymentPath) {
-                PaymentView(viewModel: container.makePaymentViewModel())
-                    .navigationDestination(for: AppRoute.self, destination: destination(for:))
-            }
-            .tabItem {
-                Image(systemName: "creditcard")
-                Text("Payment")
-            }
-            .tag(AppTab.payment)
+//            // Payment Tab
+//            NavigationStack(path: $appRouter.paymentPath) {
+//                PaymentView(viewModel: container.makePaymentViewModel(orderTotal: 100))
+//                    .navigationDestination(for: AppRoute.self, destination: destination(for:))
+//            }
+//            .tabItem {
+//                Image(systemName: "creditcard")
+//                Text("Payment")
+//            }
+//            .tag(AppTab.payment)
             
             // Profile Tab
             NavigationStack(path: $appRouter.profilePath) {
@@ -89,8 +89,8 @@ extension MainAppView {
         case .checkout:
             Text("Checkout Screen")
 
-        case .payment:
-            PaymentView(viewModel: container.makePaymentViewModel())
+        case .payment(let amount):
+            PaymentView(viewModel: container.makePaymentViewModel(orderTotal: amount))
         case .productDetails(let id):
             ProductDetailsView(
                 productId: id,

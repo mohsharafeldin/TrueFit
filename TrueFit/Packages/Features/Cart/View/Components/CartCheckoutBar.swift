@@ -4,6 +4,7 @@ struct CartCheckoutBar: View {
     @ObservedObject var viewModel: CartViewModel
     let cart: Cart
     let openURL: OpenURLAction
+    @EnvironmentObject var appRouter: AppRouter
     
     var body: some View {
         VStack(spacing: 0) {
@@ -12,12 +13,10 @@ struct CartCheckoutBar: View {
                 .shadow(color: Color.shadowColor.opacity(0.05), radius: 4, x: 0, y: -2)
             
             Button(action: {
-                if let url = viewModel.checkoutURL {
-                    openURL(url)
-                }
+                appRouter.navigate(to: .payment(amount: cart.total.amount))
             }) {
                 HStack {
-                    if viewModel.checkoutURL == nil {
+                    if cart.isEmpty {
                         Text("Unavailable")
                     } else {
                         Text("Checkout — \(viewModel.totalText)")
@@ -26,10 +25,10 @@ struct CartCheckoutBar: View {
                 .trueFitTextStyle(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, minHeight: 54)
-                .background(viewModel.isUpdating || cart.isEmpty || viewModel.checkoutURL == nil ? Color.disabledColor : Color.brandPrimary)
+                .background(viewModel.isUpdating || cart.isEmpty ? Color.disabledColor : Color.brandPrimary)
                 .clipShape(RoundedRectangle.trueFit(Radius.xl))
             }
-            .disabled(viewModel.isUpdating || cart.isEmpty || viewModel.checkoutURL == nil)
+            .disabled(viewModel.isUpdating || cart.isEmpty)
             .accessibilityLabel("Checkout, total \(viewModel.totalText)")
             .padding(.horizontal, Spacing.md)
             .padding(.vertical, Spacing.md)

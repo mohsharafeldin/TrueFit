@@ -7,25 +7,15 @@
 
 import SwiftUI
 
-// MARK: - Payment View
-
 struct PaymentView: View {
-
-    // MARK: - Environment
 
     @Environment(\.dismiss) private var dismiss
 
-    // MARK: - State Object
-
     @StateObject private var viewModel: PaymentViewModel
-
-    // MARK: - Init
 
     init(viewModel: PaymentViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-
-    // MARK: - Body
 
     var body: some View {
         ZStack {
@@ -36,13 +26,10 @@ struct PaymentView: View {
                 scrollContent
             }
 
-            // Full-screen overlays driven by payment state
             paymentStateOverlay
         }
         .navigationBarHidden(true)
     }
-
-    // MARK: - Navigation Bar
 
     private var navigationBar: some View {
         ZStack {
@@ -70,8 +57,6 @@ struct PaymentView: View {
         )
     }
 
-    // MARK: - Scroll Content
-
     private var scrollContent: some View {
         ScrollView {
             VStack(spacing: Spacing.xl) {
@@ -81,8 +66,6 @@ struct PaymentView: View {
             .padding(Spacing.md)
         }
     }
-
-    // MARK: - Order Summary Card
 
     private var orderSummaryCard: some View {
         VStack(spacing: Spacing.md) {
@@ -101,7 +84,7 @@ struct PaymentView: View {
                     .font(.trueFitCallout)
                     .foregroundColor(.textSecondary)
                 Spacer()
-                Text("$0.00")
+                Text(viewModel.orderTotal, format: .currency(code: PaymentConfiguration.currencyCode))
                     .font(.trueFitHeadline)
                     .foregroundColor(.textPrimary)
             }
@@ -114,8 +97,6 @@ struct PaymentView: View {
                 .stroke(Color.borderColor, lineWidth: 0.5)
         )
     }
-
-    // MARK: - Apple Pay Section
 
     private var applePaySection: some View {
         VStack(spacing: Spacing.md) {
@@ -141,8 +122,6 @@ struct PaymentView: View {
         )
     }
 
-    // MARK: - Apple Pay Available
-
     private var applePayAvailableContent: some View {
         VStack(spacing: Spacing.sm) {
             Text("Tap the button below to complete your purchase securely with Apple Pay.")
@@ -157,17 +136,12 @@ struct PaymentView: View {
             ) {
                 guard viewModel.paymentState != .processing else { return }
                 Task {
-                    await viewModel.startApplePayment(
-                        totalAmount: 0.00,
-                        label: "TrueFit Order"
-                    )
+                    await viewModel.startApplePayment()
                 }
             }
             .frame(height: 50)
         }
     }
-
-    // MARK: - Apple Pay Unavailable
 
     private var applePayUnavailableContent: some View {
         HStack(spacing: Spacing.sm) {
@@ -196,8 +170,6 @@ struct PaymentView: View {
                 .stroke(Color.semanticWarning.opacity(0.3), lineWidth: 0.5)
         )
     }
-
-    // MARK: - Payment State Overlay
 
     @ViewBuilder
     private var paymentStateOverlay: some View {
@@ -230,8 +202,6 @@ struct PaymentView: View {
             EmptyView()
         }
     }
-
-    // MARK: - Payment Result Banner
 
     private func paymentResultBanner(
         icon: String,
@@ -282,8 +252,6 @@ struct PaymentView: View {
         .zIndex(1)
     }
 }
-
-// MARK: - Preview
 
 #Preview {
     PaymentView(viewModel: PreviewMocks.makePaymentViewModel())

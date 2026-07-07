@@ -17,7 +17,7 @@ enum AppRoute: Hashable {
   //  case cart
    // case favorites
     case checkout
-    case payment
+    case payment(amount: Decimal)
     case search
     case productDetails(productId: String)
     case productsByCollection(collectionId: Int64, title: String)

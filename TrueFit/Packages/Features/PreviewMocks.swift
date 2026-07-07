@@ -248,6 +248,31 @@ extension PreviewMocks {
     }
 }
 
+// MARK: - Mock Cart Repository & Preferences
+
+class MockCartRepository: CartRepositoryProtocol {
+    private var emptyCart: Cart {
+        Cart(id: "mock-cart", lines: [], totalQuantity: 0, subtotal: Money(amount: 0, currencyCode: "USD"), total: Money(amount: 0, currencyCode: "USD"), totalTax: nil, discountCodes: [], checkoutURL: nil)
+    }
+    func getCart(id: String) async throws -> Cart { return emptyCart }
+    func createCart(variantId: String, quantity: Int) async throws -> Cart { return emptyCart }
+    func addToCart(cartId: String, variantId: String, quantity: Int) async throws -> Cart { return emptyCart }
+    func updateQuantity(cartId: String, lineId: String, quantity: Int) async throws -> Cart { return emptyCart }
+    func removeLine(cartId: String, lineId: String) async throws -> Cart { return emptyCart }
+    func applyDiscount(cartId: String, code: String) async throws -> Cart { return emptyCart }
+}
+
+class MockPreferencesManager: PreferencesManagerProtocol {
+    var hasSeenOnboarding: Bool = true
+    var hasRunBefore: Bool = true
+    var cartId: String? = "mock-cart-id"
+    var cartItemCount: Int = 3
+    
+    func saveUser(_ user: User) {}
+    func getUser() -> User? { return nil }
+    func clearUser() {}
+}
+
 // MARK: - Mock Payment Repository
 
 class MockPaymentRepository: PaymentRepositoryProtocol {
@@ -268,9 +293,18 @@ extension PreviewMocks {
     static func makePaymentViewModel(
         simulatedResult: PaymentResult = .success
     ) -> PaymentViewModel {
-        let repo = MockPaymentRepository()
-        repo.mockResult = simulatedResult
-        let useCase = ProcessPaymentUseCase(repository: repo)
-        return PaymentViewModel(processPaymentUseCase: useCase)
+        let paymentRepo = MockPaymentRepository()
+        paymentRepo.mockResult = simulatedResult
+        let cartRepo = MockCartRepository()
+        let prefs = MockPreferencesManager()
+        
+        return PaymentViewModel(
+            processPaymentUseCase: ProcessPaymentUseCase(repository: paymentRepo),
+            clearCartUseCase: ClearCartUseCase(repository: cartRepo),
+            preferencesManager: prefs,
+            cartStateModel: CartState(),
+            orderTotal: 100.0,
+            orderLabel: "Preview Order"
+        )
     }
 }
