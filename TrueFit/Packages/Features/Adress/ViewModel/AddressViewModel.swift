@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 public final class AddressViewModel: ObservableObject {
@@ -15,6 +16,8 @@ public final class AddressViewModel: ObservableObject {
     @Published public private(set) var addresses: [Address] = []
     @Published public private(set) var isLoading: Bool = false
     @Published public var errorMessage: String?
+    
+    public let addressSelected = Combine.PassthroughSubject<Address, Never>()
 
     // MARK: - Dependencies (Use Cases)
 

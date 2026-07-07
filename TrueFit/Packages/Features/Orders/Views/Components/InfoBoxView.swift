@@ -37,7 +37,11 @@ struct InfoBoxView: View {
     }
 }
 
-#Preview {
-    InfoBoxView(icon: "mappin.and.ellipse", title: "Delivery Address", value: "123 Main Street, Apt 4B, New York, NY 10001")
-        .padding()
+struct InfoBoxView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        InfoBoxView(icon: "mappin.and.ellipse", title: "Delivery Address", value: "123 Main Street, Apt 4B, New York, NY 10001")
+            .padding()
+
+    }
 }

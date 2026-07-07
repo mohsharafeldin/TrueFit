@@ -4,7 +4,7 @@ struct CartContentView: View {
     let cart: Cart
     @ObservedObject var viewModel: CartViewModel
     @Binding var isDiscountExpanded: Bool
-    let openURL: OpenURLAction
+    let onCheckout: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -47,7 +47,7 @@ struct CartContentView: View {
             }
             
             // Checkout Bar
-            CartCheckoutBar(viewModel: viewModel, cart: cart, openURL: openURL)
+            CartCheckoutBar(viewModel: viewModel, cart: cart, onCheckout: onCheckout)
         }
     }
 }

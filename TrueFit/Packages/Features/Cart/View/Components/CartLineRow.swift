@@ -27,30 +27,32 @@ struct CartLineRow: View {
             // Main Content Row
             HStack(alignment: .top, spacing: Spacing.md) {
                 // Product Image
-                AsyncImage(url: line.imageURL) { phase in
-                    switch phase {
-                    case .empty:
-                        RoundedRectangle(cornerRadius: Radius.md)
-                            .fill(Color.borderColor)
-                            .overlay(ProgressView())
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    case .failure:
-                        RoundedRectangle(cornerRadius: Radius.md)
-                            .fill(Color.borderColor)
-                            .overlay(
-                                Image(systemName: "photo")
-                                    .foregroundColor(.textTertiary)
-                            )
-                    @unknown default:
-                        EmptyView()
+                if let url = line.imageURL {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            RoundedRectangle(cornerRadius: Radius.md)
+                                .fill(Color.borderColor)
+                                .overlay(ProgressView())
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        case .failure:
+                            imagePlaceholder
+                        @unknown default:
+                            imagePlaceholder
+                        }
                     }
+                    .frame(width: 72, height: 72)
+                    .clipShape(RoundedRectangle.trueFit(Radius.md))
+                    .accessibilityLabel(line.imageAltText ?? line.productTitle)
+                } else {
+                    imagePlaceholder
+                        .frame(width: 72, height: 72)
+                        .clipShape(RoundedRectangle.trueFit(Radius.md))
+                        .accessibilityLabel(line.imageAltText ?? line.productTitle)
                 }
-                .frame(width: 72, height: 72)
-                .clipShape(RoundedRectangle.trueFit(Radius.md))
-                .accessibilityLabel(line.imageAltText ?? line.productTitle)
                 
                 // Right Side Columns
                 HStack(alignment: .top, spacing: Spacing.xs) {
@@ -151,5 +153,15 @@ struct CartLineRow: View {
                 withAnimation(.spring()) { offset = 0 } // Close swipe on cancel
             }
         )
+    }
+    
+    private var imagePlaceholder: some View {
+        RoundedRectangle(cornerRadius: Radius.md)
+            .fill(Color.borderColor.opacity(0.3))
+            .overlay(
+                Image(systemName: "photo")
+                    .font(.system(size: 24))
+                    .foregroundColor(.textTertiary)
+            )
     }
 }

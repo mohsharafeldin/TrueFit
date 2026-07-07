@@ -87,10 +87,13 @@ extension MainAppView {
     private func destination(for route: AppRoute) -> some View {
         switch route {
         case .checkout:
-            Text("Checkout Screen")
-
+            CheckoutView(viewModel: container.makeCheckoutViewModel())
+            
+        case .orderCompleted(let info):
+            OrderCompletedView(info: info)
         case .payment(let amount):
             PaymentView(viewModel: container.makePaymentViewModel(orderTotal: amount))
+            
         case .productDetails(let id):
             ProductDetailsView(
                 productId: id,
@@ -116,6 +119,8 @@ extension MainAppView {
 			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
         case .address:
             AddressView(viewModel: container.addressViewModel)
+        case .addressSelection:
+            AddressView(viewModel: container.addressViewModel, isSelectionMode: true)
         case .addNewAddress:
             AddNewAddressView(addressViewModel: container.addressViewModel)
         case .editAddress(let address):
@@ -128,6 +133,8 @@ extension MainAppView {
                 addressViewModel: container.addressViewModel,
                 address: address,
                 editingAddressId: nil )
+        case .currency:
+            CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
         }
     }
     

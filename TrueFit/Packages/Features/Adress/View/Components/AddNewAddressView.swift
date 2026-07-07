@@ -109,6 +109,7 @@ struct AddNewAddressView: View {
             .ignoresSafeArea(edges: .bottom)
         }
         .navigationBarHidden(true)
+        .toolbar(.hidden, for: .tabBar)
         .onReceive(locationManager.$lastLocation) { coord in
             guard let coord else { return }
             withAnimation(.easeInOut(duration: 0.5)) {
@@ -357,9 +358,13 @@ struct AddNewAddressView: View {
     }
 }
 
-#Preview {
-    AddNewAddressView(
-        addressViewModel: PreviewMocks.makeAddressViewModel()
-    )
-    .environmentObject(AppRouter())
+struct AddNewAddressView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        AddNewAddressView(
+            addressViewModel: PreviewMocks.makeAddressViewModel()
+        )
+        .environmentObject(AppRouter())
+
+    }
 }

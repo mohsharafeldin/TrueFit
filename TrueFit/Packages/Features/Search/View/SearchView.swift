@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     @StateObject var viewModel: SearchViewModel
     @EnvironmentObject var appRouter: AppRouter
+    @ObservedObject var currencyManager = CurrencyManager.shared
     @FocusState private var isSearchFocused: Bool
 
     var body: some View {
@@ -320,7 +321,7 @@ struct SearchView: View {
                 if viewModel.currentPriceMin > viewModel.priceRangeMin ||
                    viewModel.currentPriceMax < viewModel.priceRangeMax {
                     ActiveFilterChip(
-                        text: "$\(Int(viewModel.currentPriceMin)) – $\(Int(viewModel.currentPriceMax))"
+                        text: "\(PriceFormatter.format(Decimal(viewModel.currentPriceMin))) – \(PriceFormatter.format(Decimal(viewModel.currentPriceMax)))"
                     ) {
                         withAnimation(TrueFitMotion.springDefault) {
                             viewModel.currentPriceMin = viewModel.priceRangeMin
@@ -714,7 +715,7 @@ struct FilterSheetView: View {
 
                 Spacer()
 
-                Text("$\(Int(viewModel.currentPriceMin)) - $\(Int(viewModel.currentPriceMax))")
+                Text("\(PriceFormatter.format(Decimal(viewModel.currentPriceMin))) - \(PriceFormatter.format(Decimal(viewModel.currentPriceMax)))")
                     .trueFitTextStyle(.subheadline)
                     .foregroundColor(.textSecondary)
             }
@@ -739,10 +740,10 @@ struct FilterSheetView: View {
                         }
                     }
 
-                    Text("$\(Int(viewModel.currentPriceMin))")
+                    Text(PriceFormatter.format(Decimal(viewModel.currentPriceMin)))
                         .trueFitTextStyle(.caption)
                         .foregroundColor(.textPrimary)
-                        .frame(width: 45, alignment: .trailing)
+                        .frame(width: 60, alignment: .trailing)
                 }
 
                 // Max price slider
@@ -764,10 +765,10 @@ struct FilterSheetView: View {
                         }
                     }
 
-                    Text("$\(Int(viewModel.currentPriceMax))")
+                    Text(PriceFormatter.format(Decimal(viewModel.currentPriceMax)))
                         .trueFitTextStyle(.caption)
                         .foregroundColor(.textPrimary)
-                        .frame(width: 45, alignment: .trailing)
+                        .frame(width: 60, alignment: .trailing)
                 }
             }
         }

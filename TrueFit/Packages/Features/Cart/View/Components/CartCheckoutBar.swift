@@ -3,8 +3,7 @@ import SwiftUI
 struct CartCheckoutBar: View {
     @ObservedObject var viewModel: CartViewModel
     let cart: Cart
-    let openURL: OpenURLAction
-    @EnvironmentObject var appRouter: AppRouter
+    let onCheckout: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -13,14 +12,10 @@ struct CartCheckoutBar: View {
                 .shadow(color: Color.shadowColor.opacity(0.05), radius: 4, x: 0, y: -2)
             
             Button(action: {
-                appRouter.navigate(to: .payment(amount: cart.total.amount))
+                onCheckout()
             }) {
                 HStack {
-                    if cart.isEmpty {
-                        Text("Unavailable")
-                    } else {
-                        Text("Checkout — \(viewModel.totalText)")
-                    }
+                    Text("Checkout — \(viewModel.totalText)")
                 }
                 .trueFitTextStyle(.headline)
                 .foregroundColor(.white)
