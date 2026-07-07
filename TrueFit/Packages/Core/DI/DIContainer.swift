@@ -16,10 +16,15 @@ final class DIContainer: ObservableObject {
     let preferencesManager = PreferencesManager()
     let appRouter = AppRouter()
     let authRouter = AuthRouter()
+    lazy var cartState: CartState = {
+        CartState(initialCount: preferencesManager.cartItemCount) { [weak self] newCount in
+            self?.preferencesManager.cartItemCount = newCount
+        }
+    }()
     
     // MARK: - Core Services
     private lazy var keychainManager: KeychainManagerProtocol = KeychainManager()
-    public lazy var authManager: AuthManager = AuthManager(keychainManager: keychainManager)
+    public lazy var authManager: AuthManager = AuthManager(keychainManager: keychainManager, preferencesManager: preferencesManager)
     
     // MARK: - Networking
     let genericClient: GenericHTTPClientProtocol = GenericHTTPClient()
@@ -60,7 +65,8 @@ final class DIContainer: ObservableObject {
             firebaseDataSource: firebaseAuthDataSource,
             shopifyDataSource: shopifyAuthDataSource,
             keychainManager: keychainManager,
-            googleSignInService: googleSignInDataSource
+            googleSignInService: googleSignInDataSource,
+            preferencesManager: preferencesManager
         )
     }()
     
@@ -93,6 +99,10 @@ final class DIContainer: ObservableObject {
     // Products Use Cases
     private lazy var fetchNewArrivalsUseCase = FetchNewArrivalsUseCase(repository: productsRepository)
     private lazy var fetchCollectionsUseCase = FetchCollectionsUseCase(repository: productsRepository)
+    private lazy var fetchBrandsUseCase = FetchBrandsUseCase(repository: productsRepository)
+    private lazy var fetchProductsByCollectionUseCase = FetchProductsByCollectionUseCase(repository: productsRepository)
+    private lazy var fetchProductsByVendorUseCase = FetchProductsByVendorUseCase(repository: productsRepository)
+    private lazy var fetchAllProductsUseCase = FetchAllProductsUseCase(repository: productsRepository)
     
     
     // MARK: - CART FEATURE
@@ -146,9 +156,18 @@ final class DIContainer: ObservableObject {
     // MARK: - Init
     public init() {}
     
+    // MARK: - App Launch Operations
+    public func fetchInitialCartCount() async {
+        guard let cartId = preferencesManager.cartId, !cartId.isEmpty else { return }
+        do {
+            let cart = try await getCartUseCase.execute(cartId: cartId)
+            cartState.updateCount(cart.totalQuantity)
+        } catch {
+            print("Failed to fetch initial cart count: \(error)")
+        }
+    }
     
-    
-    
+
     // MARK: - VIEW MODELS FACTORY
     
     public func makeRootViewModel() -> RootViewModel {
@@ -176,16 +195,30 @@ final class DIContainer: ObservableObject {
         HomeViewModel(
             fetchNewArrivalsUseCase: fetchNewArrivalsUseCase,
             fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            isFavoriteUseCase: isFavoriteUseCase
+            isFavoriteUseCase: isFavoriteUseCase, 
+            preferencesManager: preferencesManager
+        )
+    }
+
+    public func makeSearchViewModel() -> SearchViewModel {
+        SearchViewModel(
+            fetchAllProductsUseCase: fetchAllProductsUseCase,
+            fetchBrandsUseCase: fetchBrandsUseCase,
+            fetchCollectionsUseCase: fetchCollectionsUseCase,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase
         )
     }
 
     func makeProductDetailsViewModel(productId: String) -> ProductDetailsViewModel {
         let viewModel = ProductDetailsViewModel(
             getProductUseCase: getProductUseCase,
+            addToCartUseCase: addToCartUseCase,
+            preferencesManager: preferencesManager,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            isFavoriteUseCase: isFavoriteUseCase
+            isFavoriteUseCase: isFavoriteUseCase,
+            cartState: cartState
         )
         return viewModel
     }
@@ -200,7 +233,16 @@ final class DIContainer: ObservableObject {
             addToCartUseCase: addToCartUseCase,
             updateCartLineUseCase: updateCartLineUseCase,
             removeCartLineUseCase: removeCartLineUseCase,
-            applyDiscountUseCase: applyDiscountUseCase
+            applyDiscountUseCase: applyDiscountUseCase,
+            cartState: cartState,
+            preferencesManager: preferencesManager
+        )
+    }
+    func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
+        ProductListViewModel(
+            source: source,
+            fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
         )
     }
     
@@ -212,6 +254,13 @@ final class DIContainer: ObservableObject {
         )
     }
     
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(
+            preferencesManager: preferencesManager,
+            authManager: authManager,
+            logoutUseCase: makeLogoutUseCase()
+        )
+    }
     func makeAddressViewModel() -> AddressViewModel {
             AddressViewModel(
                 authManager: authManager,

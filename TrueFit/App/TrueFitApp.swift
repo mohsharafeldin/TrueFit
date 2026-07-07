@@ -24,6 +24,7 @@ struct TrueFitApp: App {
                 .environmentObject(diContainer.authRouter)
                 .environmentObject(diContainer.appRouter)
                 .environmentObject(diContainer)
+                .environmentObject(diContainer.cartState)
                 .environment(\.managedObjectContext, diContainer.persistenceController.container.viewContext)
         }
     }

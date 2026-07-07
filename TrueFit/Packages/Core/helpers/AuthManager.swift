@@ -47,8 +47,16 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
     private let service = "com.truefit.auth"
     private let account = "shopifyCustomerToken"
     
-    init(keychainManager: KeychainManagerProtocol = KeychainManager()) {
+    init(keychainManager: KeychainManagerProtocol = KeychainManager(), preferencesManager: PreferencesManagerProtocol = PreferencesManager()) {
         self.keychainManager = keychainManager
+        
+        // Handle fresh install keychain cleanup
+        var prefs = preferencesManager
+        if !prefs.hasRunBefore {
+            self.deleteTokenFromKeychain()
+            prefs.hasRunBefore = true
+        }
+        
         checkAuthStatus()
     }
     

@@ -30,23 +30,37 @@ struct ProductDetailsBottomBar: View {
             Spacer()
             
             
-            Button(action: { viewModel.addToCart() }) {
+            Button(action: {
+                Task {
+                    await viewModel.addToCart()
+                }
+            }) {
                 HStack(spacing: Spacing.sm) {
-                    Image(systemName: "bag.fill")
-                        .font(.system(size: 16))
-                    
-                    Text(viewModel.isAddToCartDisabled ? "Out of Stock" : "Add to Cart")
-                        .trueFitTextStyle(.headline)
-                        .lineLimit(1)
-                        .fixedSize(horizontal: true, vertical: false)
+                    if viewModel.isAddingToCart {
+                        ProgressView()
+                            .tint(.surface)
+                        
+                        Text("Adding...")
+                            .trueFitTextStyle(.headline)
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: false)
+                    } else {
+                        Image(systemName: "bag.fill")
+                            .font(.system(size: 16))
+                        
+                        Text(viewModel.isAddToCartDisabled ? (viewModel.quantity > (viewModel.maxQuantity ?? Int.max) ? "Max Stock Reached" : "Out of Stock") : "Add to Cart")
+                            .trueFitTextStyle(.headline)
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: false)
+                    }
                 }
                 .foregroundColor(.surface)
                 .frame(height: 50)
                 .padding(.horizontal, Spacing.lg)
-                .background(viewModel.isAddToCartDisabled ? Color.disabledColor : Color.brandPrimary)
+                .background(viewModel.isAddToCartDisabled || viewModel.isAddingToCart ? Color.disabledColor : Color.brandPrimary)
                 .clipShape(Capsule())
             }
-            .disabled(viewModel.isAddToCartDisabled)
+            .disabled(viewModel.isAddToCartDisabled || viewModel.isAddingToCart)
         }
         .padding(.horizontal, Spacing.xl)
         .padding(.vertical, Spacing.sm)

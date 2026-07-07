@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductDetailsView: View {
     @StateObject var viewModel: ProductDetailsViewModel
     let productId: String
+    @State private var showGuestAlert = false
     
     init(productId: String, viewModelFactory: @escaping () -> ProductDetailsViewModel) {
         self.productId = productId
@@ -46,6 +47,8 @@ struct ProductDetailsView: View {
                 await viewModel.loadProduct(id: productId)
             }
         }
+        .trueFitGuestAlert(isPresented: $showGuestAlert)
+        .trueFitToast(message: $viewModel.toastMessage, style: viewModel.toastStyle)
         .navigationBarHidden(true)
     }
     
@@ -86,7 +89,13 @@ struct ProductDetailsView: View {
                 // Floating Header Over the Image
                 ProductDetailsHeader(
                     isFavorite: viewModel.isFavorite,
-                    onToggleFavorite: { viewModel.toggleFavorite() }
+                    onToggleFavorite: {
+                        if viewModel.isGuest {
+                            showGuestAlert = true
+                        } else {
+                            viewModel.toggleFavorite()
+                        }
+                    }
                 )
             }
             

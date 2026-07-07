@@ -12,6 +12,7 @@ enum PriceFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = "USD"
+        formatter.currencySymbol = "$" // Forces simple "$" instead of "US$"
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         return formatter

@@ -82,7 +82,7 @@ struct PreviewMocks {
             logoutUseCase: MockLogoutUseCase(),
             authManager: MockAuthManager(),
             authRouter: AuthRouter(),
-            loginWithGoogleUseCase: MockLoginWithGoogleUseCase(),
+            loginWithGoogleUseCase: MockLoginWithGoogleUseCase()
         )
     }
 }

@@ -39,10 +39,12 @@ struct ErrorView: View {
     }
 }
 
-#Preview {
-    ErrorView(
-        message: "Please check your internet connection and try again.",
-        showRetry: true,
-        onRetry: {}
-    )
+struct ErrorView_Previews: PreviewProvider {
+    static var previews: some View {
+        ErrorView(
+            message: "Please check your internet connection and try again.",
+            showRetry: true,
+            onRetry: {}
+        )
+    }
 }

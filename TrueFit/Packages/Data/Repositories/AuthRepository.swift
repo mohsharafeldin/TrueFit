@@ -16,17 +16,20 @@ public final class AuthRepository: AuthRepositoryProtocol {
     private let shopifyDataSource: ShopifyAuthDataSourceProtocol
     private let keychainManager: KeychainManagerProtocol
     private let googleSignInService:GoogleSignInServiceProtocol
+    private let preferencesManager: PreferencesManagerProtocol
     
-    public init(
+     init(
         firebaseDataSource: FirebaseAuthDataSourceProtocol,
         shopifyDataSource: ShopifyAuthDataSourceProtocol,
         keychainManager: KeychainManagerProtocol,
-        googleSignInService:GoogleSignInServiceProtocol
+        googleSignInService:GoogleSignInServiceProtocol,
+        preferencesManager: PreferencesManagerProtocol
     ) {
         self.firebaseDataSource = firebaseDataSource
         self.shopifyDataSource = shopifyDataSource
         self.keychainManager = keychainManager
         self.googleSignInService = googleSignInService
+        self.preferencesManager = preferencesManager
     }
     
     public func login(email: String, password: String) async throws -> AuthResult {
@@ -46,6 +49,7 @@ public final class AuthRepository: AuthRepositoryProtocol {
             
             // 4. Map to Domain entity
             let user = AuthMapper.toDomain(firebaseUser: firebaseUser, shopifyCustomerId: "")
+            preferencesManager.saveUser(user)
             return AuthResult(user: user)
             
         } catch {
@@ -83,6 +87,7 @@ public final class AuthRepository: AuthRepositoryProtocol {
             
             // 6. Map
             let user = AuthMapper.toDomain(firebaseUser: createdFirebaseUser!, shopifyCustomerId: shopifyCustomerId)
+            preferencesManager.saveUser(user)
             return AuthResult(user: user)
             
         } catch {
@@ -114,6 +119,7 @@ public final class AuthRepository: AuthRepositoryProtocol {
         // 3. Clear all auth tokens
         try? keychainManager.delete(service: "com.truefit.auth", account: "firebaseToken")
         try? keychainManager.delete(service: "com.truefit.auth", account: "shopifyCustomerToken")
+        preferencesManager.clearUser()
     }
     public func loginWithGoogle() async throws -> AuthResult {
         do {
@@ -162,6 +168,8 @@ public final class AuthRepository: AuthRepositoryProtocol {
                 lastName: googleResult.lastName,
                 shopifyCustomerId: shopifyCustomerId
             )
+            
+            preferencesManager.saveUser(user)
             return AuthResult(user: user)
             
         } catch {
