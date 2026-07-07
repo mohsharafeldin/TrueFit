@@ -139,6 +139,7 @@
 		336CCC172FFD8FF6002B841D /* GeminiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC162FFD8FF6002B841D /* GeminiError.swift */; };
 		336CCC192FFD909F002B841D /* GeminiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */; };
 		336CCC1B2FFD90D2002B841D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1A2FFD90D2002B841D /* GeminiService.swift */; };
+		336CCC1E2FFD9290002B841D /* AIChatRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -421,6 +422,7 @@
 		336CCC162FFD8FF6002B841D /* GeminiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiError.swift; sourceTree = "<group>"; };
 		336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiServiceProtocol.swift; sourceTree = "<group>"; };
 		336CCC1A2FFD90D2002B841D /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
+		336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRepositoryProtocol.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -1024,6 +1026,14 @@
 			path = Gemini;
 			sourceTree = "<group>";
 		};
+		336CCC1C2FFD9274002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1288,6 +1298,7 @@
 		33AA80F22FEFE50100A20AF9 /* RepositoryInterfaces */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC1C2FFD9274002B841D /* AIChat */,
 				33AB51412FFC065A0085ECAC /* Orders */,
 				4C0F11B02FFA985600B096F5 /* Address */,
 				33CB34E42FF8E39800798582 /* Favorites */,
@@ -2035,6 +2046,7 @@
 				4C8F1F042FF2AFFD00299F30 /* ThirdOnBoeardingView.swift in Sources */,
 				0CE05B622FF680E200ADEB7D /* KeychainError.swift in Sources */,
 				0C67AD022FF81FB5006A3E3B /* GetCartUseCase.swift in Sources */,
+				336CCC1E2FFD9290002B841D /* AIChatRepositoryProtocol.swift in Sources */,
 				0C67ACF42FF81F2F006A3E3B /* CartMapper.swift in Sources */,
 				0C09B68B2FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
