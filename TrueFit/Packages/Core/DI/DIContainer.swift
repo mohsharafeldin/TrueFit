@@ -33,6 +33,7 @@ final class DIContainer: ObservableObject {
         GetProductUseCase(repository: productsRepository)
     }()
     
+    
     // MARK: - Currency Dependencies (from feature branch)
     lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
         CurrencyRemoteDataSource(apiClient: genericClient)
@@ -261,15 +262,24 @@ final class DIContainer: ObservableObject {
             logoutUseCase: makeLogoutUseCase()
         )
     }
-    func makeAddressViewModel() -> AddressViewModel {
-            AddressViewModel(
-                authManager: authManager,
-                getAddresses: getAddressesUseCase,
-                createAddress: createAddressUseCase,
-                updateAddress: updateAddressUseCase,
-                deleteAddress: deleteAddressUseCase
-            )
-        }
+//    func makeAddressViewModel() -> AddressViewModel {
+//            AddressViewModel(
+//                authManager: authManager,
+//                getAddresses: getAddressesUseCase,
+//                createAddress: createAddressUseCase,
+//                updateAddress: updateAddressUseCase,
+//                deleteAddress: deleteAddressUseCase
+//            )
+//        }
+    lazy var addressViewModel: AddressViewModel = {
+        AddressViewModel(
+            authManager: authManager,
+            getAddresses: getAddressesUseCase,
+            createAddress: createAddressUseCase,
+            updateAddress: updateAddressUseCase,
+            deleteAddress: deleteAddressUseCase
+        )
+    }()
     
     
 }

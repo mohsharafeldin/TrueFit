@@ -75,7 +75,6 @@ extension MainAppView {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
-            
         case .checkout:
             Text("Checkout Screen")
             
@@ -97,21 +96,22 @@ extension MainAppView {
                 viewModel: container.makeProductListViewModel(
                     source: .brand(vendor: vendor)
                 )
-            )
+            )       
         case .address:
-             AddressView(viewModel: container.addressViewModel)
-        case .addNewAddress: 
-             AddNewAddressView(addressViewModel: container.addressViewModel)
+            AddressView(viewModel: container.addressViewModel)
+        case .addNewAddress:
+            AddNewAddressView(addressViewModel: container.addressViewModel)
         case .editAddress(let address):
-              AddressDetailsFormView(
-                    addressViewModel: container.addressViewModel, 
-                    address:address, 
-                    editingAddressId: address.id )
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
+                address:address,
+                editingAddressId: address.id )
         case .addressDetailsForm(let address):
-            AddressDetailsFormView( 
-                addressViewModel: container.addressViewModel, 
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
                 address: address,
                 editingAddressId: nil )
+        }
     }
+    
 }
-
