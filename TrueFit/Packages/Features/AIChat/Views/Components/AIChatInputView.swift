@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AIChatInputView: View {
     @ObservedObject var viewModel: AIChatViewModel
-    @FocusState var isTextFieldFocused: Bool
+    @FocusState.Binding var isTextFieldFocused: Bool
     
     var body: some View {
         HStack(spacing: Spacing.sm) {
@@ -46,10 +46,18 @@ struct AIChatInputView: View {
 }
 
 #if DEBUG
+private struct AIChatInputViewPreviewWrapper: View {
+    @StateObject private var viewModel = AIChatViewModel()
+    @FocusState private var isFocused: Bool
+    
+    var body: some View {
+        AIChatInputView(viewModel: viewModel, isTextFieldFocused: $isFocused)
+            .padding()
+            .background(Color.trueFitBackground)
+    }
+}
+
 #Preview {
-    AIChatInputView(viewModel: AIChatViewModel())
-        .padding()
-        .background(Color.trueFitBackground)
+    AIChatInputViewPreviewWrapper()
 }
 #endif
-
