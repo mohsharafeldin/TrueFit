@@ -140,6 +140,8 @@
 		336CCC192FFD909F002B841D /* GeminiServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */; };
 		336CCC1B2FFD90D2002B841D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1A2FFD90D2002B841D /* GeminiService.swift */; };
 		336CCC1E2FFD9290002B841D /* AIChatRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */; };
+		336CCC212FFD92FB002B841D /* SendChatMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */; };
+		336CCC232FFD931C002B841D /* BuildProductContextUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -423,6 +425,8 @@
 		336CCC182FFD909F002B841D /* GeminiServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiServiceProtocol.swift; sourceTree = "<group>"; };
 		336CCC1A2FFD90D2002B841D /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
 		336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRepositoryProtocol.swift; sourceTree = "<group>"; };
+		336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatMessageUseCase.swift; sourceTree = "<group>"; };
+		336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildProductContextUseCase.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -1034,6 +1038,15 @@
 			path = AIChat;
 			sourceTree = "<group>";
 		};
+		336CCC1F2FFD92E5002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */,
+				336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1092,6 +1105,7 @@
 		33AA80D72FEFDFA300A20AF9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC1F2FFD92E5002B841D /* AIChat */,
 				4C0F11B32FFA988F00B096F5 /* Address */,
 				33CB34EB2FF8E43600798582 /* Favorites */,
 				0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */,
@@ -2006,6 +2020,7 @@
 				4C5F9CC42FFB162400BC1A4A /* AddressRemoteDataSource.swift in Sources */,
 				33CB34FE2FF8E94200798582 /* FavoritesLocalDataSource.swift in Sources */,
 				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
+				336CCC212FFD92FB002B841D /* SendChatMessageUseCase.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
 				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
@@ -2097,6 +2112,7 @@
 				33AB51452FFC06810085ECAC /* OrdersRepositoryProtocol.swift in Sources */,
 				33CB34E82FF8E3C300798582 /* FavoritesRepositoryProtocol.swift in Sources */,
 				A0AB9F73D8877DB9319F1411 /* User.swift in Sources */,
+				336CCC232FFD931C002B841D /* BuildProductContextUseCase.swift in Sources */,
 				3AA5FCEA458B6D9BAC4348BF /* ProductsRepositoryProtocol.swift in Sources */,
 				A3F06C46DA68D682F7738F53 /* FetchCollectionsUseCase.swift in Sources */,
 				336CCC062FFD40F8002B841D /* AIChatMessageView.swift in Sources */,
