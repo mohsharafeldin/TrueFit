@@ -246,6 +246,7 @@
 		5A1CA3C82FEFD52A00401F6B /* TrueFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */; };
 		5A1CA3CA2FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */; };
 		5A884779F16A899A2D2A0500 /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF8C878479EC0384CCE360 /* TokenRefreshManager.swift */; };
+		5A9B8DC92FFDA71000A0542A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */; };
 		5A9E26102FFC140000067D5C /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26112FFC140000067D5C /* CheckoutViewModel.swift */; };
 		5A9E26122FFC140000067D5C /* OrderCompletedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26132FFC140000067D5C /* OrderCompletedViewModel.swift */; };
 		5A9E26142FFC140000067D5C /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26152FFC140000067D5C /* CheckoutView.swift */; };
@@ -539,6 +540,9 @@
 		5A1CA3C32FEFD52A00401F6B /* TrueFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrueFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITests.swift; sourceTree = "<group>"; };
 		5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+
+		5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+
 		5A9E26112FFC140000067D5C /* CheckoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
 		5A9E26132FFC140000067D5C /* OrderCompletedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderCompletedViewModel.swift; sourceTree = "<group>"; };
 		5A9E26152FFC140000067D5C /* CheckoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
@@ -1083,6 +1087,9 @@
 		33AA80D92FEFDFF300A20AF9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+
+				5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */,
+
 				594868AA2FF401B000F2241E /* AppRouter.swift */,
 				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
 				0C00A13D2FF0051B007A668C /* RootView.swift */,
@@ -1979,7 +1986,11 @@
 				0C67ACF02FF81E7F006A3E3B /* Cart.graphql in Resources */,
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0CE05B6C2FF682E800ADEB7D /* Config.xcconfig in Resources */,
+
 				4CC1DC382FFD8DA000C0DB63 /* GoogleService-Info.plist in Resources */,
+
+				5A9B8DC92FFDA71000A0542A /* GoogleService-Info.plist in Resources */,
+
 				33AB516F2FFC15140085ECAC /* generate_apollo.sh in Resources */,
 				0C198E972FF2BA8E00477701 /* Assets.xcassets in Resources */,
 			);
