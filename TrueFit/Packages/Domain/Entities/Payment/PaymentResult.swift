@@ -2,7 +2,7 @@
 //  PaymentResult.swift
 //  TrueFit
 //
-//  Domain entity representing the outcome of a payment attempt.
+//  Created by AndrewMagdy on 05/07/2026.
 //
 
 import Foundation

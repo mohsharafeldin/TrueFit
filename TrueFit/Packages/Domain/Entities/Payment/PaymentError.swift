@@ -2,9 +2,8 @@
 //  PaymentError.swift
 //  TrueFit
 //
-//  Domain-level errors for the Payment feature.
+//  Created by AndrewMagdy on 05/07/2026.
 //
-
 import Foundation
 
 // MARK: - Payment Error

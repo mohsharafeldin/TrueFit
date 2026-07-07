@@ -2,7 +2,7 @@
 //  PaymentRepositoryProtocol.swift
 //  TrueFit
 //
-//  Domain boundary for the Payment feature.
+//  Created by AndrewMagdy on 05/07/2026.
 //
 
 import Foundation
