@@ -128,6 +128,7 @@
 		330EA0DB2FFD2758008A2244 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330EA0DA2FFD2758008A2244 /* AIChatView.swift */; };
 		330EA0DD2FFD2AD5008A2244 /* AIChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330EA0DC2FFD2AD5008A2244 /* AIChatViewModel.swift */; };
 		336CCC012FFD3DC4002B841D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC002FFD3DC4002B841D /* ChatMessage.swift */; };
+		336CCC042FFD4024002B841D /* AIChatBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -400,6 +401,7 @@
 		330EA0DA2FFD2758008A2244 /* AIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
 		330EA0DC2FFD2AD5008A2244 /* AIChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatViewModel.swift; sourceTree = "<group>"; };
 		336CCC002FFD3DC4002B841D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatBubbleShape.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -947,6 +949,7 @@
 		330EA0D72FFD26FE008A2244 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC022FFD400C002B841D /* Components */,
 				330EA0DA2FFD2758008A2244 /* AIChatView.swift */,
 			);
 			path = Views;
@@ -975,6 +978,14 @@
 				336CCC002FFD3DC4002B841D /* ChatMessage.swift */,
 			);
 			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC022FFD400C002B841D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
@@ -2039,6 +2050,7 @@
 				33AB51382FFBC8760085ECAC /* OrderImagesOverlapView.swift in Sources */,
 				0C5EC92F2FF92C3E00F8F028 /* CartLineRow.swift in Sources */,
 				0C5EC9332FF92C3E00F8F028 /* CartDiscountSection.swift in Sources */,
+				336CCC042FFD4024002B841D /* AIChatBubbleShape.swift in Sources */,
 				33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */,
 				33AB513E2FFBC9780085ECAC /* OrderStatusTimeline.swift in Sources */,
 				4C5F9CC82FFB2AE400BC1A4A /* DeleteAddressUseCase.swift in Sources */,
