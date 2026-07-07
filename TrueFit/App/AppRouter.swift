@@ -18,6 +18,7 @@ enum AppRoute: Hashable {
    // case favorites
     case checkout
     case orderCompleted(OrderCompletedInfo)
+    case payment(amount: Decimal)
     case search
     case productDetails(productId: String)
     case productsByCollection(collectionId: Int64, title: String)
@@ -37,6 +38,7 @@ enum AppTab: Hashable {
     case favorites
     case cart
     case profile
+    case payment
 }
 
 final class AppRouter: ObservableObject {
@@ -46,6 +48,7 @@ final class AppRouter: ObservableObject {
     @Published var favoritesPath = NavigationPath()
     @Published var cartPath = NavigationPath()
     @Published var profilePath = NavigationPath()
+    @Published var paymentPath = NavigationPath()
     
     func navigate(to route: AppRoute) {
         switch selectedTab {
@@ -53,6 +56,7 @@ final class AppRouter: ObservableObject {
         case .favorites: favoritesPath.append(route)
         case .cart: cartPath.append(route)
         case .profile: profilePath.append(route)
+        case .payment: paymentPath.append(route)
         }
     }
     
@@ -62,6 +66,7 @@ final class AppRouter: ObservableObject {
         case .favorites: if !favoritesPath.isEmpty { favoritesPath.removeLast() }
         case .cart: if !cartPath.isEmpty { cartPath.removeLast() }
         case .profile: if !profilePath.isEmpty { profilePath.removeLast() }
+        case .payment: if !paymentPath.isEmpty { paymentPath.removeLast() }
         }
     }
     
@@ -75,6 +80,7 @@ final class AppRouter: ObservableObject {
         case .favorites: favoritesPath = NavigationPath()
         case .cart: cartPath = NavigationPath()
         case .profile: profilePath = NavigationPath()
+        case .payment: paymentPath = NavigationPath()
         }
     }
     
@@ -83,6 +89,7 @@ final class AppRouter: ObservableObject {
         favoritesPath = NavigationPath()
         cartPath = NavigationPath()
         profilePath = NavigationPath()
+        paymentPath = NavigationPath()
         selectedTab = .home
     }
     func pop(count: Int) {
@@ -95,6 +102,8 @@ final class AppRouter: ObservableObject {
                cartPath.removeLast(min(count, cartPath.count))
            case .profile:
                profilePath.removeLast(min(count, profilePath.count))
+           case .payment:
+               paymentPath.removeLast(min(count, paymentPath.count))
            }
        }
 }
