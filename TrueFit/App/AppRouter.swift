@@ -23,6 +23,10 @@ enum AppRoute: Hashable {
     case productsByBrand(vendor: String)
     case orders
     case orderDetails(orderId: String)
+    case address
+    case addNewAddress
+    case editAddress(address: Address)
+    case addressDetailsForm(address: Address)
 }
 
 enum AppTab: Hashable {
@@ -78,6 +82,18 @@ final class AppRouter: ObservableObject {
         profilePath = NavigationPath()
         selectedTab = .home
     }
+    func pop(count: Int) {
+           switch selectedTab {
+           case .home:
+               homePath.removeLast(min(count, homePath.count))
+           case .favorites:
+               favoritesPath.removeLast(min(count, favoritesPath.count))
+           case .cart:
+               cartPath.removeLast(min(count, cartPath.count))
+           case .profile:
+               profilePath.removeLast(min(count, profilePath.count))
+           }
+       }
 }
 
 final class Router<Route: Hashable>: ObservableObject {
@@ -91,6 +107,14 @@ final class Router<Route: Hashable>: ObservableObject {
     func goBack() {
         guard !path.isEmpty else { return }
         path.removeLast()
+    }
+
+    func pop(count: Int) {
+        guard path.count >= count else {
+            popToRoot()
+            return
+        }
+        path.removeLast(count)
     }
 
     func popToRoot() {

@@ -23,6 +23,7 @@ struct ProfileAccountSection: View {
                     if isGuest {
                         showGuestAlert = true
                     } else {
+                        appRouter.navigate(to: .address)
                         // Navigate to Addresses
                     }
                 }

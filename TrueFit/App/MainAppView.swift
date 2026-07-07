@@ -1,4 +1,4 @@
-//
+
 //  MainAppView.swift
 //  TrueFit
 //
@@ -75,7 +75,6 @@ extension MainAppView {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
-            
         case .checkout:
             Text("Checkout Screen")
             
@@ -102,6 +101,21 @@ extension MainAppView {
 			OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
 		case .orderDetails(let orderId):
 			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
+        case .address:
+            AddressView(viewModel: container.addressViewModel)
+        case .addNewAddress:
+            AddNewAddressView(addressViewModel: container.addressViewModel)
+        case .editAddress(let address):
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
+                address:address,
+                editingAddressId: address.id )
+        case .addressDetailsForm(let address):
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
+                address: address,
+                editingAddressId: nil )
         }
     }
+    
 }

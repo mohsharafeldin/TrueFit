@@ -179,7 +179,23 @@
 		4C0306B02FF7E671005D9827 /* LoginWithGoogleUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0306AF2FF7E671005D9827 /* LoginWithGoogleUseCaseProtocol.swift */; };
 		4C0306B22FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0306B12FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift */; };
 		4C0306B42FF80136005D9827 /* LoginWithGoogleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0306B32FF80136005D9827 /* LoginWithGoogleUseCase.swift */; };
+		4C0F11B52FFA98B400B096F5 /* CreateAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11B42FFA98B400B096F5 /* CreateAddressUseCase.swift */; };
+		4C0F11B82FFA98EC00B096F5 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11B72FFA98EC00B096F5 /* Address.swift */; };
+		4C0F11BB2FFA990C00B096F5 /* AddressRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11BA2FFA990C00B096F5 /* AddressRepository.swift */; };
+		4C0F11C12FFA9E7800B096F5 /* AddressDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11C02FFA9E7800B096F5 /* AddressDTO.swift */; };
+		4C0F11C42FFAC21500B096F5 /* AddressMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11C32FFAC21500B096F5 /* AddressMapper.swift */; };
+		4C0F11C62FFAC33100B096F5 /* AddressError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11C52FFAC33100B096F5 /* AddressError.swift */; };
+		4C0F11C82FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0F11C72FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift */; };
+		4C0F11CA2FFAC8EC00B096F5 /* Address.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 4C0F11C92FFAC8E900B096F5 /* Address.graphql */; };
+		4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */; };
+		4C1A20432FFBF332001FC5B2 /* AddressDetailsFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20422FFBF332001FC5B2 /* AddressDetailsFormView.swift */; };
+		4C1A20452FFC1304001FC5B2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1A20442FFC1304001FC5B2 /* LocationManager.swift */; };
 		4C5979DE2FF28ACD0015A849 /* OnboardingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */; };
+		4C5F9CC42FFB162400BC1A4A /* AddressRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F9CC32FFB162400BC1A4A /* AddressRemoteDataSource.swift */; };
+		4C5F9CC82FFB2AE400BC1A4A /* DeleteAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F9CC72FFB2AE400BC1A4A /* DeleteAddressUseCase.swift */; };
+		4C60A6BE2FFB31B800B5E17D /* AddressRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60A6BD2FFB31B800B5E17D /* AddressRepositoryProtocol.swift */; };
+		4C60A6C02FFB3F7600B5E17D /* UpdateAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60A6BF2FFB3F7600B5E17D /* UpdateAddressUseCase.swift */; };
+		4C60A6C22FFB42FA00B5E17D /* GetAddressesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C60A6C12FFB42FA00B5E17D /* GetAddressesUseCase.swift */; };
 		4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBACF2FF003AC00CA6538 /* Apollo */; };
 		4C8CBAD32FF003D400CA6538 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD22FF003D400CA6538 /* Alamofire */; };
 		4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8CBAD52FF004D900CA6538 /* FirebaseAuth */; };
@@ -192,6 +208,10 @@
 		4CAAF4892FF477AF00D751DB /* GoogleSignInResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF4882FF477AF00D751DB /* GoogleSignInResult.swift */; };
 		4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */; };
 		4CB476922FF9695A00BBA891 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB476982FF9AA8D00BBA891 /* AddressView.swift */; };
+		4CC2CBC52FFC7A1A00F136D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2CBC42FFC7A1A00F136D1 /* GoogleService-Info.plist */; };
+		4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */; };
+		4CD6DD442FF9ECE3007B6E2D /* AddNewAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */; };
 		594868AB2FF401B000F2241E /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594868AA2FF401B000F2241E /* AppRouter.swift */; };
 		5A104C642FF90F57002AC6E2 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5A104C632FF90F57002AC6E2 /* SDWebImage */; };
 		5A104C662FF90F57002AC6E2 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */; };
@@ -426,13 +446,33 @@
 		4C0306AF2FF7E671005D9827 /* LoginWithGoogleUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithGoogleUseCaseProtocol.swift; sourceTree = "<group>"; };
 		4C0306B12FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleSignInServiceProtocol.swift; path = TrueFit/Packages/Domain/UseCases/GoogleSignInServiceProtocol.swift; sourceTree = SOURCE_ROOT; };
 		4C0306B32FF80136005D9827 /* LoginWithGoogleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithGoogleUseCase.swift; sourceTree = "<group>"; };
+		4C0F11B42FFA98B400B096F5 /* CreateAddressUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressUseCase.swift; sourceTree = "<group>"; };
+		4C0F11B72FFA98EC00B096F5 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		4C0F11BA2FFA990C00B096F5 /* AddressRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddressRepository.swift; path = TrueFit/Packages/Domain/Entities/Address/AddressRepository.swift; sourceTree = SOURCE_ROOT; };
+		4C0F11C02FFA9E7800B096F5 /* AddressDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDTO.swift; sourceTree = "<group>"; };
+		4C0F11C32FFAC21500B096F5 /* AddressMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMapper.swift; sourceTree = "<group>"; };
+		4C0F11C52FFAC33100B096F5 /* AddressError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressError.swift; sourceTree = "<group>"; };
+		4C0F11C72FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
+		4C0F11C92FFAC8E900B096F5 /* Address.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Address.graphql; sourceTree = "<group>"; };
+		4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		4C1A20422FFBF332001FC5B2 /* AddressDetailsFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailsFormView.swift; sourceTree = "<group>"; };
+		4C1A20442FFC1304001FC5B2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4C5979DD2FF28ACD0015A849 /* OnboardingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentView.swift; sourceTree = "<group>"; };
+		4C5F9CC32FFB162400BC1A4A /* AddressRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRemoteDataSource.swift; sourceTree = "<group>"; };
+		4C5F9CC72FFB2AE400BC1A4A /* DeleteAddressUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAddressUseCase.swift; sourceTree = "<group>"; };
+		4C60A6BD2FFB31B800B5E17D /* AddressRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressRepositoryProtocol.swift; sourceTree = "<group>"; };
+		4C60A6BF2FFB3F7600B5E17D /* UpdateAddressUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAddressUseCase.swift; sourceTree = "<group>"; };
+		4C60A6C12FFB42FA00B5E17D /* GetAddressesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAddressesUseCase.swift; sourceTree = "<group>"; };
 		4C8CBADE2FF02D1600CA6538 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		4C8F1EFF2FF2AFD900299F30 /* FirstOnBoeardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoeardingView.swift; sourceTree = "<group>"; };
 		4C8F1F012FF2AFEC00299F30 /* SecondOnBoeardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoeardingView.swift; sourceTree = "<group>"; };
 		4C8F1F032FF2AFFD00299F30 /* ThirdOnBoeardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdOnBoeardingView.swift; sourceTree = "<group>"; };
 		4CAAF4882FF477AF00D751DB /* GoogleSignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInResult.swift; sourceTree = "<group>"; };
 		4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInDataSource.swift; sourceTree = "<group>"; };
+		4CB476982FF9AA8D00BBA891 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		4CC2CBC42FFC7A1A00F136D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
+		4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressView.swift; sourceTree = "<group>"; };
 		50DDA34F4C3B3FD93E094907 /* FetchProductsByVendorUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchProductsByVendorUseCase.swift; sourceTree = "<group>"; };
 		5690582B6FD0D8BA140ADB74 /* FetchNewArrivalsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FetchNewArrivalsUseCase.swift; sourceTree = "<group>"; };
 		594868AA2FF401B000F2241E /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -579,6 +619,7 @@
 			children = (
 				0C198E802FF2A4EF00477701 /* AuthManager.swift */,
 				0CCCFCE22FF317C7004DBD32 /* PreferencesManager.swift */,
+				4C1A20442FFC1304001FC5B2 /* LocationManager.swift */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -720,6 +761,7 @@
 		0C67ACEF2FF81E7F006A3E3B /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				4C0F11C92FFAC8E900B096F5 /* Address.graphql */,
 				0C67ACEE2FF81E7F006A3E3B /* Cart.graphql */,
 				33AB51682FFC0AAF0085ECAC /* Orders.graphql */,
 			);
@@ -922,6 +964,7 @@
 		33AA80D52FEFDF8400A20AF9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				4C0F11B62FFA98D400B096F5 /* Address */,
 				33AB510A2FFBC0580085ECAC /* Orders */,
 				33CB34E12FF8E2A700798582 /* Favorites */,
 				0C67ACF92FF81F80006A3E3B /* Cart.swift */,
@@ -941,6 +984,7 @@
 		33AA80D72FEFDFA300A20AF9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				4C0F11B32FFA988F00B096F5 /* Address */,
 				33CB34EB2FF8E43600798582 /* Favorites */,
 				0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */,
 				0C67AD032FF81FCA006A3E3B /* UpdateCartLineUseCase.swift */,
@@ -975,7 +1019,7 @@
 				0C00A13F2FF01FD5007A668C /* RootViewModel.swift */,
 				0C198E7B2FF2A39D00477701 /* AuthFlowView.swift */,
 				0C198E7D2FF2A3B900477701 /* MainAppView.swift */,
-				33AB50FA2FFBA4350085ECAC /* GoogleService-Info.plist */,
+				4CC2CBC42FFC7A1A00F136D1 /* GoogleService-Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1009,6 +1053,7 @@
 			children = (
 				0CCA5D5C2FFC0212005C538C /* Profile */,
 				33AB51042FFBB8810085ECAC /* Orders */,
+				4CB476932FF9A9A700BBA891 /* Adress */,
 				33AF9FBD2FF7FEF200628D96 /* Favorite */,
 				0C67AD062FF81FE7006A3E3B /* Cart */,
 				0C09B6BD2FF63E1A00F4CC3D /* Shared */,
@@ -1056,6 +1101,7 @@
 			isa = PBXGroup;
 			children = (
 				33AB51562FFC08240085ECAC /* Orders */,
+				4C0F11C22FFAC20500B096F5 /* Address */,
 				33CB34F82FF8E69B00798582 /* Favorites */,
 				0C67ACF32FF81F2F006A3E3B /* CartMapper.swift */,
 				0C09B69B2FF63D9A00F4CC3D /* APIErrorMapper.swift */,
@@ -1081,6 +1127,7 @@
 			isa = PBXGroup;
 			children = (
 				33AB51512FFC077C0085ECAC /* Orders */,
+				4C0F11BD2FFA992800B096F5 /* Address */,
 				0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */,
 				0C09B6932FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift */,
 				774A2CFE4A3ADF7B4F142BD9 /* FirebaseAuthDataSource.swift */,
@@ -1110,6 +1157,7 @@
 				EC69097C38E0EA068A5FB50C /* CollectionDTO.swift */,
 				8226DC372C72E1E971F2F87D /* ProductDTO.swift */,
 				624FA8616FFD9774F41EA248 /* ShopifyAuthDTOs.swift */,
+				4C0F11C02FFA9E7800B096F5 /* AddressDTO.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1126,6 +1174,7 @@
 			isa = PBXGroup;
 			children = (
 				33AB515B2FFC08DF0085ECAC /* Orders */,
+				4C0F11B92FFA98FA00B096F5 /* Address */,
 				33CB35032FF8EA6100798582 /* Favorites */,
 				0C67ACF72FF81F65006A3E3B /* CartRepository.swift */,
 				0C09B6A42FF63DAA00F4CC3D /* CurrencyRepository.swift */,
@@ -1139,6 +1188,7 @@
 			isa = PBXGroup;
 			children = (
 				33AB51412FFC065A0085ECAC /* Orders */,
+				4C0F11B02FFA985600B096F5 /* Address */,
 				33CB34E42FF8E39800798582 /* Favorites */,
 				0C67ACFB2FF81F8E006A3E3B /* CartRepositoryProtocol.swift */,
 				33D02D1A2FF3D9F60048E60D /* AuthRepositoryProtocol.swift */,
@@ -1359,6 +1409,59 @@
 			path = Favorites;
 			sourceTree = "<group>";
 		};
+		4C0F11B02FFA985600B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C60A6BD2FFB31B800B5E17D /* AddressRepositoryProtocol.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4C0F11B32FFA988F00B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C0F11B42FFA98B400B096F5 /* CreateAddressUseCase.swift */,
+				4C5F9CC72FFB2AE400BC1A4A /* DeleteAddressUseCase.swift */,
+				4C60A6BF2FFB3F7600B5E17D /* UpdateAddressUseCase.swift */,
+				4C60A6C12FFB42FA00B5E17D /* GetAddressesUseCase.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4C0F11B62FFA98D400B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C0F11B72FFA98EC00B096F5 /* Address.swift */,
+				4C0F11C52FFAC33100B096F5 /* AddressError.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4C0F11B92FFA98FA00B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C0F11BA2FFA990C00B096F5 /* AddressRepository.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4C0F11BD2FFA992800B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C0F11C72FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift */,
+				4C5F9CC32FFB162400BC1A4A /* AddressRemoteDataSource.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		4C0F11C22FFAC20500B096F5 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				4C0F11C32FFAC21500B096F5 /* AddressMapper.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
 		4C8CBADB2FF029E300CA6538 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1376,6 +1479,42 @@
 				4C8CBADE2FF02D1600CA6538 /* SplashView.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		4CB476932FF9A9A700BBA891 /* Adress */ = {
+			isa = PBXGroup;
+			children = (
+				4CB476952FF9A9BA00BBA891 /* ViewModel */,
+				4CB476942FF9A9B300BBA891 /* View */,
+			);
+			path = Adress;
+			sourceTree = "<group>";
+		};
+		4CB476942FF9A9B300BBA891 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4CD6DD402FF9EB23007B6E2D /* Components */,
+				4CB476982FF9AA8D00BBA891 /* AddressView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4CB476952FF9A9BA00BBA891 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4C1A20402FFBE84A001FC5B2 /* AddressViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4CD6DD402FF9EB23007B6E2D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4CD6DD412FF9EB54007B6E2D /* CustomActionSheet.swift */,
+				4CD6DD432FF9ECE3007B6E2D /* AddNewAddressView.swift */,
+				4C1A20422FFBF332001FC5B2 /* AddressDetailsFormView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		519E694443BBE6E8B63A0571 /* ViewModel */ = {
@@ -1621,9 +1760,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CE9F31F2FF3D67B00466794 /* Config.xcconfig.example in Resources */,
-				33AB50FB2FFBA4360085ECAC /* GoogleService-Info.plist in Resources */,
+				4CC2CBC52FFC7A1A00F136D1 /* GoogleService-Info.plist in Resources */,
 				5A1CA3AF2FEFD52900401F6B /* Preview Assets.xcassets in Resources */,
-				33AB51692FFC0AAF0085ECAC /* Orders.graphql in Resources */,
+				4C0F11CA2FFAC8EC00B096F5 /* Address.graphql in Resources */,
+                33AB51692FFC0AAF0085ECAC /* Orders.graphql in Resources */,
 				0C67ACF02FF81E7F006A3E3B /* Cart.graphql in Resources */,
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0CE05B6C2FF682E800ADEB7D /* Config.xcconfig in Resources */,
@@ -1658,6 +1798,7 @@
 				33D02D1B2FF3D9F70048E60D /* AuthRepositoryProtocol.swift in Sources */,
 				0C198EAA2FF2BAD500477701 /* AuthTextField.swift in Sources */,
 				33D02D1D2FF3DA210048E60D /* AuthRepository.swift in Sources */,
+				4C60A6C22FFB42FA00B5E17D /* GetAddressesUseCase.swift in Sources */,
 				0C09B6AA2FF63DC500F4CC3D /* AppError.swift in Sources */,
 				0CCA5D5E2FFC0212005C538C /* ProfileViewModel.swift in Sources */,
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
@@ -1667,12 +1808,15 @@
 				0CE05B7C2FF7041C00ADEB7D /* ProductOptionSectionView.swift in Sources */,
 				0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */,
 				0C67ACEB2FF81E64006A3E3B /* ApolloManager.swift in Sources */,
+				4C0F11C62FFAC33100B096F5 /* AddressError.swift in Sources */,
+				4C60A6C02FFB3F7600B5E17D /* UpdateAddressUseCase.swift in Sources */,
 				33CB34E32FF8E2C800798582 /* FavoriteItem.swift in Sources */,
 				0C09B6902FF63D3600F4CC3D /* ErrorLogger.swift in Sources */,
 				0C198EB12FF2BAD500477701 /* SuccessView.swift in Sources */,
 				0C09B6922FF63D3B00F4CC3D /* ViewState.swift in Sources */,
 				0C198E7E2FF2A3B900477701 /* MainAppView.swift in Sources */,
 				0CE9F31A2FF3D31E00466794 /* Bundle+Shopify.swift in Sources */,
+				4CD6DD442FF9ECE3007B6E2D /* AddNewAddressView.swift in Sources */,
 				4C0306B02FF7E671005D9827 /* LoginWithGoogleUseCaseProtocol.swift in Sources */,
 				33AB51282FFBC35C0085ECAC /* OrderStatus+Color.swift in Sources */,
 				0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */,
@@ -1684,6 +1828,7 @@
 				0CE9F3102FF3D18100466794 /* AuthInterceptor.swift in Sources */,
 				0C198EAE2FF2BAD500477701 /* LoginView.swift in Sources */,
 				0C09B6BA2FF63E0B00F4CC3D /* ProductDetailsViewModel.swift in Sources */,
+				4CD6DD422FF9EB54007B6E2D /* CustomActionSheet.swift in Sources */,
 				33D02D1F2FF3DA4C0048E60D /* PreviewMocks.swift in Sources */,
 				0C00A1402FF01FD5007A668C /* RootViewModel.swift in Sources */,
 				0CE9F3122FF3D18100466794 /* APIClientProtocol.swift in Sources */,
@@ -1692,6 +1837,7 @@
 				0C198EB02FF2BAD500477701 /* SignUpView.swift in Sources */,
 				0C198EA92FF2BAD500477701 /* AuthViewModel.swift in Sources */,
 				0CE9F3112FF3D18100466794 /* RetryInterceptor.swift in Sources */,
+				4C60A6BE2FFB31B800B5E17D /* AddressRepositoryProtocol.swift in Sources */,
 				0C198EAF2FF2BAD500477701 /* NewPasswordView.swift in Sources */,
 				33CB35072FF8EEFB00798582 /* FavoritesViewModel.swift in Sources */,
 				0C09B6BE2FF63E1A00F4CC3D /* ErrorView.swift in Sources */,
@@ -1700,6 +1846,7 @@
 				0C09B6A22FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift in Sources */,
 				0C5EC93A2FF9442800F8F028 /* TrueFitToast.swift in Sources */,
 				0CCA5D5D2FFC0212005C538C /* ProfileView.swift in Sources */,
+				4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */,
 				0CE9F3132FF3D18100466794 /* APIError.swift in Sources */,
 				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C5EC92D2FF92C3E00F8F028 /* CartContentView.swift in Sources */,
@@ -1720,6 +1867,7 @@
 				0C5EC9302FF92C3E00F8F028 /* CartEmptyView.swift in Sources */,
 				0C09B6942FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift in Sources */,
 				0C67ADDF2FF878C5006A3E3B /* RemoveCartLineUseCase.swift in Sources */,
+				4C0F11BB2FFA990C00B096F5 /* AddressRepository.swift in Sources */,
 				4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
 				0C198EAC2FF2BAD500477701 /* SocialLoginButton.swift in Sources */,
@@ -1737,6 +1885,7 @@
 				33CB35172FF909C100798582 /* FilterCategoriesRow.swift in Sources */,
 				33CB35182FF909C100798582 /* ShimmerFavoriteCard.swift in Sources */,
 				33CB35192FF909C100798582 /* FavoritesHeaderView.swift in Sources */,
+				4C5F9CC42FFB162400BC1A4A /* AddressRemoteDataSource.swift in Sources */,
 				33CB34FE2FF8E94200798582 /* FavoritesLocalDataSource.swift in Sources */,
 				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
@@ -1744,13 +1893,16 @@
 				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
 				0C09B6A02FF63D9A00F4CC3D /* ProductMapper.swift in Sources */,
 				0CCA5D6E2FFC1844005C538C /* ProfileSectionHeader.swift in Sources */,
+				4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */,
 				0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */,
 				0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */,
+				4C0F11B82FFA98EC00B096F5 /* Address.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				0CCA5D6A2FFC1844005C538C /* ProfileBottomActionSection.swift in Sources */,
 				33AB51552FFC07CF0085ECAC /* OrdersRemoteDataSourceProtocol.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
 				33AB51362FFBC8000085ECAC /* OrderHistoryCard.swift in Sources */,
+				4C0F11C42FFAC21500B096F5 /* AddressMapper.swift in Sources */,
 				4C0306B22FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift in Sources */,
 				0CE9F3142FF3D18100466794 /* Constants.swift in Sources */,
 				4C8F1F002FF2AFD900299F30 /* FirstOnBoeardingView.swift in Sources */,
@@ -1784,6 +1936,7 @@
 				4C8CBADF2FF02D1600CA6538 /* SplashView.swift in Sources */,
 				8A9CED2B41DA0ABE62B69721 /* GetProductEndpoint.swift in Sources */,
 				0CCA5D6D2FFC1844005C538C /* ProfileRow.swift in Sources */,
+				4C1A20432FFBF332001FC5B2 /* AddressDetailsFormView.swift in Sources */,
 				AD6F8CC75BBB2B5C30A3507D /* StorefrontAuthInterceptor.swift in Sources */,
 				653B704DA3D949056B394FBE /* TokenRefreshInterceptor.swift in Sources */,
 				5A884779F16A899A2D2A0500 /* TokenRefreshManager.swift in Sources */,
@@ -1808,6 +1961,7 @@
 				0CCA5D692FFC1844005C538C /* ProfileAccountSection.swift in Sources */,
 				0C67ACFC2FF81F8E006A3E3B /* CartRepositoryProtocol.swift in Sources */,
 				EF2678C3EB727AE01B456535 /* ProductsRepository.swift in Sources */,
+				4C1A20452FFC1304001FC5B2 /* LocationManager.swift in Sources */,
 				78692C4CF703BCC177F6DF2E /* AuthError.swift in Sources */,
 				4C0306B42FF80136005D9827 /* LoginWithGoogleUseCase.swift in Sources */,
 				33AB512A2FFBC3DA0085ECAC /* OrderItem.swift in Sources */,
@@ -1821,13 +1975,17 @@
 				3AA5FCEA458B6D9BAC4348BF /* ProductsRepositoryProtocol.swift in Sources */,
 				A3F06C46DA68D682F7738F53 /* FetchCollectionsUseCase.swift in Sources */,
 				33AB510E2FFBC1110085ECAC /* OrderStatus.swift in Sources */,
+				4C0F11C82FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift in Sources */,
 				E76CECA2E6ED099355446B24 /* FetchNewArrivalsUseCase.swift in Sources */,
+				4C0F11C12FFA9E7800B096F5 /* AddressDTO.swift in Sources */,
+				4C0F11B52FFA98B400B096F5 /* CreateAddressUseCase.swift in Sources */,
 				266E2E89725F7DBCA48A64CA /* LoginUseCase.swift in Sources */,
 				33AB51382FFBC8760085ECAC /* OrderImagesOverlapView.swift in Sources */,
 				0C5EC92F2FF92C3E00F8F028 /* CartLineRow.swift in Sources */,
 				0C5EC9332FF92C3E00F8F028 /* CartDiscountSection.swift in Sources */,
 				33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */,
 				33AB513E2FFBC9780085ECAC /* OrderStatusTimeline.swift in Sources */,
+				4C5F9CC82FFB2AE400BC1A4A /* DeleteAddressUseCase.swift in Sources */,
 				7546494C5AC07FED9620D049 /* LogoutUseCase.swift in Sources */,
 				0CE05B632FF680E200ADEB7D /* KeychainManager.swift in Sources */,
 				0CCA5D6F2FFC1844005C538C /* ProfileSupportSection.swift in Sources */,
