@@ -109,6 +109,7 @@ struct AddNewAddressView: View {
             .ignoresSafeArea(edges: .bottom)
         }
         .navigationBarHidden(true)
+        .toolbar(.hidden, for: .tabBar)
         .onReceive(locationManager.$lastLocation) { coord in
             guard let coord else { return }
             withAnimation(.easeInOut(duration: 0.5)) {

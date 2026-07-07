@@ -115,6 +115,8 @@ extension MainAppView {
                 addressViewModel: container.addressViewModel,
                 address: address,
                 editingAddressId: nil )
+        case .currency:
+            CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
         }
     }
     

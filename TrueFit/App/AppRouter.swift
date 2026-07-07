@@ -27,6 +27,7 @@ enum AppRoute: Hashable {
     case addNewAddress
     case editAddress(address: Address)
     case addressDetailsForm(address: Address)
+    case currency
 }
 
 enum AppTab: Hashable {
