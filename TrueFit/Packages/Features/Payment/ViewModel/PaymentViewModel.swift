@@ -9,18 +9,7 @@
 import Foundation
 import PassKit
 
-enum PaymentMethodType: Equatable {
-    case applePay
-    case cashOnDelivery
-}
 
-enum PaymentState: Equatable {
-    case idle
-    case processing
-    case success
-    case cancelled
-    case failed(message: String)
-}
 
 @MainActor
 final class PaymentViewModel: ObservableObject {
@@ -33,20 +22,23 @@ final class PaymentViewModel: ObservableObject {
     let orderLabel: String
 
     private let processPayment: ProcessPaymentUseCase
-    private let clearCartUseCase: ClearCartUseCase
+    private let getCartUseCase: GetCartUseCase
+    private let removeCartLineUseCase: RemoveCartLineUseCase
     private var preferencesManager: PreferencesManagerProtocol
     private let cartStateModel: CartState
 
     init(
         processPaymentUseCase: ProcessPaymentUseCase,
-        clearCartUseCase: ClearCartUseCase,
+        getCartUseCase: GetCartUseCase,
+        removeCartLineUseCase: RemoveCartLineUseCase,
         preferencesManager: PreferencesManagerProtocol,
         cartStateModel: CartState,
         orderTotal: Decimal,
         orderLabel: String = "TrueFit Order"
     ) {
         self.processPayment = processPaymentUseCase
-        self.clearCartUseCase = clearCartUseCase
+        self.getCartUseCase = getCartUseCase
+        self.removeCartLineUseCase = removeCartLineUseCase
         self.preferencesManager = preferencesManager
         self.cartStateModel = cartStateModel
         self.orderTotal = orderTotal
@@ -113,8 +105,11 @@ final class PaymentViewModel: ObservableObject {
     private func handlePaymentSuccess() async {
         do {
             if let cartId = preferencesManager.cartId, !cartId.isEmpty {
-                let emptyCart = try await clearCartUseCase.execute(cartId: cartId)
-                cartStateModel.updateCount(emptyCart.totalQuantity)
+                var cart = try await getCartUseCase.execute(cartId: cartId)
+                for line in cart.lines {
+                    cart = try await removeCartLineUseCase.execute(cartId: cartId, lineId: line.id)
+                }
+                cartStateModel.updateCount(cart.totalQuantity)
             }
         } catch {
             print("Failed to clear cart: \(error)")
@@ -129,10 +124,7 @@ final class PaymentViewModel: ObservableObject {
         }
 
         paymentState = .processing
-        
-        // Simulate a small delay for processing
         try? await Task.sleep(nanoseconds: 800_000_000)
-        
         await handlePaymentSuccess()
     }
 }

@@ -11,19 +11,14 @@ import Foundation
 /// Errors that can arise during payment processing.
 public enum PaymentError: LocalizedError {
 
-    /// Apple Pay is not available on this device or no cards are set up.
     case applePayUnavailable
 
-    /// The payment request could not be formed (e.g. bad config).
     case invalidRequest
 
-    /// The payment was declined by the network or issuer.
     case paymentDeclined
 
-    /// An unknown error occurred, with an optional underlying message.
     case unknown(String)
 
-    // MARK: LocalizedError
 
     public var errorDescription: String? {
         switch self {

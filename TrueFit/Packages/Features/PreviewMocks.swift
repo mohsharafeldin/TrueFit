@@ -297,10 +297,11 @@ extension PreviewMocks {
         paymentRepo.mockResult = simulatedResult
         let cartRepo = MockCartRepository()
         let prefs = MockPreferencesManager()
-        
+
         return PaymentViewModel(
             processPaymentUseCase: ProcessPaymentUseCase(repository: paymentRepo),
-            clearCartUseCase: ClearCartUseCase(repository: cartRepo),
+            getCartUseCase: GetCartUseCase(repository: cartRepo),
+            removeCartLineUseCase: RemoveCartLineUseCase(repository: cartRepo),
             preferencesManager: prefs,
             cartStateModel: CartState(),
             orderTotal: 100.0,

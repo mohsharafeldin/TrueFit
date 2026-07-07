@@ -119,7 +119,7 @@ final class DIContainer: ObservableObject {
     private lazy var updateCartLineUseCase = UpdateCartLineUseCase(repository: cartRepository)
     private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
     private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
-    private lazy var clearCartUseCase = ClearCartUseCase(repository: cartRepository)
+    //private lazy var clearCartUseCase = ClearCartUseCase(repository: cartRepository)
     
     // MARK: - FAVORITES FEATURE
     
@@ -302,15 +302,7 @@ final class DIContainer: ObservableObject {
     public func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
         OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
     }
-//    func makeAddressViewModel() -> AddressViewModel {
-//            AddressViewModel(
-//                authManager: authManager,
-//                getAddresses: getAddressesUseCase,
-//                createAddress: createAddressUseCase,
-//                updateAddress: updateAddressUseCase,
-//                deleteAddress: deleteAddressUseCase
-//            )
-//        }
+
     lazy var addressViewModel: AddressViewModel = {
         AddressViewModel(
             authManager: authManager,
@@ -324,7 +316,8 @@ final class DIContainer: ObservableObject {
     func makePaymentViewModel(orderTotal: Decimal, orderLabel: String = "TrueFit Order") -> PaymentViewModel {
         PaymentViewModel(
             processPaymentUseCase: processPaymentUseCase,
-            clearCartUseCase: clearCartUseCase,
+            getCartUseCase: getCartUseCase,
+            removeCartLineUseCase: removeCartLineUseCase,
             preferencesManager: preferencesManager,
             cartStateModel: cartState,
             orderTotal: orderTotal,
