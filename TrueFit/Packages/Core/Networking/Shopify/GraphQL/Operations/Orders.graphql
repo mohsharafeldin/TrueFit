@@ -1,0 +1,89 @@
+# Reuses MoneyFields from Cart.graphql implicitly. 
+# We define OrderLineItemFields and OrderDetailsFields here.
+
+fragment OrderListFields on Order {
+  id
+  name
+  orderNumber
+  processedAt
+  financialStatus
+  fulfillmentStatus
+  currentTotalPrice { ...MoneyFields }
+  lineItems(first: 1) {
+    edges {
+      node {
+        variant {
+          image { url }
+        }
+      }
+    }
+  }
+}
+
+fragment OrderDetailsFields on Order {
+  id
+  name
+  orderNumber
+  processedAt
+  cancelReason
+  canceledAt
+  financialStatus
+  fulfillmentStatus
+  currentTotalPrice { ...MoneyFields }
+  currentSubtotalPrice { ...MoneyFields }
+  totalShippingPrice { ...MoneyFields }
+  totalTax { ...MoneyFields }
+  totalRefunded { ...MoneyFields }
+  shippingAddress {
+    address1
+    address2
+    city
+    province
+    zip
+    country
+  }
+  lineItems(first: 50) {
+    edges {
+      node {
+        title
+        quantity
+        originalTotalPrice { ...MoneyFields }
+        discountedTotalPrice { ...MoneyFields }
+        variant {
+          id
+          title
+          price { ...MoneyFields }
+          image { url altText }
+        }
+      }
+    }
+  }
+  successfulFulfillments(first: 5) {
+    trackingCompany
+    trackingInfo { number url }
+  }
+}
+
+query GetCustomerOrdersList($customerAccessToken: String!, $first: Int!) {
+  customer(customerAccessToken: $customerAccessToken) {
+    orders(first: $first, sortKey: PROCESSED_AT, reverse: true) {
+      edges {
+        node {
+          ...OrderListFields
+        }
+      }
+    }
+  }
+}
+
+query GetCustomerOrderDetails($customerAccessToken: String!, $orderQuery: String!) {
+  customer(customerAccessToken: $customerAccessToken) {
+    orders(first: 1, query: $orderQuery) {
+      edges {
+        node {
+          ...OrderDetailsFields
+        }
+      }
+    }
+  }
+}

@@ -33,6 +33,7 @@ final class DIContainer: ObservableObject {
         GetProductUseCase(repository: productsRepository)
     }()
     
+    
     // MARK: - Currency Dependencies (from feature branch)
     lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
         CurrencyRemoteDataSource(apiClient: genericClient)
@@ -135,6 +136,38 @@ final class DIContainer: ObservableObject {
     private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
     lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
     
+    // MARK: - ORDERS FEATURE
+    
+    // Orders Data Sources & Repository
+    private lazy var ordersRemoteDataSource: OrdersRemoteDataSourceProtocol = {
+        OrdersRemoteDataSource(apollo: apolloManager)
+    }()
+    
+    private lazy var ordersRepository: OrdersRepositoryProtocol = {
+        OrdersRepository(remoteDataSource: ordersRemoteDataSource, authManager: authManager)
+    }()
+    
+    // Orders Use Cases
+    private lazy var fetchOrdersUseCase = FetchOrdersUseCase(repository: ordersRepository)
+    private lazy var fetchOrderDetailsUseCase = FetchOrderDetailsUseCase(repository: ordersRepository)
+    
+    // MARK: - ADDRESS FEATURE
+        
+        // Address Data Source & Repository
+        private lazy var addressRemoteDataSource: AddressRemoteDataSourceProtocol = {
+            AddressRemoteDataSource(apollo: apolloManager)
+        }()
+        
+        private lazy var addressRepository: AddressRepositoryProtocol = {
+            AddressRepository(remoteDataSource: addressRemoteDataSource)
+        }()
+        
+        // Address Use Cases
+        private lazy var getAddressesUseCase = GetAddressesUseCase(repository: addressRepository)
+        private lazy var createAddressUseCase = CreateAddressUseCase(repository: addressRepository)
+        private lazy var updateAddressUseCase = UpdateAddressUseCase(repository: addressRepository)
+        private lazy var deleteAddressUseCase = DeleteAddressUseCase(repository: addressRepository)
+    
     // MARK: - Init
     public init() {}
     
@@ -235,4 +268,40 @@ final class DIContainer: ObservableObject {
             authManager: authManager
         )
     }
+    
+    func makeProfileViewModel() -> ProfileViewModel {
+        ProfileViewModel(
+            preferencesManager: preferencesManager,
+            authManager: authManager,
+            logoutUseCase: makeLogoutUseCase()
+        )
+	}
+
+    public func makeOrderHistoryViewModel() -> OrderHistoryViewModel {
+        OrderHistoryViewModel(fetchOrdersUseCase: fetchOrdersUseCase, authManager: authManager)
+    }
+    
+    public func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
+        OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
+    }
+//    func makeAddressViewModel() -> AddressViewModel {
+//            AddressViewModel(
+//                authManager: authManager,
+//                getAddresses: getAddressesUseCase,
+//                createAddress: createAddressUseCase,
+//                updateAddress: updateAddressUseCase,
+//                deleteAddress: deleteAddressUseCase
+//            )
+//        }
+    lazy var addressViewModel: AddressViewModel = {
+        AddressViewModel(
+            authManager: authManager,
+            getAddresses: getAddressesUseCase,
+            createAddress: createAddressUseCase,
+            updateAddress: updateAddressUseCase,
+            deleteAddress: deleteAddressUseCase
+        )
+    }()
+    
+    
 }

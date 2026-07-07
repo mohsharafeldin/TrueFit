@@ -1,4 +1,4 @@
-//
+
 //  MainAppView.swift
 //  TrueFit
 //
@@ -57,7 +57,7 @@ struct MainAppView: View {
             
             // Profile Tab
             NavigationStack(path: $appRouter.profilePath) {
-                Text("Profile Screen")
+                ProfileView(viewModelFactory: { container.makeProfileViewModel() })
                     .navigationDestination(for: AppRoute.self, destination: destination(for:))
             }
             .tabItem {
@@ -75,7 +75,6 @@ extension MainAppView {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
-            
         case .checkout:
             CheckoutView(viewModel: CheckoutViewModel())
             
@@ -101,6 +100,25 @@ extension MainAppView {
                     source: .brand(vendor: vendor)
                 )
             )
+		case .orders: 
+			OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
+		case .orderDetails(let orderId):
+			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
+        case .address:
+            AddressView(viewModel: container.addressViewModel)
+        case .addNewAddress:
+            AddNewAddressView(addressViewModel: container.addressViewModel)
+        case .editAddress(let address):
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
+                address:address,
+                editingAddressId: address.id )
+        case .addressDetailsForm(let address):
+            AddressDetailsFormView(
+                addressViewModel: container.addressViewModel,
+                address: address,
+                editingAddressId: nil )
         }
     }
+    
 }

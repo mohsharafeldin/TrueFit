@@ -9,6 +9,7 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     @EnvironmentObject var appRouter: AppRouter
+    @State private var showGuestAlert = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -35,6 +36,7 @@ struct HomeView: View {
         }
         .background(Color.trueFitBackground)
         .ignoresSafeArea(.all, edges: .bottom)
+        .trueFitGuestAlert(isPresented: $showGuestAlert)
         .onAppear {
             viewModel.onAppear()
         }
@@ -62,7 +64,11 @@ struct HomeView: View {
                         products: viewModel.products,
                         favoriteStatuses: viewModel.favoriteStatuses,
                         onToggleFavorite: { product in
-                            viewModel.toggleFavorite(product: product)
+                            if viewModel.isGuest {
+                                showGuestAlert = true
+                            } else {
+                                viewModel.toggleFavorite(product: product)
+                            }
                         }
                     )
                 }

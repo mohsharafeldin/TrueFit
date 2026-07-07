@@ -37,6 +37,10 @@ final class HomeViewModel: ObservableObject {
     @Published var isLoadingBrands = false
     @Published var errorMessage: String?
     @Published var userName: String = "Guest"
+    
+    var isGuest: Bool {
+        return preferencesManager.getUser() == nil
+    }
 
     // MARK: - Dependencies
 
