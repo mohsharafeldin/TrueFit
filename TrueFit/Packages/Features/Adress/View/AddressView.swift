@@ -16,10 +16,13 @@ struct AddressView: View {
     @State private var isMenuPressed = false
     @State private var selectedAddress: Address?
 
+    var onSelect: ((Address) -> Void)?
+    var isSelectionMode: Bool
 
-
-    init(viewModel: AddressViewModel) {
+    init(viewModel: AddressViewModel, isSelectionMode: Bool = false, onSelect: ((Address) -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        self.isSelectionMode = isSelectionMode
+        self.onSelect = onSelect
     }
 
     var body: some View {
@@ -104,6 +107,17 @@ struct AddressView: View {
                         } else {
                             ForEach(viewModel.addresses) { address in
                                 addressCard(for: address)
+                                    .onTapGesture {
+                                        if let onSelect = onSelect {
+                                            onSelect(address)
+                                            dismiss()
+                                        } else if isSelectionMode {
+                                            DispatchQueue.main.async {
+                                                viewModel.addressSelected.send(address)
+                                            }
+                                            appRouter.goBack()
+                                        }
+                                    }
                             }
                         }
                     }
@@ -229,9 +243,13 @@ struct AddressView: View {
     }
 }
 
-#Preview {
-    AddressView(
-        viewModel: PreviewMocks.makeAddressViewModel()
-    )
-    .environmentObject(AppRouter())
+struct AddressView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        AddressView(
+            viewModel: PreviewMocks.makeAddressViewModel()
+        )
+        .environmentObject(AppRouter())
+
+    }
 }

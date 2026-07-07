@@ -17,6 +17,7 @@ enum AppRoute: Hashable {
   //  case cart
    // case favorites
     case checkout
+    case orderCompleted(OrderCompletedInfo)
     case search
     case productDetails(productId: String)
     case productsByCollection(collectionId: Int64, title: String)
@@ -24,6 +25,7 @@ enum AppRoute: Hashable {
     case orders
     case orderDetails(orderId: String)
     case address
+    case addressSelection
     case addNewAddress
     case editAddress(address: Address)
     case addressDetailsForm(address: Address)

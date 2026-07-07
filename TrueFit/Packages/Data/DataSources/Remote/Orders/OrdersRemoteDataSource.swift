@@ -27,9 +27,21 @@ final class OrdersRemoteDataSource: OrdersRemoteDataSourceProtocol {
     }
     
     func fetchOrderDetails(customerAccessToken: String, orderId: String) async throws -> OrderDetailsFields {
-        // Use query string to filter orders by the specific global ID
-        let orderQueryStr = "id:\(orderId)"
-        let query = GetCustomerOrderDetailsQuery(customerAccessToken: customerAccessToken, orderQuery: orderQueryStr)
+        var targetQueryStr = ""
+        if orderId.starts(with: "gid://") {
+            if let orders = try? await fetchOrders(customerAccessToken: customerAccessToken),
+               let match = orders.first(where: { $0.node.fragments.orderListFields.id == orderId }) {
+                targetQueryStr = "name:\(match.node.fragments.orderListFields.name)"
+            } else {
+                let cleanId = orderId.components(separatedBy: "/").last ?? orderId
+                targetQueryStr = "name:#\(cleanId)"
+            }
+        } else if orderId.starts(with: "#") {
+            targetQueryStr = "name:\(orderId)"
+        } else {
+            targetQueryStr = "name:#\(orderId)"
+        }
+        let query = GetCustomerOrderDetailsQuery(customerAccessToken: customerAccessToken, orderQuery: targetQueryStr)
         let data = try await apollo.fetch(query: query)
         
         guard let firstEdge = data.customer?.orders.edges.first else {

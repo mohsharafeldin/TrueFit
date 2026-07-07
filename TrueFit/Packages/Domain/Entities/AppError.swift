@@ -63,6 +63,10 @@ enum AppError: Error, LocalizedError, Equatable {
         }
     }
     
+    var errorDescription: String? {
+        return userMessage
+    }
+    
     var isRetryable: Bool {
         switch self {
         case .noInternet, .serverError, .rateLimited, .unknown, .persistenceFailure:

@@ -65,7 +65,11 @@ struct OrderItemCard: View {
     }
 }
 
-#Preview {
-    OrderItemCard(item: OrderPreviewData.mockOrderDetails.items[0])
-        .padding()
+struct OrderItemCard_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderItemCard(item: OrderPreviewData.mockOrderDetails.items[0])
+            .padding()
+
+    }
 }

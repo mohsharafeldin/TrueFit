@@ -52,6 +52,10 @@ struct CustomActionSheet: View {
     }
 }
 
-#Preview {
-    CustomActionSheet(onEdit: {}, onDelete: {}, onCancel: {})
+struct CustomActionSheet_Previews: PreviewProvider {
+    static var previews: some View {
+
+        CustomActionSheet(onEdit: {}, onDelete: {}, onCancel: {})
+
+    }
 }

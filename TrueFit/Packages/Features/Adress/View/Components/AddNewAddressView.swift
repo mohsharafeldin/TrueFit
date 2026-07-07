@@ -358,9 +358,13 @@ struct AddNewAddressView: View {
     }
 }
 
-#Preview {
-    AddNewAddressView(
-        addressViewModel: PreviewMocks.makeAddressViewModel()
-    )
-    .environmentObject(AppRouter())
+struct AddNewAddressView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        AddNewAddressView(
+            addressViewModel: PreviewMocks.makeAddressViewModel()
+        )
+        .environmentObject(AppRouter())
+
+    }
 }
