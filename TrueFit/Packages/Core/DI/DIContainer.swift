@@ -136,6 +136,20 @@ final class DIContainer: ObservableObject {
     private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
     lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
     
+    // MARK: - ORDERS FEATURE
+    
+    // Orders Data Sources & Repository
+    private lazy var ordersRemoteDataSource: OrdersRemoteDataSourceProtocol = {
+        OrdersRemoteDataSource(apollo: apolloManager)
+    }()
+    
+    private lazy var ordersRepository: OrdersRepositoryProtocol = {
+        OrdersRepository(remoteDataSource: ordersRemoteDataSource, authManager: authManager)
+    }()
+    
+    // Orders Use Cases
+    private lazy var fetchOrdersUseCase = FetchOrdersUseCase(repository: ordersRepository)
+    private lazy var fetchOrderDetailsUseCase = FetchOrderDetailsUseCase(repository: ordersRepository)
     
     // MARK: - ADDRESS FEATURE
         
@@ -261,6 +275,14 @@ final class DIContainer: ObservableObject {
             authManager: authManager,
             logoutUseCase: makeLogoutUseCase()
         )
+	}
+
+    public func makeOrderHistoryViewModel() -> OrderHistoryViewModel {
+        OrderHistoryViewModel(fetchOrdersUseCase: fetchOrdersUseCase, authManager: authManager)
+    }
+    
+    public func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
+        OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
     }
 //    func makeAddressViewModel() -> AddressViewModel {
 //            AddressViewModel(

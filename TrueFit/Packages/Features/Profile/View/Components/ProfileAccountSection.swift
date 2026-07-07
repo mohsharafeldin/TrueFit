@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileAccountSection: View {
     let isGuest: Bool
     @Binding var showGuestAlert: Bool
+    @EnvironmentObject var appRouter: AppRouter
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -13,7 +14,7 @@ struct ProfileAccountSection: View {
                     if isGuest {
                         showGuestAlert = true
                     } else {
-                        // Navigate to Orders
+                        appRouter.navigate(to: .orders)
                     }
                 }
                 Divider().padding(.leading, 48)

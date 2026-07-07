@@ -65,10 +65,19 @@ class MockAuthManager: AuthManagerProtocol {
     
     var isAuthenticated = false
     var isGuest = false
+    var mockToken: String? = nil
+    
+    init(hasToken: Bool = false) {
+        if hasToken {
+            self.mockToken = "dummy_preview_token"
+            self.isAuthenticated = true
+        }
+    }
+    
     func login(token: String) {}
     func logout() {}
     func setGuestMode(_ isGuest: Bool) {}
-    func getAccessToken() -> String? { return nil }
+    func getAccessToken() -> String? { return mockToken }
 }
 
 // MARK: - Preview ViewModel Creator
@@ -158,6 +167,47 @@ extension PreviewMocks {
     }
 }
 
+// MARK: - Mock Orders Repository
+
+class MockOrdersRepository: OrdersRepositoryProtocol {
+    func fetchOrders() async throws -> [Order] {
+        return OrderPreviewData.mockOrders
+    }
+    
+    func fetchOrderDetails(orderId: String) async throws -> OrderDetails {
+        return OrderPreviewData.mockOrderDetails
+    }
+}
+
+// MARK: - Orders Preview ViewModel Creator Extension
+
+extension PreviewMocks {
+    @MainActor
+    static func makeOrderHistoryViewModel() -> OrderHistoryViewModel {
+        let mockRepo = MockOrdersRepository()
+        let fetchOrdersUseCase = FetchOrdersUseCase(repository: mockRepo)
+        
+        let viewModel = OrderHistoryViewModel(
+            fetchOrdersUseCase: fetchOrdersUseCase,
+            authManager: MockAuthManager(hasToken: true)
+        )
+        
+        viewModel.orders = OrderPreviewData.mockOrders
+        viewModel.isLoading = false
+        
+        return viewModel
+    }
+    
+    @MainActor
+    static func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
+        let mockRepo = MockOrdersRepository()
+        let fetchOrderDetailsUseCase = FetchOrderDetailsUseCase(repository: mockRepo)
+        let viewModel = OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
+        
+        viewModel.orderDetails = OrderPreviewData.mockOrderDetails
+        viewModel.isLoading = false
+        
+        return viewModel
 // MARK: - Mock Address Repository
 
 class MockAddressRepository: AddressRepositoryProtocol {

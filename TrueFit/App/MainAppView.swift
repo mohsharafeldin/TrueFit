@@ -96,6 +96,11 @@ extension MainAppView {
                 viewModel: container.makeProductListViewModel(
                     source: .brand(vendor: vendor)
                 )
+            )
+		case .orders: 
+			OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
+		case .orderDetails(let orderId):
+			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
             )       
         case .address:
             AddressView(viewModel: container.addressViewModel)
