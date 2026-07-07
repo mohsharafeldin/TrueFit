@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2031,7 +2031,7 @@
 				4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */,
-				4CCE64DC2FFD947C00D6A036 /* XCLocalSwiftPackageReference "ShopifyAPI" */,
+				4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -2675,16 +2675,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-/* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		4CCE64DC2FFD947C00D6A036 /* XCLocalSwiftPackageReference "ShopifyAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ShopifyAPI;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/mohamedsharaf/Documents/TrueFit/ShopifyAPI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -2755,6 +2755,7 @@
 		};
 		4CCE64DD2FFD947C00D6A036 /* ShopifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */;
 			productName = ShopifyAPI;
 		};
 		5A104C632FF90F57002AC6E2 /* SDWebImage */ = {

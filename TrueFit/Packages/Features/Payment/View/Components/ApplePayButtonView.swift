@@ -61,8 +61,10 @@ struct ApplePayButtonView: UIViewRepresentable {
 
 // MARK: - Preview
 
-#Preview {
-    ApplePayButtonView(buttonStyle: .black, buttonType: .plain) {}
-        .frame(height: 50)
-        .padding()
+struct ApplePayButtonView_Previews: PreviewProvider {
+    static var previews: some View {
+        ApplePayButtonView(buttonStyle: .black, buttonType: .plain) {}
+            .frame(height: 50)
+            .padding()
+    }
 }
