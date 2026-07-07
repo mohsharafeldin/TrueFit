@@ -147,7 +147,7 @@ struct OrderCompletedView: View {
     private var bottomButtons: some View {
         VStack(spacing: Spacing.sm) {
             Button(action: {
-                viewModel.trackOrder()
+                viewModel.trackOrder(appRouter: appRouter)
             }) {
                 Text("Track order")
                     .trueFitTextStyle(.headline)

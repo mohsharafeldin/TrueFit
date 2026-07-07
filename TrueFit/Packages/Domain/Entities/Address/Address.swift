@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address: Identifiable, Equatable,Hashable {
+public struct Address: Identifiable, Equatable, Hashable, Codable {
     public let id: String
     public var address1: String
     public var country: String

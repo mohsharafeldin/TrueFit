@@ -436,6 +436,7 @@ struct HomeProductCard: View {
     var isFavorite: Bool = false
     var onToggleFavorite: () -> Void = {}
     @EnvironmentObject var appRouter: AppRouter
+    @ObservedObject var currencyManager = CurrencyManager.shared
 
     var body: some View {
         Button(action: {
@@ -516,10 +517,10 @@ struct HomeProductCard: View {
     }
 
     private var formattedPrice: String {
-        if let value = Double(product.price) {
-            return String(format: "$%.2f", value)
+        if let value = Decimal(string: product.price) {
+            return PriceFormatter.format(value)
         }
-        return "$\(product.price)"
+        return product.price
     }
 }
 

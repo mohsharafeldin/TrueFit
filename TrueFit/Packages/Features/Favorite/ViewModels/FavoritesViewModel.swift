@@ -38,7 +38,7 @@ final class FavoritesViewModel: ObservableObject {
     // MARK: - Computed Properties
     
     var categories: [String] {
-        var vendors = Set(favoriteProducts.compactMap { $0.vendor })
+        let vendors = Set(favoriteProducts.compactMap { $0.vendor })
         var sortedVendors = Array(vendors).sorted()
         sortedVendors.insert("All", at: 0)
         return sortedVendors

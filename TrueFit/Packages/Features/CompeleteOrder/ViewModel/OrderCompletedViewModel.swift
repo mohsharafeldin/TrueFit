@@ -32,7 +32,8 @@ final class OrderCompletedViewModel: ObservableObject {
         self.info = info
     }
     
-    func trackOrder() {
-        showTrackingToast = true
+    func trackOrder(appRouter: AppRouter) {
+        let orderId = info.orderNumber // This should ideally be a valid Global ID, but we can pass the string
+        appRouter.navigate(to: .orderDetails(orderId: orderId))
     }
 }

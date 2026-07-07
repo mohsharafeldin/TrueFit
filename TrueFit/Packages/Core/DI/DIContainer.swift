@@ -111,7 +111,7 @@ final class DIContainer: ObservableObject {
     // GraphQL & Cart Data Sources
     // TODO: Add SQLiteNormalizedCache to ApolloManager when offline support is needed
     private lazy var cartRemoteDataSource: CartRemoteDataSourceProtocol = CartRemoteDataSource(apollo: apolloManager)
-    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource)
+    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource, productsRepository: productsRepository)
     
     // Cart Use Cases
     private lazy var getCartUseCase = GetCartUseCase(repository: cartRepository)
@@ -144,7 +144,7 @@ final class DIContainer: ObservableObject {
     }()
     
     private lazy var ordersRepository: OrdersRepositoryProtocol = {
-        OrdersRepository(remoteDataSource: ordersRemoteDataSource, authManager: authManager)
+        OrdersRepository(remoteDataSource: ordersRemoteDataSource, authManager: authManager, productsRepository: productsRepository)
     }()
     
     // Orders Use Cases
@@ -253,6 +253,16 @@ final class DIContainer: ObservableObject {
             preferencesManager: preferencesManager
         )
     }
+    
+    public func makeCheckoutViewModel() -> CheckoutViewModel {
+        CheckoutViewModel(
+            getCartUseCase: getCartUseCase,
+            getAddressesUseCase: getAddressesUseCase,
+            authManager: authManager,
+            preferencesManager: preferencesManager
+        )
+    }
+    
     func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
         ProductListViewModel(
             source: source,

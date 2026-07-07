@@ -11,6 +11,7 @@ struct FavoriteProductCard: View {
     let product: FavoriteItem
     var onRemove: () -> Void
     var onAddToCart: () -> Void
+    @ObservedObject var currencyManager = CurrencyManager.shared
     
     var body: some View {
         HStack(spacing: Spacing.md) {
@@ -96,9 +97,6 @@ struct FavoriteProductCard: View {
     }
     
     private var formattedPrice: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        return formatter.string(from: NSDecimalNumber(decimal: product.price)) ?? "$\(product.price)"
+        return PriceFormatter.format(product.price)
     }
 }

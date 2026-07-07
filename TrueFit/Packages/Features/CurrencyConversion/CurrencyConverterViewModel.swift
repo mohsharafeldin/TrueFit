@@ -7,17 +7,24 @@ final class CurrencyConverterViewModel: ObservableObject {
     
     @Published var state: ViewState<CurrencyRates> = .idle
     @Published var inputAmount: String = ""
-    @Published var selectedCurrency: String = "EGP"
+    @Published var selectedCurrency: String {
+        didSet {
+            CurrencyManager.shared.selectedCurrency = selectedCurrency
+        }
+    }
     @Published var availableCurrencies: [String] = []
     
     init(getExchangeRatesUseCase: GetExchangeRatesUseCase) {
         self.getExchangeRatesUseCase = getExchangeRatesUseCase
+        self.selectedCurrency = CurrencyManager.shared.selectedCurrency
     }
     
     func loadRates() async {
         state = .loading
         do {
             let rates = try await getExchangeRatesUseCase.execute(base: "USD")
+            
+            CurrencyManager.shared.rates = rates.rates
             
             var currencies = Array(rates.rates.keys)
             if !currencies.contains(rates.base) {

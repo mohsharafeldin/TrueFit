@@ -11,6 +11,7 @@ struct CheckoutView: View {
     @StateObject private var viewModel: CheckoutViewModel
     @EnvironmentObject var appRouter: AppRouter
     @EnvironmentObject var globalCartState: CartState
+    @EnvironmentObject var container: DIContainer
     
     init(viewModel: CheckoutViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -51,7 +52,15 @@ struct CheckoutView: View {
         .navigationTitle("Checkout")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await viewModel.loadCartData()
+            await viewModel.loadInitialData()
+        }
+        .onReceive(container.addressViewModel.addressSelected) { address in
+            viewModel.updateShippingAddress(address)
+        }
+        .alert("Notice", isPresented: .constant(viewModel.errorMessage != nil)) {
+            Button("OK") { viewModel.errorMessage = nil }
+        } message: {
+            Text(viewModel.errorMessage ?? "")
         }
     }
     
@@ -135,26 +144,45 @@ struct CheckoutView: View {
             }
             
             VStack(alignment: .leading, spacing: Spacing.md) {
-                VStack(alignment: .leading, spacing: Spacing.xxs) {
-                    Text(viewModel.shippingName)
-                        .trueFitTextStyle(.headline)
-                        .foregroundColor(.textPrimary)
-                    
-                    Text(viewModel.formattedShippingAddress)
-                        .trueFitTextStyle(.body)
-                        .foregroundColor(.textSecondary)
-                        .lineSpacing(4)
-                }
-                
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        viewModel.toggleAddress()
+                if viewModel.selectedAddress != nil {
+                    VStack(alignment: .leading, spacing: Spacing.xxs) {
+                        Text(viewModel.shippingName)
+                            .trueFitTextStyle(.headline)
+                            .foregroundColor(.textPrimary)
+                        
+                        Text(viewModel.formattedShippingAddress)
+                            .trueFitTextStyle(.body)
+                            .foregroundColor(.textSecondary)
+                            .lineSpacing(4)
                     }
-                }) {
-                    Text("Change address")
-                        .trueFitTextStyle(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.brandPrimary)
+                    
+                    Button(action: {
+                        appRouter.navigate(to: .addressSelection)
+                    }) {
+                        Text("Change address")
+                            .trueFitTextStyle(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.brandPrimary)
+                    }
+                } else {
+                    VStack(alignment: .leading, spacing: Spacing.xs) {
+                        Text("No shipping address added")
+                            .trueFitTextStyle(.headline)
+                            .foregroundColor(.textPrimary)
+                        
+                        Text("Please add a delivery address to complete your order.")
+                            .trueFitTextStyle(.body)
+                            .foregroundColor(.textSecondary)
+                    }
+                    
+                    Button(action: {
+                        appRouter.navigate(to: .addressSelection)
+                    }) {
+                        Text("Add address")
+                            .trueFitTextStyle(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.brandPrimary)
+                    }
                 }
             }
             .padding(Spacing.lg)
@@ -314,10 +342,10 @@ struct CheckoutView: View {
                     .trueFitTextStyle(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity, minHeight: 54)
-                    .background(viewModel.isPlacingOrder ? Color.disabledColor : Color.brandPrimary)
+                    .background(viewModel.isPlacingOrder || viewModel.selectedAddress == nil ? Color.disabledColor : Color.brandPrimary)
                     .clipShape(RoundedRectangle.trueFit(Radius.xl))
                 }
-                .disabled(viewModel.isPlacingOrder)
+                .disabled(viewModel.isPlacingOrder || viewModel.selectedAddress == nil)
             }
             .padding(.horizontal, Spacing.md)
             .padding(.vertical, Spacing.md)
