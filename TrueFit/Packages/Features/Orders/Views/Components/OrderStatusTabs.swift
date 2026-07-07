@@ -50,8 +50,12 @@ struct OrderStatusTabs: View {
     }
 }
 
-#Preview {
-    OrderStatusTabs(selectedStatus: .constant(.all))
-        .padding(.vertical)
-        .background(Color.trueFitBackground)
+struct OrderStatusTabs_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderStatusTabs(selectedStatus: .constant(.all))
+            .padding(.vertical)
+            .background(Color.trueFitBackground)
+
+    }
 }
