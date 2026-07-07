@@ -77,7 +77,9 @@ extension MainAppView {
         switch route {
         case .checkout:
             Text("Checkout Screen")
-            
+
+        case .payment:
+            PaymentView(viewModel: container.makePaymentViewModel())
         case .productDetails(let id):
             ProductDetailsView(
                 productId: id,

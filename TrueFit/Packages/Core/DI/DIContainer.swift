@@ -167,6 +167,20 @@ final class DIContainer: ObservableObject {
         private lazy var createAddressUseCase = CreateAddressUseCase(repository: addressRepository)
         private lazy var updateAddressUseCase = UpdateAddressUseCase(repository: addressRepository)
         private lazy var deleteAddressUseCase = DeleteAddressUseCase(repository: addressRepository)
+
+    // MARK: - PAYMENT FEATURE
+
+    // Payment Data Source & Repository
+    private lazy var paymentLocalDataSource: PaymentLocalDataSourceProtocol = {
+        PaymentLocalDataSource()
+    }()
+
+    private lazy var paymentRepository: PaymentRepositoryProtocol = {
+        PaymentRepository(dataSource: paymentLocalDataSource)
+    }()
+
+    // Payment Use Cases
+    private lazy var processPaymentUseCase = ProcessPaymentUseCase(repository: paymentRepository)
     
     // MARK: - Init
     public init() {}
@@ -302,6 +316,10 @@ final class DIContainer: ObservableObject {
             deleteAddress: deleteAddressUseCase
         )
     }()
+
+    func makePaymentViewModel() -> PaymentViewModel {
+        PaymentViewModel(processPaymentUseCase: processPaymentUseCase)
+    }
     
     
 }

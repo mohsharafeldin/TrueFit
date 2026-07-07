@@ -247,3 +247,30 @@ extension PreviewMocks {
         )
     }
 }
+
+// MARK: - Mock Payment Repository
+
+class MockPaymentRepository: PaymentRepositoryProtocol {
+    /// Override this in specific previews to simulate different outcomes.
+    var mockResult: PaymentResult = .success
+
+    func processPayment(request: PaymentRequestDTO) async throws -> PaymentResult {
+        // Simulate a short network delay so the processing state is visible.
+        try await Task.sleep(nanoseconds: 800_000_000)
+        return mockResult
+    }
+}
+
+// MARK: - Payment Preview ViewModel Creator Extension
+
+extension PreviewMocks {
+    @MainActor
+    static func makePaymentViewModel(
+        simulatedResult: PaymentResult = .success
+    ) -> PaymentViewModel {
+        let repo = MockPaymentRepository()
+        repo.mockResult = simulatedResult
+        let useCase = ProcessPaymentUseCase(repository: repo)
+        return PaymentViewModel(processPaymentUseCase: useCase)
+    }
+}
