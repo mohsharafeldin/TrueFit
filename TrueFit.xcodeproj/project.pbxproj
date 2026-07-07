@@ -135,6 +135,7 @@
 		336CCC0C2FFD427C002B841D /* AIChatWelcomeStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */; };
 		336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0E2FFD4311002B841D /* AIChatInputView.swift */; };
 		336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */; };
+		336CCC142FFD8E4B002B841D /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */; };
 		33AB50F92FFB9AE70085ECAC /* ShopifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 33AB50F82FFB9AE70085ECAC /* ShopifyAPI */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
@@ -547,6 +548,7 @@
 			files = (
 				4CAAF4852FF4668900D751DB /* GoogleSignInSwift in Frameworks */,
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
+				336CCC142FFD8E4B002B841D /* GoogleGenerativeAI in Frameworks */,
 				4CAAF4832FF4668900D751DB /* GoogleSignIn in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
 				0C67ADDD2FF8779E006A3E3B /* ShopifyAPI in Frameworks */,
@@ -1744,6 +1746,7 @@
 				5A104C632FF90F57002AC6E2 /* SDWebImage */,
 				5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */,
 				33AB50F82FFB9AE70085ECAC /* ShopifyAPI */,
+				336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */,
 			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
@@ -1824,6 +1827,7 @@
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */,
 				33AB50F72FFB9AE70085ECAC /* XCLocalSwiftPackageReference "ShopifyAPI" */,
+				336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -2453,6 +2457,14 @@
 				version = 10.23.0;
 			};
 		};
+		336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
 		4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
@@ -2491,6 +2503,11 @@
 		0C67ADDC2FF8779E006A3E3B /* ShopifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ShopifyAPI;
+		};
+		336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
 		};
 		33AB50F82FFB9AE70085ECAC /* ShopifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
