@@ -61,7 +61,7 @@ struct PaymentView: View {
         ScrollView {
             VStack(spacing: Spacing.xl) {
                 orderSummaryCard
-                applePaySection
+                paymentMethodSection
             }
             .padding(Spacing.md)
         }
@@ -98,19 +98,28 @@ struct PaymentView: View {
         )
     }
 
-    private var applePaySection: some View {
+    private var paymentMethodSection: some View {
         VStack(spacing: Spacing.md) {
             HStack {
-                Text("Pay with")
+                Text("Payment Method")
                     .font(.trueFitTitle3)
                     .foregroundColor(.textPrimary)
                 Spacer()
             }
+            
+            paymentMethodSelector
+            
+            Divider()
+                .background(Color.borderColor)
 
-            if viewModel.isApplePayAvailable {
-                applePayAvailableContent
+            if viewModel.selectedPaymentMethod == .applePay {
+                if viewModel.isApplePayAvailable {
+                    applePayAvailableContent
+                } else {
+                    applePayUnavailableContent
+                }
             } else {
-                applePayUnavailableContent
+                cashOnDeliveryContent
             }
         }
         .padding(Spacing.lg)
@@ -120,6 +129,55 @@ struct PaymentView: View {
             RoundedRectangle(cornerRadius: Radius.md)
                 .stroke(Color.borderColor, lineWidth: 0.5)
         )
+    }
+
+    private var paymentMethodSelector: some View {
+        VStack(spacing: Spacing.sm) {
+            paymentMethodRow(
+                title: "Apple Pay",
+                icon: "applelogo",
+                isSelected: viewModel.selectedPaymentMethod == .applePay
+            ) {
+                viewModel.selectedPaymentMethod = .applePay
+            }
+            
+            paymentMethodRow(
+                title: "Cash On Delivery",
+                icon: "shippingbox",
+                isSelected: viewModel.selectedPaymentMethod == .cashOnDelivery
+            ) {
+                viewModel.selectedPaymentMethod = .cashOnDelivery
+            }
+        }
+    }
+    
+    private func paymentMethodRow(title: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                    .foregroundColor(isSelected ? .brandPrimary : .textSecondary)
+                    .frame(width: 30)
+                
+                Text(title)
+                    .font(.trueFitHeadline)
+                    .foregroundColor(isSelected ? .textPrimary : .textSecondary)
+                
+                Spacer()
+                
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.brandPrimary)
+                        .font(.system(size: 20))
+                } else {
+                    Circle()
+                        .stroke(Color.borderColor, lineWidth: 1.5)
+                        .frame(width: 20, height: 20)
+                }
+            }
+            .padding(.vertical, Spacing.sm)
+            .contentShape(Rectangle())
+        }
     }
 
     private var applePayAvailableContent: some View {
@@ -169,6 +227,38 @@ struct PaymentView: View {
             RoundedRectangle(cornerRadius: Radius.sm)
                 .stroke(Color.semanticWarning.opacity(0.3), lineWidth: 0.5)
         )
+    }
+
+    private var cashOnDeliveryContent: some View {
+        VStack(spacing: Spacing.sm) {
+            Text("Pay with cash when your order is delivered to your address.")
+                .font(.trueFitSubheadline)
+                .foregroundColor(.textSecondary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Button(action: {
+                guard viewModel.paymentState != .processing else { return }
+                Task {
+                    await viewModel.startCashOnDelivery()
+                }
+            }) {
+                HStack {
+                    if viewModel.paymentState == .processing {
+                        ProgressView().tint(.white)
+                    } else {
+                        Text("Place Order")
+                    }
+                }
+                .font(.trueFitHeadline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(.black)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.md))
+            }
+            .disabled(viewModel.paymentState == .processing)
+        }
     }
 
     @ViewBuilder

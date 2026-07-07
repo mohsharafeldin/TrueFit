@@ -9,6 +9,11 @@
 import Foundation
 import PassKit
 
+enum PaymentMethodType: Equatable {
+    case applePay
+    case cashOnDelivery
+}
+
 enum PaymentState: Equatable {
     case idle
     case processing
@@ -22,6 +27,7 @@ final class PaymentViewModel: ObservableObject {
 
     @Published private(set) var paymentState: PaymentState = .idle
     @Published private(set) var isApplePayAvailable: Bool = false
+    @Published var selectedPaymentMethod: PaymentMethodType = .applePay
 
     let orderTotal: Decimal
     let orderLabel: String
@@ -89,15 +95,7 @@ final class PaymentViewModel: ObservableObject {
             let result = try await processPayment(request: dto)
             switch result {
             case .success:
-                do {
-                    if let cartId = preferencesManager.cartId, !cartId.isEmpty {
-                        let emptyCart = try await clearCartUseCase.execute(cartId: cartId)
-                        cartStateModel.updateCount(emptyCart.totalQuantity)
-                    }
-                } catch {
-                    print("Failed to clear cart: \(error)")
-                }
-                paymentState = .success
+                await handlePaymentSuccess()
             case .cancelled:  paymentState = .cancelled
             case .failed(let reason): paymentState = .failed(message: reason)
             }
@@ -110,5 +108,31 @@ final class PaymentViewModel: ObservableObject {
 
     func resetState() {
         paymentState = .idle
+    }
+
+    private func handlePaymentSuccess() async {
+        do {
+            if let cartId = preferencesManager.cartId, !cartId.isEmpty {
+                let emptyCart = try await clearCartUseCase.execute(cartId: cartId)
+                cartStateModel.updateCount(emptyCart.totalQuantity)
+            }
+        } catch {
+            print("Failed to clear cart: \(error)")
+        }
+        paymentState = .success
+    }
+
+    func startCashOnDelivery() async {
+        guard orderTotal > 0 else {
+            paymentState = .failed(message: PaymentError.invalidRequest.errorDescription ?? "")
+            return
+        }
+
+        paymentState = .processing
+        
+        // Simulate a small delay for processing
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        
+        await handlePaymentSuccess()
     }
 }
