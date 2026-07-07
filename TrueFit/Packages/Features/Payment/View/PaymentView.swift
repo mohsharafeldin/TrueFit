@@ -86,7 +86,9 @@ struct PaymentView: View {
     }
 }
 
-#Preview {
-    PaymentView(viewModel: PreviewMocks.makePaymentViewModel())
-        .environmentObject(AppRouter())
+struct PaymentView_Previews: PreviewProvider {
+    static var previews: some View {
+        PaymentView(viewModel: PreviewMocks.makePaymentViewModel())
+            .environmentObject(AppRouter())
+    }
 }
