@@ -8,8 +8,8 @@
 import Foundation
 import GoogleGenerativeAI
 
-class GeminiService: GeminiServiceProtocol {
-    private let modelName = "gemini-1.5-flash"
+final class GeminiService: GeminiServiceProtocol {
+    private let modelName = "gemini-2.0-flash"
     
     func sendMessage(_ text: String, history: [ChatMessage], systemPrompt: String) async throws -> String {
         let apiKey = Bundle.main.geminiAPIKey
@@ -54,6 +54,8 @@ class GeminiService: GeminiServiceProtocol {
             }
             
             return responseText
+        } catch let geminiError as GeminiError {
+            throw geminiError
         } catch {
             throw GeminiError.networkError(error)
         }

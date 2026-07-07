@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SendChatMessageUseCase {
+final class SendChatMessageUseCase {
     private let repository: AIChatRepositoryProtocol
     
     init(repository: AIChatRepositoryProtocol) {

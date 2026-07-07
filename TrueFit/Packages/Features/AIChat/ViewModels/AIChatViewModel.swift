@@ -1,12 +1,11 @@
 //
-//  AiViewModel.swift
+//  AIChatViewModel.swift
 //  TrueFit
 //
 //  Created by Omar Khaled Jaafar on 07/07/2026.
 //
 
 import Foundation
-import SwiftUI
 
 @MainActor
 class AIChatViewModel: ObservableObject {
@@ -41,25 +40,16 @@ class AIChatViewModel: ObservableObject {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         
-        // Add User Message
         let userMsg = ChatMessage(text: trimmed, isUser: true)
-        withAnimation(TrueFitMotion.springDefault) {
-            messages.append(userMsg)
-            inputText = ""
-            isTyping = true
-            errorMessage = nil
-        }
+        messages.append(userMsg)
+        inputText = ""
+        isTyping = true
+        errorMessage = nil
         
         guard let sendUseCase = sendChatMessageUseCase,
               let contextUseCase = buildProductContextUseCase else {
-            // Mock AI Response for Previews
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                withAnimation(TrueFitMotion.springDefault) {
-                    self.isTyping = false
-                    let aiResponse = ChatMessage(text: "I'm looking through our catalog for the best options that match your request. Give me a second! ✨", isUser: false)
-                    self.messages.append(aiResponse)
-                }
-            }
+            // Fallback for Previews when no use cases are injected
+            handleMockResponse()
             return
         }
         
@@ -71,23 +61,41 @@ class AIChatViewModel: ObservableObject {
                 
                 guard let context = systemContext else { return }
                 
-                let responseText = try await sendUseCase.execute(message: trimmed, history: messages, systemContext: context)
+                let responseText = try await sendUseCase.execute(
+                    message: trimmed,
+                    history: messages,
+                    systemContext: context
+                )
                 
-                withAnimation(TrueFitMotion.springDefault) {
-                    self.isTyping = false
-                    let aiResponse = ChatMessage(text: responseText, isUser: false)
-                    self.messages.append(aiResponse)
-                }
+                let aiResponse = ChatMessage(text: responseText, isUser: false)
+                self.messages.append(aiResponse)
+                self.isTyping = false
                 
+            } catch let appError as AppError {
+                self.isTyping = false
+                self.errorMessage = appError.userMessage
+                let errorMsg = ChatMessage(text: "Sorry, I ran into an issue. \(appError.userMessage) 😔", isUser: false)
+                self.messages.append(errorMsg)
             } catch {
-                withAnimation(TrueFitMotion.springDefault) {
-                    self.isTyping = false
-                    self.errorMessage = error.localizedDescription
-                    
-                    let errorMsg = ChatMessage(text: "Sorry, I ran into an issue: \(error.localizedDescription) 😔", isUser: false)
-                    self.messages.append(errorMsg)
-                }
+                self.isTyping = false
+                self.errorMessage = error.localizedDescription
+                let errorMsg = ChatMessage(text: "Sorry, something unexpected went wrong. Please try again. 😔", isUser: false)
+                self.messages.append(errorMsg)
             }
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func handleMockResponse() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+            guard let self else { return }
+            self.isTyping = false
+            let aiResponse = ChatMessage(
+                text: "I'm looking through our catalog for the best options that match your request. Give me a second! ✨",
+                isUser: false
+            )
+            self.messages.append(aiResponse)
         }
     }
 }

@@ -117,6 +117,8 @@ extension MainAppView {
                 editingAddressId: nil )
         case .currency:
             CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
+        case .aiChat:
+            AIChatView(viewModel: container.makeAIChatViewModel())
         }
     }
     

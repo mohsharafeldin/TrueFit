@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BuildProductContextUseCase {
+final class BuildProductContextUseCase {
     private let productsRepository: ProductsRepositoryProtocol
     
     init(productsRepository: ProductsRepositoryProtocol) {

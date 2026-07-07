@@ -7,16 +7,14 @@
 
 import Foundation
 
-struct AIChatRemoteDataSource: AIChatRemoteDataSourceProtocol {
+final class AIChatRemoteDataSource: AIChatRemoteDataSourceProtocol {
     private let geminiService: GeminiServiceProtocol
     
-    // Dependency Injection for the networking client
     init(geminiService: GeminiServiceProtocol) {
         self.geminiService = geminiService
     }
     
     func sendMessage(_ text: String, history: [ChatMessage], systemPrompt: String) async throws -> String {
-        
         return try await geminiService.sendMessage(text, history: history, systemPrompt: systemPrompt)
     }
 }

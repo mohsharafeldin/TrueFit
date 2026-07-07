@@ -10,11 +10,10 @@ import SwiftUI
 // MARK: - AI Chat View
 struct AIChatView: View {
     @EnvironmentObject var appRouter: AppRouter
-    @StateObject var viewModel = AIChatViewModel()
+    @StateObject var viewModel: AIChatViewModel
     @FocusState private var isTextFieldFocused: Bool
     @State private var isGlowing = false
     
-    @MainActor
     init(viewModel: AIChatViewModel? = nil) {
         _viewModel = StateObject(wrappedValue: viewModel ?? AIChatViewModel())
     }
@@ -47,9 +46,12 @@ struct AIChatView: View {
                         .transition(.opacity)
                 }
             }
+            .animation(TrueFitMotion.springDefault, value: viewModel.messages.count)
+            .animation(TrueFitMotion.springDefault, value: viewModel.isTyping)
             
             // Floating Input Field
-            AIChatInputView(viewModel: viewModel, isTextFieldFocused: $isTextFieldFocused)     .padding(.bottom, Spacing.lg)
+            AIChatInputView(viewModel: viewModel, isTextFieldFocused: $isTextFieldFocused)
+                .padding(.bottom, Spacing.lg)
                 .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .navigationBarHidden(true)
@@ -107,20 +109,12 @@ struct AIChatView: View {
 // MARK: - Previews
 #if DEBUG
 #Preview("Empty State") {
-    AIChatView()
+    AIChatView(viewModel: PreviewMocks.makeAIChatViewModel())
         .environmentObject(AppRouter())
 }
 
 #Preview("With Messages") {
-    let mockData = [
-        ChatMessage(text: "White sneakers under $50 👟", isUser: true, date: Date()),
-        ChatMessage(text: "I found some amazing options for you! 🔥\n\n1. Classic White Canvas - $35\n2. Sport Runner White - $45\n\nWould you like me to open any of them?", isUser: false, date: Date()),
-        ChatMessage(text: "Yes, show me the first one please.", isUser: true, date: Date())
-    ]
-    
-    let mockVM = AIChatViewModel(mockMessages: mockData)
-    
-    return AIChatView(viewModel: mockVM)
+    AIChatView(viewModel: PreviewMocks.makeAIChatViewModel(withMessages: true))
         .environmentObject(AppRouter())
 }
 #endif
