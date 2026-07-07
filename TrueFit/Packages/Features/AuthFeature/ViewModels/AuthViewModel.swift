@@ -111,7 +111,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let result = try await loginUseCase.execute(email: email.trimmingCharacters(in: .whitespaces), password: password)
-                authManager.login(token: result.user.id)
+                authManager.markAuthenticated()
             } catch let error as AuthError {
                 showError(error.localizedDescription)
             } catch {
@@ -141,7 +141,7 @@ class AuthViewModel: ObservableObject {
                     self.showAlert = true
                 }
                 
-                authManager.login(token: result.user.id)
+                authManager.markAuthenticated()
                 
                 isLoading = false
                 
@@ -235,7 +235,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let result = try await loginWithGoogleUseCase.execute()
-                authManager.login(token: result.user.id)
+                authManager.markAuthenticated()
             } catch let error as AuthError {
                 showError(error.localizedDescription)
             } catch {

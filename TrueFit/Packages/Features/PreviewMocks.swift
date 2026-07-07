@@ -59,12 +59,25 @@ class MockLoginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol {
 
 @MainActor
 class MockAuthManager: AuthManagerProtocol {
+    func markAuthenticated() {
+        
+    }
+    
     var isAuthenticated = false
     var isGuest = false
+    var mockToken: String? = nil
+    
+    init(hasToken: Bool = false) {
+        if hasToken {
+            self.mockToken = "dummy_preview_token"
+            self.isAuthenticated = true
+        }
+    }
+    
     func login(token: String) {}
     func logout() {}
     func setGuestMode(_ isGuest: Bool) {}
-    func getAccessToken() -> String? { return nil }
+    func getAccessToken() -> String? { return mockToken }
 }
 
 // MARK: - Preview ViewModel Creator
@@ -150,6 +163,87 @@ extension PreviewMocks {
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
             authManager: MockAuthManager()
+        )
+    }
+}
+
+// MARK: - Mock Orders Repository
+
+class MockOrdersRepository: OrdersRepositoryProtocol {
+    func fetchOrders() async throws -> [Order] {
+        return OrderPreviewData.mockOrders
+    }
+    
+    func fetchOrderDetails(orderId: String) async throws -> OrderDetails {
+        return OrderPreviewData.mockOrderDetails
+    }
+}
+
+// MARK: - Orders Preview ViewModel Creator Extension
+
+extension PreviewMocks {
+    @MainActor
+    static func makeOrderHistoryViewModel() -> OrderHistoryViewModel {
+        let mockRepo = MockOrdersRepository()
+        let fetchOrdersUseCase = FetchOrdersUseCase(repository: mockRepo)
+        
+        let viewModel = OrderHistoryViewModel(
+            fetchOrdersUseCase: fetchOrdersUseCase,
+            authManager: MockAuthManager(hasToken: true)
+        )
+        
+        viewModel.orders = OrderPreviewData.mockOrders
+        viewModel.isLoading = false
+        
+        return viewModel
+    }
+    
+    @MainActor
+    static func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
+        let mockRepo = MockOrdersRepository()
+        let fetchOrderDetailsUseCase = FetchOrderDetailsUseCase(repository: mockRepo)
+        let viewModel = OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
+        
+        viewModel.orderDetails = OrderPreviewData.mockOrderDetails
+        viewModel.isLoading = false
+        
+        return viewModel
+    }
+}
+
+// MARK: - Mock Address Repository
+
+class MockAddressRepository: AddressRepositoryProtocol {
+    func createAddress(customerAccessToken: String, address1: String, country: String, province: String, city: String, zip: String) async throws -> Address {
+        return Address(id: UUID().uuidString, address1: address1, country: country, province: province, city: city, zip: zip)
+    }
+    
+    func deleteAddress(customerAccessToken: String, addressId: String) async throws -> String {
+        return addressId
+    }
+    
+    func updateAddress(customerAccessToken: String, addressId: String, address1: String, country: String, province: String, city: String, zip: String) async throws -> Address {
+        return Address(id: addressId, address1: address1, country: country, province: province, city: city, zip: zip)
+    }
+    
+    func getAddresses(customerAccessToken: String) async throws -> [Address] {
+        return [
+            Address(id: "1", address1: "123 Main St", country: "USA", province: "NY", city: "New York", zip: "10001"),
+            Address(id: "2", address1: "456 Elm St", country: "USA", province: "CA", city: "Los Angeles", zip: "90001")
+        ]
+    }
+}
+
+extension PreviewMocks {
+    @MainActor
+    static func makeAddressViewModel() -> AddressViewModel {
+        let repo = MockAddressRepository()
+        return AddressViewModel(
+            authManager: MockAuthManager(),
+            getAddresses: GetAddressesUseCase(repository: repo),
+            createAddress: CreateAddressUseCase(repository: repo),
+            updateAddress: UpdateAddressUseCase(repository: repo),
+            deleteAddress: DeleteAddressUseCase(repository: repo)
         )
     }
 }
