@@ -208,6 +208,9 @@ extension PreviewMocks {
         viewModel.isLoading = false
         
         return viewModel
+    }
+}
+
 // MARK: - Mock Address Repository
 
 class MockAddressRepository: AddressRepositoryProtocol {

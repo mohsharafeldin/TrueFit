@@ -101,7 +101,6 @@ extension MainAppView {
 			OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
 		case .orderDetails(let orderId):
 			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
-            )       
         case .address:
             AddressView(viewModel: container.addressViewModel)
         case .addNewAddress:
