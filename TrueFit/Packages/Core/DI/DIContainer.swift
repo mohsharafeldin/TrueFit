@@ -168,6 +168,31 @@ final class DIContainer: ObservableObject {
         private lazy var updateAddressUseCase = UpdateAddressUseCase(repository: addressRepository)
         private lazy var deleteAddressUseCase = DeleteAddressUseCase(repository: addressRepository)
     
+    // MARK: - AI CHAT FEATURE
+        
+        // Networking & Data Source
+        private lazy var geminiService: GeminiServiceProtocol = {
+            GeminiService()
+        }()
+        
+        private lazy var aiChatRemoteDataSource: AIChatRemoteDataSourceProtocol = {
+            AIChatRemoteDataSource(geminiService: geminiService)
+        }()
+        
+        // Repository
+        private lazy var aiChatRepository: AIChatRepositoryProtocol = {
+            AIChatRepository(remoteDataSource: aiChatRemoteDataSource)
+        }()
+        
+        // Use Cases
+        private lazy var sendChatMessageUseCase: SendChatMessageUseCase = {
+            SendChatMessageUseCase(repository: aiChatRepository)
+        }()
+        
+        private lazy var buildProductContextUseCase: BuildProductContextUseCase = {
+            BuildProductContextUseCase(productsRepository: productsRepository)
+        }()
+    
     // MARK: - Init
     public init() {}
     
@@ -302,6 +327,14 @@ final class DIContainer: ObservableObject {
             deleteAddress: deleteAddressUseCase
         )
     }()
+    
+    
+    public func makeAIChatViewModel() -> AIChatViewModel {
+            AIChatViewModel(
+                sendChatMessageUseCase: sendChatMessageUseCase,
+                buildProductContextUseCase: buildProductContextUseCase
+            )
+        }
     
     
 }
