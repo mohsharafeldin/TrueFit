@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import PassKit
 
 struct DeliveryOption: Identifiable, Equatable {
     let id: String
@@ -23,16 +24,6 @@ struct DeliveryOption: Identifiable, Equatable {
     static let express = DeliveryOption(id: "express", title: "Express", subtitle: "Next business day", priceAmount: 24)
 }
 
-struct PaymentMethod: Identifiable, Equatable {
-    let id: String
-    let title: String
-    let iconName: String
-    let isApplePay: Bool
-    
-    static let applePay = PaymentMethod(id: "applePay", title: "Apple Pay", iconName: "applelogo", isApplePay: true)
-    static let cashOnDelivery = PaymentMethod(id: "cashOnDelivery", title: "Cash on delivery", iconName: "banknote", isApplePay: false)
-}
-
 @MainActor
 final class CheckoutViewModel: ObservableObject {
     @Published var selectedAddress: Address? = nil
@@ -44,7 +35,8 @@ final class CheckoutViewModel: ObservableObject {
     @Published var isAlternateAddress: Bool = false
     
     @Published var selectedDeliveryOption: DeliveryOption = .standard
-    @Published var selectedPaymentMethod: PaymentMethod = .applePay
+    @Published var selectedPaymentMethod: PaymentMethodType = .applePay
+    @Published var isApplePayAvailable: Bool = false
     @Published var isPlacingOrder: Bool = false
     @Published var isLoadingCart: Bool = false
     
@@ -52,22 +44,31 @@ final class CheckoutViewModel: ObservableObject {
     
     private let getCartUseCase: GetCartUseCase?
     private let getAddressesUseCase: GetAddressesUseCase?
+    private let processPaymentUseCase: ProcessPaymentUseCase?
     private let authManager: AuthManagerProtocol?
     private var preferencesManager: PreferencesManagerProtocol?
     
     let deliveryOptions: [DeliveryOption] = [.standard, .express]
-    let paymentMethods: [PaymentMethod] = [.applePay, .cashOnDelivery]
     
     init(
         getCartUseCase: GetCartUseCase? = nil,
         getAddressesUseCase: GetAddressesUseCase? = nil,
+        processPaymentUseCase: ProcessPaymentUseCase? = nil,
         authManager: AuthManagerProtocol? = nil,
         preferencesManager: PreferencesManagerProtocol? = nil
     ) {
         self.getCartUseCase = getCartUseCase
         self.getAddressesUseCase = getAddressesUseCase
+        self.processPaymentUseCase = processPaymentUseCase
         self.authManager = authManager
         self.preferencesManager = preferencesManager
+        self.isApplePayAvailable = checkApplePayAvailability()
+    }
+    
+    private func checkApplePayAvailability() -> Bool {
+        PKPaymentAuthorizationController.canMakePayments(
+            usingNetworks: PaymentConfiguration.supportedNetworks
+        )
     }
     
     func loadCartData() async {
@@ -163,7 +164,7 @@ final class CheckoutViewModel: ObservableObject {
         }
         isPlacingOrder = true
         
-        let pmText = selectedPaymentMethod.isApplePay ? "**** **** **** 4242\nApple Pay" : selectedPaymentMethod.title
+        let pmText = selectedPaymentMethod == .applePay ? "**** **** **** 4242\nApple Pay" : "Cash on delivery"
         UserDefaults.standard.set(pmText, forKey: "lastUsedPaymentMethod")
         
         let deliveryText = estimatedDeliveryDateRangeText
@@ -214,6 +215,101 @@ final class CheckoutViewModel: ObservableObject {
                         self.errorMessage = error.localizedDescription
                     }
                 }
+            }
+        }
+    }
+    
+    func startApplePayment(appRouter: AppRouter, cartState: CartState) {
+        guard selectedAddress != nil else {
+            self.errorMessage = "Please add or select a shipping address before placing your order."
+            return
+        }
+        guard isApplePayAvailable else {
+            self.errorMessage = PaymentError.applePayUnavailable.errorDescription
+            return
+        }
+        guard totalAmountDecimal > 0 else {
+            self.errorMessage = PaymentError.invalidRequest.errorDescription
+            return
+        }
+        
+        isPlacingOrder = true
+        
+        let convertedAmount = CurrencyManager.shared.convert(totalAmountDecimal)
+        let currencyCode = CurrencyManager.shared.selectedCurrency
+        
+        let summaryItem = PKPaymentSummaryItem(
+            label: "TrueFit Order",
+            amount: NSDecimalNumber(decimal: convertedAmount)
+        )
+        let merchantItem = PKPaymentSummaryItem(
+            label: PaymentConfiguration.merchantDisplayName,
+            amount: NSDecimalNumber(decimal: convertedAmount)
+        )
+        
+        let dto = PaymentRequestDTO(
+            merchantIdentifier: PaymentConfiguration.merchantIdentifier,
+            supportedNetworks: PaymentConfiguration.supportedNetworks,
+            merchantCapabilities: PaymentConfiguration.merchantCapabilities,
+            countryCode: PaymentConfiguration.countryCode,
+            currencyCode: currencyCode,
+            paymentSummaryItems: [summaryItem, merchantItem]
+        )
+        
+        Task {
+            do {
+                if let processPayment = processPaymentUseCase {
+                    let result = try await processPayment(request: dto)
+                    switch result {
+                    case .success:
+                        await MainActor.run {
+                            self.placeOrder(appRouter: appRouter, cartState: cartState)
+                        }
+                    case .cancelled:
+                        await MainActor.run {
+                            self.isPlacingOrder = false
+                        }
+                    case .failed(let reason):
+                        await MainActor.run {
+                            self.isPlacingOrder = false
+                            self.errorMessage = reason
+                        }
+                    }
+                } else {
+                    await MainActor.run {
+                        self.placeOrder(appRouter: appRouter, cartState: cartState)
+                    }
+                }
+            } catch let error as PaymentError {
+                await MainActor.run {
+                    self.isPlacingOrder = false
+                    self.errorMessage = error.errorDescription
+                }
+            } catch {
+                await MainActor.run {
+                    self.isPlacingOrder = false
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+    
+    func startCashOnDelivery(appRouter: AppRouter, cartState: CartState) {
+        guard selectedAddress != nil else {
+            self.errorMessage = "Please add or select a shipping address before placing your order."
+            return
+        }
+        guard totalAmountDecimal > 0 else {
+            self.errorMessage = PaymentError.invalidRequest.errorDescription
+            return
+        }
+        
+        isPlacingOrder = true
+        
+        Task {
+            try? await Task.sleep(nanoseconds: 800_000_000)
+            await MainActor.run {
+                self.placeOrder(appRouter: appRouter, cartState: cartState)
             }
         }
     }
