@@ -65,13 +65,16 @@ final class PaymentViewModel: ObservableObject {
 
         paymentState = .processing
 
+        let convertedAmount = CurrencyManager.shared.convert(orderTotal)
+        let currencyCode = CurrencyManager.shared.selectedCurrency
+
         let summaryItem = PKPaymentSummaryItem(
             label: orderLabel,
-            amount: NSDecimalNumber(decimal: orderTotal)
+            amount: NSDecimalNumber(decimal: convertedAmount)
         )
         let merchantItem = PKPaymentSummaryItem(
             label: PaymentConfiguration.merchantDisplayName,
-            amount: NSDecimalNumber(decimal: orderTotal)
+            amount: NSDecimalNumber(decimal: convertedAmount)
         )
 
         let dto = PaymentRequestDTO(
@@ -79,7 +82,7 @@ final class PaymentViewModel: ObservableObject {
             supportedNetworks: PaymentConfiguration.supportedNetworks,
             merchantCapabilities: PaymentConfiguration.merchantCapabilities,
             countryCode: PaymentConfiguration.countryCode,
-            currencyCode: PaymentConfiguration.currencyCode,
+            currencyCode: currencyCode,
             paymentSummaryItems: [summaryItem, merchantItem]
         )
 

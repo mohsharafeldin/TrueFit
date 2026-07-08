@@ -301,6 +301,7 @@ final class DIContainer: ObservableObject {
         CheckoutViewModel(
             getCartUseCase: getCartUseCase,
             getAddressesUseCase: getAddressesUseCase,
+            processPaymentUseCase: processPaymentUseCase,
             authManager: authManager,
             preferencesManager: preferencesManager
         )

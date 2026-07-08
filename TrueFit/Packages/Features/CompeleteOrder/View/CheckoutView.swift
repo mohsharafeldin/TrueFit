@@ -262,50 +262,17 @@ struct CheckoutView: View {
                     .foregroundColor(.textPrimary)
             }
             
-            VStack(spacing: Spacing.sm) {
-                ForEach(viewModel.paymentMethods) { method in
-                    let isSelected = viewModel.selectedPaymentMethod == method
-                    
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            viewModel.selectedPaymentMethod = method
-                        }
-                    }) {
-                        HStack(spacing: Spacing.sm) {
-                            Image(systemName: method.iconName)
-                                .font(.system(size: 20, weight: .medium))
-                                .foregroundColor(isSelected ? .brandPrimary : .textSecondary)
-                                .frame(width: 28)
-                            
-                            Text(method.title)
-                                .trueFitTextStyle(.headline)
-                                .foregroundColor(.textPrimary)
-                            
-                            Spacer()
-                            
-                            if isSelected {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.system(size: 22))
-                                    .foregroundColor(.brandPrimary)
-                            } else {
-                                Circle()
-                                    .stroke(Color.borderColor, lineWidth: 1.5)
-                                    .frame(width: 22, height: 22)
-                            }
-                        }
-                        .padding(.vertical, Spacing.md)
-                        .padding(.horizontal, Spacing.lg)
-                        .background(isSelected ? Color.brandPrimary.opacity(0.06) : Color.surface)
-                        .clipShape(RoundedRectangle.trueFit(Radius.lg))
-                        .overlay(
-                            RoundedRectangle.trueFit(Radius.lg)
-                                .stroke(isSelected ? Color.brandPrimary : Color.borderColor, lineWidth: isSelected ? 2 : 1)
-                        )
-                        .trueFitShadow(isSelected ? .sm : .xs)
-                    }
-                    .buttonStyle(.plain)
+            PaymentMethodsSection(
+                selectedMethod: $viewModel.selectedPaymentMethod,
+                isApplePayAvailable: viewModel.isApplePayAvailable,
+                isProcessing: viewModel.isPlacingOrder,
+                onApplePayAction: {
+                    viewModel.startApplePayment(appRouter: appRouter, cartState: globalCartState)
+                },
+                onCashOnDeliveryAction: {
+                    viewModel.startCashOnDelivery(appRouter: appRouter, cartState: globalCartState)
                 }
-            }
+            )
         }
     }
     
@@ -316,36 +283,14 @@ struct CheckoutView: View {
                 .background(Color.borderColor)
                 .shadow(color: Color.shadowColor.opacity(0.05), radius: 4, x: 0, y: -2)
             
-            VStack(spacing: Spacing.md) {
-                HStack {
-                    Text("Total")
-                        .trueFitTextStyle(.body)
-                        .foregroundColor(.textSecondary)
-                    Spacer()
-                    Text(viewModel.totalAmountText)
-                        .trueFitTextStyle(.title1)
-                        .foregroundColor(.textPrimary)
-                }
-                
-                Button(action: {
-                    viewModel.placeOrder(appRouter: appRouter, cartState: globalCartState)
-                }) {
-                    HStack(spacing: Spacing.xs) {
-                        if viewModel.isPlacingOrder {
-                            ProgressView()
-                                .tint(.white)
-                            Text("Processing...")
-                        } else {
-                            Text("Place order")
-                        }
-                    }
-                    .trueFitTextStyle(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, minHeight: 54)
-                    .background(viewModel.isPlacingOrder || viewModel.selectedAddress == nil ? Color.disabledColor : Color.brandPrimary)
-                    .clipShape(RoundedRectangle.trueFit(Radius.xl))
-                }
-                .disabled(viewModel.isPlacingOrder || viewModel.selectedAddress == nil)
+            HStack {
+                Text("Total")
+                    .trueFitTextStyle(.body)
+                    .foregroundColor(.textSecondary)
+                Spacer()
+                Text(viewModel.totalAmountText)
+                    .trueFitTextStyle(.title1)
+                    .foregroundColor(.textPrimary)
             }
             .padding(.horizontal, Spacing.md)
             .padding(.vertical, Spacing.md)
