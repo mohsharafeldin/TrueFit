@@ -55,7 +55,7 @@ struct HomeView: View {
             // New Arrivals Section
             VStack(spacing: Spacing.md) {
                 HomeSectionHeader(title: "New Arrivals 🔥", actionTitle: "See All") {
-                    // TODO: Navigate to full products list
+                    appRouter.navigate(to: .allProducts)
                 }
 
                 if viewModel.isLoadingProducts {
@@ -82,17 +82,25 @@ struct HomeView: View {
     // MARK: - Category Tab Content
     @ViewBuilder
     private var categoryTabContent: some View {
+        let columns = [
+            GridItem(.flexible(), spacing: Spacing.sm),
+            GridItem(.flexible(), spacing: Spacing.sm),
+            GridItem(.flexible(), spacing: Spacing.sm)
+        ]
+        
         VStack(spacing: Spacing.md) {
             if viewModel.isLoadingCollections {
                 categoryPlaceholder
             } else if viewModel.collections.isEmpty {
                 emptyStateView(message: "No categories found")
             } else {
-                ForEach(viewModel.collections) { collection in
-                    Button(action: {
-                        appRouter.navigate(to: .productsByCollection(collectionId: collection.id, title: collection.title))
-                    }) {
-                        CategoryCard(collection: collection)
+                LazyVGrid(columns: columns, spacing: Spacing.xl) {
+                    ForEach(viewModel.collections) { collection in
+                        Button(action: {
+                            appRouter.navigate(to: .productsByCollection(collectionId: collection.id, title: collection.title))
+                        }) {
+                            CategoryCard(collection: collection)
+                        }
                     }
                 }
             }
@@ -135,8 +143,15 @@ struct HomeView: View {
 
     @ViewBuilder
     private var categoryPlaceholder: some View {
-        ForEach(0..<4, id: \.self) { _ in
-            ShimmerCategoryCard()
+        let columns = [
+            GridItem(.flexible(), spacing: Spacing.sm),
+            GridItem(.flexible(), spacing: Spacing.sm),
+            GridItem(.flexible(), spacing: Spacing.sm)
+        ]
+        LazyVGrid(columns: columns, spacing: Spacing.xl) {
+            ForEach(0..<6, id: \.self) { _ in
+                ShimmerCategoryCard()
+            }
         }
     }
 
@@ -175,14 +190,11 @@ struct HomeHeaderView: View {
     var body: some View {
         HStack(spacing: Spacing.sm) {
             // Profile avatar
-            Circle()
-                .fill(Color.brandPrimary.opacity(0.15))
+            Image("user")
+                .resizable()
+                .scaledToFill()
                 .frame(width: 48, height: 48)
-                .overlay(
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(.brandPrimary)
-                )
+                .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: Spacing.xxs) {
                 Text("Hi, \(userName)")
@@ -311,23 +323,33 @@ struct HomeTabSelector: View {
 
 struct HomeBannerCarousel: View {
     @State private var currentPage = 0
-    private let banners = BannerData.samples
+    private let slides = ["slide1", "slide4" , "slide2", "slide3"]
+    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
     var body: some View {
         VStack(spacing: Spacing.sm) {
             TabView(selection: $currentPage) {
-                ForEach(banners.indices, id: \.self) { index in
-                    BannerCard(banner: banners[index])
+                ForEach(slides.indices, id: \.self) { index in
+                    Image(slides[index])
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 140)
+                        .clipped()
                         .tag(index)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .frame(height: 140)
             .clipShape(RoundedRectangle.trueFit(Radius.lg))
+            .onReceive(timer) { _ in
+                withAnimation {
+                    currentPage = (currentPage + 1) % slides.count
+                }
+            }
 
             // Page dots
             HStack(spacing: 6) {
-                ForEach(banners.indices, id: \.self) { index in
+                ForEach(slides.indices, id: \.self) { index in
                     Circle()
                         .fill(index == currentPage ? Color.brandPrimary : Color.textTertiary.opacity(0.3))
                         .frame(width: index == currentPage ? 8 : 6,
@@ -336,64 +358,6 @@ struct HomeBannerCarousel: View {
                 }
             }
         }
-    }
-}
-
-struct BannerData: Identifiable {
-    let id = UUID()
-    let title: String
-    let subtitle: String
-    let accentColor: Color
-
-    static let samples: [BannerData] = [
-        BannerData(title: "24% off shipping today\non bag purchases", subtitle: "By Kutuku Store", accentColor: .brandPrimary),
-        BannerData(title: "New Summer Collection\njust arrived", subtitle: "Explore Now", accentColor: .categoryApparel),
-        BannerData(title: "Free returns on\nall orders", subtitle: "Limited Time", accentColor: .categoryAccessories)
-    ]
-}
-
-struct BannerCard: View {
-    let banner: BannerData
-
-    var body: some View {
-        ZStack {
-            // Background
-            RoundedRectangle.trueFit(Radius.lg)
-                .fill(Color.surface)
-
-            // Accent circle decoration
-            GeometryReader { geo in
-                Circle()
-                    .fill(banner.accentColor.opacity(0.15))
-                    .frame(width: 160, height: 160)
-                    .offset(x: -40, y: geo.size.height * 0.1)
-            }
-            .clipped()
-
-            HStack {
-                VStack(alignment: .center, spacing: Spacing.xs) {
-                    Text(banner.title)
-                        .trueFitTextStyle(.headline)
-                        .foregroundColor(.textPrimary)
-                        .multilineTextAlignment(.center)
-
-                    Text(banner.subtitle)
-                        .trueFitTextStyle(.caption)
-                        .foregroundColor(.textSecondary)
-                }
-                .padding(.leading, Spacing.lg)
-
-                Spacer()
-
-                // Shopping bag icon as placeholder
-                Image(systemName: "bag.fill")
-                    .font(.system(size: 48))
-                    .foregroundColor(banner.accentColor.opacity(0.3))
-                    .padding(.trailing, Spacing.lg)
-            }
-        }
-        .clipShape(RoundedRectangle.trueFit(Radius.lg))
-        .trueFitShadow(.sm)
     }
 }
 
@@ -429,8 +393,8 @@ struct ProductsGridView: View {
     let onToggleFavorite: (Product) -> Void
 
     private let columns = [
-        GridItem(.flexible(), spacing: Spacing.md),
-        GridItem(.flexible(), spacing: Spacing.md)
+        GridItem(.flexible(), spacing: Spacing.lg),
+        GridItem(.flexible(), spacing: Spacing.lg)
     ]
 
     var body: some View {
@@ -474,8 +438,7 @@ struct HomeProductCard: View {
                     case .success(let image):
                         image
                             .resizable()
-                            .scaledToFit()
-                            .padding(Spacing.sm)
+                            .scaledToFill()
                     case .failure:
                         RoundedRectangle.trueFit(Radius.lg)
                             .fill(Color.surface)
@@ -488,13 +451,13 @@ struct HomeProductCard: View {
                         EmptyView()
                     }
                 }
-                .frame(height: 160)
+                .frame(height: 130)
                 .frame(maxWidth: .infinity)
                 .background(Color.surface)
                 .clipShape(RoundedRectangle.trueFit(Radius.lg))
                 .overlay(
                     RoundedRectangle.trueFit(Radius.lg)
-                        .stroke(comparisonManager.isSelected(product) ? Color.brandPrimary : Color.clear, lineWidth: 3)
+                        .stroke(comparisonManager.isSelected(product) ? Color.brandPrimary : Color.gray.opacity(0.2), lineWidth: comparisonManager.isSelected(product) ? 3 : 1)
                 )
                 .overlay(
                     Group {
@@ -577,46 +540,44 @@ struct CategoryCard: View {
     let collection: ProductCollection
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            // Background image or gradient
-            if let imageURL = collection.imageURL {
-                AsyncImage(url: imageURL) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    default:
-                        categoryPlaceholderBackground
+        VStack(spacing: Spacing.sm) {
+            // Background image
+            Group {
+                if let imageURL = collection.imageURL {
+                    AsyncImage(url: imageURL) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        default:
+                            categoryPlaceholderBackground
+                        }
                     }
+                } else {
+                    categoryPlaceholderBackground
                 }
-            } else {
-                categoryPlaceholderBackground
             }
-
-            // Gradient overlay for text readability
-            LinearGradient(
-                colors: [.black.opacity(0.5), .clear, .black.opacity(0.3)],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
+            .frame(width: 80, height: 80)
+            .background(Circle().fill(Color.surface))
+            .clipShape(Circle())
+            .overlay(Circle().stroke(Color.gray.opacity(0.2), lineWidth: 1))
+            .trueFitShadow(.md)
 
             // Text overlay
-            VStack(alignment: .leading, spacing: Spacing.xxs) {
+            VStack(spacing: 2) {
                 Text(collection.title)
-                    .trueFitTextStyle(.title2)
-                    .foregroundColor(.white)
+                    .trueFitTextStyle(.subheadline)
+                    .foregroundColor(.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(1)
 
                 Text("\(collection.productsCount) Product")
-                    .trueFitTextStyle(.subheadline)
-                    .foregroundColor(.white.opacity(0.85))
+                    .trueFitTextStyle(.caption)
+                    .foregroundColor(.textSecondary)
+                    .lineLimit(1)
             }
-            .padding(.leading, Spacing.lg)
         }
-        .frame(height: 120)
-        .frame(maxWidth: .infinity)
-        .clipShape(RoundedRectangle.trueFit(Radius.lg))
-        .trueFitShadow(.sm)
     }
 
     @ViewBuilder
@@ -742,22 +703,33 @@ struct ShimmerCategoryCard: View {
     @State private var isAnimating = false
 
     var body: some View {
-        RoundedRectangle.trueFit(Radius.lg)
-            .fill(Color.surface)
-            .frame(height: 120)
-            .frame(maxWidth: .infinity)
-            .overlay(
-                RoundedRectangle.trueFit(Radius.lg)
-                    .fill(
-                        LinearGradient(
-                            colors: [.clear, .white.opacity(0.3), .clear],
-                            startPoint: .leading,
-                            endPoint: .trailing
+        VStack(spacing: Spacing.sm) {
+            Circle()
+                .fill(Color.surface)
+                .frame(width: 80, height: 80)
+                .overlay(
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [.clear, .white.opacity(0.3), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .offset(x: isAnimating ? 400 : -400)
-            )
-            .clipped()
+                        .offset(x: isAnimating ? 100 : -100)
+                )
+                .overlay(Circle().stroke(Color.gray.opacity(0.2), lineWidth: 1))
+                .clipped()
+                .trueFitShadow(.md)
+            
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color.surface)
+                .frame(width: 60, height: 12)
+            
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color.surface)
+                .frame(width: 40, height: 10)
+        }
             .onAppear {
                 withAnimation(
                     .linear(duration: TrueFitMotion.loadingCycle)

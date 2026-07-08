@@ -142,9 +142,10 @@ extension MainAppView {
         case .payment(let amount):
             PaymentView(viewModel: container.makePaymentViewModel(orderTotal: amount))
             
-        case .productDetails(let id):
+        case .productDetails(let id, let variantId):
             ProductDetailsView(
                 productId: id,
+                preselectedVariantId: variantId,
                 viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
             )
         case .search:
@@ -161,10 +162,16 @@ extension MainAppView {
                     source: .brand(vendor: vendor)
                 )
             )
-        case .orders:
-            OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
-        case .orderDetails(let orderId):
-            OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
+        case .allProducts:
+            ProductListView(
+                viewModel: container.makeProductListViewModel(
+                    source: .allProducts
+                )
+            )
+		case .orders: 
+			OrderHistoryView(viewModel: container.makeOrderHistoryViewModel())
+		case .orderDetails(let orderId):
+			OrderDetailsView(viewModel: container.makeOrderDetailsViewModel(orderId: orderId))
         case .address:
             AddressView(viewModel: container.addressViewModel)
         case .addressSelection:
@@ -187,6 +194,15 @@ extension MainAppView {
             AIComparisonView(viewModel: AIComparisonViewModel(products: products))
         case .aiChat:
             AIChatView(viewModel: container.makeAIChatViewModel())
+            
+        case .faqs:
+            FAQsView()
+        case .contactUs:
+            ContactUsView()
+        case .termsAndConditions:
+            TermsAndConditionsView()
+        case .reviews:
+            ReviewsView()
         }
     }
 }

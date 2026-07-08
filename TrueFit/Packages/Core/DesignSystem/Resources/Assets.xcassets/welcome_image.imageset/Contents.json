@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "an_updated_version_of_data_image_image_1._move_the_hand_and_the_cluster_of.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

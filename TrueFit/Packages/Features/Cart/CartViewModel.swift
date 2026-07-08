@@ -146,6 +146,10 @@ final class CartViewModel: ObservableObject {
     
     // MARK: - Computed Properties for UI
     
+    var isGuest: Bool {
+        return preferencesManager.getUser() == nil
+    }
+    
     var lineCount: Int {
         guard case .success(let cart) = cartState else { return 0 }
         return cart.totalQuantity

@@ -31,7 +31,9 @@ struct CartView: View {
                     } : nil
                 )
             case .success(let cart):
-                if cart.isEmpty {
+                if viewModel.isGuest {
+                    CartEmptyView(onStartShopping: onStartShopping, isGuest: true)
+                } else if cart.isEmpty {
                     CartEmptyView(onStartShopping: onStartShopping)
                 } else {
                     CartContentView(

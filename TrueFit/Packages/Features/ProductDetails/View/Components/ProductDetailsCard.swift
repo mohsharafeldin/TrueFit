@@ -3,6 +3,7 @@ import SwiftUI
 struct ProductDetailsCard: View {
     let product: Product
     @ObservedObject var viewModel: ProductDetailsViewModel
+    @EnvironmentObject var appRouter: AppRouter
     
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.xl) {
@@ -24,10 +25,19 @@ struct ProductDetailsCard: View {
                 }
                 
                 HStack(alignment: .center) {
-                    HStack(spacing: Spacing.xxs) {
-                        Image(systemName: "star.fill").foregroundColor(.statusRating)
-                        Text("4.8").trueFitTextStyle(.subheadline).bold()
-                        Text("(320 Review)").trueFitTextStyle(.subheadline).foregroundColor(.textSecondary)
+                    Button(action: {
+                        appRouter.navigate(to: .reviews)
+                    }) {
+                        HStack(spacing: Spacing.xxs) {
+                            Image(systemName: "star.fill").foregroundColor(.statusRating)
+                            Text("4.8").trueFitTextStyle(.subheadline).bold()
+                                .foregroundColor(.textPrimary)
+                            Text("(320 Review)").trueFitTextStyle(.subheadline).foregroundColor(.textSecondary)
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.textSecondary)
+                                .padding(.leading, Spacing.xxs)
+                        }
                     }
                     
                     Spacer()

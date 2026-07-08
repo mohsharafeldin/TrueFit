@@ -144,6 +144,53 @@ class MockFavoritesRepository: FavoritesRepositoryProtocol {
     }
 }
 
+// MARK: - Mock Products Repository
+
+class MockProductsRepository: ProductsRepositoryProtocol {
+    func fetchNewArrivals(limit: Int) async throws -> [Product] { return [] }
+    func fetchCollections() async throws -> [ProductCollection] { return [] }
+    func getProduct(id: String) async throws -> Product {
+        return Product(
+            id: id,
+            title: "Mock Product",
+            description: "Mock Description",
+            vendor: "Mock",
+            productType: "Shoes",
+            handle: "mock-product",
+            status: .active,
+            tags: ["Mock"],
+            variants: [
+                ProductVariant(
+                    id: "gid://shopify/ProductVariant/mock",
+                    title: "Default Title",
+                    price: 100.0,
+                    compareAtPrice: nil,
+                    sku: "MOCK-01",
+                    isAvailable: true,
+                    requiresShipping: true,
+                    weight: nil,
+                    weightUnit: nil,
+                    inventoryQuantity: 10,
+                    imageId: nil,
+                    selectedOptions: [:]
+                )
+            ],
+            images: [],
+            options: [],
+            mainImage: nil,
+            isAvailable: true,
+            priceRange: PriceRange(min: 100.0, max: 100.0, isSinglePrice: true),
+            hasMultipleVariants: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+    }
+    func fetchBrands() async throws -> [Brand] { return [] }
+    func fetchProductsByCollection(collectionId: Int64) async throws -> [Product] { return [] }
+    func fetchProductsByVendor(vendor: String) async throws -> [Product] { return [] }
+    func fetchAllProducts() async throws -> [Product] { return [] }
+}
+
 // MARK: - Preview ViewModel Creator Extension
 
 extension PreviewMocks {
@@ -158,11 +205,17 @@ extension PreviewMocks {
         
         let getFavoritesUseCase = GetFavoritesUseCase(repository: mockRepo)
         let toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: mockRepo)
+        let mockCartRepo = MockCartRepository()
+        let mockProductRepo = MockProductsRepository()
         
         return FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            authManager: MockAuthManager()
+            authManager: MockAuthManager(),
+            addToCartUseCase: AddToCartUseCase(repository: mockCartRepo),
+            getProductUseCase: GetProductUseCase(repository: mockProductRepo),
+            preferencesManager: MockPreferencesManager(),
+            cartState: CartState()
         )
     }
 }
@@ -322,17 +375,7 @@ class MockAIChatRepository: AIChatRepositoryProtocol {
     }
 }
 
-class MockProductsRepository: ProductsRepositoryProtocol {
-    func fetchNewArrivals(limit: Int) async throws -> [Product] { return [] }
-    func fetchCollections() async throws -> [ProductCollection] { return [] }
-    func getProduct(id: String) async throws -> Product {
-        fatalError("Not needed for AI Chat preview")
-    }
-    func fetchBrands() async throws -> [Brand] { return [] }
-    func fetchProductsByCollection(collectionId: Int64) async throws -> [Product] { return [] }
-    func fetchProductsByVendor(vendor: String) async throws -> [Product] { return [] }
-    func fetchAllProducts() async throws -> [Product] { return [] }
-}
+
 
 // MARK: - AI Chat Preview ViewModel Creator Extension
 
