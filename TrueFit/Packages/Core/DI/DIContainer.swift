@@ -87,7 +87,11 @@ final class DIContainer: ObservableObject {
     private func makeLogoutUseCase() -> LogoutUseCaseProtocol {
         LogoutUseCase(authRepository: authRepository)
     }
-    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol {         LoginWithGoogleUseCase(authRepository: authRepository)
+    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol { LoginWithGoogleUseCase(authRepository: authRepository)
+    }
+    
+    private func makeSendEmailVerificationUseCase() -> SendEmailVerificationUseCaseProtocol {
+        SendEmailVerificationUseCase(authRepository: authRepository)
     }
     
     
@@ -245,7 +249,8 @@ final class DIContainer: ObservableObject {
             logoutUseCase: makeLogoutUseCase(),
             authManager: authManager,
             authRouter: authRouter,
-            loginWithGoogleUseCase: makeLoginWithGoogleUseCase()
+            loginWithGoogleUseCase: makeLoginWithGoogleUseCase(),
+            sendEmailVerificationUseCase: makeSendEmailVerificationUseCase()
         )
     }
     

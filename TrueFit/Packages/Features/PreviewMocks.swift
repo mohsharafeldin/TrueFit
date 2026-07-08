@@ -24,6 +24,10 @@ class MockAuthRepository: AuthRepositoryProtocol {
     func resetPassword(email: String) async throws {}
     
     func signOut() async throws {}
+    
+    func sendEmailVerification() async throws {}
+    
+    func isEmailVerified() -> Bool { return true }
 }
 
 // MARK: - Mock Use Cases
@@ -52,6 +56,10 @@ class MockLoginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol {
     func execute() async throws -> AuthResult {
         return AuthResult(user: User(id: "mock-id", email: "email", firstName: "Mock", lastName: "User", shopifyCustomerId: "mock-shopify-id"))
     }
+}
+
+class MockSendEmailVerificationUseCase: SendEmailVerificationUseCaseProtocol {
+    func execute() async throws {}
 }
 
 
@@ -91,7 +99,8 @@ struct PreviewMocks {
             logoutUseCase: MockLogoutUseCase(),
             authManager: MockAuthManager(),
             authRouter: AuthRouter(),
-            loginWithGoogleUseCase: MockLoginWithGoogleUseCase()
+            loginWithGoogleUseCase: MockLoginWithGoogleUseCase(),
+            sendEmailVerificationUseCase: MockSendEmailVerificationUseCase()
         )
     }
 }

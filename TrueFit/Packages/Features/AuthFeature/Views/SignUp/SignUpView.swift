@@ -130,6 +130,11 @@ struct SignUpView: View {
                 viewModel.errorMessage = nil
             }
         }
+        .sheet(isPresented: $viewModel.showEmailVerificationSheet) {
+            EmailVerificationView(viewModel: viewModel)
+                .presentationDetents([.height(520)])
+                .presentationDragIndicator(.hidden)
+        }
     }
     
     private var headerView: some View {
