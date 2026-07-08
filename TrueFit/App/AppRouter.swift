@@ -31,6 +31,7 @@ enum AppRoute: Hashable {
     case editAddress(address: Address)
     case addressDetailsForm(address: Address)
     case currency
+    case aiComparison(products: [Product])
 }
 
 enum AppTab: Hashable {
