@@ -13,4 +13,6 @@ protocol AuthRepositoryProtocol {
     func resetPassword(email: String) async throws
     func signOut() async throws
     func loginWithGoogle() async throws -> AuthResult
+    func sendEmailVerification() async throws
+    func isEmailVerified() -> Bool
 }

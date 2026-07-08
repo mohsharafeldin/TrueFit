@@ -32,5 +32,17 @@ public final class FirebaseAuthDataSource: FirebaseAuthDataSourceProtocol {
     public func signOut() throws {
         try Auth.auth().signOut()
     }
+    
+    public func sendEmailVerification() async throws {
+        guard let user = Auth.auth().currentUser else { return }
+
+           try await user.sendEmailVerification()
+
+           
+    }
+    
+    public func isEmailVerified() -> Bool {
+        return Auth.auth().currentUser?.isEmailVerified ?? false
+    }
 }
 

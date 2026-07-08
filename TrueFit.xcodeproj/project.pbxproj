@@ -221,6 +221,8 @@
 		4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */; };
 		4CB476922FF9695A00BBA891 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		4CB476992FF9AA8D00BBA891 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB476982FF9AA8D00BBA891 /* AddressView.swift */; };
+		4CB4A3D32FFDD83100077A21 /* SendEmailVerificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A3D22FFDD83100077A21 /* SendEmailVerificationUseCase.swift */; };
+		4CB4A3D52FFDD88500077A21 /* EmailVerificationView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4A3D42FFDD88500077A21 /* EmailVerificationView 2.swift */; };
 		4CC1DC382FFD8DA000C0DB63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1DC372FFD8DA000C0DB63 /* GoogleService-Info.plist */; };
 		4CC7276C2FFD22EB00182113 /* PaymentGatewayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7276B2FFD22EB00182113 /* PaymentGatewayProtocol.swift */; };
 		4CC7276E2FFD22FA00182113 /* StubPaymentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC7276D2FFD22FA00182113 /* StubPaymentGateway.swift */; };
@@ -511,6 +513,8 @@
 		4CAAF4882FF477AF00D751DB /* GoogleSignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInResult.swift; sourceTree = "<group>"; };
 		4CAAF48A2FF4785B00D751DB /* GoogleSignInDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInDataSource.swift; sourceTree = "<group>"; };
 		4CB476982FF9AA8D00BBA891 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		4CB4A3D22FFDD83100077A21 /* SendEmailVerificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailVerificationUseCase.swift; sourceTree = "<group>"; };
+		4CB4A3D42FFDD88500077A21 /* EmailVerificationView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmailVerificationView 2.swift"; sourceTree = "<group>"; };
 		4CC1DC372FFD8DA000C0DB63 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4CC7276B2FFD22EB00182113 /* PaymentGatewayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentGatewayProtocol.swift; sourceTree = "<group>"; };
 		4CC7276D2FFD22FA00182113 /* StubPaymentGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubPaymentGateway.swift; sourceTree = "<group>"; };
@@ -755,6 +759,7 @@
 			children = (
 				0C198EA42FF2BAD500477701 /* SignUpView.swift */,
 				0C198EA52FF2BAD500477701 /* SuccessView.swift */,
+				4CB4A3D42FFDD88500077A21 /* EmailVerificationView 2.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -1053,6 +1058,7 @@
 		33AA80D72FEFDFA300A20AF9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				4CB4A3D22FFDD83100077A21 /* SendEmailVerificationUseCase.swift */,
 				4C2D28072FFC97960017254C /* Payment */,
 				4C0F11B32FFA988F00B096F5 /* Address */,
 				33CB34EB2FF8E43600798582 /* Favorites */,
@@ -2126,6 +2132,7 @@
 				4C0F11B82FFA98EC00B096F5 /* Address.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				4C2D28132FFC97DB0017254C /* PaymentRequestDTO.swift in Sources */,
+				4CB4A3D52FFDD88500077A21 /* EmailVerificationView 2.swift in Sources */,
 				0CCA5D6A2FFC1844005C538C /* ProfileBottomActionSection.swift in Sources */,
 				33AB51552FFC07CF0085ECAC /* OrdersRemoteDataSourceProtocol.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
@@ -2211,6 +2218,7 @@
 				33AB51452FFC06810085ECAC /* OrdersRepositoryProtocol.swift in Sources */,
 				33CB34E82FF8E3C300798582 /* FavoritesRepositoryProtocol.swift in Sources */,
 				A0AB9F73D8877DB9319F1411 /* User.swift in Sources */,
+				4CB4A3D32FFDD83100077A21 /* SendEmailVerificationUseCase.swift in Sources */,
 				3AA5FCEA458B6D9BAC4348BF /* ProductsRepositoryProtocol.swift in Sources */,
 				A3F06C46DA68D682F7738F53 /* FetchCollectionsUseCase.swift in Sources */,
 				33AB510E2FFBC1110085ECAC /* OrderStatus.swift in Sources */,
