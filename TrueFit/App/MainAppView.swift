@@ -117,6 +117,8 @@ extension MainAppView {
                 editingAddressId: nil )
         case .currency:
             CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
+        case .aiComparison(let products):
+            AIComparisonView(viewModel: AIComparisonViewModel(products: products))
         }
     }
     
