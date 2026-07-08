@@ -37,13 +37,6 @@ struct HomeView: View {
                 }
             }
             .background(Color.trueFitBackground)
-            
-            // The AI Floating Action Button
-            AIFloatingButton {
-                appRouter.navigate(to: .aiChat)
-            }
-            .padding(.trailing, Spacing.lg)
-            .padding(.bottom, Spacing.xxl)
         }
         .ignoresSafeArea(.all, edges: .bottom)
         .trueFitGuestAlert(isPresented: $showGuestAlert)
@@ -169,48 +162,6 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, Spacing.xxxl)
-    }
-}
-
-// MARK: - AI Floating Button (NEW COMPONENT)
-
-struct AIFloatingButton: View {
-    var action: () -> Void
-    @State private var isPulsing = false
-    
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                // Outer glowing pulse effect
-                Circle()
-                    .fill(Color.brandPrimary.opacity(0.3))
-                    .frame(width: 70, height: 70)
-                    .scaleEffect(isPulsing ? 1.2 : 0.8)
-                    .opacity(isPulsing ? 0 : 1)
-                
-                // Inner solid button
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [Color.brandPrimary, Color.brandPrimary.opacity(0.8)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 60, height: 60)
-                    .trueFitShadow(.md)
-                
-                // Sparkle Icon (Represents AI)
-                Image(systemName: "sparkles")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundColor(.white)
-            }
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: false)) {
-                isPulsing = true
-            }
-        }
     }
 }
 
