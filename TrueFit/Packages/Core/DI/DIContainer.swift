@@ -190,6 +190,31 @@ final class DIContainer: ObservableObject {
     // Payment Use Cases
     private lazy var processPaymentUseCase = ProcessPaymentUseCase(repository: paymentRepository)
     
+    // MARK: - AI CHAT FEATURE
+        
+        // Networking & Data Source
+        private lazy var geminiService: GeminiChatServiceProtocol = {
+            GeminiChatService()
+        }()
+        
+        private lazy var aiChatRemoteDataSource: AIChatRemoteDataSourceProtocol = {
+            AIChatRemoteDataSource(geminiService: geminiService)
+        }()
+        
+        // Repository
+        private lazy var aiChatRepository: AIChatRepositoryProtocol = {
+            AIChatRepository(remoteDataSource: aiChatRemoteDataSource)
+        }()
+        
+        // Use Cases
+        private lazy var sendChatMessageUseCase: SendChatMessageUseCase = {
+            SendChatMessageUseCase(repository: aiChatRepository)
+        }()
+        
+        private lazy var buildProductContextUseCase: BuildProductContextUseCase = {
+            BuildProductContextUseCase(productsRepository: productsRepository)
+        }()
+    
     // MARK: - Init
     public init() {}
     
@@ -281,16 +306,18 @@ final class DIContainer: ObservableObject {
         CheckoutViewModel(
             getCartUseCase: getCartUseCase,
             getAddressesUseCase: getAddressesUseCase,
+            processPaymentUseCase: processPaymentUseCase,
             authManager: authManager,
             preferencesManager: preferencesManager
         )
     }
     
     func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
-        ProductListViewModel(
+        return ProductListViewModel(
             source: source,
             fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
-            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase,
+            fetchAllProductsUseCase: fetchAllProductsUseCase
         )
     }
     
@@ -298,7 +325,11 @@ final class DIContainer: ObservableObject {
         FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            authManager: authManager
+            authManager: authManager,
+            addToCartUseCase: addToCartUseCase,
+            getProductUseCase: getProductUseCase,
+            preferencesManager: preferencesManager,
+            cartState: cartState
         )
     }
     
@@ -339,6 +370,14 @@ final class DIContainer: ObservableObject {
             orderLabel: orderLabel
         )
     }
+    
+    
+    public func makeAIChatViewModel() -> AIChatViewModel {
+            AIChatViewModel(
+                sendChatMessageUseCase: sendChatMessageUseCase,
+                buildProductContextUseCase: buildProductContextUseCase
+            )
+        }
     
     
 }

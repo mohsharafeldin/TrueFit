@@ -1,23 +1,25 @@
 import SwiftUI
 
 struct ProfileSupportSection: View {
+    @EnvironmentObject var appRouter: AppRouter
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ProfileSectionHeader(title: "Support & Info")
             
             VStack(spacing: 0) {
                 ProfileRow(icon: "questionmark.circle", title: "FAQs") {
-                    // Navigate to FAQs
+                    appRouter.navigate(to: .faqs)
                 }
                 Divider().padding(.leading, 48)
                 
                 ProfileRow(icon: "envelope", title: "Contact Us") {
-                    // Navigate to Contact
+                    appRouter.navigate(to: .contactUs)
                 }
                 Divider().padding(.leading, 48)
                 
                 ProfileRow(icon: "doc.text", title: "Terms & Conditions") {
-                    // Navigate to Terms
+                    appRouter.navigate(to: .termsAndConditions)
                 }
             }
             .background(Color.surface)

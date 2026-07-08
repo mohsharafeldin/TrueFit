@@ -14,75 +14,125 @@ struct MainAppView: View {
     @EnvironmentObject var cartState: CartState
     
     var body: some View {
-        TabView(selection: $appRouter.selectedTab) {
-            // Home Tab
-            NavigationStack(path: $appRouter.homePath) {
-                HomeView(viewModel: container.makeHomeViewModel())
+        ZStack(alignment: .bottom) {
+            
+            TabView(selection: $appRouter.selectedTab) {
+                // Home Tab
+                NavigationStack(path: $appRouter.homePath) {
+                    HomeView(viewModel: container.makeHomeViewModel())
+                        .navigationDestination(for: AppRoute.self, destination: destination(for:))
+                }
+                .tabItem {
+                    Image("ic_home")
+                    Text("Home")
+                }
+                .tag(AppTab.home)
+                
+                // Favorites Tab
+                NavigationStack(path: $appRouter.favoritesPath) {
+                    FavoritesView(viewModel: container.makeFavoritesViewModel())
+                        .navigationDestination(for: AppRoute.self, destination: destination(for:))
+                }
+                .tabItem {
+                    Image("ic_favorite")
+                    Text("Favorite")
+                }
+                .tag(AppTab.favorites)
+                
+                // Cart Tab
+                NavigationStack(path: $appRouter.cartPath) {
+                    CartView(
+                        viewModelFactory: { container.makeCartViewModel() },
+                        onStartShopping: {
+                            appRouter.popToRoot()
+                            appRouter.switchTab(to: .home)
+                        }
+                    )
                     .navigationDestination(for: AppRoute.self, destination: destination(for:))
+                }
+                .tabItem {
+                    Image("ic_cart")
+                    Text("Cart")
+                }
+                .badge(cartState.itemCount > 0 ? cartState.itemCount : 0)
+                .tag(AppTab.cart)
+                
+                // Profile Tab
+                NavigationStack(path: $appRouter.profilePath) {
+                    ProfileView(viewModelFactory: { container.makeProfileViewModel() })
+                        .navigationDestination(for: AppRoute.self, destination: destination(for:))
+                }
+                .tabItem {
+                    Image("ic_profile")
+                    Text("Profile")
+                }
+                .tag(AppTab.profile)
             }
-            .tabItem {
-                Image("ic_home")
-                Text("Home")
-            }
-            .tag(AppTab.home)
             
-            // Favorites Tab
-            NavigationStack(path: $appRouter.favoritesPath) {
-                FavoritesView(viewModel: container.makeFavoritesViewModel())
-                    .navigationDestination(for: AppRoute.self, destination: destination(for:))
+            if appRouter.selectedTab == .home && appRouter.homePath.isEmpty {
+                SmartAIPill {
+                    appRouter.navigate(to: .aiChat)
+                }
+                .padding(.bottom, 60)
             }
-            .tabItem {
-                Image("ic_favorite")
-                Text("Favorite")
-            }
-            .tag(AppTab.favorites)
-            
-            // Cart Tab
-            NavigationStack(path: $appRouter.cartPath) {
-                CartView(
-                    viewModelFactory: { container.makeCartViewModel() },
-                    onStartShopping: {
-                        appRouter.popToRoot()
-                        appRouter.switchTab(to: .home)
-                    }
-                )
-                .navigationDestination(for: AppRoute.self, destination: destination(for:))
-            }
-            .tabItem {
-                Image("ic_cart")
-                Text("Cart")
-            }
-            .badge(cartState.itemCount > 0 ? cartState.itemCount : 0)
-            .tag(AppTab.cart)
-            
-//            // Payment Tab
-//            NavigationStack(path: $appRouter.paymentPath) {
-//                PaymentView(viewModel: container.makePaymentViewModel(orderTotal: 100))
-//                    .navigationDestination(for: AppRoute.self, destination: destination(for:))
-//            }
-//            .tabItem {
-//                Image(systemName: "creditcard")
-//                Text("Payment")
-//            }
-//            .tag(AppTab.payment)
-            
-            // Profile Tab
-            NavigationStack(path: $appRouter.profilePath) {
-                ProfileView(viewModelFactory: { container.makeProfileViewModel() })
-                    .navigationDestination(for: AppRoute.self, destination: destination(for:))
-            }
-            .tabItem {
-                Image("ic_profile")
-                Text("Profile")
-            }
-            .tag(AppTab.profile)
         }
-        
     }
 }
 
-extension MainAppView {
+// MARK: - Smart AI Pill
+struct SmartAIPill: View {
+    var action: () -> Void
+    @State private var isGleaming = false
     
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 16, weight: .bold))
+                
+                Text("Ask TrueFit AI")
+                    .font(.system(size: 14, weight: .semibold))
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .background(
+                ZStack {
+                    // Gradient
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.blue, .purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    
+                    // Shimmering
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.clear, .white.opacity(0.4), .clear],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .offset(x: isGleaming ? 150 : -150)
+                }
+            )
+            .clipShape(Capsule())
+            .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 2).repeatForever(autoreverses: false)) {
+                isGleaming = true
+            }
+        }
+    }
+}
+
+// MARK: - Navigation Destinations
+extension MainAppView {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
@@ -94,9 +144,10 @@ extension MainAppView {
         case .payment(let amount):
             PaymentView(viewModel: container.makePaymentViewModel(orderTotal: amount))
             
-        case .productDetails(let id):
+        case .productDetails(let id, let variantId):
             ProductDetailsView(
                 productId: id,
+                preselectedVariantId: variantId,
                 viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
             )
         case .search:
@@ -111,6 +162,12 @@ extension MainAppView {
             ProductListView(
                 viewModel: container.makeProductListViewModel(
                     source: .brand(vendor: vendor)
+                )
+            )
+        case .allProducts:
+            ProductListView(
+                viewModel: container.makeProductListViewModel(
+                    source: .allProducts
                 )
             )
 		case .orders: 
@@ -135,7 +192,19 @@ extension MainAppView {
                 editingAddressId: nil )
         case .currency:
             CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
+        case .aiComparison(let products):
+            AIComparisonView(viewModel: AIComparisonViewModel(products: products))
+        case .aiChat:
+            AIChatView(viewModel: container.makeAIChatViewModel())
+            
+        case .faqs:
+            FAQsView()
+        case .contactUs:
+            ContactUsView()
+        case .termsAndConditions:
+            TermsAndConditionsView()
+        case .reviews:
+            ReviewsView()
         }
     }
-    
 }

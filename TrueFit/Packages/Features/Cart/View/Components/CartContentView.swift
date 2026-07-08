@@ -3,6 +3,7 @@ import SwiftUI
 struct CartContentView: View {
     let cart: Cart
     @ObservedObject var viewModel: CartViewModel
+    @EnvironmentObject var appRouter: AppRouter
     @Binding var isDiscountExpanded: Bool
     let onCheckout: () -> Void
     
@@ -16,6 +17,10 @@ struct CartContentView: View {
                         VStack(spacing: Spacing.xl) {
                             ForEach(cart.lines, id: \.id) { line in
                                 CartLineRow(line: line, viewModel: viewModel)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        appRouter.navigate(to: .productDetails(productId: line.rawProductId, variantId: line.rawVariantId))
+                                    }
                             }
                         }
                         .padding(.top, Spacing.md)

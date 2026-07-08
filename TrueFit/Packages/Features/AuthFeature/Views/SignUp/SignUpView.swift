@@ -11,20 +11,26 @@ struct SignUpView: View {
     @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
-        ScrollView {
+        ZStack {
+            Color.trueFitBackground.ignoresSafeArea(edges: .all)
+            
+            VStack(spacing: 0) {
+                headerView
+                
+                ScrollView {
             VStack(alignment: .leading, spacing: Spacing.xl) {
                 
                 // Hero Section
                 VStack(alignment: .leading, spacing: Spacing.xs) {
                     Text("Create Account")
-                        .trueFitTextStyle(.display)
+                        .trueFitTextStyle(.title1)
                         .foregroundColor(.textPrimary)
                     
                     Text("Start learning with create your account")
                         .trueFitTextStyle(.subheadline)
                         .foregroundColor(.textSecondary)
                 }
-                .padding(.top, Spacing.xxxxl)
+                .padding(.top, Spacing.lg)
                 .padding(.horizontal, Spacing.md)
                 
                 // Form Card
@@ -67,52 +73,49 @@ struct SignUpView: View {
                 .trueFitShadow(.sm)
                 .padding(.horizontal, Spacing.md)
                 
-                // Primary Action
-                PrimaryButton(title: "Create Account") {
-                    viewModel.signUp()
-                }
-                .padding(.horizontal, Spacing.md)
-                .padding(.top, Spacing.sm)
-                
-                // Social Login
+                // Actions Group
                 VStack(spacing: Spacing.md) {
-                    Text("Or using other method")
-                        .trueFitTextStyle(.footnote)
-                        .foregroundColor(.textSecondary)
+                    // Primary Action
+                    PrimaryButton(title: "Create Account") {
+                        viewModel.signUp()
+                    }
+                    .padding(.horizontal, Spacing.md)
                     
-                    SocialLoginButton(title: "Sign Up with Google", iconImage: .googleIcon) {
-                        print("Google Sign Up Tapped")
-                    }
+                    // Social Login
+                    VStack(spacing: Spacing.md) {
+                        Text("Or using other method")
+                            .trueFitTextStyle(.footnote)
+                            .foregroundColor(.textSecondary)
                         
-                    SocialLoginButton(title: "Sign Up with Facebook", iconImage: .facebookIcon) {
-                        print("Facebook Sign Up Tapped")
+                        SocialLoginButton(title: "Sign Up with Google", iconImage: .googleIcon) {
+                            print("Google Sign Up Tapped")
+                        }
                     }
-                }
-                .padding(.horizontal, Spacing.md)
-                .padding(.top, Spacing.lg)
-                
-                // Already have account
-                HStack {
-                    Text("Already have an account?")
+                    .padding(.horizontal, Spacing.md)
+                    
+                    // Already have account
+                    HStack {
+                        Text("Already have an account?")
+                            .trueFitTextStyle(.footnote)
+                            .foregroundColor(.textSecondary)
+                        Button("Sign In") {
+                            viewModel.goBack()
+                        }
                         .trueFitTextStyle(.footnote)
-                        .foregroundColor(.textSecondary)
-                    Button("Sign In") {
-                        viewModel.goBack()
+                        .foregroundColor(.brandPrimary)
+                        .fontWeight(.semibold)
                     }
-                    .trueFitTextStyle(.footnote)
-                    .foregroundColor(.brandPrimary)
-                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .padding(.top, Spacing.md)
+                .padding(.top, Spacing.sm)
                 
                 Spacer(minLength: Spacing.xxxxl)
             }
         }
         .scrollDismissesKeyboard(.interactively)
-        .background(
-            Color.trueFitBackground
-                .ignoresSafeArea(edges: .bottom)
-        )
+            } // Close VStack
+        } // Close ZStack
+        .navigationBarHidden(true)
         .overlay {
             if viewModel.isLoading {
                 Color.black.opacity(0.3)
@@ -132,6 +135,26 @@ struct SignUpView: View {
                 .presentationDetents([.height(520)])
                 .presentationDragIndicator(.hidden)
         }
+    }
+    
+    private var headerView: some View {
+        HStack {
+            Button(action: {
+                viewModel.goBack()
+            }) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.textPrimary)
+                    .frame(width: 40, height: 40)
+                    .background(Color.surface)
+                    .clipShape(Circle())
+                    .trueFitShadow(.xs)
+            }
+            Spacer()
+        }
+        .padding(.horizontal, Spacing.md)
+        .padding(.top, Spacing.md)
+        .padding(.bottom, Spacing.xs)
     }
 }
 

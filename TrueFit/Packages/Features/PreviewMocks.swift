@@ -153,6 +153,53 @@ class MockFavoritesRepository: FavoritesRepositoryProtocol {
     }
 }
 
+// MARK: - Mock Products Repository
+
+class MockProductsRepository: ProductsRepositoryProtocol {
+    func fetchNewArrivals(limit: Int) async throws -> [Product] { return [] }
+    func fetchCollections() async throws -> [ProductCollection] { return [] }
+    func getProduct(id: String) async throws -> Product {
+        return Product(
+            id: id,
+            title: "Mock Product",
+            description: "Mock Description",
+            vendor: "Mock",
+            productType: "Shoes",
+            handle: "mock-product",
+            status: .active,
+            tags: ["Mock"],
+            variants: [
+                ProductVariant(
+                    id: "gid://shopify/ProductVariant/mock",
+                    title: "Default Title",
+                    price: 100.0,
+                    compareAtPrice: nil,
+                    sku: "MOCK-01",
+                    isAvailable: true,
+                    requiresShipping: true,
+                    weight: nil,
+                    weightUnit: nil,
+                    inventoryQuantity: 10,
+                    imageId: nil,
+                    selectedOptions: [:]
+                )
+            ],
+            images: [],
+            options: [],
+            mainImage: nil,
+            isAvailable: true,
+            priceRange: PriceRange(min: 100.0, max: 100.0, isSinglePrice: true),
+            hasMultipleVariants: false,
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+    }
+    func fetchBrands() async throws -> [Brand] { return [] }
+    func fetchProductsByCollection(collectionId: Int64) async throws -> [Product] { return [] }
+    func fetchProductsByVendor(vendor: String) async throws -> [Product] { return [] }
+    func fetchAllProducts() async throws -> [Product] { return [] }
+}
+
 // MARK: - Preview ViewModel Creator Extension
 
 extension PreviewMocks {
@@ -167,11 +214,17 @@ extension PreviewMocks {
         
         let getFavoritesUseCase = GetFavoritesUseCase(repository: mockRepo)
         let toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: mockRepo)
+        let mockCartRepo = MockCartRepository()
+        let mockProductRepo = MockProductsRepository()
         
         return FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            authManager: MockAuthManager()
+            authManager: MockAuthManager(),
+            addToCartUseCase: AddToCartUseCase(repository: mockCartRepo),
+            getProductUseCase: GetProductUseCase(repository: mockProductRepo),
+            preferencesManager: MockPreferencesManager(),
+            cartState: CartState()
         )
     }
 }
@@ -315,6 +368,49 @@ extension PreviewMocks {
             cartStateModel: CartState(),
             orderTotal: 100.0,
             orderLabel: "Preview Order"
+        )
+    }
+}
+
+// MARK: - Mock AI Chat Repository
+
+class MockAIChatRepository: AIChatRepositoryProtocol {
+    var mockResponse: String = "Great choice! 🔥 Here are some options from our TrueFit catalog:\n\n1. **Nike Air Force 1** by Nike — $120\n2. **Adidas Ultraboost** by Adidas — $190\n\nWould you like more details on any of these?"
+    
+    func sendMessage(_ text: String, history: [ChatBootMessage], systemContext: String) async throws -> String {
+        // Simulate network delay for realistic preview behavior
+        try await Task.sleep(nanoseconds: 500_000_000)
+        return mockResponse
+    }
+}
+
+
+
+// MARK: - AI Chat Preview ViewModel Creator Extension
+
+extension PreviewMocks {
+    @MainActor
+    static func makeAIChatViewModel(withMessages: Bool = false) -> AIChatViewModel {
+        let mockChatRepo = MockAIChatRepository()
+        let mockProductsRepo = MockProductsRepository()
+        
+        let sendUseCase = SendChatMessageUseCase(repository: mockChatRepo)
+        let buildContextUseCase = BuildProductContextUseCase(productsRepository: mockProductsRepo)
+        
+        var mockMessages: [ChatBootMessage] = []
+        
+        if withMessages {
+            mockMessages = [
+                ChatBootMessage(text: "White sneakers under $50 👟", isUser: true),
+                ChatBootMessage(text: "I found some amazing options for you! 🔥\n\n1. Classic White Canvas - $35\n2. Sport Runner White - $45\n\nWould you like me to open any of them?", isUser: false),
+                ChatBootMessage(text: "Yes, show me the first one please.", isUser: true)
+            ]
+        }
+        
+        return AIChatViewModel(
+            sendChatMessageUseCase: sendUseCase,
+            buildProductContextUseCase: buildContextUseCase,
+            mockMessages: mockMessages
         )
     }
 }

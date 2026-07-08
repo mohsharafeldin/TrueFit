@@ -113,8 +113,11 @@ struct CartLineRow: View {
                     }
                 }
             }
+            .padding(Spacing.md)
+            .background(Color.surface)
+            .clipShape(RoundedRectangle.trueFit(Radius.lg))
+            .trueFitShadow(.sm)
             .padding(.horizontal, Spacing.md)
-            .background(Color.trueFitBackground) // Must have solid background to hide the button beneath it
             .offset(x: offset)
             .gesture(
                 DragGesture()

@@ -27,7 +27,7 @@ struct PaymentOrderSummaryCard: View {
                     .font(.trueFitCallout)
                     .foregroundColor(.textSecondary)
                 Spacer()
-                Text(total, format: .currency(code: PaymentConfiguration.currencyCode))
+                Text(PriceFormatter.format(total))
                     .font(.trueFitHeadline)
                     .foregroundColor(.textPrimary)
             }
