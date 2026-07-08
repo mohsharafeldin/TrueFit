@@ -102,7 +102,7 @@ struct ProductDetailsView: View {
             }
             
             // Sticky Bottom Bar
-            ProductDetailsBottomBar(viewModel: viewModel)
+            ProductDetailsBottomBar(viewModel: viewModel, onGuestAction: { showGuestAlert = true })
         }
     }
 }
