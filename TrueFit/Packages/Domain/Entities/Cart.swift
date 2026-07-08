@@ -29,6 +29,14 @@ struct CartLine {
     let lineTotal: Money
     let compareAtLineTotal: Money?
     var isOnSale: Bool { compareAtPrice != nil && compareAtPrice!.amount > unitPrice.amount }
+    
+    var rawProductId: String {
+        productId.components(separatedBy: "/").last ?? productId
+    }
+    
+    var rawVariantId: String {
+        variantId.components(separatedBy: "/").last ?? variantId
+    }
 }
 
 struct Money {

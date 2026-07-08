@@ -11,6 +11,7 @@ import Foundation
 enum ProductListSource: Equatable {
     case collection(id: Int64, title: String)
     case brand(vendor: String)
+    case allProducts
 }
 
 @MainActor
@@ -31,6 +32,8 @@ final class ProductListViewModel: ObservableObject {
             return title
         case .brand(let vendor):
             return vendor
+        case .allProducts:
+            return "All Products"
         }
     }
 
@@ -38,17 +41,20 @@ final class ProductListViewModel: ObservableObject {
 
     private let fetchProductsByCollectionUseCase: FetchProductsByCollectionUseCase
     private let fetchProductsByVendorUseCase: FetchProductsByVendorUseCase
+    private let fetchAllProductsUseCase: FetchAllProductsUseCase
 
     // MARK: - Init
 
     init(
         source: ProductListSource,
         fetchProductsByCollectionUseCase: FetchProductsByCollectionUseCase,
-        fetchProductsByVendorUseCase: FetchProductsByVendorUseCase
+        fetchProductsByVendorUseCase: FetchProductsByVendorUseCase,
+        fetchAllProductsUseCase: FetchAllProductsUseCase
     ) {
         self.source = source
         self.fetchProductsByCollectionUseCase = fetchProductsByCollectionUseCase
         self.fetchProductsByVendorUseCase = fetchProductsByVendorUseCase
+        self.fetchAllProductsUseCase = fetchAllProductsUseCase
     }
 
     // MARK: - Public Methods
@@ -64,6 +70,8 @@ final class ProductListViewModel: ObservableObject {
                 fetchedProducts = try await fetchProductsByCollectionUseCase.execute(collectionId: id)
             case .brand(let vendor):
                 fetchedProducts = try await fetchProductsByVendorUseCase.execute(vendor: vendor)
+            case .allProducts:
+                fetchedProducts = try await fetchAllProductsUseCase.execute()
             }
 
             self.products = fetchedProducts

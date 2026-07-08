@@ -33,7 +33,7 @@ struct MainAppView: View {
             }
             .tabItem {
                 Image("ic_favorite")
-                Text("Favorite")
+                Text("Wishlist")
             }
             .tag(AppTab.favorites)
             
@@ -94,9 +94,10 @@ extension MainAppView {
         case .payment(let amount):
             PaymentView(viewModel: container.makePaymentViewModel(orderTotal: amount))
             
-        case .productDetails(let id):
+        case .productDetails(let id, let variantId):
             ProductDetailsView(
                 productId: id,
+                preselectedVariantId: variantId,
                 viewModelFactory: { container.makeProductDetailsViewModel(productId: id) }
             )
         case .search:
@@ -111,6 +112,12 @@ extension MainAppView {
             ProductListView(
                 viewModel: container.makeProductListViewModel(
                     source: .brand(vendor: vendor)
+                )
+            )
+        case .allProducts:
+            ProductListView(
+                viewModel: container.makeProductListViewModel(
+                    source: .allProducts
                 )
             )
 		case .orders: 
@@ -137,6 +144,15 @@ extension MainAppView {
             CurrencyConverterView(viewModelFactory: container.makeCurrencyConverterViewModel())
         case .aiComparison(let products):
             AIComparisonView(viewModel: AIComparisonViewModel(products: products))
+            
+        case .faqs:
+            FAQsView()
+        case .contactUs:
+            ContactUsView()
+        case .termsAndConditions:
+            TermsAndConditionsView()
+        case .reviews:
+            ReviewsView()
         }
     }
     

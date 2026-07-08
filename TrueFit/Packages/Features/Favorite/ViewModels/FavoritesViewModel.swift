@@ -14,6 +14,8 @@ final class FavoritesViewModel: ObservableObject {
     @Published var favoriteProducts: [FavoriteItem] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var toastMessage: String?
+    @Published var toastStyle: ToastStyle = .success
     @Published var searchQuery: String = ""
     @Published var selectedCategory: String = "All"
     @Published var isGuest: Bool = false
@@ -22,16 +24,28 @@ final class FavoritesViewModel: ObservableObject {
     private let getFavoritesUseCase: GetFavoritesUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let authManager: AuthManagerProtocol
+    private let addToCartUseCase: AddToCartUseCase
+    private let getProductUseCase: GetProductUseCase
+    private var preferencesManager: PreferencesManagerProtocol
+    private let cartState: CartState
     
     // MARK: - Init
     init(
         getFavoritesUseCase: GetFavoritesUseCase,
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
-        authManager: AuthManagerProtocol
+        authManager: AuthManagerProtocol,
+        addToCartUseCase: AddToCartUseCase,
+        getProductUseCase: GetProductUseCase,
+        preferencesManager: PreferencesManagerProtocol,
+        cartState: CartState
     ) {
         self.getFavoritesUseCase = getFavoritesUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.authManager = authManager
+        self.addToCartUseCase = addToCartUseCase
+        self.getProductUseCase = getProductUseCase
+        self.preferencesManager = preferencesManager
+        self.cartState = cartState
         self.isGuest = !authManager.isAuthenticated
     }
     
@@ -104,8 +118,28 @@ final class FavoritesViewModel: ObservableObject {
     }
     
     func addToCart(_ id: String) {
-        print("Product \(id) added to cart! 🛒")
-        // Future: integrate with CartUseCase
+        guard let cartId = preferencesManager.cartId else { return }
+        
+        Task {
+            do {
+                let product = try await getProductUseCase.execute(productId: id)
+                guard let variant = product.variants.first(where: { $0.isAvailable }) ?? product.variants.first else { return }
+                
+                let globalVariantId = variant.id.hasPrefix("gid://") ? variant.id : "gid://shopify/ProductVariant/\(variant.id)"
+                
+                let updatedCart = try await addToCartUseCase.execute(cartId: cartId, variantId: globalVariantId, quantity: 1)
+                preferencesManager.cartId = updatedCart.id
+                cartState.updateCount(updatedCart.totalQuantity)
+                
+                toastStyle = .success
+                toastMessage = "Item added to cart"
+            } catch {
+                toastStyle = .error
+                toastMessage = error.localizedDescription
+                errorMessage = error.localizedDescription
+                ErrorLogger.log(error as? AppError ?? AppError.unknown(error.localizedDescription), context: "FavoritesViewModel.addToCart")
+            }
+        }
     }
 }
 

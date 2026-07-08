@@ -20,9 +20,10 @@ enum AppRoute: Hashable {
     case orderCompleted(OrderCompletedInfo)
     case payment(amount: Decimal)
     case search
-    case productDetails(productId: String)
+    case productDetails(productId: String, variantId: String? = nil)
     case productsByCollection(collectionId: Int64, title: String)
     case productsByBrand(vendor: String)
+    case allProducts
     case orders
     case orderDetails(orderId: String)
     case address
@@ -32,6 +33,14 @@ enum AppRoute: Hashable {
     case addressDetailsForm(address: Address)
     case currency
     case aiComparison(products: [Product])
+    
+    // Support
+    case faqs
+    case contactUs
+    case termsAndConditions
+    
+    // Product
+    case reviews
 }
 
 enum AppTab: Hashable {

@@ -282,10 +282,11 @@ final class DIContainer: ObservableObject {
     }
     
     func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
-        ProductListViewModel(
+        return ProductListViewModel(
             source: source,
             fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
-            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase,
+            fetchAllProductsUseCase: fetchAllProductsUseCase
         )
     }
     
@@ -293,7 +294,11 @@ final class DIContainer: ObservableObject {
         FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            authManager: authManager
+            authManager: authManager,
+            addToCartUseCase: addToCartUseCase,
+            getProductUseCase: getProductUseCase,
+            preferencesManager: preferencesManager,
+            cartState: cartState
         )
     }
     

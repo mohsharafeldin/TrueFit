@@ -10,6 +10,7 @@ import SwiftUI
 // MARK: - Favorites View
 struct FavoritesView: View {
     @StateObject var viewModel: FavoritesViewModel
+    @EnvironmentObject var appRouter: AppRouter
     
     var body: some View {
         VStack(spacing: 0) {
@@ -45,6 +46,9 @@ struct FavoritesView: View {
                                 onRemove: { viewModel.removeFromFavorites(favoriteItem.id) },
                                 onAddToCart: { viewModel.addToCart(favoriteItem.id) }
                             )
+                            .onTapGesture {
+                                appRouter.navigate(to: .productDetails(productId: favoriteItem.id))
+                            }
                         }
                     }
                     .padding(.horizontal, Spacing.lg)
@@ -57,6 +61,7 @@ struct FavoritesView: View {
         .onAppear {
             viewModel.onAppeard()
         }
+        .trueFitToast(message: $viewModel.toastMessage, style: viewModel.toastStyle)
     }
     
     @ViewBuilder
