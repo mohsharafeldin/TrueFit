@@ -33,6 +33,7 @@ enum AppRoute: Hashable {
     case addressDetailsForm(address: Address)
     case currency
     case aiComparison(products: [Product])
+    case aiChat
     
     // Support
     case faqs

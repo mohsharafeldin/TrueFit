@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -132,10 +132,31 @@
 		0CF37AC82FFD20A30058028E /* AIComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF37AC32FFD20A20058028E /* AIComparisonView.swift */; };
 		0CF37AC92FFD20A30058028E /* AIComparisonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF37AC52FFD20A20058028E /* AIComparisonViewModel.swift */; };
 		0CF37ACB2FFD20D60058028E /* ComparisonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF37ACA2FFD20D60058028E /* ComparisonManager.swift */; };
-		0CF37ACE2FFD213B0058028E /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF37ACC2FFD213B0058028E /* GeminiService.swift */; };
 		0F86B1135D807284C47A1E1F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3A92FEFD52800401F6B /* ContentView.swift */; };
 		1717B5BA4C546461434B9EDE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3B02FEFD52900401F6B /* Persistence.swift */; };
 		266E2E89725F7DBCA48A64CA /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008AECDFDFDB603CBC844C /* LoginUseCase.swift */; };
+		330EA0DB2FFD2758008A2244 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330EA0DA2FFD2758008A2244 /* AIChatView.swift */; };
+		330EA0DD2FFD2AD5008A2244 /* AIChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330EA0DC2FFD2AD5008A2244 /* AIChatViewModel.swift */; };
+		335505902FFDDB7A001968A4 /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3355058F2FFDDB7A001968A4 /* GeminiService.swift */; };
+		336CCC012FFD3DC4002B841D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC002FFD3DC4002B841D /* ChatMessage.swift */; };
+		336CCC042FFD4024002B841D /* AIChatBubbleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */; };
+		336CCC062FFD40F8002B841D /* AIChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC052FFD40F8002B841D /* AIChatMessageView.swift */; };
+		336CCC082FFD418B002B841D /* AITypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC072FFD418B002B841D /* AITypingIndicatorView.swift */; };
+		336CCC0A2FFD4200002B841D /* AIChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC092FFD4200002B841D /* AIChatHeaderView.swift */; };
+		336CCC0C2FFD427C002B841D /* AIChatWelcomeStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */; };
+		336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC0E2FFD4311002B841D /* AIChatInputView.swift */; };
+		336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */; };
+		336CCC142FFD8E4B002B841D /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */; };
+		336CCC172FFD8FF6002B841D /* GeminiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC162FFD8FF6002B841D /* GeminiError.swift */; };
+		336CCC192FFD909F002B841D /* GeminiChatServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC182FFD909F002B841D /* GeminiChatServiceProtocol.swift */; };
+		336CCC1B2FFD90D2002B841D /* GeminiChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1A2FFD90D2002B841D /* GeminiChatService.swift */; };
+		336CCC1E2FFD9290002B841D /* AIChatRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */; };
+		336CCC212FFD92FB002B841D /* SendChatMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */; };
+		336CCC232FFD931C002B841D /* BuildProductContextUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */; };
+		336CCC262FFD97EC002B841D /* GeminiErrorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC252FFD97EC002B841D /* GeminiErrorMapper.swift */; };
+		336CCC292FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */; };
+		336CCC2B2FFD98AD002B841D /* AIChatRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */; };
+		336CCC2E2FFD9DB3002B841D /* AIChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336CCC2D2FFD9DB3002B841D /* AIChatRepository.swift */; };
 		33AB50FE2FFBAA520085ECAC /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */; };
 		33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB51022FFBB4930085ECAC /* OrderDetailsView.swift */; };
 		33AB510E2FFBC1110085ECAC /* OrderStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AB510D2FFBC1110085ECAC /* OrderStatus.swift */; };
@@ -258,6 +279,7 @@
 		5A1CA3C82FEFD52A00401F6B /* TrueFitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */; };
 		5A1CA3CA2FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */; };
 		5A884779F16A899A2D2A0500 /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CF8C878479EC0384CCE360 /* TokenRefreshManager.swift */; };
+		5A9B8DC92FFDA71000A0542A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */; };
 		5A9E26102FFC140000067D5C /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26112FFC140000067D5C /* CheckoutViewModel.swift */; };
 		5A9E26122FFC140000067D5C /* OrderCompletedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26132FFC140000067D5C /* OrderCompletedViewModel.swift */; };
 		5A9E26142FFC140000067D5C /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9E26152FFC140000067D5C /* CheckoutView.swift */; };
@@ -442,9 +464,29 @@
 		0CF37AC32FFD20A20058028E /* AIComparisonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIComparisonView.swift; sourceTree = "<group>"; };
 		0CF37AC52FFD20A20058028E /* AIComparisonViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIComparisonViewModel.swift; sourceTree = "<group>"; };
 		0CF37ACA2FFD20D60058028E /* ComparisonManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComparisonManager.swift; sourceTree = "<group>"; };
-		0CF37ACC2FFD213B0058028E /* GeminiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
 		0EEE39595D79E0B36460D59E /* AuthMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthMapper.swift; sourceTree = "<group>"; };
 		2CB59FC0F448ACA52816CC1D /* SignUpUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
+		330EA0DA2FFD2758008A2244 /* AIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
+		330EA0DC2FFD2AD5008A2244 /* AIChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatViewModel.swift; sourceTree = "<group>"; };
+		3355058F2FFDDB7A001968A4 /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
+		336CCC002FFD3DC4002B841D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatBubbleShape.swift; sourceTree = "<group>"; };
+		336CCC052FFD40F8002B841D /* AIChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatMessageView.swift; sourceTree = "<group>"; };
+		336CCC072FFD418B002B841D /* AITypingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITypingIndicatorView.swift; sourceTree = "<group>"; };
+		336CCC092FFD4200002B841D /* AIChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatHeaderView.swift; sourceTree = "<group>"; };
+		336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatWelcomeStateView.swift; sourceTree = "<group>"; };
+		336CCC0E2FFD4311002B841D /* AIChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatInputView.swift; sourceTree = "<group>"; };
+		336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Gemini.swift"; sourceTree = "<group>"; };
+		336CCC162FFD8FF6002B841D /* GeminiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiError.swift; sourceTree = "<group>"; };
+		336CCC182FFD909F002B841D /* GeminiChatServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiChatServiceProtocol.swift; sourceTree = "<group>"; };
+		336CCC1A2FFD90D2002B841D /* GeminiChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiChatService.swift; sourceTree = "<group>"; };
+		336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRepositoryProtocol.swift; sourceTree = "<group>"; };
+		336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatMessageUseCase.swift; sourceTree = "<group>"; };
+		336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildProductContextUseCase.swift; sourceTree = "<group>"; };
+		336CCC252FFD97EC002B841D /* GeminiErrorMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiErrorMapper.swift; sourceTree = "<group>"; };
+		336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
+		336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRemoteDataSource.swift; sourceTree = "<group>"; };
+		336CCC2D2FFD9DB3002B841D /* AIChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatRepository.swift; sourceTree = "<group>"; };
 		33AA80F82FEFEFC700A20AF9 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		33AA81152FEFF31900A20AF9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		33AB50FD2FFBAA520085ECAC /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
@@ -563,6 +605,7 @@
 		5A1CA3C32FEFD52A00401F6B /* TrueFitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrueFitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A1CA3C72FEFD52A00401F6B /* TrueFitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITests.swift; sourceTree = "<group>"; };
 		5A1CA3C92FEFD52A00401F6B /* TrueFitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrueFitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A9E26112FFC140000067D5C /* CheckoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
 		5A9E26132FFC140000067D5C /* OrderCompletedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderCompletedViewModel.swift; sourceTree = "<group>"; };
 		5A9E26152FFC140000067D5C /* CheckoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
@@ -606,6 +649,7 @@
 			files = (
 				4CAAF4852FF4668900D751DB /* GoogleSignInSwift in Frameworks */,
 				4C8CBAD02FF003AC00CA6538 /* Apollo in Frameworks */,
+				336CCC142FFD8E4B002B841D /* GoogleGenerativeAI in Frameworks */,
 				4CAAF4832FF4668900D751DB /* GoogleSignIn in Frameworks */,
 				4C8CBAD62FF004D900CA6538 /* FirebaseAuth in Frameworks */,
 				4CB476922FF9695A00BBA891 /* (null) in Frameworks */,
@@ -1050,6 +1094,7 @@
 			isa = PBXGroup;
 			children = (
 				0CE9F3172FF3D31E00466794 /* Bundle+Shopify.swift */,
+				336CCC102FFD7EFA002B841D /* Bundle+Gemini.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1082,7 +1127,7 @@
 		0CF37ACD2FFD213B0058028E /* AI */ = {
 			isa = PBXGroup;
 			children = (
-				0CF37ACC2FFD213B0058028E /* GeminiService.swift */,
+				3355058F2FFDDB7A001968A4 /* GeminiService.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -1102,6 +1147,105 @@
 				E6ECD954D2391094AECB82BE /* ViewModel */,
 			);
 			path = ProductList;
+			sourceTree = "<group>";
+		};
+		330EA0D72FFD26FE008A2244 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC022FFD400C002B841D /* Components */,
+				330EA0DA2FFD2758008A2244 /* AIChatView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		330EA0D82FFD2706008A2244 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				330EA0DC2FFD2AD5008A2244 /* AIChatViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		330EA0D92FFD2730008A2244 /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				330EA0D82FFD2706008A2244 /* ViewModels */,
+				330EA0D72FFD26FE008A2244 /* Views */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCBFF2FFD3D2C002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC002FFD3DC4002B841D /* ChatMessage.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC022FFD400C002B841D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC032FFD4024002B841D /* AIChatBubbleShape.swift */,
+				336CCC052FFD40F8002B841D /* AIChatMessageView.swift */,
+				336CCC072FFD418B002B841D /* AITypingIndicatorView.swift */,
+				336CCC092FFD4200002B841D /* AIChatHeaderView.swift */,
+				336CCC0B2FFD427C002B841D /* AIChatWelcomeStateView.swift */,
+				336CCC0E2FFD4311002B841D /* AIChatInputView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		336CCC152FFD8FDF002B841D /* Gemini */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC162FFD8FF6002B841D /* GeminiError.swift */,
+				336CCC182FFD909F002B841D /* GeminiChatServiceProtocol.swift */,
+				336CCC1A2FFD90D2002B841D /* GeminiChatService.swift */,
+			);
+			path = Gemini;
+			sourceTree = "<group>";
+		};
+		336CCC1C2FFD9274002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC1D2FFD9290002B841D /* AIChatRepositoryProtocol.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC1F2FFD92E5002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC202FFD92FB002B841D /* SendChatMessageUseCase.swift */,
+				336CCC222FFD931C002B841D /* BuildProductContextUseCase.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC242FFD97D4002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC252FFD97EC002B841D /* GeminiErrorMapper.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC272FFD9876002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC282FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift */,
+				336CCC2A2FFD98AD002B841D /* AIChatRemoteDataSource.swift */,
+			);
+			path = AIChat;
+			sourceTree = "<group>";
+		};
+		336CCC2C2FFD9D92002B841D /* AIChat */ = {
+			isa = PBXGroup;
+			children = (
+				336CCC2D2FFD9DB3002B841D /* AIChatRepository.swift */,
+			);
+			path = AIChat;
 			sourceTree = "<group>";
 		};
 		33AA80D12FEFDF3000A20AF9 /* Core */ = {
@@ -1144,6 +1288,7 @@
 			isa = PBXGroup;
 			children = (
 				4C2D280E2FFC97C50017254C /* Payment */,
+				336CCBFF2FFD3D2C002B841D /* AIChat */,
 				4C0F11B62FFA98D400B096F5 /* Address */,
 				33AB510A2FFBC0580085ECAC /* Orders */,
 				33CB34E12FF8E2A700798582 /* Favorites */,
@@ -1165,6 +1310,7 @@
 			isa = PBXGroup;
 			children = (
 				4C2D28072FFC97960017254C /* Payment */,
+				336CCC1F2FFD92E5002B841D /* AIChat */,
 				4C0F11B32FFA988F00B096F5 /* Address */,
 				33CB34EB2FF8E43600798582 /* Favorites */,
 				0C67ADDE2FF878C5006A3E3B /* RemoveCartLineUseCase.swift */,
@@ -1194,6 +1340,7 @@
 		33AA80D92FEFDFF300A20AF9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5A9B8DC82FFDA71000A0542A /* GoogleService-Info.plist */,
 				594868AA2FF401B000F2241E /* AppRouter.swift */,
 				5A1CA3A72FEFD52800401F6B /* TrueFitApp.swift */,
 				0C00A13D2FF0051B007A668C /* RootView.swift */,
@@ -1238,6 +1385,7 @@
 				5A9E26062FFC133800067D5C /* CompeleteOrder */,
 				4C2D28012FFC96B10017254C /* Payment */,
 				0CF37AC72FFD20A20058028E /* AIComparison */,
+				330EA0D92FFD2730008A2244 /* AIChat */,
 				0CCA5D5C2FFC0212005C538C /* Profile */,
 				33AB51042FFBB8810085ECAC /* Orders */,
 				4CB476932FF9A9A700BBA891 /* Adress */,
@@ -1261,6 +1409,7 @@
 			isa = PBXGroup;
 			children = (
 				0CF37ACD2FFD213B0058028E /* AI */,
+				336CCC152FFD8FDF002B841D /* Gemini */,
 				0C09B68D2FF63D1400F4CC3D /* Frankfurter */,
 				0C09B6872FF63D0700F4CC3D /* Shared */,
 				0CE9F30B2FF3D18100466794 /* Shopify */,
@@ -1289,6 +1438,7 @@
 		33AA80E82FEFE46700A20AF9 /* Mappers */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC242FFD97D4002B841D /* AIChat */,
 				33AB51562FFC08240085ECAC /* Orders */,
 				4C0F11C22FFAC20500B096F5 /* Address */,
 				33CB34F82FF8E69B00798582 /* Favorites */,
@@ -1315,6 +1465,7 @@
 		33AA80EB2FEFE48F00A20AF9 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				336CCC272FFD9876002B841D /* AIChat */,
 				33AB51512FFC077C0085ECAC /* Orders */,
 				4C0F11BD2FFA992800B096F5 /* Address */,
 				0C67ACF12FF81F04006A3E3B /* CartRemoteDataSource.swift */,
@@ -1364,6 +1515,7 @@
 			isa = PBXGroup;
 			children = (
 				4C2D281A2FFC982F0017254C /* Payment */,
+				336CCC2C2FFD9D92002B841D /* AIChat */,
 				33AB515B2FFC08DF0085ECAC /* Orders */,
 				4C0F11B92FFA98FA00B096F5 /* Address */,
 				33CB35032FF8EA6100798582 /* Favorites */,
@@ -1379,6 +1531,7 @@
 			isa = PBXGroup;
 			children = (
 				4C2D280A2FFC97A90017254C /* Payment */,
+				336CCC1C2FFD9274002B841D /* AIChat */,
 				33AB51412FFC065A0085ECAC /* Orders */,
 				4C0F11B02FFA985600B096F5 /* Address */,
 				33CB34E42FF8E39800798582 /* Favorites */,
@@ -1991,6 +2144,7 @@
 				5A104C632FF90F57002AC6E2 /* SDWebImage */,
 				5A104C652FF90F57002AC6E2 /* SDWebImageMapKit */,
 				4CCE64DD2FFD947C00D6A036 /* ShopifyAPI */,
+				336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */,
 			);
 			productName = TrueFit;
 			productReference = 5A1CA3A42FEFD52800401F6B /* TrueFit.app */;
@@ -2070,7 +2224,8 @@
 				4CAAF4812FF4668900D751DB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */,
-				4CCE64DC2FFD947C00D6A036 /* XCLocalSwiftPackageReference "ShopifyAPI" */,
+				4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */,
+				336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			productRefGroup = 5A1CA3A52FEFD52800401F6B /* Products */;
 			projectDirPath = "";
@@ -2098,7 +2253,9 @@
 				0C198E982FF2BA8E00477701 /* Colors.xcassets in Resources */,
 				0CE05B6C2FF682E800ADEB7D /* Config.xcconfig in Resources */,
 				4CC1DC382FFD8DA000C0DB63 /* GoogleService-Info.plist in Resources */,
+				5A9B8DC92FFDA71000A0542A /* GoogleService-Info.plist in Resources */,
 				0C38FAA12FFDCAD200963350 /* Agent.md in Resources */,
+				5A9B8DC92FFDA71000A0542A /* GoogleService-Info.plist in Resources */,
 				33AB516F2FFC15140085ECAC /* generate_apollo.sh in Resources */,
 				0C198E972FF2BA8E00477701 /* Assets.xcassets in Resources */,
 			);
@@ -2130,7 +2287,6 @@
 				5A9E26142FFC140000067D5C /* CheckoutView.swift in Sources */,
 				5A9E26162FFC140000067D5C /* OrderCompletedView.swift in Sources */,
 				33CB34F12FF8E49400798582 /* ToggleFavoriteUseCase.swift in Sources */,
-				0CF37ACE2FFD213B0058028E /* GeminiService.swift in Sources */,
 				33AF9FC22FF7FF6200628D96 /* FavoritesView.swift in Sources */,
 				33D02D1B2FF3D9F70048E60D /* AuthRepositoryProtocol.swift in Sources */,
 				0C198EAA2FF2BAD500477701 /* AuthTextField.swift in Sources */,
@@ -2141,6 +2297,7 @@
 				0C198E902FF2BA8E00477701 /* AppImages.swift in Sources */,
 				0C198E932FF2BA8E00477701 /* Radius.swift in Sources */,
 				0C67AD002FF81FA3006A3E3B /* ApplyDiscountUseCase.swift in Sources */,
+				336CCC2E2FFD9DB3002B841D /* AIChatRepository.swift in Sources */,
 				33AB51302FFBC6E30085ECAC /* OrderPreviewData.swift in Sources */,
 				0CE05B7C2FF7041C00ADEB7D /* ProductOptionSectionView.swift in Sources */,
 				0C09B6992FF63D7C00F4CC3D /* CurrencyRatesDTO.swift in Sources */,
@@ -2162,6 +2319,7 @@
 				0C38FAA82FFDF14700963350 /* ContactUsView.swift in Sources */,
 				0C09B6B72FF63E0000F4CC3D /* CurrencyConverterViewModel.swift in Sources */,
 				0C198E952FF2BA8E00477701 /* Spacing.swift in Sources */,
+				336CCC1B2FFD90D2002B841D /* GeminiChatService.swift in Sources */,
 				0C5EC9312FF92C3E00F8F028 /* CartLoadingView.swift in Sources */,
 				0CE9F30E2FF3D18100466794 /* Endpoint.swift in Sources */,
 				0CE9F30F2FF3D18100466794 /* RESTClient.swift in Sources */,
@@ -2187,6 +2345,7 @@
 				4C2D28032FFC96B10017254C /* PaymentView.swift in Sources */,
 				4C2D28042FFC96B10017254C /* ApplePayButtonView.swift in Sources */,
 				4C2D28052FFC96B10017254C /* PaymentViewModel.swift in Sources */,
+				336CCC012FFD3DC4002B841D /* ChatMessage.swift in Sources */,
 				0C5EC93E2FF9586100F8F028 /* TrueFitAlert.swift in Sources */,
 				0C09B6A22FF63D9A00F4CC3D /* GenericAPIErrorMapper.swift in Sources */,
 				0C5EC93A2FF9442800F8F028 /* TrueFitToast.swift in Sources */,
@@ -2196,8 +2355,10 @@
 				0CE9F30C2FF3D18100466794 /* GraphQLClient.swift in Sources */,
 				0C5EC92D2FF92C3E00F8F028 /* CartContentView.swift in Sources */,
 				0C198E922FF2BA8E00477701 /* Motion.swift in Sources */,
+				336CCC112FFD7EFA002B841D /* Bundle+Gemini.swift in Sources */,
 				0C5EC93C2FF94C8600F8F028 /* TrueFitStepper.swift in Sources */,
 				0C09B6AB2FF63DC500F4CC3D /* Product.swift in Sources */,
+				330EA0DB2FFD2758008A2244 /* AIChatView.swift in Sources */,
 				0CCA5D602FFC040F005C538C /* TrueFitGuestAlert.swift in Sources */,
 				0C198E7C2FF2A39D00477701 /* AuthFlowView.swift in Sources */,
 				0C38FAAA2FFDF14700963350 /* TermsAndConditionsView.swift in Sources */,
@@ -2214,6 +2375,7 @@
 				0CF37ACB2FFD20D60058028E /* ComparisonManager.swift in Sources */,
 				0C09B6942FF63D6000F4CC3D /* CurrencyRemoteDataSource.swift in Sources */,
 				0C67ADDF2FF878C5006A3E3B /* RemoveCartLineUseCase.swift in Sources */,
+				336CCC262FFD97EC002B841D /* GeminiErrorMapper.swift in Sources */,
 				4C0F11BB2FFA990C00B096F5 /* AddressRepository.swift in Sources */,
 				4CAAF48B2FF4785B00D751DB /* GoogleSignInDataSource.swift in Sources */,
 				0C198E812FF2A4EF00477701 /* AuthManager.swift in Sources */,
@@ -2235,6 +2397,7 @@
 				4C5F9CC42FFB162400BC1A4A /* AddressRemoteDataSource.swift in Sources */,
 				33CB34FE2FF8E94200798582 /* FavoritesLocalDataSource.swift in Sources */,
 				0CE9F30D2FF3D18100466794 /* GraphQLEndpoint.swift in Sources */,
+				336CCC212FFD92FB002B841D /* SendChatMessageUseCase.swift in Sources */,
 				0C00A13E2FF0051B007A668C /* RootView.swift in Sources */,
 				0CCCFCE32FF317C7004DBD32 /* PreferencesManager.swift in Sources */,
 				0C09B68A2FF63D0700F4CC3D /* GenericHTTPClient.swift in Sources */,
@@ -2244,12 +2407,14 @@
 				4C2D280B2FFC97A90017254C /* PaymentRepositoryProtocol.swift in Sources */,
 				4C1A20412FFBE84A001FC5B2 /* AddressViewModel.swift in Sources */,
 				0C67AD042FF81FCA006A3E3B /* UpdateCartLineUseCase.swift in Sources */,
+				336CCC292FFD988F002B841D /* AIChatRemoteDataSourceProtocol.swift in Sources */,
 				0C09B6B32FF63DE500F4CC3D /* GetExchangeRatesUseCase.swift in Sources */,
 				4C2D280F2FFC97C50017254C /* PaymentResult.swift in Sources */,
 				4C2D28102FFC97C50017254C /* PaymentError.swift in Sources */,
 				4C0F11B82FFA98EC00B096F5 /* Address.swift in Sources */,
 				0C198EAB2FF2BAD500477701 /* PrimaryButton.swift in Sources */,
 				4C2D28132FFC97DB0017254C /* PaymentRequestDTO.swift in Sources */,
+				336CCC0A2FFD4200002B841D /* AIChatHeaderView.swift in Sources */,
 				0CCA5D6A2FFC1844005C538C /* ProfileBottomActionSection.swift in Sources */,
 				33AB51552FFC07CF0085ECAC /* OrdersRemoteDataSourceProtocol.swift in Sources */,
 				0C198E962FF2BA8E00477701 /* Typography.swift in Sources */,
@@ -2257,9 +2422,11 @@
 				4C0F11C42FFAC21500B096F5 /* AddressMapper.swift in Sources */,
 				4C0306B22FF7E8F5005D9827 /* GoogleSignInServiceProtocol.swift in Sources */,
 				0CE9F3142FF3D18100466794 /* Constants.swift in Sources */,
+				336CCC2B2FFD98AD002B841D /* AIChatRemoteDataSource.swift in Sources */,
 				4C8F1F002FF2AFD900299F30 /* FirstOnBoeardingView.swift in Sources */,
 				0C5EC9352FF92C3E00F8F028 /* CartLineLoadingRow.swift in Sources */,
 				0C5EC9322FF92C3E00F8F028 /* CartCheckoutBar.swift in Sources */,
+				336CCC0C2FFD427C002B841D /* AIChatWelcomeStateView.swift in Sources */,
 				0CE05B782FF6ADD600ADEB7D /* ProductImageCarousel.swift in Sources */,
 				4C8F1F022FF2AFEC00299F30 /* SecondOnBoeardingView.swift in Sources */,
 				0C67ACF82FF81F65006A3E3B /* CartRepository.swift in Sources */,
@@ -2278,12 +2445,15 @@
 				4C8F1F042FF2AFFD00299F30 /* ThirdOnBoeardingView.swift in Sources */,
 				0CE05B622FF680E200ADEB7D /* KeychainError.swift in Sources */,
 				0C67AD022FF81FB5006A3E3B /* GetCartUseCase.swift in Sources */,
+				336CCC1E2FFD9290002B841D /* AIChatRepositoryProtocol.swift in Sources */,
 				0C67ACF42FF81F2F006A3E3B /* CartMapper.swift in Sources */,
 				0C09B68B2FF63D0700F4CC3D /* GenericHTTPClientProtocol.swift in Sources */,
 				5A1CA3B42FEFD52A00401F6B /* TrueFit.xcdatamodeld in Sources */,
 				33CB34ED2FF8E44D00798582 /* GetFavoritesUseCase.swift in Sources */,
+				336CCC0F2FFD4311002B841D /* AIChatInputView.swift in Sources */,
 				0C09B68E2FF63D1400F4CC3D /* GetLatestRatesEndpoint.swift in Sources */,
 				0CE05B7A2FF6CCE100ADEB7D /* PriceFormatter.swift in Sources */,
+				336CCC192FFD909F002B841D /* GeminiChatServiceProtocol.swift in Sources */,
 				0C09B6882FF63D0700F4CC3D /* GenericAPIError.swift in Sources */,
 				4CC7277C2FFD497700182113 /* PaymentNavigationBar.swift in Sources */,
 				4CC7277D2FFD497700182113 /* ApplePayAvailableView.swift in Sources */,
@@ -2299,12 +2469,14 @@
 				4C8CBADF2FF02D1600CA6538 /* SplashView.swift in Sources */,
 				8A9CED2B41DA0ABE62B69721 /* GetProductEndpoint.swift in Sources */,
 				0CCA5D6D2FFC1844005C538C /* ProfileRow.swift in Sources */,
+				335505902FFDDB7A001968A4 /* GeminiService.swift in Sources */,
 				4C1A20432FFBF332001FC5B2 /* AddressDetailsFormView.swift in Sources */,
 				AD6F8CC75BBB2B5C30A3507D /* StorefrontAuthInterceptor.swift in Sources */,
 				653B704DA3D949056B394FBE /* TokenRefreshInterceptor.swift in Sources */,
 				5A884779F16A899A2D2A0500 /* TokenRefreshManager.swift in Sources */,
 				F21779A812201BC592804D96 /* CollectionDTO.swift in Sources */,
 				EB0837D63B0F7A8541E3B52F /* ProductDTO.swift in Sources */,
+				336CCC082FFD418B002B841D /* AITypingIndicatorView.swift in Sources */,
 				6516502331B9330A3367E225 /* ShopifyAuthDTOs.swift in Sources */,
 				33AB513C2FFBC9220085ECAC /* OrderItemCard.swift in Sources */,
 				0C67ACFA2FF81F80006A3E3B /* Cart.swift in Sources */,
@@ -2336,8 +2508,10 @@
 				33AB51452FFC06810085ECAC /* OrdersRepositoryProtocol.swift in Sources */,
 				33CB34E82FF8E3C300798582 /* FavoritesRepositoryProtocol.swift in Sources */,
 				A0AB9F73D8877DB9319F1411 /* User.swift in Sources */,
+				336CCC232FFD931C002B841D /* BuildProductContextUseCase.swift in Sources */,
 				3AA5FCEA458B6D9BAC4348BF /* ProductsRepositoryProtocol.swift in Sources */,
 				A3F06C46DA68D682F7738F53 /* FetchCollectionsUseCase.swift in Sources */,
+				336CCC062FFD40F8002B841D /* AIChatMessageView.swift in Sources */,
 				33AB510E2FFBC1110085ECAC /* OrderStatus.swift in Sources */,
 				4C0F11C82FFAC58500B096F5 /* AddressRemoteDataSourceProtocol.swift in Sources */,
 				E76CECA2E6ED099355446B24 /* FetchNewArrivalsUseCase.swift in Sources */,
@@ -2349,6 +2523,8 @@
 				33AB51382FFBC8760085ECAC /* OrderImagesOverlapView.swift in Sources */,
 				0C5EC92F2FF92C3E00F8F028 /* CartLineRow.swift in Sources */,
 				0C5EC9332FF92C3E00F8F028 /* CartDiscountSection.swift in Sources */,
+				336CCC172FFD8FF6002B841D /* GeminiError.swift in Sources */,
+				336CCC042FFD4024002B841D /* AIChatBubbleShape.swift in Sources */,
 				33AB51032FFBB4930085ECAC /* OrderDetailsView.swift in Sources */,
 				33AB513E2FFBC9780085ECAC /* OrderStatusTimeline.swift in Sources */,
 				4C5F9CC82FFB2AE400BC1A4A /* DeleteAddressUseCase.swift in Sources */,
@@ -2365,6 +2541,7 @@
 				33AB51672FFC09DA0085ECAC /* OrderHistoryViewModel.swift in Sources */,
 				A64517E9C5139F67356A5BF3 /* RoundedCornerModifier.swift in Sources */,
 				0CCA5D722FFC22C9005C538C /* CurrencyConverterView.swift in Sources */,
+				330EA0DD2FFD2AD5008A2244 /* AIChatViewModel.swift in Sources */,
 				DCE84B6569739C5A11A945B0 /* DIContainer.swift in Sources */,
 				34D1C18A11551FB18A3C9F03 /* ContentView.swift in Sources */,
 				72381E43042586276C204D7F /* Persistence.swift in Sources */,
@@ -2714,13 +2891,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		4CCE64DC2FFD947C00D6A036 /* XCLocalSwiftPackageReference "ShopifyAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ShopifyAPI;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		0CAA3EA72FF432B500784F78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2728,6 +2898,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 10.23.0;
+			};
+		};
+		336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
 			};
 		};
 		4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
@@ -2754,6 +2932,14 @@
 				version = 7.1.0;
 			};
 		};
+		4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/monazarea/Documents/ios/shopfy_workshop/project/TrueFit/ShopifyAPI";
+			requirement = {
+				branch = "feature/ui-enhancement";
+				kind = branch;
+			};
+		};
 		5A104C622FF90F57002AC6E2 /* XCRemoteSwiftPackageReference "sdwebimage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sdwebimage/sdwebimage";
@@ -2765,6 +2951,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		336CCC132FFD8E4B002B841D /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 336CCC122FFD8E4B002B841D /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
 		4C8CBACF2FF003AC00CA6538 /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4C8CBACE2FF003AC00CA6538 /* XCRemoteSwiftPackageReference "apollo-ios" */;
@@ -2792,6 +2983,7 @@
 		};
 		4CCE64DD2FFD947C00D6A036 /* ShopifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 4CCE64DC2FFD947C00D6A036 /* XCRemoteSwiftPackageReference "ShopifyAPI" */;
 			productName = ShopifyAPI;
 		};
 		5A104C632FF90F57002AC6E2 /* SDWebImage */ = {

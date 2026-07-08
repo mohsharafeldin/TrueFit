@@ -2,7 +2,7 @@
 //  HomeView.swift
 //  TrueFit
 //
-//  Features — Home screen 
+//  Features — Home screen
 
 import SwiftUI
 
@@ -13,29 +13,31 @@ struct HomeView: View {
     @State private var toastMessage: String?
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: Spacing.xl) {
-                    HomeHeaderView(userName: viewModel.userName, toastMessage: $toastMessage)
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: Spacing.xl) {
+                        HomeHeaderView(userName: viewModel.userName, toastMessage: $toastMessage)
 
-                    HomeTabSelector(selectedTab: $viewModel.selectedTab)
+                        HomeTabSelector(selectedTab: $viewModel.selectedTab)
 
-                    // Tab Content
-                    switch viewModel.selectedTab {
-                    case .home:
-                        homeTabContent
-                    case .category:
-                        categoryTabContent
-                    case .brand:
-                        brandTabContent
+                        // Tab Content
+                        switch viewModel.selectedTab {
+                        case .home:
+                            homeTabContent
+                        case .category:
+                            categoryTabContent
+                        case .brand:
+                            brandTabContent
+                        }
                     }
+                    .padding(.horizontal, Spacing.lg)
+                    .padding(.top, Spacing.sm)
+                    .padding(.bottom, 120)
                 }
-                .padding(.horizontal, Spacing.lg)
-                .padding(.top, Spacing.sm)
-                .padding(.bottom, 100)
             }
+            .background(Color.trueFitBackground)
         }
-        .background(Color.trueFitBackground)
         .ignoresSafeArea(.all, edges: .bottom)
         .trueFitGuestAlert(isPresented: $showGuestAlert)
         .trueFitToast(message: $toastMessage, style: .error)
@@ -45,7 +47,6 @@ struct HomeView: View {
     }
 
     // MARK: - Home Tab Content
-
     @ViewBuilder
     private var homeTabContent: some View {
         VStack(spacing: Spacing.xl) {
@@ -79,7 +80,6 @@ struct HomeView: View {
     }
 
     // MARK: - Category Tab Content
-
     @ViewBuilder
     private var categoryTabContent: some View {
         let columns = [
@@ -108,7 +108,6 @@ struct HomeView: View {
     }
 
     // MARK: - Brand Tab Content
-
     @ViewBuilder
     private var brandTabContent: some View {
         VStack(spacing: Spacing.md) {
@@ -129,7 +128,6 @@ struct HomeView: View {
     }
 
     // MARK: - Placeholders
-
     @ViewBuilder
     private var productGridPlaceholder: some View {
         let columns = [
@@ -798,11 +796,6 @@ struct ShimmerBrandTabCard: View {
     }
 }
 
-// MARK: - Bottom Tab Bar
-
-
-// MARK: - Preview
-
 // MARK: - Preview
 
 struct HomeView_Previews: PreviewProvider {
@@ -823,7 +816,7 @@ struct HomeView_Previews: PreviewProvider {
                 fetchBrandsUseCase: FetchBrandsUseCase(repository: repo),
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: mockFavoritesRepo),
                 isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo),
-                preferencesManager: mockPreferences 
+                preferencesManager: mockPreferences
             )
         )
         .environmentObject(CartState())
