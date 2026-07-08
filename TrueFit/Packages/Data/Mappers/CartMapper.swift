@@ -40,13 +40,29 @@ enum CartMapper {
         let lineTotal = mapMoney(node.cost.totalAmount.fragments.moneyFields)
         let compareAtLineTotal = node.cost.compareAtAmountPerQuantity.map { mapMoney($0.fragments.moneyFields) }
         
+        let rawProductTitle = merchandise?.product.title ?? ""
+        let rawVariantTitle = merchandise?.title ?? ""
+        
+        let finalProductTitle: String = {
+            if !rawProductTitle.isEmpty { return rawProductTitle }
+            if !rawVariantTitle.isEmpty, rawVariantTitle != "Default Title" { return rawVariantTitle }
+            return "Product Item"
+        }()
+        
+        let finalVariantTitle: String = {
+            if !rawVariantTitle.isEmpty, rawVariantTitle != "Default Title", rawVariantTitle != finalProductTitle {
+                return rawVariantTitle
+            }
+            return ""
+        }()
+
         return CartLine(
             id: node.id,
             quantity: node.quantity,
             variantId: merchandise?.id ?? "",
-            variantTitle: merchandise?.title ?? "",
+            variantTitle: finalVariantTitle,
             productId: merchandise?.product.id ?? "",
-            productTitle: merchandise?.product.title ?? "",
+            productTitle: finalProductTitle,
             productHandle: merchandise?.product.handle ?? "",
             imageURL: merchandise?.product.featuredImage.flatMap { URL(string: $0.url) },
             imageAltText: merchandise?.product.featuredImage?.altText,

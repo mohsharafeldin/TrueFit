@@ -14,5 +14,5 @@ protocol AIChatRepositoryProtocol {
     ///   - history: The previous conversation history for context.
     ///   - systemContext: The hidden prompt containing the TrueFit persona and product catalog.
     /// - Returns: The AI's generated text response.
-    func sendMessage(_ text: String, history: [ChatMessage], systemContext: String) async throws -> String
+    func sendMessage(_ text: String, history: [ChatBootMessage], systemContext: String) async throws -> String
 }

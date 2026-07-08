@@ -55,7 +55,11 @@ struct OrderImagesOverlapView: View {
     }
 }
 
-#Preview {
-    OrderImagesOverlapView(imageURLs: [URL(string: "https://example.com/1"), URL(string: "https://example.com/2")], totalItems: 2)
+struct OrderImagesOverlapView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderImagesOverlapView(imageURLs: [URL(string: "https://example.com/1"), URL(string: "https://example.com/2")], totalItems: 2)
+
+    }
 }
 

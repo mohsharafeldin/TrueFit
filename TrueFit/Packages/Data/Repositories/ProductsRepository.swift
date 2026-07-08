@@ -10,6 +10,9 @@ import Foundation
 final class ProductsRepository: ProductsRepositoryProtocol {
 
     private let remoteDataSource: ProductsRemoteDataSourceProtocol
+    private var cachedAllProducts: [Product]?
+    private var lastFetchTime: Date?
+    private let cacheLock = NSLock()
 
     init(remoteDataSource: ProductsRemoteDataSourceProtocol) {
         self.remoteDataSource = remoteDataSource
@@ -161,9 +164,25 @@ final class ProductsRepository: ProductsRepositoryProtocol {
     // MARK: - Fetch All Products
 
     func fetchAllProducts() async throws -> [Product] {
+        if let cached = cacheLock.withLock({
+            if let cached = cachedAllProducts, let lastTime = lastFetchTime, Date().timeIntervalSince(lastTime) < 300 {
+                return cached
+            }
+            return nil as [Product]?
+        }) {
+            return cached
+        }
+        
         do {
             let dtos = try await remoteDataSource.fetchAllProducts()
-            return ProductMapper.map(dtos)
+            let products = ProductMapper.map(dtos)
+            
+            cacheLock.withLock {
+                cachedAllProducts = products
+                lastFetchTime = Date()
+            }
+            
+            return products
         } catch let error as APIError {
             throw APIErrorMapper.map(error)
         } catch {

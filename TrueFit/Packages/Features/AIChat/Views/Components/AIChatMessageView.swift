@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AIChatMessageView: View {
-    let message: ChatMessage
+    let message: ChatBootMessage
     
     var body: some View {
         HStack(alignment: .bottom, spacing: Spacing.xs) {
@@ -56,8 +56,8 @@ struct AIChatMessageView: View {
 #if DEBUG
 #Preview {
     VStack(spacing: Spacing.md) {
-        AIChatMessageView(message: ChatMessage(text: "Hello, how can I help you?", isUser: false))
-        AIChatMessageView(message: ChatMessage(text: "I am looking for some white sneakers.", isUser: true))
+        AIChatMessageView(message: ChatBootMessage(text: "Hello, how can I help you?", isUser: false))
+        AIChatMessageView(message: ChatBootMessage(text: "I am looking for some white sneakers.", isUser: true))
     }
     .padding(.vertical)
     .background(Color.trueFitBackground)

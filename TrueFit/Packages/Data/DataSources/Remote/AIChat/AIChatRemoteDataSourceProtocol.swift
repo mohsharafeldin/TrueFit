@@ -8,5 +8,5 @@
 import Foundation
 
 protocol AIChatRemoteDataSourceProtocol {
-    func sendMessage(_ text: String, history: [ChatMessage], systemPrompt: String) async throws -> String
+    func sendMessage(_ text: String, history: [ChatBootMessage], systemPrompt: String) async throws -> String
 }

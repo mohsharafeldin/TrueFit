@@ -10,13 +10,14 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     @EnvironmentObject var appRouter: AppRouter
     @State private var showGuestAlert = false
+    @State private var toastMessage: String?
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(spacing: 0) {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: Spacing.xl) {
-                        HomeHeaderView(userName: viewModel.userName)
+                        HomeHeaderView(userName: viewModel.userName, toastMessage: $toastMessage)
 
                         HomeTabSelector(selectedTab: $viewModel.selectedTab)
 
@@ -46,6 +47,7 @@ struct HomeView: View {
         }
         .ignoresSafeArea(.all, edges: .bottom)
         .trueFitGuestAlert(isPresented: $showGuestAlert)
+        .trueFitToast(message: $toastMessage, style: .error)
         .onAppear {
             viewModel.onAppear()
         }
@@ -216,6 +218,7 @@ struct AIFloatingButton: View {
 
 struct HomeHeaderView: View {
     let userName: String
+    @Binding var toastMessage: String?
     @EnvironmentObject var appRouter: AppRouter
 
     var body: some View {
@@ -246,7 +249,7 @@ struct HomeHeaderView: View {
                 IconButton(systemName: "magnifyingglass") {
                     appRouter.navigate(to: .search)
                 }
-                NotificationButton()
+                ComparisonHeaderButton(toastMessage: $toastMessage)
             }
         }
     }
@@ -271,24 +274,42 @@ struct IconButton: View {
     }
 }
 
-// MARK: - Notification Button
+// MARK: - Comparison Header Button
 
-struct NotificationButton: View {
+struct ComparisonHeaderButton: View {
+    @ObservedObject var comparisonManager = ComparisonManager.shared
+    @EnvironmentObject var appRouter: AppRouter
+    @Binding var toastMessage: String?
+    
     var body: some View {
-        Button(action: {}) {
+        let count = comparisonManager.selectedProducts.count
+        let isEnabled = count >= 2
+        
+        Button(action: {
+            if isEnabled {
+                appRouter.navigate(to: .aiComparison(products: comparisonManager.selectedProducts))
+            } else {
+                toastMessage = "Select at least 2 products to compare"
+            }
+        }) {
             ZStack(alignment: .topTrailing) {
-                Image(systemName: "bell")
+                Image(systemName: "square.split.2x1")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(isEnabled ? .brandPrimary : .textTertiary)
                     .frame(width: 40, height: 40)
                     .background(Color.surface)
                     .clipShape(Circle())
                     .trueFitShadow(.xs)
 
-                Circle()
-                    .fill(Color.semanticDanger)
-                    .frame(width: 10, height: 10)
-                    .offset(x: 2, y: -1)
+                if count > 0 {
+                    Text("\(count)")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 16, height: 16)
+                        .background(isEnabled ? Color.brandPrimary : Color.textSecondary)
+                        .clipShape(Circle())
+                        .offset(x: 4, y: -4)
+                }
             }
         }
     }
@@ -484,81 +505,109 @@ struct HomeProductCard: View {
     var onToggleFavorite: () -> Void = {}
     @EnvironmentObject var appRouter: AppRouter
     @ObservedObject var currencyManager = CurrencyManager.shared
+    @ObservedObject var comparisonManager = ComparisonManager.shared
 
     var body: some View {
-        Button(action: {
-            appRouter.navigate(to: .productDetails(productId: product.id))
-        }) {
-            VStack(spacing: Spacing.sm) {
-                ZStack(alignment: .topTrailing) {
-                    // Product Image
-                    AsyncImage(url: product.imageURL) { phase in
-                        switch phase {
-                        case .empty:
-                            RoundedRectangle.trueFit(Radius.lg)
-                                .fill(Color.surface)
-                                .overlay(
-                                    ProgressView()
-                                        .tint(.brandPrimary)
-                                )
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFit()
+        VStack(spacing: Spacing.sm) {
+            ZStack(alignment: .topTrailing) {
+                // Product Image
+                AsyncImage(url: product.imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        RoundedRectangle.trueFit(Radius.lg)
+                            .fill(Color.surface)
+                            .overlay(
+                                ProgressView()
+                                    .tint(.brandPrimary)
+                            )
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .padding(Spacing.sm)
+                    case .failure:
+                        RoundedRectangle.trueFit(Radius.lg)
+                            .fill(Color.surface)
+                            .overlay(
+                                Image(systemName: "photo")
+                                    .font(.system(size: 28))
+                                    .foregroundColor(.textTertiary)
+                            )
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(height: 160)
+                .frame(maxWidth: .infinity)
+                .background(Color.surface)
+                .clipShape(RoundedRectangle.trueFit(Radius.lg))
+                .overlay(
+                    RoundedRectangle.trueFit(Radius.lg)
+                        .stroke(comparisonManager.isSelected(product) ? Color.brandPrimary : Color.clear, lineWidth: 3)
+                )
+                .overlay(
+                    Group {
+                        if comparisonManager.isSelected(product) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.brandPrimary)
                                 .padding(Spacing.sm)
-                        case .failure:
-                            RoundedRectangle.trueFit(Radius.lg)
-                                .fill(Color.surface)
-                                .overlay(
-                                    Image(systemName: "photo")
-                                        .font(.system(size: 28))
-                                        .foregroundColor(.textTertiary)
+                                .background(
+                                    Circle()
+                                        .fill(Color.white)
+                                        .frame(width: 20, height: 20)
                                 )
-                        @unknown default:
-                            EmptyView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                         }
                     }
-                    .frame(height: 160)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.surface)
-                    .clipShape(RoundedRectangle.trueFit(Radius.lg))
-                    
-                    // Favorite button
-                    Button {
-                        withAnimation(TrueFitMotion.springSnappy) {
-                            onToggleFavorite()
-                        }
-                    } label: {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(isFavorite ? .statusWishlistActive : .white)
-                            .padding(Spacing.xs)
-                            .background(Color.black.opacity(0.25))
-                            .clipShape(Circle())
-                    }
-                    .padding(Spacing.xs)
-                }
-                .trueFitShadow(.xs)
+                )
                 
-                // Product Info
-                VStack(spacing: Spacing.xxs) {
-                    Text(product.title)
-                        .trueFitTextStyle(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.textPrimary)
-                        .lineLimit(1)
-                    
-                    Text(product.vendor ?? "")
-                        .trueFitTextStyle(.caption)
-                        .foregroundColor(.textSecondary)
-                        .lineLimit(1)
-                    
-                    Text(formattedPrice)
-                        .trueFitTextStyle(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.textPrimary)
-                        .padding(.top, 2)
+                // Favorite button
+                Button {
+                    withAnimation(TrueFitMotion.springSnappy) {
+                        onToggleFavorite()
+                    }
+                } label: {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(isFavorite ? .statusWishlistActive : .white)
+                        .padding(Spacing.xs)
+                        .background(Color.black.opacity(0.25))
+                        .clipShape(Circle())
                 }
+                .padding(Spacing.xs)
+            }
+            .trueFitShadow(.xs)
+            
+            // Product Info
+            VStack(spacing: Spacing.xxs) {
+                Text(product.title)
+                    .trueFitTextStyle(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.textPrimary)
+                    .lineLimit(1)
+                
+                Text(product.vendor ?? "")
+                    .trueFitTextStyle(.caption)
+                    .foregroundColor(.textSecondary)
+                    .lineLimit(1)
+                
+                Text(formattedPrice)
+                    .trueFitTextStyle(.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.textPrimary)
+                    .padding(.top, 2)
+            }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            appRouter.navigate(to: .productDetails(productId: product.id))
+        }
+        .onLongPressGesture(minimumDuration: 0.5) {
+            let impactMed = UIImpactFeedbackGenerator(style: .heavy)
+            impactMed.impactOccurred()
+            withAnimation(.spring()) {
+                comparisonManager.toggleSelection(for: product)
             }
         }
     }

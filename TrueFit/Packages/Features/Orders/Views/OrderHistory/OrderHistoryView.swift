@@ -104,8 +104,12 @@ struct OrderHistoryView: View {
 
 // MARK: - Previews
 #if DEBUG
-#Preview {
-    OrderHistoryView(viewModel: PreviewMocks.makeOrderHistoryViewModel())
-        .environmentObject(AppRouter())
+struct OrderHistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderHistoryView(viewModel: PreviewMocks.makeOrderHistoryViewModel())
+            .environmentObject(AppRouter())
+
+    }
 }
 #endif

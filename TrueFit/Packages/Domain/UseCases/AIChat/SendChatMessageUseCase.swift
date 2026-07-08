@@ -14,7 +14,7 @@ final class SendChatMessageUseCase {
         self.repository = repository
     }
     
-    func execute(message: String, history: [ChatMessage], systemContext: String) async throws -> String {
+    func execute(message: String, history: [ChatBootMessage], systemContext: String) async throws -> String {
         return try await repository.sendMessage(message, history: history, systemContext: systemContext)
     }
 }

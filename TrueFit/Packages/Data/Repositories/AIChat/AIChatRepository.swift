@@ -14,7 +14,7 @@ final class AIChatRepository: AIChatRepositoryProtocol {
         self.remoteDataSource = remoteDataSource
     }
     
-    func sendMessage(_ text: String, history: [ChatMessage], systemContext: String) async throws -> String {
+    func sendMessage(_ text: String, history: [ChatBootMessage], systemContext: String) async throws -> String {
         do {
             let response = try await remoteDataSource.sendMessage(text, history: history, systemPrompt: systemContext)
             return response
