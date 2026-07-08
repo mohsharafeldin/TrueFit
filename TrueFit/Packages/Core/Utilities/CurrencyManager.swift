@@ -28,6 +28,9 @@ final class CurrencyManager: ObservableObject {
     
     func convert(_ price: Decimal) -> Decimal {
         let rate = rates[selectedCurrency] ?? 1.0
-        return price * rate
+        var raw = price * rate
+        var rounded = Decimal()
+        NSDecimalRound(&rounded, &raw, 2, .plain)
+        return rounded
     }
 }
