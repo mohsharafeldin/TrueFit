@@ -257,9 +257,13 @@ struct OrderDetailsView: View {
 
 // MARK: - Previews
 #if DEBUG
-#Preview {
-    OrderDetailsView(viewModel: PreviewMocks.makeOrderDetailsViewModel(orderId: OrderPreviewData.mockOrderDetails.orderNumber))
-        .environmentObject(AppRouter())
+struct OrderDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderDetailsView(viewModel: PreviewMocks.makeOrderDetailsViewModel(orderId: OrderPreviewData.mockOrderDetails.orderNumber))
+            .environmentObject(AppRouter())
+
+    }
 }
 #endif
 

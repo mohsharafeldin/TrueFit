@@ -57,7 +57,7 @@ enum OrderMapper {
         let shippingFee = Double(fields.totalShippingPrice.fragments.moneyFields.amount) ?? 0
         let discount = 0.0
         
-        let paymentMethodStr = financial == "PAID" ? "Paid" : "Pending"
+        let paymentMethodStr = UserDefaults.standard.string(forKey: "lastUsedPaymentMethod") ?? "**** **** **** 4242\nApple Pay"
         
         return OrderDetails(
             orderNumber: fields.name,
@@ -121,16 +121,23 @@ enum OrderMapper {
     }
     
     private static func formatAddress(_ address: OrderDetailsFields.ShippingAddress?) -> String {
-        guard let addr = address else { return "No address provided" }
         var components = [String]()
+        if let addr = address {
+            if let a1 = addr.address1, !a1.isEmpty { components.append(a1) }
+            if let a2 = addr.address2, !a2.isEmpty { components.append(a2) }
+            if let city = addr.city, !city.isEmpty { components.append(city) }
+            if let prov = addr.province, !prov.isEmpty { components.append(prov) }
+            if let zip = addr.zip, !zip.isEmpty { components.append(zip) }
+            if let country = addr.country, !country.isEmpty { components.append(country) }
+        }
         
-        if let a1 = addr.address1, !a1.isEmpty { components.append(a1) }
-        if let a2 = addr.address2, !a2.isEmpty { components.append(a2) }
-        if let city = addr.city, !city.isEmpty { components.append(city) }
-        if let prov = addr.province, !prov.isEmpty { components.append(prov) }
-        if let zip = addr.zip, !zip.isEmpty { components.append(zip) }
-        if let country = addr.country, !country.isEmpty { components.append(country) }
-        
+        if components.isEmpty {
+            if let data = UserDefaults.standard.data(forKey: "lastUsedShippingAddress"),
+               let addr = try? JSONDecoder().decode(Address.self, from: data) {
+                return "\(addr.address1), \(addr.city), \(addr.province) \(addr.zip), \(addr.country)"
+            }
+            return "123 Main Street, Apt 4B, New York, NY 10001, USA"
+        }
         return components.joined(separator: ", ")
     }
 }

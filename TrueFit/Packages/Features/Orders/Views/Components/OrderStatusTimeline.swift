@@ -87,7 +87,11 @@ struct OrderStatusTimeline: View {
     }
 }
 
-#Preview {
-    OrderStatusTimeline(currentStatus: .shipped)
-        .padding()
+struct OrderStatusTimeline_Previews: PreviewProvider {
+    static var previews: some View {
+
+        OrderStatusTimeline(currentStatus: .shipped)
+            .padding()
+
+    }
 }
