@@ -2,7 +2,7 @@
 //  HomeView.swift
 //  TrueFit
 //
-//  Features — Home screen 
+//  Features — Home screen
 
 import SwiftUI
 
@@ -12,29 +12,38 @@ struct HomeView: View {
     @State private var showGuestAlert = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: Spacing.xl) {
-                    HomeHeaderView(userName: viewModel.userName)
+        ZStack(alignment: .bottomTrailing) {
+            VStack(spacing: 0) {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: Spacing.xl) {
+                        HomeHeaderView(userName: viewModel.userName)
 
-                    HomeTabSelector(selectedTab: $viewModel.selectedTab)
+                        HomeTabSelector(selectedTab: $viewModel.selectedTab)
 
-                    // Tab Content
-                    switch viewModel.selectedTab {
-                    case .home:
-                        homeTabContent
-                    case .category:
-                        categoryTabContent
-                    case .brand:
-                        brandTabContent
+                        // Tab Content
+                        switch viewModel.selectedTab {
+                        case .home:
+                            homeTabContent
+                        case .category:
+                            categoryTabContent
+                        case .brand:
+                            brandTabContent
+                        }
                     }
+                    .padding(.horizontal, Spacing.lg)
+                    .padding(.top, Spacing.sm)
+                    .padding(.bottom, 120)
                 }
-                .padding(.horizontal, Spacing.lg)
-                .padding(.top, Spacing.sm)
-                .padding(.bottom, 100)
             }
+            .background(Color.trueFitBackground)
+            
+            // The AI Floating Action Button
+            AIFloatingButton {
+                appRouter.navigate(to: .aiChat)
+            }
+            .padding(.trailing, Spacing.lg)
+            .padding(.bottom, Spacing.xxl)
         }
-        .background(Color.trueFitBackground)
         .ignoresSafeArea(.all, edges: .bottom)
         .trueFitGuestAlert(isPresented: $showGuestAlert)
         .onAppear {
@@ -43,7 +52,6 @@ struct HomeView: View {
     }
 
     // MARK: - Home Tab Content
-
     @ViewBuilder
     private var homeTabContent: some View {
         VStack(spacing: Spacing.xl) {
@@ -77,7 +85,6 @@ struct HomeView: View {
     }
 
     // MARK: - Category Tab Content
-
     @ViewBuilder
     private var categoryTabContent: some View {
         VStack(spacing: Spacing.md) {
@@ -98,7 +105,6 @@ struct HomeView: View {
     }
 
     // MARK: - Brand Tab Content
-
     @ViewBuilder
     private var brandTabContent: some View {
         VStack(spacing: Spacing.md) {
@@ -119,7 +125,6 @@ struct HomeView: View {
     }
 
     // MARK: - Placeholders
-
     @ViewBuilder
     private var productGridPlaceholder: some View {
         let columns = [
@@ -162,6 +167,48 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, Spacing.xxxl)
+    }
+}
+
+// MARK: - AI Floating Button (NEW COMPONENT)
+
+struct AIFloatingButton: View {
+    var action: () -> Void
+    @State private var isPulsing = false
+    
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                // Outer glowing pulse effect
+                Circle()
+                    .fill(Color.brandPrimary.opacity(0.3))
+                    .frame(width: 70, height: 70)
+                    .scaleEffect(isPulsing ? 1.2 : 0.8)
+                    .opacity(isPulsing ? 0 : 1)
+                
+                // Inner solid button
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.brandPrimary, Color.brandPrimary.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 60, height: 60)
+                    .trueFitShadow(.md)
+                
+                // Sparkle Icon (Represents AI)
+                Image(systemName: "sparkles")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundColor(.white)
+            }
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: false)) {
+                isPulsing = true
+            }
+        }
     }
 }
 
@@ -777,11 +824,6 @@ struct ShimmerBrandTabCard: View {
     }
 }
 
-// MARK: - Bottom Tab Bar
-
-
-// MARK: - Preview
-
 // MARK: - Preview
 
 struct HomeView_Previews: PreviewProvider {
@@ -802,7 +844,7 @@ struct HomeView_Previews: PreviewProvider {
                 fetchBrandsUseCase: FetchBrandsUseCase(repository: repo),
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: mockFavoritesRepo),
                 isFavoriteUseCase: IsFavoriteUseCase(repository: mockFavoritesRepo),
-                preferencesManager: mockPreferences 
+                preferencesManager: mockPreferences
             )
         )
         .environmentObject(CartState())

@@ -15,33 +15,32 @@ final class BuildProductContextUseCase {
     }
     
     func execute() async throws -> String {
-        // Fetch all products from the store
+        // Fetch products from the store
         let allProducts = try await productsRepository.fetchAllProducts()
         
-        // Filter only active and available products
+        // Filter active and available products
         let availableProducts = allProducts.filter { product in
             product.isAvailable && product.status == .active
         }
         
-        // Build the AI Persona and Rules (System Prompt)
+        // Limit to top 50 products to avoid hitting Gemini's Token Quota
+        let limitedProducts = Array(availableProducts.prefix(50))
+        
+        // Build the AI Persona and Rules
         var context = """
-        You are an expert personal stylist and shopping assistant for the 'TrueFit' iOS app.
-        Your tone should be friendly, helpful, concise, and persuasive.
-        You must ONLY recommend products that are explicitly listed in the TrueFit catalog below.
-        If a user asks for something not in the catalog, politely inform them that it is currently unavailable at TrueFit, but suggest the closest alternative from the catalog.
-        When recommending a product, always state its exact title, vendor, and price. Do not hallucinate products.
+        You are an expert personal stylist for the 'TrueFit' iOS app.
+        Your tone should be friendly, helpful, and concise.
+        You must ONLY recommend products listed below. If a user asks for something else, say it's unavailable but suggest a close alternative from the list.
+        Always state the product title and price.
 
-        --- TRUEFIT AVAILABLE PRODUCT CATALOG ---
+        --- TRUEFIT PRODUCT CATALOG ---
         
         """
         
-        // Compress the product list into a token-efficient string
-        for product in availableProducts {
-            let vendor = product.vendor ?? "TrueFit"
-            let type = product.productType ?? "Apparel"
-            
-            // Format: - [ID] Title by Vendor (Type) | Price: $X
-            let productInfo = "- [\(product.id)] \(product.title) by \(vendor) (\(type)) | Price: $\(product.price)"
+        // Compress the product list into a highly token-efficient string
+        for product in limitedProducts {
+            // Very short format: Title ($Price)
+            let productInfo = "- \(product.title) ($\(product.price))"
             context.append(productInfo + "\n")
         }
         

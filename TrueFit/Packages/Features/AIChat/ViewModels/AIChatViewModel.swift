@@ -63,7 +63,7 @@ class AIChatViewModel: ObservableObject {
                 
                 let responseText = try await sendUseCase.execute(
                     message: trimmed,
-                    history: messages,
+                    history: Array(messages.dropLast()),
                     systemContext: context
                 )
                 
@@ -72,11 +72,13 @@ class AIChatViewModel: ObservableObject {
                 self.isTyping = false
                 
             } catch let appError as AppError {
+                print("🚨 AI CHAT APP ERROR: \(appError)")
                 self.isTyping = false
                 self.errorMessage = appError.userMessage
                 let errorMsg = ChatMessage(text: "Sorry, I ran into an issue. \(appError.userMessage) 😔", isUser: false)
                 self.messages.append(errorMsg)
             } catch {
+                print("🚨 AI CHAT RAW ERROR: \(error)")
                 self.isTyping = false
                 self.errorMessage = error.localizedDescription
                 let errorMsg = ChatMessage(text: "Sorry, something unexpected went wrong. Please try again. 😔", isUser: false)
