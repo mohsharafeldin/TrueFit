@@ -69,10 +69,12 @@ struct MainAppView: View {
                 .tag(AppTab.profile)
             }
             
-            SmartAIPill {
-                appRouter.navigate(to: .aiChat)
+            if appRouter.selectedTab == .home && appRouter.homePath.isEmpty {
+                SmartAIPill {
+                    appRouter.navigate(to: .aiChat)
+                }
+                .padding(.bottom, 60)
             }
-            .padding(.bottom, 60)
         }
     }
 }
