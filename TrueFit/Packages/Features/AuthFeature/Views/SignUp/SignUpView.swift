@@ -88,7 +88,7 @@ struct SignUpView: View {
                             .foregroundColor(.textSecondary)
                         
                         SocialLoginButton(title: "Sign Up with Google", iconImage: .googleIcon) {
-                            print("Google Sign Up Tapped")
+                            viewModel.loginWithGoogle()
                         }
                     }
                     .padding(.horizontal, Spacing.md)
