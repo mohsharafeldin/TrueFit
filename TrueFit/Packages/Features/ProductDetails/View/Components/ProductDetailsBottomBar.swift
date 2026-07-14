@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProductDetailsBottomBar: View {
     @ObservedObject var viewModel: ProductDetailsViewModel
+    var onGuestAction: () -> Void
     
     var body: some View {
         HStack(alignment: .center, spacing: Spacing.md) {
@@ -31,8 +32,12 @@ struct ProductDetailsBottomBar: View {
             
             
             Button(action: {
-                Task {
-                    await viewModel.addToCart()
+                if viewModel.isGuest {
+                    onGuestAction()
+                } else {
+                    Task {
+                        await viewModel.addToCart()
+                    }
                 }
             }) {
                 HStack(spacing: Spacing.sm) {

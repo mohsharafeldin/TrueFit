@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Product: Identifiable, Equatable {
+struct Product: Identifiable, Equatable, Hashable {
     let id: String
     let title: String
     let description: String
@@ -39,6 +39,10 @@ struct Product: Identifiable, Equatable {
     
     static func == (lhs: Product, rhs: Product) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

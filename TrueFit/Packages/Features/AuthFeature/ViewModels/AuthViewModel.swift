@@ -23,6 +23,7 @@ class AuthViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var successMessage: String?
     @Published var showForgotPasswordSheet = false
+    @Published var showEmailVerificationSheet = false
     
     // MARK: - Dependencies
     private let loginUseCase: LoginUseCaseProtocol
@@ -31,6 +32,7 @@ class AuthViewModel: ObservableObject {
     private let logoutUseCase: LogoutUseCaseProtocol
     private let authManager: AuthManagerProtocol
     private let loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol
+    private let sendEmailVerificationUseCase: SendEmailVerificationUseCaseProtocol
     var authRouter: AuthRouter
     
     // MARK: - Init
@@ -41,7 +43,8 @@ class AuthViewModel: ObservableObject {
         logoutUseCase: LogoutUseCaseProtocol,
         authManager: AuthManagerProtocol,
         authRouter: AuthRouter,
-        loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol
+        loginWithGoogleUseCase: LoginWithGoogleUseCaseProtocol,
+        sendEmailVerificationUseCase: SendEmailVerificationUseCaseProtocol
     ) {
         self.loginUseCase = loginUseCase
         self.signUpUseCase = signUpUseCase
@@ -50,7 +53,7 @@ class AuthViewModel: ObservableObject {
         self.authManager = authManager
         self.authRouter = authRouter
         self.loginWithGoogleUseCase = loginWithGoogleUseCase
-        
+        self.sendEmailVerificationUseCase = sendEmailVerificationUseCase
     }
     
     // MARK: - Validation
@@ -111,7 +114,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let result = try await loginUseCase.execute(email: email.trimmingCharacters(in: .whitespaces), password: password)
-                authManager.login(token: result.user.id)
+                authManager.markAuthenticated()
             } catch let error as AuthError {
                 showError(error.localizedDescription)
             } catch {
@@ -129,21 +132,17 @@ class AuthViewModel: ObservableObject {
         
         Task {
             do {
-                let result = try await signUpUseCase.execute(
+                let _ = try await signUpUseCase.execute(
                     firstName: firstName.trimmingCharacters(in: .whitespaces),
                     lastName: lastName.trimmingCharacters(in: .whitespaces),
                     email: email.trimmingCharacters(in: .whitespaces),
                     password: password
                 )
                 
+                // Account created and verification email sent — do NOT mark authenticated
                 await MainActor.run {
-                    self.successMessage = "Account created successfully!"
-                    self.showAlert = true
+                    self.showEmailVerificationSheet = true
                 }
-                
-                authManager.login(token: result.user.id)
-                
-                isLoading = false
                 
             } catch let error as AuthError {
                 showError(error.localizedDescription)
@@ -220,6 +219,27 @@ class AuthViewModel: ObservableObject {
         showAlert = true
     }
     
+    private func showSuccess(_ message: String) {
+        successMessage = message
+        errorMessage = nil
+        showAlert = true
+    }
+    
+    func resendVerificationEmail() {
+        isLoading = true
+        Task {
+            do {
+                try await sendEmailVerificationUseCase.execute()
+                showSuccess("Verification email resent. Please check your inbox.")
+            } catch let error as AuthError {
+                showError(error.localizedDescription)
+            } catch {
+                showError(error.localizedDescription)
+            }
+            isLoading = false
+        }
+    }
+    
     func clearForm() {
         firstName = ""
         lastName = ""
@@ -235,7 +255,7 @@ class AuthViewModel: ObservableObject {
         Task {
             do {
                 let result = try await loginWithGoogleUseCase.execute()
-                authManager.login(token: result.user.id)
+                authManager.markAuthenticated()
             } catch let error as AuthError {
                 showError(error.localizedDescription)
             } catch {

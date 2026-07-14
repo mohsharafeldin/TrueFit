@@ -15,6 +15,8 @@ public enum AuthError: Error, LocalizedError, Equatable {
     case missingClientID
     case missingRootViewController
     case missingIDToken
+    case emailNotVerified
+    case failedToSendVerificationEmail
     case unknown(String)
     
     public var errorDescription: String? {
@@ -33,6 +35,10 @@ public enum AuthError: Error, LocalizedError, Equatable {
             return "Unable to present sign-in screen"
         case .missingIDToken:
             return "Failed to retrieve ID token from Google"
+        case .emailNotVerified:
+            return "Your email is not verified. Please check your inbox and verify your email before signing in."
+        case .failedToSendVerificationEmail:
+            return "Failed to send verification email. Please try again."
         case .unknown(let message):
             return message
         }

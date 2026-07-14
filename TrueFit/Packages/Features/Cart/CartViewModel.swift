@@ -15,6 +15,7 @@ final class CartViewModel: ObservableObject {
     private let applyDiscountUseCase: ApplyDiscountUseCase
     private let cartStateModel: CartState
     private var preferencesManager: PreferencesManagerProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     init(
         getCartUseCase: GetCartUseCase,
@@ -32,6 +33,13 @@ final class CartViewModel: ObservableObject {
         self.applyDiscountUseCase = applyDiscountUseCase
         self.cartStateModel = cartState
         self.preferencesManager = preferencesManager
+        
+        CurrencyManager.shared.$selectedCurrency
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Actions
@@ -137,6 +145,10 @@ final class CartViewModel: ObservableObject {
     }
     
     // MARK: - Computed Properties for UI
+    
+    var isGuest: Bool {
+        return preferencesManager.getUser() == nil
+    }
     
     var lineCount: Int {
         guard case .success(let cart) = cartState else { return 0 }

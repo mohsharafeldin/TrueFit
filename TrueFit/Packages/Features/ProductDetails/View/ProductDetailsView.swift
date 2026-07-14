@@ -10,10 +10,12 @@ import SwiftUI
 struct ProductDetailsView: View {
     @StateObject var viewModel: ProductDetailsViewModel
     let productId: String
+    let preselectedVariantId: String?
     @State private var showGuestAlert = false
     
-    init(productId: String, viewModelFactory: @escaping () -> ProductDetailsViewModel) {
+    init(productId: String, preselectedVariantId: String? = nil, viewModelFactory: @escaping () -> ProductDetailsViewModel) {
         self.productId = productId
+        self.preselectedVariantId = preselectedVariantId
         _viewModel = StateObject(wrappedValue: viewModelFactory())
     }
     
@@ -33,7 +35,7 @@ struct ProductDetailsView: View {
                     showRetry: true,
                     onRetry: {
                         Task {
-                            await viewModel.retry(id: productId)
+                            await viewModel.retry(id: productId, preselectedVariantId: preselectedVariantId)
                         }
                     }
                 )
@@ -44,7 +46,7 @@ struct ProductDetailsView: View {
         }
         .task {
             if case .idle = viewModel.state {
-                await viewModel.loadProduct(id: productId)
+                await viewModel.loadProduct(id: productId, preselectedVariantId: preselectedVariantId)
             }
         }
         .trueFitGuestAlert(isPresented: $showGuestAlert)
@@ -100,7 +102,7 @@ struct ProductDetailsView: View {
             }
             
             // Sticky Bottom Bar
-            ProductDetailsBottomBar(viewModel: viewModel)
+            ProductDetailsBottomBar(viewModel: viewModel, onGuestAction: { showGuestAlert = true })
         }
     }
 }

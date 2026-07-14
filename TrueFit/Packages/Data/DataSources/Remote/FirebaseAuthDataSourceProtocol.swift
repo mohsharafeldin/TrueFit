@@ -14,5 +14,7 @@ public protocol FirebaseAuthDataSourceProtocol {
     func resetPassword(email: String) async throws
     func deleteCurrentUser() async throws
     func signOut() throws
+    func sendEmailVerification() async throws
+    func isEmailVerified() -> Bool
 }
 

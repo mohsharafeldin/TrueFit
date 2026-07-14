@@ -23,5 +23,9 @@
 	<string>$(SHOPIFY_STORE_NAME)</string>
 	<key>ShopifyStorefrontToken</key>
 	<string>$(SHOPIFY_STOREFRONT_TOKEN)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to reach you easily</string>
+	<key>GeminiAPIKey</key>
+	<string>$(GEMINI_API_KEY)</string>
 </dict>
 </plist>

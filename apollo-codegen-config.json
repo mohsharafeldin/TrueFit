@@ -14,9 +14,9 @@
       }
     },
     "schemaTypes" : {
-      "path" : "./ShopifyAPI",
+      "path" : "./ShopifyAPI/Sources",
       "moduleType" : {
-        "swiftPackageManager" : {
+        "other" : {
         }
       }
     },

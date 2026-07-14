@@ -33,6 +33,7 @@ final class DIContainer: ObservableObject {
         GetProductUseCase(repository: productsRepository)
     }()
     
+    
     // MARK: - Currency Dependencies (from feature branch)
     lazy var currencyRemoteDataSource: CurrencyRemoteDataSourceProtocol = {
         CurrencyRemoteDataSource(apiClient: genericClient)
@@ -86,7 +87,11 @@ final class DIContainer: ObservableObject {
     private func makeLogoutUseCase() -> LogoutUseCaseProtocol {
         LogoutUseCase(authRepository: authRepository)
     }
-    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol {         LoginWithGoogleUseCase(authRepository: authRepository)
+    private func makeLoginWithGoogleUseCase() -> LoginWithGoogleUseCaseProtocol { LoginWithGoogleUseCase(authRepository: authRepository)
+    }
+    
+    private func makeSendEmailVerificationUseCase() -> SendEmailVerificationUseCaseProtocol {
+        SendEmailVerificationUseCase(authRepository: authRepository)
     }
     
     
@@ -110,7 +115,7 @@ final class DIContainer: ObservableObject {
     // GraphQL & Cart Data Sources
     // TODO: Add SQLiteNormalizedCache to ApolloManager when offline support is needed
     private lazy var cartRemoteDataSource: CartRemoteDataSourceProtocol = CartRemoteDataSource(apollo: apolloManager)
-    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource)
+    private lazy var cartRepository: CartRepositoryProtocol = CartRepository(remoteDataSource: cartRemoteDataSource, productsRepository: productsRepository)
     
     // Cart Use Cases
     private lazy var getCartUseCase = GetCartUseCase(repository: cartRepository)
@@ -118,6 +123,7 @@ final class DIContainer: ObservableObject {
     private lazy var updateCartLineUseCase = UpdateCartLineUseCase(repository: cartRepository)
     private lazy var removeCartLineUseCase = RemoveCartLineUseCase(repository: cartRepository)
     private lazy var applyDiscountUseCase = ApplyDiscountUseCase(repository: cartRepository)
+    //private lazy var clearCartUseCase = ClearCartUseCase(repository: cartRepository)
     
     // MARK: - FAVORITES FEATURE
     
@@ -134,6 +140,80 @@ final class DIContainer: ObservableObject {
     private lazy var getFavoritesUseCase = GetFavoritesUseCase(repository: favoritesRepository)
     private lazy var toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: favoritesRepository)
     lazy var isFavoriteUseCase = IsFavoriteUseCase(repository: favoritesRepository)
+    
+    // MARK: - ORDERS FEATURE
+    
+    // Orders Data Sources & Repository
+    private lazy var ordersRemoteDataSource: OrdersRemoteDataSourceProtocol = {
+        OrdersRemoteDataSource(apollo: apolloManager)
+    }()
+    
+    private lazy var ordersRepository: OrdersRepositoryProtocol = {
+        OrdersRepository(remoteDataSource: ordersRemoteDataSource, authManager: authManager, productsRepository: productsRepository)
+    }()
+    
+    // Orders Use Cases
+    private lazy var fetchOrdersUseCase = FetchOrdersUseCase(repository: ordersRepository)
+    private lazy var fetchOrderDetailsUseCase = FetchOrderDetailsUseCase(repository: ordersRepository)
+    
+    // MARK: - ADDRESS FEATURE
+        
+        // Address Data Source & Repository
+        private lazy var addressRemoteDataSource: AddressRemoteDataSourceProtocol = {
+            AddressRemoteDataSource(apollo: apolloManager)
+        }()
+        
+        private lazy var addressRepository: AddressRepositoryProtocol = {
+            AddressRepository(remoteDataSource: addressRemoteDataSource)
+        }()
+        
+        // Address Use Cases
+        private lazy var getAddressesUseCase = GetAddressesUseCase(repository: addressRepository)
+        private lazy var createAddressUseCase = CreateAddressUseCase(repository: addressRepository)
+        private lazy var updateAddressUseCase = UpdateAddressUseCase(repository: addressRepository)
+        private lazy var deleteAddressUseCase = DeleteAddressUseCase(repository: addressRepository)
+
+    // MARK: - PAYMENT FEATURE
+
+    // Payment Data Source & Repository
+    
+    private lazy var paymentGatWay: PaymentGatewayProtocol=StubPaymentGateway()
+    
+    private lazy var paymentLocalDataSource: PaymentLocalDataSourceProtocol = {
+        PaymentLocalDataSource(gateway: paymentGatWay)
+    }()
+
+    private lazy var paymentRepository: PaymentRepositoryProtocol = {
+        PaymentRepository(dataSource: paymentLocalDataSource)
+    }()
+
+    // Payment Use Cases
+    private lazy var processPaymentUseCase = ProcessPaymentUseCase(repository: paymentRepository)
+    
+    // MARK: - AI CHAT FEATURE
+        
+        // Networking & Data Source
+        private lazy var geminiService: GeminiChatServiceProtocol = {
+            GeminiChatService()
+        }()
+        
+        private lazy var aiChatRemoteDataSource: AIChatRemoteDataSourceProtocol = {
+            AIChatRemoteDataSource(geminiService: geminiService)
+        }()
+        
+        // Repository
+        private lazy var aiChatRepository: AIChatRepositoryProtocol = {
+            AIChatRepository(remoteDataSource: aiChatRemoteDataSource)
+        }()
+        
+        // Use Cases
+        private lazy var sendChatMessageUseCase: SendChatMessageUseCase = {
+            SendChatMessageUseCase(repository: aiChatRepository)
+        }()
+        
+        private lazy var buildProductContextUseCase: BuildProductContextUseCase = {
+            BuildProductContextUseCase(productsRepository: productsRepository)
+        }()
     
     // MARK: - Init
     public init() {}
@@ -169,7 +249,8 @@ final class DIContainer: ObservableObject {
             logoutUseCase: makeLogoutUseCase(),
             authManager: authManager,
             authRouter: authRouter,
-            loginWithGoogleUseCase: makeLoginWithGoogleUseCase()
+            loginWithGoogleUseCase: makeLoginWithGoogleUseCase(),
+            sendEmailVerificationUseCase: makeSendEmailVerificationUseCase()
         )
     }
     
@@ -220,11 +301,23 @@ final class DIContainer: ObservableObject {
             preferencesManager: preferencesManager
         )
     }
+    
+    public func makeCheckoutViewModel() -> CheckoutViewModel {
+        CheckoutViewModel(
+            getCartUseCase: getCartUseCase,
+            getAddressesUseCase: getAddressesUseCase,
+            processPaymentUseCase: processPaymentUseCase,
+            authManager: authManager,
+            preferencesManager: preferencesManager
+        )
+    }
+    
     func makeProductListViewModel(source: ProductListSource) -> ProductListViewModel {
-        ProductListViewModel(
+        return ProductListViewModel(
             source: source,
             fetchProductsByCollectionUseCase: fetchProductsByCollectionUseCase,
-            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase
+            fetchProductsByVendorUseCase: fetchProductsByVendorUseCase,
+            fetchAllProductsUseCase: fetchAllProductsUseCase
         )
     }
     
@@ -232,7 +325,11 @@ final class DIContainer: ObservableObject {
         FavoritesViewModel(
             getFavoritesUseCase: getFavoritesUseCase,
             toggleFavoriteUseCase: toggleFavoriteUseCase,
-            authManager: authManager
+            authManager: authManager,
+            addToCartUseCase: addToCartUseCase,
+            getProductUseCase: getProductUseCase,
+            preferencesManager: preferencesManager,
+            cartState: cartState
         )
     }
     
@@ -242,5 +339,45 @@ final class DIContainer: ObservableObject {
             authManager: authManager,
             logoutUseCase: makeLogoutUseCase()
         )
+	}
+
+    public func makeOrderHistoryViewModel() -> OrderHistoryViewModel {
+        OrderHistoryViewModel(fetchOrdersUseCase: fetchOrdersUseCase, authManager: authManager)
     }
+    
+    public func makeOrderDetailsViewModel(orderId: String) -> OrderDetailsViewModel {
+        OrderDetailsViewModel(fetchOrderDetailsUseCase: fetchOrderDetailsUseCase, orderId: orderId)
+    }
+
+    lazy var addressViewModel: AddressViewModel = {
+        AddressViewModel(
+            authManager: authManager,
+            getAddresses: getAddressesUseCase,
+            createAddress: createAddressUseCase,
+            updateAddress: updateAddressUseCase,
+            deleteAddress: deleteAddressUseCase
+        )
+    }()
+
+    func makePaymentViewModel(orderTotal: Decimal, orderLabel: String = "TrueFit Order") -> PaymentViewModel {
+        PaymentViewModel(
+            processPaymentUseCase: processPaymentUseCase,
+            getCartUseCase: getCartUseCase,
+            removeCartLineUseCase: removeCartLineUseCase,
+            preferencesManager: preferencesManager,
+            cartStateModel: cartState,
+            orderTotal: orderTotal,
+            orderLabel: orderLabel
+        )
+    }
+    
+    
+    public func makeAIChatViewModel() -> AIChatViewModel {
+            AIChatViewModel(
+                sendChatMessageUseCase: sendChatMessageUseCase,
+                buildProductContextUseCase: buildProductContextUseCase
+            )
+        }
+    
+    
 }

@@ -8,17 +8,19 @@
 import Foundation
 
 enum PriceFormatter {
-    private static let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        formatter.currencySymbol = "$" // Forces simple "$" instead of "US$"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        return formatter
-    }()
-    
     static func format(_ price: Decimal) -> String {
-        return formatter.string(from: price as NSDecimalNumber) ?? ""
+        let manager = CurrencyManager.shared
+        let converted = manager.convert(price)
+        let selectedCurrency = manager.selectedCurrency
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        
+        if let formattedStr = formatter.string(from: converted as NSDecimalNumber) {
+            return "\(formattedStr) \(selectedCurrency)"
+        }
+        return "\(converted) \(selectedCurrency)"
     }
 }

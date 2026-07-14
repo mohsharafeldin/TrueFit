@@ -64,7 +64,11 @@ public final class AuthMapper {
             }
         }
         
-        // If it's already an AuthError
+        // If it's already an AuthError, pass it through directly
+        if let authError = error as? AuthError {
+            return authError
+        }
+        
         let nsError = error as NSError
         if nsError.domain == AuthErrorDomain {
             if let authErrorCode = AuthErrorCode.Code(rawValue: nsError.code) {
@@ -74,6 +78,7 @@ public final class AuthMapper {
                     return .invalidCredentials
                 case .weakPassword: return .weakPassword
                 case .networkError: return .networkError
+                case .tooManyRequests: return .failedToSendVerificationEmail
                 default: return .unknown(error.localizedDescription)
                 }
             }
