@@ -15,6 +15,7 @@ struct AuthTextField: View {
     var keyboardType: UIKeyboardType = .default
     
     @FocusState private var isFocused: Bool
+    @State private var isPasswordVisible: Bool = false
     
     var autocapitalization: TextInputAutocapitalization {
         if isSecure { return .never }
@@ -30,7 +31,7 @@ struct AuthTextField: View {
                 .animation(.easeInOut(duration: TrueFitMotion.durationFast), value: isFocused)
             
             Group {
-                if isSecure {
+                if isSecure && !isPasswordVisible {
                     SecureField(placeholder, text: $text)
                         .textInputAutocapitalization(autocapitalization)
                         .autocorrectionDisabled(true)
@@ -46,8 +47,12 @@ struct AuthTextField: View {
             .foregroundColor(.textPrimary)
             
             if isSecure {
-                Image(systemName: "eye.slash")
-                    .foregroundColor(.textTertiary)
+                Button(action: {
+                    isPasswordVisible.toggle()
+                }) {
+                    Image(systemName: isPasswordVisible ? "eye" : "eye.slash")
+                        .foregroundColor(.textTertiary)
+                }
             }
         }
         .padding(Spacing.md)

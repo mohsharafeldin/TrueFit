@@ -3,10 +3,10 @@ import SwiftUI
 struct CartView: View {
     @StateObject var viewModel: CartViewModel
     @EnvironmentObject var globalCartState: CartState
+    @EnvironmentObject var appRouter: AppRouter
     let onStartShopping: () -> Void
     
     @State private var isDiscountExpanded: Bool = false
-    @Environment(\.openURL) private var openURL
 
     init(viewModelFactory: @escaping () -> CartViewModel, onStartShopping: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: viewModelFactory())
@@ -31,14 +31,18 @@ struct CartView: View {
                     } : nil
                 )
             case .success(let cart):
-                if cart.isEmpty {
+                if viewModel.isGuest {
+                    CartEmptyView(onStartShopping: onStartShopping, isGuest: true)
+                } else if cart.isEmpty {
                     CartEmptyView(onStartShopping: onStartShopping)
                 } else {
                     CartContentView(
                         cart: cart,
                         viewModel: viewModel,
                         isDiscountExpanded: $isDiscountExpanded,
-                        openURL: openURL
+                        onCheckout: {
+                            appRouter.navigate(to: .checkout)
+                        }
                     )
                 }
             }

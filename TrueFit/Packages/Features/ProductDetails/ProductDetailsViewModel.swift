@@ -34,6 +34,8 @@ final class ProductDetailsViewModel: ObservableObject {
         return preferencesManager.getUser() == nil
     }
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init(getProductUseCase: GetProductUseCase,
          addToCartUseCase: AddToCartUseCase,
          preferencesManager: PreferencesManagerProtocol,
@@ -43,9 +45,16 @@ final class ProductDetailsViewModel: ObservableObject {
         self.getProductUseCase = getProductUseCase
         self.addToCartUseCase = addToCartUseCase
         self.preferencesManager = preferencesManager
-        self.cartState = cartState
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.isFavoriteUseCase = isFavoriteUseCase
+        self.cartState = cartState
+        
+        CurrencyManager.shared.$selectedCurrency
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
     }
     
     func setupInitialSelection(for product: Product) {
@@ -55,11 +64,17 @@ final class ProductDetailsViewModel: ObservableObject {
         }
     }
     
-    func loadProduct(id: String) async {
+    func loadProduct(id: String, preselectedVariantId: String? = nil) async {
         state = .loading
         do {
             let product = try await getProductUseCase.execute(productId: id)
-            self.selectedVariant = product.variants.first(where: { $0.isAvailable }) ?? product.variants.first
+            if let preselectedVariantId = preselectedVariantId,
+               let matchedVariant = product.variants.first(where: { $0.id == preselectedVariantId }) {
+                self.selectedVariant = matchedVariant
+                self.selectedOptions = matchedVariant.selectedOptions
+            } else {
+                self.selectedVariant = product.variants.first(where: { $0.isAvailable }) ?? product.variants.first
+            }
             self.state = .success(product)
             await checkFavoriteStatus(id: id)
         } catch let appError as AppError {
@@ -72,8 +87,8 @@ final class ProductDetailsViewModel: ObservableObject {
         }
     }
     
-    func retry(id: String) async {
-        await loadProduct(id: id)
+    func retry(id: String, preselectedVariantId: String? = nil) async {
+        await loadProduct(id: id, preselectedVariantId: preselectedVariantId)
     }
     
     private func checkFavoriteStatus(id: String) async {

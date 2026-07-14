@@ -31,6 +31,7 @@ protocol AuthManagerProtocol {
     var isAuthenticated: Bool { get }
     var isGuest: Bool { get }
     func login(token: String)
+    func markAuthenticated()
     func logout()
     func setGuestMode(_ isGuest: Bool)
     func getAccessToken() -> String?
@@ -60,8 +61,14 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
     }
     
     func login(token: String) {
-       
         saveTokenToKeychain(token)
+        self.isAuthenticated = true
+        self.isGuest = false
+    }
+    
+    /// Marks the user as authenticated without touching the keychain.
+    /// Use this after the repository has already saved the Shopify token.
+    func markAuthenticated() {
         self.isAuthenticated = true
         self.isGuest = false
     }
@@ -111,4 +118,6 @@ final class AuthManager: ObservableObject, AuthManagerProtocol {
             print("Failed to delete token from Keychain: \(error)")
         }
     }
+    
+    
 }

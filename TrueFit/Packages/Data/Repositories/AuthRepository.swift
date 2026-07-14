@@ -38,16 +38,23 @@ public final class AuthRepository: AuthRepositoryProtocol {
             let authResult = try await firebaseDataSource.signIn(email: email, password: password)
             let firebaseUser = authResult.user
             
-            // 2. Authenticate with Shopify
+            // 2. Check email verification
+            if !firebaseDataSource.isEmailVerified() {
+                // Sign the user out immediately to prevent unverified access
+                try? firebaseDataSource.signOut()
+                throw AuthError.emailNotVerified
+            }
+            
+            // 3. Authenticate with Shopify
             let shopifyTokenResponse = try await shopifyDataSource.customerAccessTokenCreate(email: email, password: password)
             let shopifyToken = AuthMapper.extractShopifyToken(from: shopifyTokenResponse)
             
-            // 3. Save tokens
+            // 4. Save tokens
             let firebaseToken = try await firebaseUser.getIDToken()
             try keychainManager.save(firebaseToken, service: "com.truefit.auth", account: "firebaseToken")
             try keychainManager.save(shopifyToken, service: "com.truefit.auth", account: "shopifyCustomerToken")
             
-            // 4. Map to Domain entity
+            // 5. Map to Domain entity
             let user = AuthMapper.toDomain(firebaseUser: firebaseUser, shopifyCustomerId: "")
             preferencesManager.saveUser(user)
             return AuthResult(user: user)
@@ -61,7 +68,7 @@ public final class AuthRepository: AuthRepositoryProtocol {
         var createdFirebaseUser: FirebaseAuth.User?
         
         do {
-            // 1. Firebase
+            // 1. Firebase — create the account
             let authResult = try await firebaseDataSource.signUp(email: email, password: password)
             createdFirebaseUser = authResult.user
             
@@ -70,7 +77,7 @@ public final class AuthRepository: AuthRepositoryProtocol {
             changeRequest?.displayName = "\(firstName) \(lastName)"
             try await changeRequest?.commitChanges()
             
-            // 3. Shopify
+            // 3. Shopify — create customer (sends Shopify activation email, unchanged)
             let shopifyCustomer = try await shopifyDataSource.customerCreate(
                 firstName: firstName, lastName: lastName, email: email, password: password
             )
@@ -79,25 +86,29 @@ public final class AuthRepository: AuthRepositoryProtocol {
             // 4. Shopify Token
             let shopifyTokenResponse = try await shopifyDataSource.customerAccessTokenCreate(email: email, password: password)
             let shopifyToken = AuthMapper.extractShopifyToken(from: shopifyTokenResponse)
-            
-            // 5. Save
-            let firebaseToken = try await createdFirebaseUser?.getIDToken() ?? ""
-            try keychainManager.save(firebaseToken, service: "com.truefit.auth", account: "firebaseToken")
             try keychainManager.save(shopifyToken, service: "com.truefit.auth", account: "shopifyCustomerToken")
             
-            // 6. Map
+            // 5. Send Firebase verification email (new behaviour — alongside Shopify activation email)
+            try await firebaseDataSource.sendEmailVerification()
+            
+            // 6. Sign Firebase user out — they must verify before gaining full access
+            try? firebaseDataSource.signOut()
+            
+            // 7. Map — user is created but NOT authenticated yet
             let user = AuthMapper.toDomain(firebaseUser: createdFirebaseUser!, shopifyCustomerId: shopifyCustomerId)
-            preferencesManager.saveUser(user)
             return AuthResult(user: user)
             
         } catch {
-            // ROLLBACK
+            // ROLLBACK — Firebase user deletion still works here because we only sign out
+            // after all Shopify steps succeed. If we reach this catch block, the user is
+            // still signed in and currentUser is non-nil.
             if createdFirebaseUser != nil {
                 try? await firebaseDataSource.deleteCurrentUser()
             }
             throw AuthMapper.mapError(error)
         }
     }
+
     
     public func resetPassword(email: String) async throws {
         do {
@@ -175,5 +186,16 @@ public final class AuthRepository: AuthRepositoryProtocol {
         } catch {
             throw AuthMapper.mapError(error)
         }
+    }
+    public func sendEmailVerification() async throws {
+        do {
+            try await firebaseDataSource.sendEmailVerification()
+        } catch {
+            throw AuthMapper.mapError(error)
+        }
+    }
+    
+    public func isEmailVerified() -> Bool {
+        return firebaseDataSource.isEmailVerified()
     }
 }
